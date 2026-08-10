@@ -30,5 +30,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          wranglerVersion: latest
           command: pages deploy flipgazine-root-3 --project-name=flipgazine --branch=main
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
