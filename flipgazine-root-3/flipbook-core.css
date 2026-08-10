@@ -1,0 +1,60 @@
+/* flipgazine — shared flipbook chrome (stage 1)
+   ---------------------------------------------------------------------------
+   Structure only. Every colour resolves from the book's own custom properties
+   through a fallback chain, so one file serves every palette:
+
+     --pink   books forked from the ANJU template (ANJU, Horizon, Bangkok'78,
+              Lobby Lounge, Sip & Co.)
+     --gold   Countdown to Midnight, which predates that template
+     literal  anything else
+
+   Load this BEFORE the book's own <style> so a book can still override.
+   =========================================================================== */
+
+:root{
+  --fg-accent: var(--pink, var(--gold, #f2c14e));
+}
+
+/* ---- reading progress ---------------------------------------------------- */
+#pageRule{
+  position:relative;width:min(58vw,300px);height:1px;margin-top:-6px;
+  background:rgba(255,255,255,.12);border-radius:1px;overflow:hidden;z-index:9;
+}
+#pageRule i{
+  position:absolute;top:0;bottom:0;left:0;width:8.333%;
+  background:var(--fg-accent);border-radius:1px;
+  box-shadow:0 0 10px var(--fg-accent);
+  transition:width .55s cubic-bezier(.22,1,.36,1);
+}
+
+/* ---- page transitions ---------------------------------------------------- */
+/* The book fades in on arrival; leaving is handled by the #fgFade overlay
+   below, which pairs with the fade the homepage runs so the handover reads as
+   one dissolve. Note that a filling animation outranks a plain declaration --
+   which is why the leave is an overlay rather than `opacity:0` on body, since
+   that would be ignored while fgEnter is still filling. */
+@keyframes fgEnter{ from{opacity:0} to{opacity:1} }
+body{ animation:fgEnter .42s ease both; }
+/* No body fade on leave: the #fgFade overlay below does that job, and running
+   both dimmed the page twice over. */
+
+/* Overlay in the catalog's own ink, so leaving a book fades toward the colour
+   of the page you are going to rather than through the book's own. Belt and
+   braces with the body fade above: the overlay covers anything the body
+   animation cannot, such as fixed chrome. */
+#fgFade{
+  position:fixed;inset:0;z-index:9999;background:#0D1110;
+  opacity:0;pointer-events:none;transition:opacity .26s ease;
+}
+body.fg-leaving #fgFade{ opacity:1;pointer-events:auto; }
+
+/* No prefers-reduced-motion block anywhere, by design: every visitor sees the
+   same thing. Books previously carried `@media (prefers-reduced-motion:reduce)
+   and (min-width:100000px)`, a query written so it could never match -- same
+   effect, but it read like a bug. Stated plainly instead. */
+
+/* ---- debug: hide the book to inspect the background ---------------------- */
+/* visibility, not display: display:none makes StPageFlip measure the book as
+   0x0 while hidden and it re-lays out in the wrong place when shown again. */
+body.fg-nobook #stage{ visibility:hidden !important; }
+body.fg-nobook .fg-mag{ visibility:hidden !important; }

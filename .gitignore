@@ -1,0 +1,16 @@
+# macOS metadata
+.DS_Store
+
+# Local browser-test output
+.playwright-cli/
+output/
+
+# Local AI-agent configuration (may contain credentials)
+.agents/
+.claude/
+.mcp.json
+
+# Deployment archives and local secrets
+*.zip
+.env
+.env.*
