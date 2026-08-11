@@ -223,6 +223,10 @@
      but the fresh row must only refresh storage -- never replace the document
      while that cached page is saving the returned session. */
   var authReturn = location.hash.indexOf('access_token=') !== -1;
+  if(authReturn){
+    try{ sessionStorage.setItem('fg:oauthHash',location.hash); }catch(e){}
+    try{ history.replaceState(null,'',location.pathname+location.search); }catch(e){}
+  }
   var cached=null;
   if(!shortCode){ try{ cached=localStorage.getItem(CK); }catch(e){} }
 
