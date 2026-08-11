@@ -196,7 +196,24 @@
     document.open(); document.write(html); document.close();
     keepPWA(); setTimeout(keepPWA,0);
   }
-  function fail(){ document.getElementById('boot').innerHTML='<div class="err">This page couldn\'t be loaded right now.<br><a href="/">\u2190 Back to flipgazine</a></div>'; }
+  function fail(){
+    /* Android may return from Google before an updated PWA has repopulated its
+       database-page cache. Keep the callback alive and retry the shell boot;
+       showing the ordinary dead-end here loses an otherwise valid sign-in. */
+    if(authReturn){
+      var retries=0;
+      try{
+        retries=Number(sessionStorage.getItem('fg:oauthBootRetries')||0);
+        sessionStorage.setItem('fg:oauthBootRetries',String(retries+1));
+      }catch(e){}
+      if(retries<8){
+        document.getElementById('boot').innerHTML='<div class="err">Finishing sign-in\u2026</div>';
+        setTimeout(function(){ location.reload(); },Math.min(700+(retries*350),2800));
+        return;
+      }
+    }
+    document.getElementById('boot').innerHTML='<div class="err">This page couldn\'t be loaded right now.<br><a href="/">\u2190 Back to flipgazine</a></div>';
+  }
 
   /* Applied before the first paint of the boot screen, so nothing of the
      default skin is ever shown and then corrected. */
@@ -222,9 +239,16 @@
      mobile does not depend on a perfectly timed network handoff from Google,
      but the fresh row must only refresh storage -- never replace the document
      while that cached page is saving the returned session. */
-  var authReturn = location.hash.indexOf('access_token=') !== -1;
-  if(authReturn){
-    try{ sessionStorage.setItem('fg:oauthHash',location.hash); }catch(e){}
+  var authHash=location.hash||'';
+  if(authHash.indexOf('access_token=')===-1){
+    try{ authHash=localStorage.getItem('fg:oauthHash')||''; }catch(e){ authHash=''; }
+  }
+  var authReturn = authHash.indexOf('access_token=') !== -1;
+  if(location.hash.indexOf('access_token=') !== -1){
+    try{
+      sessionStorage.setItem('fg:oauthHash',location.hash);
+      localStorage.setItem('fg:oauthHash',location.hash);
+    }catch(e){}
     try{ history.replaceState(null,'',location.pathname+location.search); }catch(e){}
   }
   var cached=null;
