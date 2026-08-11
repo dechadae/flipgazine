@@ -1,5 +1,7 @@
 /* flipgazine service worker — installable + offline-capable */
-var V = 'fg-v7';
+/* v8 refreshes the precached shell so installed Android PWAs keep the OAuth
+   callback fixes even when the return from Google briefly falls back offline. */
+var V = 'fg-v8';
 var CORE = ['/', '/index.html', '/favicon-v3.svg', '/manifest.webmanifest',
   '/icons/icon-192-v3.png', '/icons/icon-512-v3.png', '/icons/icon-512-maskable-v3.png',
   '/og/home-v2.png'];
