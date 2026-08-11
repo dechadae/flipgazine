@@ -218,13 +218,13 @@
 
   /* A short link cannot be read from cache, because the real path is not known
      until the lookup returns. Ordinary paths keep the instant cache paint. */
-  /* An OAuth return must execute once. Painting a stale cached page first can
-     start its token exchange, clear the fragment, and then abort that exchange
-     when the fresh row repaints the whole document. Wait for the fresh page on
-     this one navigation so the callback owns the token from start to finish. */
+  /* An OAuth return must execute once. Its cached page is allowed to paint so
+     mobile does not depend on a perfectly timed network handoff from Google,
+     but the fresh row must only refresh storage -- never replace the document
+     while that cached page is saving the returned session. */
   var authReturn = location.hash.indexOf('access_token=') !== -1;
   var cached=null;
-  if(!shortCode && !authReturn){ try{ cached=localStorage.getItem(CK); }catch(e){} }
+  if(!shortCode){ try{ cached=localStorage.getItem(CK); }catch(e){} }
 
   var fresh=resolvePath().then(function(p){
       path=p; CK='fg:'+p;
@@ -257,6 +257,7 @@
          fetch wins the race, painted is still false and the fresh copy paints
          first, making the queued cache paint a no-op. */
       headerFresh.then(function(fragment){
+        if(authReturn) return;
         if(html===cached) return;
         painted=false;
         paint(compose(html,fragment));
