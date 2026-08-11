@@ -90,6 +90,71 @@
 
   var BASE="https://sjpvhgxacsiorrtijqua.supabase.co/rest/v1";
   var KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNqcHZoZ3hhY3Npb3JydGlqcXVhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM3NDE5MjcsImV4cCI6MjA5OTMxNzkyN30.9rQa7r9pxoBwh5SrYLlBGzzvbZkkUXKdvahCPugZncY";
+  var FG_SESSION_KEY="sb-sjpvhgxacsiorrtijqua-auth-token";
+
+  /* Complete the OAuth handoff before loading a database-backed page. Android
+     can resume an installed PWA while its network context is still settling;
+     validate the returned token with Supabase Auth here, so Home and the shared
+     header are no longer prerequisites for restoring the requested page. */
+  function completeOAuth(){
+    var raw=location.hash||'';
+    if(raw.indexOf('access_token=')===-1){
+      try{ raw=localStorage.getItem('fg:oauthHash')||''; }catch(e){ raw=''; }
+    }
+    if(raw.indexOf('access_token=')===-1) return false;
+    var p={};
+    raw.replace(/^#/,'').split('&').forEach(function(kv){
+      var i=kv.indexOf('=');
+      if(i>0) p[decodeURIComponent(kv.slice(0,i))]=decodeURIComponent(kv.slice(i+1));
+    });
+    if(!p.access_token) return false;
+    try{
+      localStorage.setItem('fg:oauthHash',raw);
+      history.replaceState(null,'',location.pathname+location.search);
+    }catch(e){}
+    var dest='';
+    try{
+      dest=sessionStorage.getItem('fg:oauthReturn')||localStorage.getItem('fg:oauthReturn')||'';
+    }catch(e){}
+    if(dest.charAt(0)!=='/'||dest.charAt(1)==='/') dest=location.pathname+location.search;
+    document.getElementById('boot').innerHTML='<div class="err">Finishing sign-in\u2026</div>';
+    function verify(attempt){
+      fetch('https://sjpvhgxacsiorrtijqua.supabase.co/auth/v1/user',{
+        headers:{apikey:KEY,Authorization:'Bearer '+p.access_token},cache:'no-store'
+      }).then(function(r){ if(!r.ok) throw 0; return r.json(); })
+        .then(function(user){
+          var secs=Number(p.expires_in||3600);
+          var session={
+            access_token:p.access_token,
+            refresh_token:p.refresh_token||'',
+            token_type:p.token_type||'bearer',
+            expires_in:secs,
+            expires_at:Number(p.expires_at||(Math.floor(Date.now()/1000)+secs)),
+            user:user
+          };
+          localStorage.setItem(FG_SESSION_KEY,JSON.stringify(session));
+          if(user&&user.email) localStorage.setItem('fg:devuser',user.email);
+          try{
+            sessionStorage.removeItem('fg:oauthHash');
+            sessionStorage.removeItem('fg:oauthReturn');
+            sessionStorage.removeItem('fg:oauthBootRetries');
+            localStorage.removeItem('fg:oauthHash');
+            localStorage.removeItem('fg:oauthReturn');
+          }catch(e){}
+          try{ location.replace(dest); }catch(e){ location.href=dest; }
+        })['catch'](function(){
+          if(attempt<8){
+            setTimeout(function(){ verify(attempt+1); },Math.min(650+(attempt*300),2600));
+            return;
+          }
+          document.getElementById('boot').innerHTML='<div class="err">Sign-in could not reconnect yet.<br><a href="/home.html">Try again</a></div>';
+        });
+    }
+    verify(0);
+    return true;
+  }
+  if(completeOAuth()) return;
+
   var path=location.pathname;
   if(path===''||path==='/'||path==='/index.html') path='/home.html';
 

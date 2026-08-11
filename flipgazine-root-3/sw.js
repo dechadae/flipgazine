@@ -1,7 +1,6 @@
 /* flipgazine service worker — installable + offline-capable */
-/* v9 refreshes the precached shell so installed Android PWAs keep both the
-   durable return target and callback retry when Google hands control back. */
-var V = 'fg-v9';
+/* v10 refreshes the shell that completes OAuth before any database page load. */
+var V = 'fg-v10';
 var CORE = ['/', '/index.html', '/favicon-v3.svg', '/manifest.webmanifest',
   '/icons/icon-192-v3.png', '/icons/icon-512-v3.png', '/icons/icon-512-maskable-v3.png',
   '/og/home-v2.png'];
