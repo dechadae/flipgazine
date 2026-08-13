@@ -37,25 +37,29 @@
     font-family:'Poppins',system-ui,-apple-system,sans-serif;font-weight:300;}
   /* The boot screen is the seam between pages: document.write() replaces this
      whole document, so nothing can animate across it. Rather than transition,
-     it wears the destination's header — same 64px, same glass, same hairline,
-     brand in the same place. The bar appears not to move while the body
-     arrives underneath, which is the effect a transition would have bought.
+     it wears the destination's header — same responsive geometry, same glass,
+     same hairline, brand in the same place. The bar appears not to move while
+     the body arrives underneath, which is the effect a transition would have bought.
      A centred spinner did the opposite: it drew the eye to the middle of an
      empty screen, then vanished. */
   #boot{position:fixed;inset:0;overflow:hidden;}
-  #bootbar{position:absolute;top:0;left:0;right:0;height:64px;
+  #bootbar{position:absolute;top:0;left:0;right:0;
     background:rgba(21,25,24,.55);
     -webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4);
-    border-bottom:1px solid rgba(244,241,235,.14);
-    display:flex;align-items:center;}
-  .bwrap{width:100%;max-width:1240px;margin:0 auto;padding:0 clamp(20px,4vw,48px);}
+    border-bottom:1px solid rgba(244,241,235,.14);}
+  .bwrap{width:auto;max-width:1240px;margin:0 auto;padding:0 clamp(20px,4vw,48px);}
+  .brow{display:flex;align-items:center;justify-content:space-between;gap:18px;
+    min-height:30px;padding:12px 0;}
   .bbrand{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:600;
     letter-spacing:.01em;color:#F4F1EB;}
   .fmark{width:28px;height:auto;color:#00F0D1;}
+  @media (min-width:640px){.fmark{width:32px}.bbrand{font-size:16px}}
+  @media (min-width:1024px){.brow{padding:15px 0}}
+  @media (min-width:1440px){.brow{padding:18px 0}.bbrand{font-size:17px;gap:12px}.fmark{width:36px}}
   /* Held back deliberately. On a warm cache the page paints in a few
      frames, and a progress hint that flashes for 40ms reads as a glitch.
      It only appears once the wait is long enough to be worth explaining. */
-  #bootline{position:absolute;top:64px;left:0;right:0;height:1px;overflow:hidden;
+  #bootline{position:absolute;top:55px;left:0;right:0;height:1px;overflow:hidden;
     opacity:0;transition:opacity .35s ease;}
   /* No bar on a book, so the hint has nothing to hang beneath. */
   #boot.nobar #bootline{top:0;}
@@ -69,9 +73,9 @@
 </head>
 <body>
 <div id="boot">
-  <div id="bootbar"><div class="bwrap">
+  <div id="bootbar"><div class="bwrap"><div class="brow">
     <span class="bbrand"><svg class="fmark" viewBox="0 0 646 676" id="fm" aria-hidden="true"></svg>flipgazine</span>
-  </div></div>
+  </div></div></div>
   <div id="bootline"><i></i></div>
 </div>
 <script>
@@ -85,6 +89,30 @@
 "M 121.02,629.02 c -0.8,1.18 0.19,2.65 -0.96,3.44 c -1.62,0.52 -3.14,1.24 -4.57,2.17 c -1.83,-0.12 -3.65,-0.16 -5.46,-0.09 c -0.64,0.36 -1.16,0.84 -1.57,1.45 c 0.65,4.66 -3.21,-1.59 -4.68,2.44 c -80.15,-44.41 -59.44,-170.14 33.09,-179.91 c 22.72,-1.97 46.96,5.57 63.2,21.88 c 7.89,7.12 -0.3,18.05 -7.91,12.78 c -26.46,-23.7 -60.69,-25.1 -89.98,-5.36 c -52.33,38.95 -41.27,117.01 18.84,141.2 Z",
 "M 570.28,87.25 c 3.16,2.64 6.15,5.46 8.95,8.47 c -1.6,0.49 -0.77,2.13 -1.85,3.13 c -5.75,1.14 -6.66,3.43 -10.54,7.32 c -2.78,-2.94 -5.79,-5.62 -9.02,-8.05 c 1.05,-2.25 0.98,-1.63 2.53,-0.92 c 3.42,-3.43 7.34,-5.72 9.93,-9.95 Z"];
   document.getElementById('fm').innerHTML=P.map(function(d){return '<path fill="currentColor" d="'+d+'"/>';}).join('');
+
+  /* The outgoing shared header records its resolved skin before navigation.
+     Reusing those computed colours here keeps the shell seam visually still
+     even when the editorial palette is not the dark fallback above. */
+  try{
+    var hs=JSON.parse(sessionStorage.getItem('fg:header-skin')||'null');
+    var hb=document.getElementById('bootbar');
+    var bb=document.querySelector('.bbrand');
+    var fm=document.getElementById('fm');
+    if(hs&&hb){
+      if(typeof hs.background==='string') hb.style.background=hs.background;
+      if(typeof hs.border==='string') hb.style.borderBottomColor=hs.border;
+      if(bb&&typeof hs.text==='string') bb.style.color=hs.text;
+      if(fm&&typeof hs.accent==='string') fm.style.color=hs.accent;
+    }
+  }catch(e){}
+
+  function syncBootHeader(){
+    var bar=document.getElementById('bootbar');
+    var line=document.getElementById('bootline');
+    if(bar&&line) line.style.top=(bar.getBoundingClientRect().height||55)+'px';
+  }
+  syncBootHeader();
+  addEventListener('resize',syncBootHeader,{passive:true});
 
   if('serviceWorker' in navigator){ navigator.serviceWorker.register('/sw.js').catch(function(){}); }
 
@@ -205,7 +233,9 @@
             && !/(moodboard|job-tracking|pilot|hotel-announcement)/.test(path);
   var ground = (peek && (peek.match(/style="background:(#[0-9A-Fa-f]{3,6})/)||[])[1])
             || (isBook ? "#0a0a0b" : "#0D1110");
-  var wantsBar = peek ? peek.indexOf("<header") !== -1 : !isBook;
+  var wantsBar = peek
+    ? (peek.indexOf("<header") !== -1 || peek.indexOf("<!--FG_HEADER") !== -1)
+    : !isBook;
   var H={apikey:KEY,Authorization:"Bearer "+KEY};
   var painted=false;
   /* Interface pages keep one marker where the shared sticky bar belongs. The
@@ -336,10 +366,20 @@
        appended into the shell instead of replacing it and inherited its
        overflow:hidden. A zero timeout is still the next tick, so it is instant
        to the eye, but the parser has finished by then. */
-    /* Always wait for the no-store fragment request. The cached fragment is
-       only an offline fallback, never the first choice, so a header edit lands
-       on this navigation instead of one navigation later. */
+    /* A cached header skips the no-store fragment request entirely for the
+       first paint -- persistent-stage migration, Phase 1. A header edit no
+       longer has to land in the very first paint to be correct: the same
+       repaint-if-different check below still fires once the live fetch
+       resolves, same as it already does for content, so the edit still lands
+       on this load, just via a same-load correction instead of blocking the
+       first frame on it. */
+    if(cachedHeader){
+      setTimeout(function(){ paint(compose(cached,cachedHeader)); }, 0);
+    }
     headerFresh.then(function(fragment){
+      if(authReturn) return;
+      if(cachedHeader && fragment===cachedHeader) return;
+      painted=false;
       setTimeout(function(){ paint(compose(cached,fragment)); }, 0);
     }).catch(function(){});
     fresh.then(function(html){
@@ -351,7 +391,7 @@
          first, making the queued cache paint a no-op. */
       headerFresh.then(function(fragment){
         if(authReturn) return;
-        if(html===cached) return;
+        if(html===cached && (!cachedHeader || fragment===cachedHeader)) return;
         painted=false;
         paint(compose(html,fragment));
       });
