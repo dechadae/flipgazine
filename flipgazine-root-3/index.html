@@ -259,13 +259,32 @@
       return fragment;
     })
     .catch(function(){ return cachedHeader; });
+  /* Persistent-stage migration, Phase 2: a page carrying <!-- fg:stage --> in
+     its first 500 bytes gets its post-header content wrapped in #page-stage
+     and fg-router.js loaded, so later same-stage navigations can swap that
+     div's contents client-side instead of a full document.write() reload.
+     A page without the marker is untouched -- same compose() output as
+     before this change, byte for byte. */
+  var STAGE_MARK='<!-- fg:stage -->';
+  function wrapStage(tail){
+    var bodyClose=tail.lastIndexOf('</body>');
+    if(bodyClose===-1) return tail;
+    var loader='<script>if(window.FGModules){FGModules.load(["/fg-router.js"]);}</script>';
+    return '<div id="page-stage">'+tail.slice(0,bodyClose)+'</div>'+loader+tail.slice(bodyClose);
+  }
   function compose(html,fragment){
     if(!fragment) throw new Error('Shared header unavailable');
+    var isStage=html.slice(0,500).indexOf(STAGE_MARK)!==-1;
     var a=html.indexOf(HEADER_START), b=html.indexOf(HEADER_END);
     if(a!==-1 && b>a){
-      return html.slice(0,a)+fragment+html.slice(b+HEADER_END.length);
+      var tail=html.slice(b+HEADER_END.length);
+      return html.slice(0,a)+fragment+(isStage?wrapStage(tail):tail);
     }
-    if(html.indexOf(HEADER_MARK)!==-1) return html.replace(HEADER_MARK,fragment);
+    var m=html.indexOf(HEADER_MARK);
+    if(m!==-1){
+      var tail2=html.slice(m+HEADER_MARK.length);
+      return html.slice(0,m)+fragment+(isStage?wrapStage(tail2):tail2);
+    }
     return html;
   }
   /* document.write() replaces the whole document — including <head>. Without
