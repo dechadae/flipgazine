@@ -269,7 +269,7 @@
   function wrapStage(tail){
     var bodyClose=tail.lastIndexOf('</body>');
     if(bodyClose===-1) return tail;
-    var loader='<script>if(window.FGModules){FGModules.load(["/fg-router.js"]);}</script>';
+    var loader='<script>if(window.FGModules){FGModules.load(["/fg-router.js"]);}<\/script>';
     return '<div id="page-stage">'+tail.slice(0,bodyClose)+'</div>'+loader+tail.slice(bodyClose);
   }
   function compose(html,fragment){
