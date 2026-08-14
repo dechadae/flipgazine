@@ -1,6 +1,6 @@
 /* flipgazine service worker — installable + offline-capable */
-/* v11 keeps the database-backed Home shell available during a cold PWA update. */
-var V = 'fg-v11';
+/* v12 also warms the shared pre-paint head used by interface pages. */
+var V = 'fg-v12';
 var CORE = ['/', '/index.html', '/favicon-v3.svg', '/manifest.webmanifest',
   '/icons/icon-192-v3.png', '/icons/icon-512-v3.png', '/icons/icon-512-maskable-v3.png',
   '/og/home-v2.png'];
@@ -8,6 +8,7 @@ var SB = 'https://sjpvhgxacsiorrtijqua.supabase.co/rest/v1';
 var KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNqcHZoZ3hhY3Npb3JydGlqcXVhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM3NDE5MjcsImV4cCI6MjA5OTMxNzkyN30.9rQa7r9pxoBwh5SrYLlBGzzvbZkkUXKdvahCPugZncY';
 var HOME_DATA = [
   SB+'/site_files?path=eq.%2Fhome.html&select=content',
+  SB+'/site_files?path=eq.%2Ffg-head.html&select=content',
   SB+'/site_files?path=eq.%2Ffg-header.html&select=content'
 ];
 
@@ -19,9 +20,9 @@ self.addEventListener('install', function(e){
     var staticReady=Promise.all(CORE.map(function(u){
       return c.add(new Request(u, {cache: 'reload'})).catch(function(){});
     }));
-    /* The shell itself is not the Home page: Home and its shared header are
-       database rows. Warm those exact public requests so the diamond Home link
-       still has a complete first paint immediately after a worker upgrade. */
+    /* The shell itself is not the Home page: Home and its shared pre-paint head
+       and header are database rows. Warm those exact public requests so the
+       diamond Home link still has a complete first paint after an upgrade. */
     var dataReady=Promise.all(HOME_DATA.map(function(u){
       var req=new Request(u,{headers:{apikey:KEY,Authorization:'Bearer '+KEY},cache:'reload'});
       return fetch(req).then(function(res){

@@ -238,6 +238,26 @@
     : !isBook;
   var H={apikey:KEY,Authorization:"Bearer "+KEY};
   var painted=false;
+  /* Shared pre-paint resources are composed into <head> before the document is
+     written. The arrival transition is intentionally not part of this row: it
+     remains inline and byte-identical in every interface page. */
+  var HEAD_MARK='<!--FG_HEAD-->';
+  var HEAD_START='<!--FG_HEAD_START-->';
+  var HEAD_END='<!--FG_HEAD_END-->';
+  var HEAD_PATH='/fg-head.html';
+  var HEAD_CACHE='fg:shared-head:v1';
+  var cachedHead=null;
+  try{ cachedHead=localStorage.getItem(HEAD_CACHE); }catch(e){}
+  var headFresh=fetch(BASE+"/site_files?path=eq."+encodeURIComponent(HEAD_PATH)+"&select=content",
+      {headers:H,cache:"no-store"})
+    .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+    .then(function(rows){
+      var fragment=rows&&rows[0]&&rows[0].content;
+      if(!fragment) throw 0;
+      try{ localStorage.setItem(HEAD_CACHE,fragment); }catch(e){}
+      return fragment;
+    })
+    .catch(function(){ return cachedHead; });
   /* Interface pages keep one marker where the shared sticky bar belongs. The
      fragment is data in site_files, so adding or changing a page/header never
      needs another shell deploy. It is composed before document.write(), which
@@ -259,14 +279,33 @@
       return fragment;
     })
     .catch(function(){ return cachedHeader; });
-  function compose(html,fragment){
-    if(!fragment) throw new Error('Shared header unavailable');
-    var a=html.indexOf(HEADER_START), b=html.indexOf(HEADER_END);
+  function hasSlot(html,start,end,mark){
+    var a=html.indexOf(start), b=html.indexOf(end);
+    return (a!==-1&&b>a)||html.indexOf(mark)!==-1;
+  }
+  function putShared(html,start,end,mark,fragment,label){
+    var a=html.indexOf(start), b=html.indexOf(end);
     if(a!==-1 && b>a){
-      return html.slice(0,a)+fragment+html.slice(b+HEADER_END.length);
+      if(!fragment) throw new Error('Shared '+label+' unavailable');
+      return html.slice(0,a)+fragment+html.slice(b+end.length);
     }
-    if(html.indexOf(HEADER_MARK)!==-1) return html.replace(HEADER_MARK,fragment);
+    if(html.indexOf(mark)!==-1){
+      if(!fragment) throw new Error('Shared '+label+' unavailable');
+      return html.replace(mark,fragment);
+    }
     return html;
+  }
+  function needsHead(html){ return hasSlot(html,HEAD_START,HEAD_END,HEAD_MARK); }
+  function needsHeader(html){ return hasSlot(html,HEADER_START,HEADER_END,HEADER_MARK); }
+  function sharedFor(html){
+    return Promise.all([
+      needsHead(html)?headFresh:Promise.resolve(cachedHead),
+      needsHeader(html)?headerFresh:Promise.resolve(cachedHeader)
+    ]);
+  }
+  function compose(html,headFragment,headerFragment){
+    html=putShared(html,HEAD_START,HEAD_END,HEAD_MARK,headFragment,'head');
+    return putShared(html,HEADER_START,HEADER_END,HEADER_MARK,headerFragment,'header');
   }
   /* document.write() replaces the whole document — including <head>. Without
      this, the manifest/theme-color/icon links are gone by the time Chrome
@@ -373,14 +412,16 @@
        resolves, same as it already does for content, so the edit still lands
        on this load, just via a same-load correction instead of blocking the
        first frame on it. */
-    if(cachedHeader){
-      setTimeout(function(){ paint(compose(cached,cachedHeader)); }, 0);
+    if((!needsHead(cached)||cachedHead)&&(!needsHeader(cached)||cachedHeader)){
+      setTimeout(function(){ paint(compose(cached,cachedHead,cachedHeader)); }, 0);
     }
-    headerFresh.then(function(fragment){
+    sharedFor(cached).then(function(fragments){
       if(authReturn) return;
-      if(cachedHeader && fragment===cachedHeader) return;
+      var headSame=!needsHead(cached)||fragments[0]===cachedHead;
+      var headerSame=!needsHeader(cached)||fragments[1]===cachedHeader;
+      if(painted&&headSame&&headerSame) return;
       painted=false;
-      setTimeout(function(){ paint(compose(cached,fragment)); }, 0);
+      setTimeout(function(){ paint(compose(cached,fragments[0],fragments[1])); }, 0);
     }).catch(function(){});
     fresh.then(function(html){
       /* This used to only refresh the cache, so a database edit did not surface
@@ -389,18 +430,23 @@
          from cache in the common case, but an edit lands on this load. If the
          fetch wins the race, painted is still false and the fresh copy paints
          first, making the queued cache paint a no-op. */
-      headerFresh.then(function(fragment){
+      sharedFor(html).then(function(fragments){
         if(authReturn) return;
-        if(html===cached && (!cachedHeader || fragment===cachedHeader)) return;
+        var headSame=!needsHead(html)||fragments[0]===cachedHead;
+        var headerSame=!needsHeader(html)||fragments[1]===cachedHeader;
+        if(html===cached&&headSame&&headerSame) return;
         painted=false;
-        paint(compose(html,fragment));
+        paint(compose(html,fragments[0],fragments[1]));
       });
     }).catch(function(){});
   }else{
     /* Same reasoning on a cold load: the network is the wait, and adding to it
        does not make anything smoother. */
-    Promise.all([fresh,headerFresh])
-      .then(function(all){ paint(compose(all[0],all[1])); }).catch(fail);
+    fresh.then(function(html){
+      return sharedFor(html).then(function(fragments){
+        paint(compose(html,fragments[0],fragments[1]));
+      });
+    }).catch(fail);
   }
 })();
 </script>
