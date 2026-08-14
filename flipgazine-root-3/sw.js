@@ -1,6 +1,7 @@
 /* flipgazine service worker — installable + offline-capable */
-/* v12 also warms the shared pre-paint head used by interface pages. */
-var V = 'fg-v12';
+/* v13 clears the old cache so the seamless flipbook entry/return shell and
+   shared book transition assets cannot remain pinned behind cache-first. */
+var V = 'fg-v13';
 var CORE = ['/', '/index.html', '/favicon-v3.svg', '/manifest.webmanifest',
   '/icons/icon-192-v3.png', '/icons/icon-512-v3.png', '/icons/icon-512-maskable-v3.png',
   '/og/home-v2.png'];

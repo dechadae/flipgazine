@@ -34,7 +34,7 @@
    which is why the leave is an overlay rather than `opacity:0` on body, since
    that would be ignored while fgEnter is still filling. */
 @keyframes fgEnter{ from{opacity:0} to{opacity:1} }
-body{ animation:fgEnter .42s ease both; }
+body{ animation:fgEnter .64s cubic-bezier(.4,0,.2,1) both; }
 /* No body fade on leave: the #fgFade overlay below does that job, and running
    both dimmed the page twice over. */
 
@@ -43,10 +43,40 @@ body{ animation:fgEnter .42s ease both; }
    braces with the body fade above: the overlay covers anything the body
    animation cannot, such as fixed chrome. */
 #fgFade{
-  position:fixed;inset:0;z-index:9999;background:#0D1110;
-  opacity:0;pointer-events:none;transition:opacity .26s ease;
+  position:fixed;inset:0;z-index:2147483600;
+  background:var(--fg-return-ground,#0D1110);
+  opacity:0;pointer-events:none;
+  transition:opacity .64s cubic-bezier(.4,0,.2,1);
 }
 body.fg-leaving #fgFade{ opacity:1;pointer-events:auto; }
+
+/* The full-document shell cannot preserve the interface header node. The book
+   therefore reveals a non-interactive clone of that exact header while it
+   dissolves. At 660ms the shell replaces it with the same geometry and skin,
+   so the handover has no header pop or empty frame. */
+#fgReturnHeader{
+  opacity:0;pointer-events:none !important;z-index:2147483601 !important;
+  transition:opacity .64s cubic-bezier(.4,0,.2,1) !important;
+}
+#fgReturnHeader *{ pointer-events:none !important; }
+body.fg-leaving #fgReturnHeader{ opacity:1; }
+#fgReturnHeader.fg-return-fallback{
+  position:fixed;top:0;left:0;right:0;
+  background:rgba(21,25,24,.55);
+  -webkit-backdrop-filter:blur(18px) saturate(1.4);
+  backdrop-filter:blur(18px) saturate(1.4);
+  border-bottom:1px solid rgba(244,241,235,.14);
+  color:#F4F1EB;
+}
+.fg-return-wrap{width:auto;max-width:1240px;margin:0 auto;
+  padding:12px clamp(20px,4vw,48px);}
+.fg-return-brand{display:flex;align-items:center;gap:10px;
+  min-height:30px;font:600 15px/1 'Poppins',system-ui,-apple-system,sans-serif;
+  letter-spacing:.01em;color:inherit;}
+.fg-return-brand .fmark{width:28px;height:auto;color:var(--fg-accent);}
+@media (min-width:640px){.fg-return-brand .fmark{width:32px}.fg-return-brand{font-size:16px}}
+@media (min-width:1024px){.fg-return-wrap{padding-top:15px;padding-bottom:15px}}
+@media (min-width:1440px){.fg-return-wrap{padding-top:18px;padding-bottom:18px}.fg-return-brand{font-size:17px;gap:12px}.fg-return-brand .fmark{width:36px}}
 
 /* No prefers-reduced-motion block anywhere, by design: every visitor sees the
    same thing. Books previously carried `@media (prefers-reduced-motion:reduce)
