@@ -2,7 +2,7 @@
 
 > **Read this file before changing Flipgazine.**
 >
-> This is the operational handoff for coding agents working on this repository, with especially detailed coverage of **The Book of Answers**. It records product intent, architecture, source-of-truth rules, routing semantics, deployment boundaries, QA invariants, and failure modes learned during the August 2026 build.
+> This is the operational handoff for coding agents working on Flipgazine, with detailed coverage of **The Book of Answers**. It records the live architecture, product invariants, routing semantics, source-of-truth boundaries, QA expectations, and failure modes learned during the August 2026 build.
 >
 > **Core rule:** understand who owns a behavior before patching it. Do not solve a local symptom by stacking CSS, duplicating routing logic, inventing parallel infrastructure, or changing multiple systems at once.
 
@@ -10,34 +10,37 @@
 
 ## 1. Product context
 
-Flipgazine is a small, intentionally niche design/editorial platform. It is not being built as a generic SaaS product. The product philosophy is:
+Flipgazine is an intentionally niche design/editorial platform. It is not being built as a generic SaaS product.
+
+Product principles:
 
 - remove friction;
 - hide operational complexity;
-- make the interface feel obvious and calm;
-- prefer existing infrastructure over parallel systems;
+- keep the public experience calm and obvious;
 - preserve strong visual continuity;
-- keep public experiences simple even when the backstage architecture is sophisticated.
+- prefer an existing platform primitive over a parallel feature-specific system;
+- make outputs feel designed by default;
+- keep sophistication backstage.
 
-The owner is both the product/creative director and the primary tester. Changes are usually made in small increments and immediately tested on real mobile devices. Respect this workflow. A theoretically elegant refactor that destabilizes a working page is worse than a small, well-understood change.
+The owner is both product/creative director and primary tester. Changes are commonly made in small increments and tested immediately on a real mobile device. Respect that workflow. A theoretically elegant refactor that destabilizes a working page is worse than a small, well-understood change.
 
-The design principle is close to “no-makeup makeup”: the system may be complex, but the user should not feel that complexity.
+The design philosophy is close to “no-makeup makeup”: the system may be complex, but the user should not feel the complexity.
 
 ---
 
 ## 2. Repository vs live source of truth
 
-### GitHub repository
+### GitHub
 
 Repository:
 
 `dechadae/flipgazine`
 
-Cloudflare Pages shell lives under:
+Cloudflare Pages shell:
 
 `flipgazine-root-3/`
 
-Important static shell files include:
+Important static owners include:
 
 - `index.html`
 - `_redirects`
@@ -45,17 +48,18 @@ Important static shell files include:
 - `_worker.js`
 - `sw.js`
 - `manifest.webmanifest`
-- shared shell assets such as flipbook core/UI files, icons, OG assets, etc.
+- shared flipbook/UI assets
+- icons / OG assets
 
-### Live page source
+### Supabase live content
 
-**Most Flipgazine pages are NOT served from GitHub files.** They are stored as rows in Supabase `public.site_files` and loaded by the shell.
+**Most Flipgazine pages are not source-controlled page files in GitHub.** They are stored in Supabase `public.site_files` and loaded through the shell.
 
 Supabase project:
 
 `sjpvhgxacsiorrtijqua`
 
-For The Book of Answers, the live source of truth is currently:
+Current Answers live source rows:
 
 - `/answers.html`
 - `/fg-page-answers.js`
@@ -63,140 +67,123 @@ For The Book of Answers, the live source of truth is currently:
 - `/fg-page-answers-admin.js`
 - `/answers.webmanifest`
 
-These are rows in `public.site_files`.
-
-As of 16 August 2026, verified live state:
+Verified 16 August 2026 live snapshot after Universal + Support work:
 
 | path | version | MD5 |
 |---|---:|---|
 | `/answers.html` | 98 | `e97e821b71c02e9d4831dcba1087c2a9` |
-| `/fg-page-answers.js` | 111 | `6f5b93160240a48bbbc09bebb5cd30c7` |
+| `/fg-page-answers.js` | **115** | `65346c73cd146269192e6f3c7607ed88` |
 | `/answers-admin.html` | 43 | `561009fdfbe6e00414457d9195854174` |
-| `/fg-page-answers-admin.js` | 19 | `07cc21cbed8a027e8ee0735f37419fbc` |
+| `/fg-page-answers-admin.js` | **22** | `35153068bc4ade1e97ae9b0490bf2f65` |
 | `/answers.webmanifest` | 3 | `b678d8ca258e19eefeff2119d6cfafac` |
 
-These versions are informational snapshots, not eternal constants. Re-query Supabase before relying on them in a later session.
+These are snapshots, not eternal constants. **Always re-query Supabase before relying on a version/hash in a later session.**
 
 ### Deployment rule
 
-If the change is page content/UI/controller data stored in `site_files`, **do not redeploy Cloudflare Pages**.
+If a change is owned by `site_files`, do **not** redeploy Cloudflare Pages.
 
-Only change/redeploy the shell when the behavior is genuinely owned by shell-level files such as `_worker.js`, `_headers`, `_redirects`, `index.html`, `sw.js`, manifests, icons, etc.
+Only change/redeploy the shell when behavior is genuinely owned by shell-level files such as `_worker.js`, `_headers`, `_redirects`, `index.html`, `sw.js`, manifests, icons, etc.
 
-Do not copy a database-served page into the static bundle as a shortcut. That creates two sources of truth and is historically a source of bugs.
+Do not copy a database-served page into the static bundle as a shortcut. That creates two sources of truth.
 
 ---
 
-## 3. Ownership map: know which system owns what
-
-Before changing anything, identify the owner.
+## 3. Ownership map
 
 ### Main Flipgazine Admin
-
-Live files:
 
 - `/admin.html`
 - `/fg-page-admin.js`
 
-This is the **main Flipgazine Admin** for Books, New, Palette, Media, Links, Team, Settings, etc.
+Owns Books, New, Palette, Media, Links, Team, Settings, etc.
 
 It is **not** the Answers Library.
 
-Do not conflate these systems.
-
-A previous accidental patch to `/fg-page-admin.js` broke the main Admin because literal `\n` sequences were inserted into JavaScript source. The controller was restored to its known-good v4. Treat main Admin as stable and avoid touching it for Answers work unless the requirement is explicitly cross-product.
+A previous accidental text patch inserted literal `\n` characters between JavaScript statements and broke Main Admin. It was restored to a known-good v4. Treat Main Admin as stable and do not touch it for an Answers-only task.
 
 ### Answers Library
-
-Live files:
 
 - `/answers-admin.html`
 - `/fg-page-answers-admin.js`
 
-This is the editor/admin specifically for the Book of Answers corpus and semantic metadata.
+Owns the authored Answers corpus and canonical semantic metadata.
 
-### Public Answers page
-
-Live files:
+### Public Answers
 
 - `/answers.html`
 - `/fg-page-answers.js`
 
-This owns the public ritual, Focus routing runtime, answer rendering, drag-to-open book behavior, answer selection, review mode, share button, placeholder handling, and popup guard.
+Owns the public ritual, CARE routing, Focus/Support runtime, Universal mix-in, answer rendering, book drag/open interaction, review mode, sharing, placeholder guard and ask-again state.
 
-### Social preview metadata
+### Social previews
 
-Crawler/social preview behavior is owned at the edge by:
+Owned at the edge by:
 
 `flipgazine-root-3/_worker.js`
 
-Do not assume `<meta>` tags inside `/answers.html` are what LINE/Facebook/etc. actually see. Crawlers do not run the page JavaScript and the Worker rewrites metadata server-side.
+Social crawlers do not run the page JavaScript. Do not “fix” LINE/Facebook previews only by editing client-side page metadata when the Worker owns crawler output.
 
-### Short links and QR
+### Short links / QR
 
-Canonical short links are owned by the existing Flipgazine **Links** system and `fg_shortlinks`.
+Owned by the existing Links system (`fg_shortlinks` / `fg_shares`). Do not build an Answers-specific shortener or QR system.
 
-Do not invent an Answers-specific QR or URL-shortening system.
+Current Answers share identity:
 
-Current permanent Answers setup:
-
-`fg_shares`:
-
-- token: `answersbook`
-- target path: `/answers.html`
+- share token: `answersbook`
+- target: `/answers.html`
 - title: `The Book of Answers — flipgazine`
 - description: `A small book for big questions.`
-- image URL: `null`
-- no expiry
+- image: `null`
+- short code: `answers`
+- short target: `/answers.html?s=answersbook`
 
-`fg_shortlinks`:
-
-- code: `answers`
-- target: `/answers.html?s=answersbook`
-- label: `The Book of Answers — flipgazine`
-- active: `true`
-
-Therefore the canonical share URL is effectively:
+Canonical public share is effectively:
 
 `https://flipgazine.pages.dev/answers`
 
-The Answers controller looks up an active shortlink matching `/answers.html?s=answersbook`; if one exists it shares the short URL, otherwise it falls back to the long token URL.
+---
 
-Admin Links is the single source of truth. If the short code is deactivated/deleted/changed there, Answers should follow it rather than hardcoding a new path.
+## 4. What The Book of Answers is
+
+It is deliberately **not a chatbot**.
+
+Ritual:
+
+1. user types a real question;
+2. presses **ถามดิ**;
+3. the question is committed;
+4. user drags across the physical paper edge;
+5. releases at a page depth;
+6. the book opens;
+7. bilingual Thai/English answer appears;
+8. **ถามอีกดิ** resets for another question.
+
+The drag/page-selection step is intentionally theatrical. Do not remove it merely because semantic routing can technically select an answer without it.
+
+The semantics should remain invisible. The user should feel that the physical book answered them.
+
+Physical depth is **not** an answer ID. The ritual and semantic selection are intentionally decoupled.
 
 ---
 
-## 4. What The Book of Answers actually is
-
-The Book of Answers is deliberately not a chatbot.
-
-The user experience is a ritual:
-
-1. user types a question;
-2. user presses **ถามดิ**;
-3. the interface commits the question;
-4. the user drags across the visible paper edge and releases at a page depth;
-5. the physical book opens;
-6. a bilingual answer appears on the spread;
-7. user can press **ถามอีกดิ** and repeat.
-
-The page-selection gesture is intentionally tactile/theatrical. It makes the experience feel like opening a physical book.
-
-**Do not remove the drag/page-selection ritual merely because the answer is already semantically routed before/at opening.** The “unnecessary” physical step is part of the product.
-
-The semantic system should remain invisible. The user should feel that they physically chose a page and the book answered them.
-
----
-
-## 5. Corpus
+## 5. Current corpus
 
 Current authored corpus:
 
-**667 normal answers**
+**717 normal authored answers**
 
-plus **3 CARE responses** handled separately before normal Focus routing.
+plus **3 CARE responses** handled separately before normal routing.
 
-Each authored normal answer conceptually owns:
+The 717 authored answers currently include:
+
+- **75 Universal answers**
+- **42 Support answers**
+- the remaining authored answers are specific/broader semantic rows reached through Focus/Topic/Helper behavior
+
+The 50 newest Universal answers were appended as IDs **668–717**, preserving all previous answer IDs.
+
+Answer rows conceptually support:
 
 ```js
 {
@@ -204,231 +191,428 @@ Each authored normal answer conceptually owns:
   english: "...",
   topics: [...],
   focus: [...],
+  support: [...],
   helpers: [...]
 }
 ```
 
-### Thai copy is layout-sensitive data
+`support` is now a first-class semantic field in the Answers Library serializer/index builder. Do not remove it during a future save/refactor.
 
-Thai line breaks are editorial composition, not incidental whitespace.
+---
+
+## 6. Thai copy is layout-sensitive data
+
+Thai line breaks are authored editorial composition, not incidental whitespace.
 
 Preserve them exactly.
 
-A prior migration accidentally double-escaped all authored breaks so strings stored `\\n` instead of normal JavaScript `\n` escapes. This affected 1,326 authored line breaks. It was repaired across all 667 answers.
+A prior migration accidentally converted authored breaks to double-escaped `\\n`. It was repaired. The same class of escaping bug has also broken controller parsing.
 
-**Never mass-rewrite answer strings without explicitly verifying newline encoding.**
-
-Correct JavaScript source representation inside an answer string:
+Correct inside a JavaScript string:
 
 ```js
 {thai:"บรรทัดหนึ่ง\nบรรทัดสอง"}
 ```
 
-That is a backslash-n escape *inside the string literal*.
-
-Incorrect source between JavaScript statements:
+Invalid between JavaScript statements:
 
 ```js
 var a=1;\nvar b=2;
 ```
 
-If literal backslash+n characters appear between statements, the controller can fail to parse.
+After any SQL/text surgery on JS:
 
-This exact class of error has broken both Answers and Main Admin before.
+- inspect source boundaries;
+- verify actual source newlines are real `0a` bytes where required;
+- verify `\n` escapes only occur where JavaScript strings intentionally contain them;
+- verify controller markers/listeners still exist;
+- do not assume a UI symptom is a UI logic bug if the controller may have failed to parse.
 
-### English copy
-
-English is adapted for voice and rhythm. It is not required to be a literal translation. Preserve the conversational editorial character.
-
-### Copy voice
-
-The voice is:
-
-- playful;
-- contemporary;
-- Thai/English code-switching where natural;
-- lightly teasing;
-- concise;
-- culturally current;
-- friend/bestie energy rather than mystical fortune teller;
-- usually one sharp observation or instruction rather than explanation.
-
-Avoid generic motivational language unless the answer is intentionally generic.
-
-### New copy workflow
-
-For significant new batches, draft/review first and publish after approval unless explicitly asked to publish directly.
+During the Support migration the dictionary/index rewrites briefly produced literal `\n\n` text between JS declarations. This was caught and fixed **before final versioning**. Current v115 has clean boundaries.
 
 ---
 
-## 6. CARE routing
+## 7. CARE is always first
 
-CARE is evaluated before normal Focus routing.
-
-It covers at least these high-risk families:
+CARE handles at least:
 
 1. suicide / self-harm;
 2. medical emergency / medicine-related emergency;
 3. unsafe / abuse / violence scenarios.
 
-CARE responses must never be randomized into normal pools and normal funny answers must never override CARE.
+CARE must never be randomized with normal funny answers.
 
-Order remains:
+Preserve this order:
 
-`CARE → Focus router → answer pool → anti-repeat → uniform random`
+```text
+CARE
+→ semantic routing
+→ precise/supported pool
+→ 2 Universal mix-ins where applicable
+→ anti-repeat / eligible pool
+→ uniform random answer
+```
 
-Do not weaken this ordering while refactoring.
+Do not weaken CARE while refactoring routing.
 
 ---
 
-## 7. Focus Router: the architectural core
+## 8. Routing philosophy
 
-The current router is intentionally **not Router v4**.
+The active architecture is the inverted-index Focus system, not Router v4.
 
-Router v4 was a classifier/weighting architecture. It was removed completely from the active runtime because it optimized classification instead of answer reachability and produced broad, semantically weaker pools.
+Router v4 was retired because it behaved like a classifier and produced broader/weaker answer reachability.
 
-The winning model is an inverted-index style Focus Router.
+Mental model:
 
-Think:
+> **Focus thinks like a librarian.**
 
-**Router v4 thought like a classifier. Focus thinks like a librarian.**
-
-For a finite authored corpus, the librarian model is better.
-
-### Core runtime flow
-
-Conceptually:
-
-```text
-question
-  ↓
-normalize
-  ↓
-longest-match alias parser
-  ↓
-focus/slang/bridge/topic/helper signals
-  ↓
-Focus index lookup
-  ↓
-small precise eligible pool
-  ↓
-light anti-repeat
-  ↓
-uniform random answer
-```
-
-Primary principle:
+Core principle:
 
 > **Precision chooses the pool. Chance chooses the answer.**
 
-Do not add score weighting inside a correctly selected pool unless the product direction explicitly changes.
-
-Uniform randomness is intentional because the Book should retain chance/magic after semantic filtering.
+Uniform randomness inside the final eligible pool is intentional. Do not add score weighting to a correctly selected pool unless product direction explicitly changes.
 
 ---
 
-## 8. Semantic layers
+## 9. Semantic hierarchy: Focus → Support → Universal
 
-Each answer may have three semantic layers.
+This distinction is critical.
 
-### Focus
+### Focus — subject owner
 
-Specific concepts that define what the answer is actually about.
+Focus says what the question is concretely about.
 
 Examples:
 
 - `dessert`
-- `cake`
+- `salary`
+- `ex`
 - `handsome`
 - `barista`
-- `salary`
-- `moo-kratha`
-- `ex`
-- `friend`
 - `coffee`
+- `moo-kratha`
+- `trip`
+- `ghosting`
 
-Focus should be specific enough that matching the concept makes the answer genuinely plausible.
+Focus owns the subject and should remain precise.
+
+### Support — secondary relevant advice
+
+Support answers are broad enough to work across more than one subject, but **not** broad enough to answer anything.
+
+Examples of Support meanings:
+
+- retry
+- continue
+- regret
+- take action
+- risk
+- stop
+- trust
+- readiness
+- fine print
+- plan B
+- honesty
+- over-explaining
+
+Support exists specifically so these answers do **not** become fake Focus families or Universal fallback.
+
+A Support signal can supplement a concrete subject without competing with it.
+
+Example:
+
+```text
+“ควรยกเลิกทริปไหม”
+
+Focus: trip
+Support: cancel
+
+base trip pool
++ relevant cancel support answer(s)
++ 2 randomly sampled Universal answers
+→ uniform random pick
+```
+
+### Universal — truly subject-neutral
+
+Universal answers must plausibly answer almost any ordinary question without inventing missing context.
+
+Current Universal count: **75**.
+
+Universal is explicit through helper `universal` and the generated generic/universal index. **No Focus + no Topic does not automatically mean Universal.**
+
+Universal answers may not have Focus, Support or Topic semantics. Answers Library validation enforces this.
 
 ### Topics
 
-Broader editorial grouping.
+Broader editorial grouping, currently including:
 
-Canonical topic set currently includes:
-
-- `beverage`
-- `cafe`
-- `confidence`
-- `conflict`
-- `family`
-- `food`
-- `friends`
-- `hangout`
-- `hobby`
-- `message`
-- `money`
-- `relationship`
-- `relax`
-- `rest`
-- `shopping`
-- `social`
-- `style`
-- `travel`
-- `work`
-- `workplace`
-
-Do not silently invent a new topic name during a one-off edit. Add a new canonical category deliberately.
+`beverage`, `cafe`, `confidence`, `conflict`, `family`, `food`, `friends`, `hangout`, `hobby`, `message`, `money`, `relationship`, `relax`, `rest`, `shopping`, `social`, `style`, `travel`, `work`, `workplace`.
 
 ### Helpers
 
-Broad utility/intent dimensions:
+Broad utility dimensions currently include:
 
 - `general`
 - `decision`
 - `timing`
+- `universal`
 
-Helpers are fallback/widening signals, not the primary semantic identity of a specific answer.
+`universal` is special and explicit.
 
 ---
 
-## 9. Dictionary kinds
+## 10. The 42 Support answers
 
-The Focus dictionary can contain concepts with kinds such as:
+The former accidental generic set was reviewed manually.
+
+25 old answers were judged truly generic and remained Universal.
+
+42 answers were judged **not truly generic**. They remain in the book but are now explicit Support answers only.
+
+Exact Support answer IDs:
+
+`[2, 14, 15, 18, 21, 22, 23, 28, 29, 74, 83, 87, 98, 109, 114, 117, 119, 130, 132, 141, 152, 153, 157, 165, 166, 170, 172, 174, 180, 205, 207, 212, 219, 221, 234, 235, 237, 239, 249, 272, 284, 288]`
+
+Current Support architecture QA:
+
+- **42** supported answers
+- **57** answer→support links
+- **36** support keys in the generated support index
+- **24** new dictionary concepts with `kind: "support"`
+- support pool minimum: 1
+- support pool maximum: 5
+- average support pool size: ~1.58
+- largest support groups: `take-action` 5, `retry` 4, `continue` 3, `risk` 3, `stop` 3
+- **0** Support/Universal overlap
+- **0** support-index mismatches
+- **0** unknown support keys
+
+Some Support tags reuse an existing Focus concept as a trigger without making the answer itself a Focus answer. Examples:
+
+- #74 supports `drink`
+- #130 supports `direct-talk`
+- #141 supports `ghosting`
+- #170 supports `closure`
+- #207 supports `attraction`, `pretty`, `handsome`
+- #212 supports `direct-talk`, `overthinking`
+- #221 supports `rest`
+
+This is intentional.
+
+---
+
+## 11. Support dictionary kind and parser lanes
+
+The dictionary now recognizes `kind: "support"` in addition to existing kinds such as:
 
 - `focus`
 - `slang`
 - `bridge`
 - `topic`
+- `support`
 
-### Bridge vocabulary
+A critical parser rule:
 
-Bridge vocabulary means the question contains understood context that does not deserve a fake authored answer family.
+**Support uses a separate overlap lane from Focus/Slang/Topic.**
 
-Examples historically treated as bridge-type vocabulary include context like hotel, feedback, DM, LINE, single, etc., where applicable.
+Why:
 
-Do not create a new Focus family merely because a word appears in user questions. A Focus family should correspond to meaningful authored-answer reachability.
+A long Support phrase must never suppress a shorter concrete Focus phrase contained inside it.
 
-### Slang
+Example:
 
-Slang can be detected and displayed/understood, but it should not overpower a concrete subject.
+`go back to my ex`
 
-If a question is about a specific subject and also contains slang, the subject should normally determine the answer family.
+should preserve:
+
+- Focus: `ex`
+- Support: `go-back`
+
+not choose one and discard the other.
+
+The runtime therefore keeps normal longest-match behavior for subject semantics while Support overlaps are resolved separately.
+
+Do not collapse Support back into the same occupied-span lane as Focus.
 
 ---
 
-## 10. Parser rules and known substring traps
+## 12. Current Support concept vocabulary
 
-The parser normalizes punctuation, spacing, case, selected typos, and uses longest-match behavior.
+New support-only dictionary concepts currently include:
 
-Longest phrase wins on overlaps.
+- `retry`
+- `continue`
+- `regret`
+- `take-action`
+- `walk-away`
+- `competition`
+- `stop`
+- `failure`
+- `hurt`
+- `risk`
+- `fine-print`
+- `go-back`
+- `play-cool`
+- `cancel`
+- `fix-repair`
+- `trust`
+- `play-dumb`
+- `plan-b`
+- `secret`
+- `low-friction-choice`
+- `wait-decision`
+- `readiness`
+- `overexplain`
+- `honesty`
+
+Aliases are intentionally narrow. Do not casually add giant broad aliases like bare `เลือก`, bare `ทำ`, etc. A generic action word can contaminate many otherwise-specific questions.
+
+As with Focus aliases, Thai substring collisions must be reviewed carefully.
+
+---
+
+## 13. Universal mix-in behavior
+
+Universal handling changed in v113+ and remains in v115.
+
+For a matched non-generic pool:
+
+1. select the precise Focus/Topic/Helper owner pool;
+2. merge any relevant Support answers;
+3. apply recent-answer handling to the subject/support base;
+4. randomly sample **2 distinct Universal answers** from the 75 Universal pool;
+5. add those 2 to the eligible pool;
+6. choose uniformly across the whole combined eligible pool.
+
+Therefore every included answer has the same probability in that draw.
+
+Example:
+
+`dessert` currently has 5 Focus answers.
+
+Normal dessert question with no Support signal:
+
+```text
+5 dessert Focus
++ 2 sampled Universal
+= 7 eligible answers
+= 1/7 probability each
+```
+
+If the router understands nothing, it does **not** sample only two Universal answers. It falls back to the full **75-answer Universal pool**.
+
+Universal mix-ins are random per draw. They are not a fixed pair.
+
+---
+
+## 14. Support pool ownership rules
+
+Support must not leak through broad helper/topic tiers merely because old Support rows still carry historical helper metadata.
+
+Runtime builds an exclusion set containing:
+
+- all Universal answer IDs;
+- all Support answer IDs.
+
+Those IDs are stripped from ordinary Focus/Topic/Helper tier construction.
+
+They can re-enter only through:
+
+- explicit Support matching; or
+- Universal behavior if they are Universal (Support and Universal are currently disjoint and must remain so).
+
+This is what prevents an answer like #272 from showing up for an unrelated dessert question merely because it once looked “generic.”
+
+---
+
+## 15. Example routing checks
+
+### Dessert
+
+Question:
+
+`อยากกินขนมหวาน`
+
+Expected semantic hit:
+
+`ขนม → dessert`
+
+Current dessert Focus pool remains 5 answers.
+
+No Support phrase is present, so only the 2 Universal mix-ins supplement it.
+
+### Retry only
+
+Question:
+
+`ควรลองใหม่ไหม`
+
+Expected:
+
+- Support: `retry`
+- no concrete subject required
+
+Current retry Support pool: 4 answers.
+
+Support becomes the narrow owner instead of falling into a huge generic decision pool, then receives 2 Universal mix-ins.
+
+### Trip + cancel
+
+Question:
+
+`ควรยกเลิกทริปไหม`
+
+Expected:
+
+- Focus: `trip`
+- Support: `cancel`
+
+Current trip Focus pool: 10.
+
+Cancel Support currently contributes one relevant answer.
+
+### Fine print
+
+Question:
+
+`สัญญานี้เซ็นดีไหม`
+
+Expected:
+
+- Support: `fine-print`
+
+Current fine-print Support pool: 2.
+
+### Readiness
+
+Question:
+
+`พร้อมหรือยัง`
+
+Expected:
+
+- Support: `readiness`
+
+No concrete subject is required for Support to act as the narrow pool when it is the best semantic information available.
+
+---
+
+## 16. Focus parser collision rules
+
+Existing longest-match protections still matter.
 
 Examples:
 
 - `แฟนเก่า` → `ex`, not `ex + partner`
-- `close friends` should resolve as its intended concept rather than `close + friend` fragments
-- `social battery` must not create unrelated generic battery matches
-- `จริงหรือเค้ก` must not be interpreted as literal cake context merely because it contains the string `เค้ก`
+- coworker beats bare friend when `เพื่อน` only exists inside coworker phrase
+- hobby/craft/coworker do not imply generic work unless another work expression exists
+- `คำตอบ` does not automatically imply reply action
+- `social battery` does not accidentally become unrelated bare battery semantics
+- `จริงหรือเค้ก` should not become literal cake merely because the string contains `เค้ก`
 
-Important historical false-positive traps that were deliberately cleaned up:
+Historical false-positive traps include:
 
 - `หน้า` ≠ `หัวหน้า`
 - `รัก` ≠ `น่ารัก`
@@ -440,390 +624,247 @@ Important historical false-positive traps that were deliberately cleaned up:
 - `ถูก` ≠ `ถูกใจ`
 - `ย่าง` ≠ `อย่าง`
 - English `date` ≠ `due date`
-- bare `จน` should not create accidental matches
-- bare English `walk` was tightened to avoid accidental reachability
 
-There are explicit conflict cleanups in the runtime, including coworker/friend, hobby/work, and `คำตอบ`/reply style collisions.
-
-When adding aliases, test surrounding Thai substrings. Thai does not use spaces as reliable word boundaries, so naive substring matching is dangerous.
+Thai does not provide reliable spaces as word boundaries. Never add a short Thai alias without testing substring collisions.
 
 ---
 
-## 11. Current widening behavior
+## 17. Widening behavior
 
-The intended widening order is:
+Base semantic widening remains conceptually:
 
 ```text
 all focus
-→ N−1 / near focus
+→ near / N−1 focus
 → any focus
 → topics
 → helpers
-→ generic
+→ generic/universal
 ```
 
-Important constraints in the current implementation:
+Current constraints:
 
 - `MIN_POOL = 2`
 - `MAX_BROAD_WIDEN = 12`
-- recent-answer memory limit is 6
+- recent-answer memory limit = 6
 
-Widening must remain a **superset of the precise seed** when a focus seed exists. Do not widen into an unrelated broad pool simply to satisfy a minimum size.
+When a Focus seed exists, widening should remain a superset of that seed. Do not widen to unrelated content just to satisfy a pool-size target.
 
-A singleton can intentionally remain a singleton rather than widening into a huge, semantically diluted pool.
+A singleton may remain intentionally precise.
 
-This is a key design choice.
+Support is supplemental to this hierarchy; it is not another competing subject classifier.
 
 ---
 
-## 12. Answer IDs and index conventions
+## 18. Answer ID conventions
 
-The Focus index stores **1-based answer IDs**.
+Generated indexes use **1-based answer IDs**.
 
-The JavaScript `answers` array is zero-based.
-
-Typical conversion:
+JavaScript array uses zero-based indices.
 
 ```js
-var id = route.pick;      // 1-based
-var index = id - 1;       // array index
+var id = route.pick; // 1-based
+var index = id - 1;
 var answer = answers[index];
 ```
 
-Do not accidentally mix these conventions while refactoring.
+Do not mix these conventions.
 
-The anti-repeat list in the UI stores array indices, then maps them to 1-based IDs before sending them to the Focus engine.
-
----
-
-## 13. Physical page depth does NOT select answer ID
-
-The public book tracks a physical `depth`/position for the drag gesture and animation.
-
-Do not infer that the page-depth number should map deterministically to an answer ID.
-
-The ritual and the semantic selection are intentionally decoupled:
-
-- user chooses a physical page depth;
-- semantic Focus chooses the eligible answer universe;
-- uniform random chance chooses an answer from that universe.
-
-This preserves both relevance and the feeling of a magical physical book.
+The UI recent list stores array indices and maps them to IDs before calling the engine.
 
 ---
 
-## 14. Example: dessert routing
+## 19. Answers Library canonical semantics
 
-Question:
+The answer rows are canonical.
 
-`อยากกินขนมหวาน`
+Derived indexes are generated from the rows.
 
-The parser should detect:
+Current generated index contains at least:
 
-`ขนม → dessert`
+- `focus`
+- `support`
+- `topics`
+- `helpers`
+- `generic` (the explicit Universal ID list)
 
-The live `dessert` focus pool was verified during debugging as IDs:
+Do not reintroduce a second semantic truth such as `ANSWER_LEGACY_TAGS`, Router v4 weights/specs, or a separate Focus Lab matrix.
 
-`[32, 175, 341, 479, 516]`
+The Library now reads/writes separately:
 
-A generic answer such as #272 (`พอซ้อมค่ะ / ไฟเวทีเปิดแล้ว`) is not semantically eligible for that pool.
+- Topics
+- Focus concepts
+- Support concepts
+- Helpers
 
-This case was useful because it demonstrated how to debug routing:
+Search includes Support semantics.
 
-1. inspect exact dictionary alias hit;
-2. inspect derived focus index;
-3. verify selected tier/pool;
-4. verify runtime state/controller version;
-5. do **not** immediately retag answers just because a screenshot looks wrong.
+Save validation includes:
 
-The semantic data was correct; the investigation then moved to runtime/session behavior.
+- Thai required
+- English required
+- duplicate Thai forbidden
+- Focus IDs must be valid focus/slang dictionary concepts
+- Support IDs may be valid focus/slang/support dictionary concepts
+- Topics must be canonical
+- Helpers must be canonical
+- Universal answers cannot also have Focus, Support or Topic tags
 
-Use this pattern for future routing bugs.
+The editor serializer must preserve `support` on every save.
+
+The index builder must regenerate `support` automatically.
 
 ---
 
-## 15. Placeholder submission invariant
+## 20. Placeholder submission invariant
 
-The question textarea displays rotating example questions using the HTML `placeholder` attribute.
+Rotating example questions are HTML placeholders only.
 
-These examples are visual only.
+They must never be routable as user questions.
 
-**The router must never treat placeholder text as user input.**
+Current invariant:
 
-Current behavior:
+- placeholder assigned to `.placeholder`, never `.value`;
+- `userQuestionEdited` starts false;
+- real input event makes it true;
+- current submitted question comes from trimmed real `.value`;
+- blank, unedited or placeholder-equal values are rejected;
+- Enter and **ถามดิ** use the same guarded submit path;
+- **ถามอีกดิ** resets the guard.
 
-- only actual textarea `.value` produced by user typing/paste may submit;
-- a `userQuestionEdited` guard tracks real input activity;
-- strings equal to known placeholder examples are rejected;
-- Enter and the **ถามดิ** button use the same guarded form submit path;
-- after **ถามอีกดิ**, the real-input guard resets.
-
-If submit does not contain a valid real user question, the page does not advance and shows a small Thai popup:
+Invalid submit shows:
 
 ```text
 ยังไม่ได้ถามจริงเลยค่ะ
 พิมพ์ก่อน แล้วกด ถามดิ อีกที
 ```
 
-Popup typography intentionally matches the normal instruction line:
+Popup Thai typography intentionally matches the instruction line:
 
-- `Noto Sans Thai`
-- size `max(16px, var(--ui-input))`
-- weight `300`
-- line-height `1.65`
+- Noto Sans Thai
+- `max(16px, var(--ui-input))`
+- weight 300
+- line-height 1.65
 
-Do not regress this to inherited Poppins.
-
----
-
-## 16. Critical JavaScript escaping failure mode
-
-This deserves its own section because it has happened repeatedly.
-
-When editing `site_files.content` through SQL/string replacement, distinguish between:
-
-### A. actual source newline between statements
-
-Hex should include:
-
-`0a`
-
-Example source:
-
-```js
-var a = 1;
-var b = 2;
-```
-
-### B. backslash+n escape INSIDE a JavaScript string
-
-Hex contains:
-
-`5c6e`
-
-Example:
-
-```js
-textContent = "line one\nline two";
-```
-
-### C. INVALID: literal backslash+n between JavaScript statements
-
-```js
-var a = 1;\nvar b = 2;
-```
-
-This can make the whole controller fail to parse.
-
-The symptom on Answers was particularly misleading: pressing **ถามดิ** caused a flicker and full page reload. The reason was not form behavior; the controller had failed to parse, so the submit listener was never attached and the browser performed a normal form submission.
-
-When a page suddenly reloads or core listeners disappear after a patch, check JavaScript parse integrity before debugging interaction logic.
-
-After any SQL text surgery on JS:
-
-- inspect raw context;
-- inspect hex around inserted boundaries if necessary;
-- search for unintended `\\n` outside string literals;
-- verify the controller still contains expected listener/function markers.
+If empty submit ever causes a full page reload again, first suspect controller parse/mount failure rather than changing form behavior.
 
 ---
 
-## 17. Review mode
+## 21. Review mode
 
-The public Answers controller has a hidden QA review mode.
-
-Examples:
+Hidden QA review mode remains useful:
 
 - `/answers.html?review=363`
 - `/answers.html?review=351`
 - `/answers.html?review=119`
 - `?review=longest`
 
-Numeric review mode opens an exact authored answer directly for visual/editorial QA. It bypasses normal question/random routing.
+Numeric review opens an exact authored answer directly and bypasses normal question/random routing.
 
-Do not remove this casually; it is useful for verifying Thai line-break composition and exact answer rendering.
-
-Do not confuse a screenshot taken in review mode with a routing result.
+Do not mistake a review-mode screenshot for a routing result.
 
 ---
 
-## 18. Public visual system
+## 22. Public visual system
 
-The Answers page is intentionally standalone/headerless.
+Answers remains intentionally standalone/headerless.
 
 Do not add the normal Flipgazine header unless explicitly requested.
 
-The visual language is modern editorial rather than tarot/mystical UI.
-
-Characteristics:
+Visual language:
 
 - dark restrained background;
-- one dominant physical book object;
+- one dominant physical book;
 - generous negative space;
 - Noto Sans Thai for Thai;
-- light weights;
+- light type weights;
 - bilingual spread;
-- paper thickness/vertical page lines on the closed book;
-- tactile page drag/opening animation;
+- tactile page drag/opening;
 - minimal controls;
-- fixed lower information/footer treatment;
-- small glass share control at bottom-right.
+- small circular glass share control;
+- editorial rather than tarot/mystical styling.
 
 Avoid:
 
 - excessive glassmorphism;
 - decorative gradients that compete with the book;
-- mystical/tarot clichés;
 - chatbot bubbles;
 - extra navigation chrome;
-- adding UI merely because there is empty space.
+- adding UI just because space exists.
 
-The simplicity is intentional.
-
----
-
-## 19. Typography
-
-Thai typography should use **Noto Sans Thai** consistently.
-
-A recurring QA issue has been Thai text accidentally inheriting Poppins or another Latin UI family.
-
-Before styling a Thai element, inspect the existing `.instruction`, textarea, button, and `:lang(th)` rules rather than inventing a new stack.
-
-Exact line-break composition in answer spreads is editorially significant.
+Flipgazine’s existing CI is the design authority. Prefer design preservation over inventing a new local visual language.
 
 ---
 
-## 20. Share button and preview behavior
+## 23. Share / preview behavior
 
-The public Answers share button is a small circular glass control in the lower-right, consistent with other Flipgazine page controls.
+Public share content:
 
-Share content:
+- title: `The Book of Answers — flipgazine`
+- text: `A small book for big questions.`
 
-Title:
+Desired chat preview is text-only.
 
-`The Book of Answers — flipgazine`
+The permanent token mode `?s=answersbook` is what tells the Worker to remove image metadata / use text-only preview behavior.
 
-Text/description:
-
-`A small book for big questions.`
-
-The desired chat preview is **text-only**, no image.
-
-The public HTML itself does not need an `og:image` for this share.
-
-However, remember that the Cloudflare Worker may inject a fallback image for ordinary paths. The permanent `?s=answersbook` share mode is what intentionally removes image metadata and provides a text-only preview.
-
-Do not “fix” a LINE preview by only deleting meta tags from `/answers.html`; that does not address edge rewriting.
+Do not fix a LINE preview only by deleting `og:image` from Answers HTML; edge rewriting owns crawler output.
 
 ---
 
-## 21. Main Admin Media vs retired WIP uploader
+## 24. Main Admin Media vs retired WIP uploader
 
-There used to be a separate private WIP Upload page/controller.
+A separate WIP Upload page existed previously and was retired after Main Admin Media was expanded to support handoff MIME types such as JSON, JS, plain text, Markdown, HTML, CSS and ZIP.
 
-It was removed after confirming that the main Admin **Media** system can support handoff formats.
+Do not resurrect a separate uploader without a real requirement Media cannot satisfy.
 
-The Supabase Storage `media` bucket MIME allowlist was expanded to include formats such as:
-
-- JSON
-- JavaScript
-- plain text
-- Markdown
-- HTML
-- CSS
-- ZIP
-
-alongside the existing image/audio/font/octet-stream formats.
-
-Do not resurrect a separate WIP uploader unless there is a genuinely new requirement that Media cannot satisfy.
-
-Also: a previous attempt to change Media upload behavior in `/fg-page-admin.js` broke Main Admin. The change was reverted. The existing Media uploader behavior should be treated as known-good unless deliberately redesigned and tested separately.
+A previous attempt to alter Main Admin Media upload logic broke `/fg-page-admin.js` and was reverted. Treat existing Main Admin behavior as known-good.
 
 ---
 
-## 22. Answers Library admin behavior
+## 25. Backups for the current routing changes
 
-The Answers Library exposes the semantic matrix directly.
+Important current backups in Supabase `site_files` include:
 
-It should show/edit separately:
+- `/wip/fg-page-answers-pre-universal-v111-2026-08-16.js`
+- `/wip/fg-page-answers-pre-support-v113-2026-08-16.js`
+- `/wip/fg-page-answers-admin-pre-support-v21-2026-08-16.js`
 
-- Topics
-- Focus concepts
-- Helpers
+Historical Focus Phase 5–19 artifacts also remain under `/wip/` and are useful for comparison, not live dependencies.
 
-Search covers Thai, English, topics, focus, and helpers.
-
-Useful QA filters include concepts like:
-
-- broad-only
-- focus-heavy
-- topicless
-- helper-only
-- aggregate review
-
-These are editorial QA queues, not automatic proof that an answer is wrong.
-
-Generic answers are allowed to have no focus/topic.
-
-### Save validation
-
-At minimum preserve these rules:
-
-- Thai required
-- English required
-- duplicate Thai forbidden
-- focus values must exist in live dictionary and be valid focus/slang kinds
-- topics should use canonical topic list
-- helpers should use canonical helper list
-
-A save serializes semantic answer rows and regenerates the derived Focus index in memory, then updates the public controller in an optimistic-version flow.
-
-The main Admin must not be involved in this operation.
+Always create a timestamped `/wip/` snapshot before a risky live controller rewrite.
 
 ---
 
-## 23. Derived Focus index
+## 26. QA baseline for Universal + Support migration
 
-The Focus index is derived from answer-owned semantics.
+Verified after the migration:
 
-This is important:
+- 717 authored answers
+- 75 Universal
+- 42 Support
+- Support/Universal overlap = 0
+- 57 support links
+- 36 support keys
+- 24 support-only dictionary concepts
+- support index exactly matches row-owned support semantics
+- no unknown support keys
+- no Support alias exactly duplicates an existing non-Support alias
+- original authored Thai/English copy unchanged by the Support reassignment
+- 50 new Universal rows retain proper JS newline escapes
+- no double-escaped new Universal Thai line breaks
+- no literal `\n\n` structural boundary remains between Focus dictionary/index/router declarations
+- dessert Focus count remains 5
+- trip Focus count remains 10
+- ex Focus count remains 1
+- Universal fallback count remains 75
 
-**the answer rows are canonical; the index is generated.**
-
-Do not manually maintain a second competing tag/index source.
-
-Old architecture such as `ANSWER_LEGACY_TAGS`, Router v4 weights/spec/analyzer, or similar parallel classification structures should not be reintroduced.
-
-Historical Phase 19 explicitly made semantic rows canonical and retired Focus Lab into the main Answers Library.
-
----
-
-## 24. Frozen QA artifacts in Supabase `/wip/`
-
-There are useful historical snapshots and QA artifacts under `/wip/` in `site_files`.
-
-Important Focus Router final artifacts include names like:
-
-- `/wip/focus-router-phase5-17-dictionary-final-2026-08-15.json`
-- `/wip/focus-router-phase5-17-index-final-2026-08-15.json`
-- `/wip/focus-router-phase5-17-engine-final-2026-08-15.js`
-- `/wip/focus-router-phase5-17-matrix-final-2026-08-15.json`
-- `/wip/focus-router-phase5-17-coverage-500-final-2026-08-15.json`
-- `/wip/focus-router-phase5-17-pool-audit-500-final-2026-08-15.json`
-- `/wip/focus-router-phase5-17-qa-report-2026-08-15.md`
-
-Phase 18/19 snapshots and pre-change backups also exist.
-
-Use these as historical comparison/rollback references, not as live runtime dependencies.
-
-The main Answers admin was specifically redesigned so it no longer depends on `/wip/focus-router-*` artifacts.
+These are regression expectations for the current state, not eternal corpus counts.
 
 ---
 
-## 25. Historical QA baseline
+## 27. Historical Focus QA baseline
 
-At the end of the Focus migration, QA achieved results including:
+Earlier Focus migration QA achieved, among other checks:
 
 - 500/500 parser expected recall
 - 500/500 non-empty pools
@@ -833,490 +874,243 @@ At the end of the Focus migration, QA achieved results including:
 - 0 generic fallbacks in the final 500-question coverage suite
 - all 50 realistic compound/mixed-language questions focus-based
 - only 2 realistic singletons intentionally precise
-- average pool roughly 10 in one final audit
 
-Treat these as regression expectations, not guarantees that the corpus will forever remain numerically identical after editorial expansion.
-
-When adding a significant answer batch, re-run equivalent reachability/pool QA instead of relying on historical numbers.
+When making a substantial routing or corpus change, run equivalent reachability/pool QA rather than assuming historical numbers still hold.
 
 ---
 
-## 26. Anti-repeat behavior
+## 28. Change discipline
 
-Recent-answer memory is intentionally light.
+For any live Answers change:
 
-Current limit: 6.
+1. identify the real owner;
+2. query the current live `site_files` row/version;
+3. inspect enough surrounding code to understand the whole behavior;
+4. back up risky rows under `/wip/`;
+5. make the smallest coherent change;
+6. use optimistic version checks;
+7. verify new markers occur exactly where expected;
+8. verify replaced code paths are actually gone;
+9. verify authored copy is unchanged when the task is semantic/runtime only;
+10. verify Main Admin is untouched unless intentionally involved;
+11. inspect JS newline/escape boundaries after SQL text surgery;
+12. test user-facing behavior and routing invariants, not only string presence.
 
-The system removes recent IDs from an eligible pool if possible. If that would empty the pool, it can fall back to the original pool.
+Avoid blind global replacement on the 200k+ controller.
 
-Do not make anti-repeat stronger than semantic precision. A repeated relevant answer is preferable to a fresh irrelevant answer.
-
----
-
-## 27. Generic fallback
-
-Generic fallback answers are intentional.
-
-They provide book-like responses when a question has no strong semantic match.
-
-Do not force every generic answer into a fake focus concept just to achieve total tagging coverage.
-
-Likewise, do not automatically route a recognized specific question into generic simply because the specific pool is small.
-
-The next editorial expansion direction is expected to include strengthening generic fallback and thin pools, but this is content expansion rather than unfinished engineering.
+Use distinctive anchors and pre/post counts.
 
 ---
 
-## 28. Product status
-
-As of this handoff, The Book of Answers can be considered **feature-complete v1**.
-
-The following are substantially finished:
-
-- interaction model;
-- visual system;
-- book ritual/motion;
-- Focus routing architecture;
-- canonical semantic answer matrix;
-- Answers Library/admin;
-- safety/CARE routing;
-- public sharing;
-- shortlink/QR integration;
-- PWA behavior;
-- 667-answer initial corpus.
-
-Future work is primarily editorial depth and targeted refinements discovered through real use.
-
-Do not mistake “more answers can be added” for “the product architecture is unfinished.”
-
----
-
-## 29. Change discipline
-
-For any live change to Answers:
-
-1. **Read the whole relevant ownership path**, not just the first matching snippet.
-2. Query the live `site_files` row and current version.
-3. Understand adjacent logic before editing.
-4. Back up the exact live row under `/wip/` when the change is meaningful/risky.
-5. Make the smallest coherent change.
-6. Increment version via the normal `site_files` update behavior.
-7. Verify the changed marker exists exactly once where appropriate.
-8. Verify old code path is gone if replacing it.
-9. Verify the 667-answer block is byte-identical if the change should not affect content.
-10. Verify Main Admin is untouched unless intentionally involved.
-11. Check newline escaping when any JS text was inserted/replaced through SQL.
-12. Test the actual user-facing behavior, not only string presence.
-
-### Strong preference
-
-Do not perform blind global replacement on the 200k+ Answers controller unless the boundaries are extremely well-defined.
-
-Use distinctive anchors and verify pre/post counts.
-
----
-
-## 30. CSS discipline
+## 29. CSS discipline
 
 Do not solve design bugs by adding override after override.
 
 Preferred order:
 
 1. identify the canonical rule;
-2. inspect inherited/parent rules;
-3. fix ownership at the correct layer;
+2. inspect inheritance/parent ownership;
+3. fix the correct layer;
 4. remove obsolete/conflicting override if safe;
 5. verify mobile and desktop.
 
-Avoid creating:
-
-```css
-.rule { ... }
-.rule { ...fix... }
-.rule { ...fix-the-fix... }
-@media (...) { .rule { ...another fix... } }
-```
-
-unless there is a real responsive reason.
-
-Flipgazine now has a strong design backbone; preserve it rather than creating local styling dialects.
+Avoid a spiral of `.rule`, `.rule fix`, `.rule fix-the-fix` unless a real responsive rule requires it.
 
 ---
 
-## 31. Architectural discipline
+## 30. Architectural discipline
 
-Before building any new system, search for an existing owner.
+Before creating a new system, search for an existing owner.
 
-Important historical examples:
+Historical examples:
 
-### Sharing
+- Answers custom share/QR was unnecessary because Links already owns short links and QR;
+- separate WIP uploader became unnecessary because Media can own uploads;
+- client page metadata alone could not fix social previews because `_worker.js` owns crawler output;
+- continuing to tune Router v4 was inferior to changing to an inverted Focus architecture;
+- broad “generic” metadata was insufficient, leading to explicit Universal and Support layers instead of more fallback heuristics.
 
-A custom Answers share/QR system was unnecessary because Flipgazine Links already provided short links and QR.
+Recurring rule:
 
-### Uploads
-
-A separate WIP Upload utility became unnecessary because Main Admin Media could support the required MIME types.
-
-### Social previews
-
-Editing page meta alone was insufficient because `_worker.js` owned crawler output.
-
-### Routing
-
-Continuing to tune Router v4 was inferior to changing the architecture to an inverted Focus index.
-
-The recurring lesson is:
-
-> **Prefer deleting duplication and using the existing platform primitive over adding another feature-specific subsystem.**
+> **Prefer the correct owner/abstraction over another layer of special-case code.**
 
 ---
 
-## 32. Do not casually change these decisions
+## 31. Do not casually change these decisions
 
-Unless the owner explicitly requests it, preserve:
+Unless explicitly requested, preserve:
 
 - public Answers remains headerless;
-- drag-to-select-page ritual remains;
-- Focus Router remains the semantic engine;
-- Router v4 remains retired;
-- uniform random remains the final pick inside the precise pool;
+- drag-to-select ritual remains;
 - CARE runs first;
-- Thai answer line breaks remain authored data;
-- Noto Sans Thai remains the Thai font;
-- main Admin and Answers Library remain separate;
-- Links remains the canonical shortlink/QR system;
-- Worker remains the social crawler metadata owner;
-- Media remains the general file upload surface;
-- `site_files` remains the live content source;
-- no unnecessary Cloudflare redeploy for content;
-- generic answers may remain untagged where semantically appropriate;
-- physical page depth does not directly map to answer ID.
+- Focus remains subject owner;
+- Support remains supplemental and never competes with subject ownership;
+- Support uses a separate parser overlap lane;
+- Universal remains explicit;
+- exactly 2 random Universals are mixed into matched non-generic pools;
+- full Universal pool is used when nothing is understood;
+- final selection remains uniform random across the final eligible pool;
+- Router v4 remains retired;
+- physical page depth does not map directly to answer ID;
+- Thai line breaks remain authored data;
+- Noto Sans Thai remains Thai UI/answer typography;
+- Main Admin and Answers Library remain separate;
+- Links remains canonical shortlink/QR owner;
+- Worker remains social metadata owner;
+- Media remains general upload owner;
+- `site_files` remains live content source;
+- no unnecessary Cloudflare redeploy for content changes.
 
 ---
 
-## 33. Testing checklist for common changes
+## 32. Testing checklist — routing
 
-### If changing routing
-
-Test:
+When changing routing, test at least:
 
 - exact target phrase;
 - nearby synonym;
 - Thai substring collision;
-- mixed Thai/English question;
-- compound question with 2 focuses;
-- no-focus generic question;
+- mixed Thai/English;
+- compound question with two Focus concepts;
+- Focus + Support question;
+- Support-only question;
+- no-focus/no-support Universal fallback;
 - recent-answer exclusion;
 - CARE query;
-- singleton/thin pool;
-- no accidental broad fallback.
+- singleton/thin Focus pool;
+- singleton/thin Support pool;
+- no accidental Support leakage through Helper/Topic tiers;
+- no Support phrase suppressing an overlapping Focus phrase;
+- two Universal additions remain distinct where possible;
+- all final eligible answers have equal probability.
 
 Inspect:
 
-- parsed focus;
+- parsed Focus;
+- parsed Support;
 - alias hits;
-- tier list;
-- selected tier;
-- pool IDs;
+- base selected tier;
+- Support additions;
+- Universal additions;
 - final eligible IDs;
 - chosen ID.
 
-### If changing answer content
+---
 
-Verify:
+## 33. Testing checklist — corpus/editor
 
-- total answer count expected;
+When changing answer content or semantics, verify:
+
+- expected total count;
 - Thai/English pairing;
 - Thai line breaks;
 - duplicate Thai;
-- focus values valid;
-- topic/helper values valid;
-- regenerated index;
-- specific answer reachability.
-
-### If changing form/question UX
-
-Verify:
-
-- placeholder never submits;
-- empty **ถามดิ** does not reload;
-- popup appears;
-- popup Thai font is Noto;
-- typed text submits;
-- pasted text submits;
-- Enter uses same path;
-- **ถามอีกดิ** clears/reset state;
-- question displayed on open spread is the actual submitted user question.
-
-### If changing sharing
-
-Verify:
-
-- active `fg_shortlinks` lookup;
-- short URL shared when available;
-- long token fallback;
-- native share on supported mobile;
-- clipboard fallback;
-- text-only crawler metadata for token mode;
-- do not rely on stale LINE preview cache when testing.
-
-### If changing book animation
-
-Verify at least:
-
-- Android/mobile portrait;
-- desktop;
-- closed book centered;
-- drag cursor works;
-- release opens book;
-- answer text fits;
-- Thai dynamic fitting does not destroy authored line breaks;
-- ask-again closing/reset works;
-- fixed footer/share control do not move unexpectedly.
+- Focus values valid;
+- Support values valid;
+- Topic/Helper values valid;
+- Universal row has no Focus/Support/Topic;
+- generated Focus index;
+- generated Support index;
+- generated Universal/generic list;
+- reachability;
+- Answers Library can save without erasing `support`.
 
 ---
 
 ## 34. Debugging philosophy
 
-When a bug appears, do not immediately patch the visible symptom.
+When a bug appears:
 
-Use this order:
-
-1. reproduce the exact user state;
+1. reproduce exact user state;
 2. identify owner/layer;
 3. inspect the full relevant block;
 4. inspect data invariants;
 5. inspect runtime/session/cache possibility;
 6. only then modify.
 
-Example from the dessert routing screenshot:
+Example: when dessert once appeared to return #272, the correct response was not to randomly retag dessert. The investigation checked dictionary alias, index, eligible pool, generic status, runtime/controller state and placeholder behavior. That led to the later cleaner architecture: #272 is now explicit `readiness` / `take-action` Support and cannot leak through generic fallback.
 
-The displayed answer looked semantically impossible. Instead of retagging #272, the investigation first verified:
-
-- dictionary alias;
-- live Focus index;
-- eligible dessert pool;
-- generic status of #272;
-- number of parser/engine/index instances;
-- controller runtime state.
-
-That prevented a correct semantic system from being damaged in response to a runtime symptom.
+Do not patch the screenshot. Fix the ownership/invariant that explains it.
 
 ---
 
-## 35. Backups
-
-For risky `site_files` changes, create a timestamped `/wip/` snapshot first.
-
-Examples from this project include:
-
-- `/wip/answers-pre-share-v95-2026-08-15.html`
-- `/wip/fg-page-answers-pre-share-v101-2026-08-15.js`
-- `/wip/fg-page-answers-pre-central-share-v104-2026-08-15.js`
-- `/wip/answers-pre-placeholder-guard-v98-2026-08-16.html`
-- `/wip/fg-page-answers-pre-placeholder-guard-v105-2026-08-16.js`
-
-Prefer backups that can be restored exactly over trying to reconstruct a working state after a failed patch.
-
----
-
-## 36. Current public submission guard details
-
-As of controller v111:
-
-- random placeholder is assigned to `questionInput.placeholder`, never `.value`;
-- `userQuestionEdited` starts false;
-- input event flips it true;
-- `currentUserQuestion()` trims the real `.value`;
-- blank, unedited, or placeholder-equal values return empty;
-- invalid submit invokes `showSubmitNudge()` and focuses the field;
-- valid submit stores `question`, sets the textarea read-only, disables the button, enters `pick` stage;
-- **ถามอีกดิ** resets `userQuestionEdited=false`.
-
-If form submission ever causes a full-page reload again, suspect controller parse/mount failure before changing form attributes.
-
----
-
-## 37. Current share/controller boundary
-
-The Answers controller contains public Supabase anon credentials for a REST read of `fg_shortlinks`.
-
-The anon key is not a secret by itself; security depends on RLS/permissions.
-
-Never put a service-role key in public page/controller code.
-
-The controller’s share lookup is intentionally read-only.
-
----
-
-## 38. PWA
-
-Answers has its own manifest:
-
-`/answers.webmanifest`
-
-It is installable as an individual Answers PWA experience.
-
-Do not accidentally force authentication onto `/answers.html`; it is intended to be public.
-
-The page should remain usable without signing into Flipgazine.
-
----
-
-## 39. Accessibility / interaction notes
-
-The book edge uses a slider-like interaction with keyboard support.
-
-Keep:
-
-- focusability in pick stage;
-- arrow-key depth adjustment;
-- Home/End handling;
-- Enter/Space opening;
-- sensible `aria` labels;
-- popup `role="alert"` / live announcement behavior;
-- readable contrast.
-
-Visual polish should not remove keyboard behavior.
-
----
-
-## 40. Performance / maintainability
-
-The Answers controller is large because it contains the authored corpus, dictionary, derived index, router and interaction runtime.
-
-Do not split it merely because it is large unless there is a concrete operational benefit. Splitting live `site_files` pages into many pieces can create new cache/dependency/deployment complexity.
-
-If proposing a refactor, demonstrate that it improves one or more of:
-
-- testability;
-- update safety;
-- load performance;
-- editor architecture;
-- readability without creating more runtime coupling.
-
-The current product already works; refactors must earn their risk.
-
----
-
-## 41. Code-review role for Codex
+## 35. Codex review role
 
 A useful Codex pass should focus on:
 
 - architectural duplication;
 - dead code;
 - unreachable branches;
-- accidental repeated CSS rules;
-- stale Router v4 remnants (there should be none active);
+- stale Router v4 remnants;
+- repeated CSS rules;
 - redundant aliases;
 - parse hazards;
 - performance hot spots;
-- regressions between live controller and documented invariants;
-- opportunities to simplify without changing product behavior.
+- inconsistencies between live controller and documented invariants;
+- simplification opportunities that preserve behavior.
 
-Codex should **not** redesign the product, rewrite the routing model, normalize authored Thai line breaks, or “clean up” intentional editorial quirks without explicit instruction.
+Codex should **not** redesign the product, rewrite the routing model, normalize Thai line breaks, collapse Support into Focus, or “clean up” intentional editorial quirks without explicit instruction.
 
 Review first; clean second.
 
 ---
 
-## 42. Design authority
+## 36. Product-quality bar
 
-Flipgazine’s existing CI is the design authority.
+The owner notices and cares about:
 
-For a new page or feature:
-
-1. inspect existing Flipgazine page patterns;
-2. reuse established typography, spacing, controls, motion language and background systems;
-3. avoid creating a new visual language from a loose prompt;
-4. preserve the project’s restraint.
-
-The goal is increasingly **design preservation rather than design invention**.
-
----
-
-## 43. Product-quality bar
-
-The owner notices:
-
-- one-pixel-ish alignment drift;
+- alignment drift;
 - wrong Thai font;
-- incorrect font weight;
-- page centering;
-- wrong line breaks;
+- wrong font weight;
+- centering;
+- line breaks;
 - UI state changes after button press;
 - unnecessary headers;
-- mobile-only regressions;
+- mobile regressions;
 - share-preview images appearing when they should not;
+- semantic mismatches;
 - architectural duplication;
-- small interactions that do not match existing Flipgazine behavior.
+- interactions that do not match the existing Flipgazine backbone.
 
-Do not dismiss these as cosmetic. They are part of the product quality bar.
-
----
-
-## 44. Working contract for future agents
-
-When assigned a bug or feature:
-
-### Do
-
-- inspect enough surrounding code to understand the system;
-- search for an existing platform primitive first;
-- query live Supabase when the issue is live-page behavior;
-- preserve current visual/product decisions;
-- make controlled changes;
-- back up risky rows;
-- test invariants after writes;
-- report exactly what changed and what was intentionally untouched.
-
-### Do not
-
-- patch the first snippet you find without checking ownership;
-- stack CSS overrides indefinitely;
-- recreate Router v4;
-- add parallel share/upload/admin systems;
-- touch Main Admin for an Answers-only task;
-- redeploy the shell for a database content edit;
-- mass-format the answer corpus;
-- normalize/remove Thai authored line breaks;
-- expose service-role credentials;
-- assume social crawlers see client-side HTML;
-- treat a broad QA flag as an automatic content error;
-- change multiple unrelated systems “while you are there.”
+Do not dismiss these as cosmetic. They are part of product correctness.
 
 ---
 
-## 45. Short mental model
-
-If you remember nothing else, remember this:
+## 37. Short mental model
 
 ```text
-FLIPGAZINE SHELL
-  Cloudflare/GitHub
-  owns routing shell, edge metadata, static infrastructure
+GITHUB / CLOUDFLARE SHELL
+  static infrastructure + edge metadata
 
-SITE_FILES
-  Supabase
-  owns live pages/controllers
+SUPABASE site_files
+  live pages/controllers
 
 ANSWERS LIBRARY
-  canonical authored rows
-  Thai + English + topics + focus + helpers
+  canonical rows:
+  Thai + English + Focus + Support + Topics + Helpers
           ↓
-  generated Focus index
+  generated Focus / Support / Universal indexes
           ↓
 PUBLIC QUESTION
           ↓
 CARE
           ↓
-longest-match Focus parser
+longest-match subject parser
+  + separate Support overlap lane
           ↓
-precise pool
+Focus owns subject
           ↓
-anti-repeat
+relevant Support joins
+          ↓
+2 random Universal answers join
+          ↓
+anti-repeat / final eligible pool
           ↓
 uniform random answer
+
+IF NOTHING IS UNDERSTOOD
+          ↓
+full 75-answer Universal pool
 
 USER EXPERIENCE
   question → ถามดิ → drag physical page → open book → bilingual answer
@@ -1326,9 +1120,9 @@ The sophistication belongs backstage. The front stage should continue to feel li
 
 ---
 
-## 46. Final principle
+## 38. Final principle
 
-The Book of Answers reached its current quality by repeatedly replacing unnecessary complexity with the correct owner/abstraction.
+The Book of Answers reached its current quality by repeatedly replacing accidental complexity with the correct owner/abstraction.
 
 When something breaks, the best fix is usually not “more code.”
 
