@@ -206,6 +206,51 @@ Thai line breaks are authored editorial composition, not incidental whitespace.
 
 Preserve them exactly.
 
+### Editorial line-break rule — approved 16 August 2026
+
+Do **not** wrap Thai answers mechanically by character count. Line breaking is visual/editorial composition.
+
+- Aim for **3–4 short lines** for medium/long answers; this is a target, not a hard quota.
+- Prefer roughly **one visual phrase per line** and break at a natural reading breath.
+- Use `จำชื่อเราได้ไหม` as the approximate pure-Thai comfort-width reference. Inspect anything that feels materially wider rather than treating the reference as a literal character limit.
+- Mixed Thai/English needs extra space because Latin text is visually wider. Break at the language boundary when useful.
+- A long English word may stand alone if it improves balance and timing, e.g. `surprise` or `philosophize`.
+- Do not let the opening line carry the whole setup when two lighter beats read better, e.g. `วันนี้ยัง` / `ไม่ต้องสารภาพ`.
+- Preserve the punchline. A shorter final line is welcome when it improves comedic/editorial timing.
+- Decision priority is **visual width → reading rhythm → meaning → grammar**.
+- Never “normalize” authored breaks later just because another wrapping pattern appears more grammatical.
+
+Canonical approved references:
+
+```text
+ช่วยได้
+แต่อย่ากลายเป็น
+customer service
+ประจำบ้าน
+
+วันนี้ยัง
+ไม่ต้องสารภาพ
+ดูก่อนว่าเขา
+จำชื่อเราได้ไหม
+
+กอดได้
+แต่ถามก่อน
+consent น่ารักกว่า
+surprise
+
+กลับพร้อม
+หนึ่ง connection ที่ดี
+ดีกว่ายี่สิบชื่อ
+ที่จำหน้าไม่ได้
+
+ถ้าพัดลมดัง
+เหมือนจะบิน
+save งานก่อน
+philosophize
+```
+
+In a review Markdown file, ` / ` may be used to display an authored line break compactly. When the answer is inserted into the live JavaScript data, each approved break must become an intentional `\n` inside the JavaScript string.
+
 A prior migration accidentally converted authored breaks to double-escaped `\\n`. It was repaired. The same class of escaping bug has also broken controller parsing.
 
 Correct inside a JavaScript string:
