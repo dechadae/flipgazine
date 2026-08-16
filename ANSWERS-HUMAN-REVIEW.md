@@ -1,9 +1,9 @@
 # The Book of Answers — Thai Human Review Protocol
 
 **Review round:** `thai-human-v1`  
-**Frozen source:** `/wip/answers-human-review-source-v118-948.js`  
-**Source controller version:** `v118`  
-**Source MD5:** `6fdb83f33f1cf768d97a190be8279777`  
+**Frozen source:** `/wip/answers-human-review-source-v119-948.js`  
+**Source controller version:** `v119`  
+**Source MD5:** `6dc18662953f897a390eea0a038f0edf`  
 **Frozen authored answer count:** `948`
 
 This document defines the human editorial review round for the Thai answer corpus in **The Book of Answers**.
@@ -63,8 +63,8 @@ The round is complete only when:
 ```text
 948 / 948 answers
 status ∈ {approved, edited}
-source_version = 118
-source_md5 = 6fdb83f33f1cf768d97a190be8279777
+source_version = 119
+source_md5 = 6dc18662953f897a390eea0a038f0edf
 ```
 
 No `draft` or missing record counts as reviewed.
