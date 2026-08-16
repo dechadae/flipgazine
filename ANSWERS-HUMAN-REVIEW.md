@@ -1,18 +1,26 @@
-# The Book of Answers — Thai Human Review Protocol
+# The Book of Answers — Completed Thai Human Review & Provenance Record
 
 **Review round:** `thai-human-v1`  
+**Status:** **COMPLETE — 948 / 948**  
 **Frozen source:** `/wip/answers-human-review-source-v119-948.js`  
 **Source controller version:** `v119`  
 **Source MD5:** `6dc18662953f897a390eea0a038f0edf`  
 **Frozen authored answer count:** `948`
 
-This document defines the human editorial review round for the Thai answer corpus in **The Book of Answers**.
+This document is the permanent protocol and provenance record for the completed Thai human-review round used by **The Book of Answers**.
 
-The purpose of this round is to establish a clean provenance layer showing that every Thai answer has been individually read and either approved or edited by a human reviewer. The review is not performed against a moving live corpus. It is tied to the frozen source above.
+The round was intentionally tied to one frozen source rather than a moving production corpus. Every answer was individually read by the human reviewer and ended in one of two completed states:
 
-## Review interface
+- explicitly accepted unchanged; or
+- human edited and then explicitly re-approved.
 
-Internal page:
+The review table is now evidence. It is **not** a production editing table and must not be normalized after the fact.
+
+---
+
+## 1. Review interface and isolation
+
+Internal review page:
 
 `/answers-thai-review.html`
 
@@ -20,53 +28,43 @@ Controller:
 
 `/fg-page-answers-thai-review.js`
 
-The review interface deliberately shows **Thai only**. English adaptation is hidden so that English wording cannot influence Thai rhythm, implication, slang, code-switching or line composition during the human review.
-
-Each answer is presented in its existing authored line structure inside a textarea. Pressing Enter inserts a real authored line break. No keyboard shortcut intercepts Enter.
-
-## Review states
-
-Each answer can have one of three stored states:
-
-- `draft` — the reviewer has edited the answer, but has not approved it yet;
-- `approved` — the reviewer approved the frozen Thai answer without changing it;
-- `edited` — the reviewer changed the Thai answer and approved the human-edited result.
-
-Only `approved` and `edited` count as completed human review.
-
-## Database audit record
-
-Review records are stored in:
+Database table:
 
 `public.answers_thai_reviews`
 
-Each record preserves:
+The interface showed **Thai only** during the review. Existing English siblings were intentionally hidden so English wording could not anchor Thai syntax, implication, lexical borrowing, humor or line composition.
 
-- review round;
-- answer ID;
-- frozen source path;
-- frozen source version;
-- frozen source MD5;
-- original Thai;
-- reviewed Thai;
-- review status;
-- reviewer user ID;
-- review timestamp;
-- update timestamp.
+Each answer was shown with its authored line breaks inside a textarea. Enter inserted a real authored line break. Line composition therefore formed part of the human editorial decision rather than being treated as post-render wrapping.
 
-The table is protected by RLS and is writable only by an authenticated Flipgazine admin reviewing their own records.
+---
 
-The database also enforces review-state integrity:
+## 2. Stored review states
 
-- `approved` requires `reviewed_thai = original_thai` and a non-null `reviewed_at`;
-- `edited` requires `reviewed_thai <> original_thai` and a non-null `reviewed_at`;
-- `draft` does not count as completed review.
+The review system supports:
 
-This means buyer-facing before/after evidence is not inferred from a UI label; the stored text itself must agree with the review state.
+- `draft` — edited but not yet re-approved;
+- `approved` — frozen source Thai explicitly accepted unchanged;
+- `edited` — Thai changed by the reviewer and explicitly approved.
 
-## Completion criterion
+Only `approved` and `edited` counted as completed review.
 
-The round is complete only when:
+Editing an already completed row invalidated its approval until the revised wording was approved again.
+
+Database integrity rules require:
+
+```text
+approved → reviewed_thai = original_thai
+edited   → reviewed_thai != original_thai
+completed → reviewed_at is non-null
+```
+
+This means before/after evidence is grounded in stored text, not merely a UI label.
+
+---
+
+## 3. Final completion result
+
+The completed round was verified with:
 
 ```text
 948 / 948 answers
@@ -75,74 +73,120 @@ source_version = 119
 source_md5 = 6dc18662953f897a390eea0a038f0edf
 ```
 
-No `draft` or missing record counts as reviewed.
+Final counts:
 
-At completion, the final reviewed Thai can be applied back to the live canonical answer rows in one controlled publication pass. That publication must preserve answer IDs, English copy and semantic metadata unless a separate approved task explicitly changes them.
+- **948 reviewed**
+- **564 approved unchanged = 59.5%**
+- **384 human edited = 40.5%**
+- **0 drafts**
+- **0 missing IDs**
+- IDs exactly **1–948**
+- **0 missing review timestamps**
+- **0 source-version/hash mismatches**
+- **1 reviewer identity** across the completed round
 
-## Editorial authority
+First formal review timestamp:
 
-Thai review should follow:
+`2026-08-16 04:01:59.145+00`
+
+Last formal review timestamp:
+
+`2026-08-16 14:58:26.765+00`
+
+Final structural QA found no trailing spaces, CR characters, unwanted terminal newlines, spaces around authored line breaks or double-space artifacts.
+
+---
+
+## 4. What the review changed
+
+Across all 948 answers:
+
+- **107 answers changed line count**;
+- **55 answers gained lines**;
+- **52 answers lost lines**;
+- **36 edits changed only composition when all whitespace is ignored**;
+- among those, **27 are strict newline-only edits with otherwise byte-identical text**;
+- average pre-review Thai length: **36.4 characters**;
+- average reviewed Thai length: **36.8 characters**;
+- net change across the full corpus: **+436 characters**.
+
+The review therefore changed **how Thai was expressed** much more than **how much information was present**.
+
+This is one of the key findings of the corpus:
+
+> **Large editorial impact. Almost no increase in information volume.**
+
+The evidence supports analysis of pragmatic alignment, lexical choice, omission, register, social specificity, humor and line delivery. It does not justify invented category percentages unless the 384 edits are later exhaustively coded into a formal taxonomy.
+
+---
+
+## 5. Editorial authority used during review
+
+Canonical editorial guide:
 
 `ANSWERS-VOICE-TONE.md`
 
-The reviewer may intentionally prefer natural Thai implication, omission, particles, queer/camp timing, modern slang, code-switching and spoken rhythm over textbook grammatical completeness.
+Central rule:
 
-Line breaks are authored language data and must be preserved exactly.
+> **Thai is the original. English is the adaptation.**
 
-## Buyer-facing comparison / preference-pair export
+The review permitted and often preferred:
 
-The human-review records must remain extractable after completion as evidence of the difference between the frozen pre-review corpus and the human-reviewed Thai.
+- implication over explicit completeness;
+- omitted subjects/pronouns when context carried them;
+- particles as stance/performance choices;
+- spoken/social rhythm over textbook grammar;
+- socially specific Thai contexts over generic abstract advice;
+- culturally recognizable humor over constructed cleverness;
+- borrowed/embedded English when that was the natural Thai lexical item;
+- Thai wording when visible English was less natural;
+- authored line breaks as breath/timing/body-language cues.
 
-There are two commercially useful buckets:
+### Borrowed English vs true code-switching
 
-### 1. Human accepted as-is
+Latin script inside Thai discourse is **not automatically code-switching**.
 
-Rows with:
+Words such as `OT`, `deadline`, `mute`, `jobsdb`, `brief`, `timeline`, `chemistry` or `consistency` can function as ordinary lexical items inside Thai grammar and Thai social rhythm.
 
-```text
-review_status = approved
-original_thai = reviewed_thai
-```
+Reserve **code-switching** for a genuine discourse-level language change required by audience/context.
 
-These show that a human Thai editor individually read the item and accepted the pre-review wording without modification.
+Do not describe the corpus as if “more English” or “more slang” makes Thai more contemporary. The review demonstrates the opposite in many cases as well.
 
-They are useful as **human-validated positive examples**.
+---
 
-### 2. Human edited preference pairs
+## 6. Canonical review exports
 
-Rows with:
+The completed review was frozen into durable exports in Supabase `site_files`.
 
-```text
-review_status = edited
-original_thai != reviewed_thai
-```
+### Full completed review
 
-These are the most important comparison assets. Each row preserves:
+JSONL:
 
-```text
-pre-human-review Thai
-→ human-edited Thai
-```
+`/wip/answers-thai-human-v1-complete-948.jsonl`
 
-They can demonstrate concrete corrections in areas such as:
+MD5:
 
-- translated-sounding Thai;
-- over-complete grammar;
-- unnatural explicit subjects/objects;
-- weak implication or omission;
-- particles and social register;
-- contemporary slang;
-- Thai/English code-switching;
-- queer/camp timing;
-- humor and punchline rhythm;
-- line breaks as breath/body-language cues;
-- word choice and native conversational cadence.
+`3e77b8e4f83ccb2ff9aecb2ba5e1f07b`
 
-For machine-learning use, these edited rows can later be exported as **preference pairs** analogous to rejected/preferred examples, subject to accurate provenance wording.
+CSV:
 
-### Required export fields
+`/wip/answers-thai-human-v1-complete-948.csv`
 
-A canonical completed-review export should preserve at least:
+MD5:
+
+`a1460783cab3bb3be5fb79b0e1518230`
+
+Manifest:
+
+`/wip/answers-thai-human-v1-manifest.md`
+
+These exports preserve the review table as stored. Do not normalize `reviewed_thai`, punctuation or line breaks when generating derived datasets.
+
+---
+
+## 7. Required evidence fields
+
+Canonical review evidence must preserve at least:
 
 ```text
 answer_id
@@ -157,9 +201,9 @@ reviewer_user_id or buyer-safe reviewer attestation
 reviewed_at
 ```
 
-A derived `changed` boolean may be included, but the original and reviewed strings must remain the source of truth.
+A derived `changed` field may be included, but the original/reviewed strings remain source of truth.
 
-For research/commercial packaging, semantic metadata may later be joined by `answer_id` from the **frozen source corpus**:
+Semantic metadata may be joined by stable `answer_id` from the appropriate frozen corpus stage, for example:
 
 ```text
 focus
@@ -168,40 +212,299 @@ support
 helpers
 ```
 
-Do not join against an unrelated future moving corpus when creating historical evidence.
+Historical evidence should not be reconstructed from an unrelated future moving corpus when the frozen source or canonical stage exists.
 
-### Export formats
+---
 
-After review completion, preserve at least these deliverables:
+## 8. Two primary Thai evidence buckets
 
-1. **Full reviewed corpus** — all 948 rows, suitable for CSV/JSONL.
-2. **Edited preference-pair subset** — only `review_status = edited`, with exact before/after Thai.
-3. **Accepted-as-is subset** — only `review_status = approved`.
-4. **Human-readable comparison sample** — selected before/after pairs rendered with authored line breaks intact for buyer/demo material.
-5. **Provenance manifest** — frozen source version/hash, review round, counts, timestamps and review methodology.
+### A. Human accepted as-is
 
-Do not destroy or overwrite `original_thai` after the reviewed Thai is promoted to production. The before/after relationship is part of the dataset asset.
+Final count:
 
-### Accurate commercial wording
+**564**
 
-Do **not** automatically describe every `original_thai` row as a pure AI-generated output. The frozen v119 corpus already contains a mixture of AI-assisted writing and earlier direct human corrections.
+Semantics:
 
-The defensible description is:
+```text
+review_status = approved
+original_thai = reviewed_thai
+```
+
+These are not “unreviewed negatives.” They are individually inspected **human-validated positive examples**.
+
+### B. Human edited correction/preference pairs
+
+Final count:
+
+**384**
+
+Semantics:
+
+```text
+review_status = edited
+original_thai != reviewed_thai
+```
+
+Each preserves:
+
+```text
+pre-human-review Thai
+→ human-edited Thai
+```
+
+These pairs are useful for studying failure modes including:
+
+- English-first thought structure;
+- over-complete grammar;
+- unnecessary explicit subjects/objects;
+- missed Thai implication;
+- poor particle/register choice;
+- decorative or unnatural English borrowing;
+- overly generic social framing;
+- culturally weak metaphors;
+- constructed humor;
+- line composition and timing.
+
+Do not call every pair a true model-output preference pair unless independent provenance proves the original was untouched model output.
+
+---
+
+## 9. Accurate provenance language
+
+The frozen v119 source contains AI-assisted writing **and** earlier direct human influence from development.
+
+Therefore the default defensible description is:
 
 > **Pre-human-review source → individually human-reviewed final Thai.**
 
-For rows where independent provenance proves an untouched model draft followed by a human correction, those may additionally be labeled as true **model draft → human correction** preference pairs.
+For `edited` rows:
 
-This distinction makes the evidence stronger, not weaker, because the provenance claim remains precise.
+> **Pre-human-review Thai → human-edited Thai.**
 
-## Dataset provenance statement after completion
+For `approved` rows:
 
-Once the completion criterion is verified, the project may accurately describe the Thai corpus along these lines:
+> **Pre-human-review Thai → explicitly human-accepted unchanged.**
 
-> Every Thai answer in this corpus was individually reviewed by a human editor. Each item has an auditable approval or human-edit record tied to a frozen source corpus and timestamped reviewer identity.
+Only when a specific item has independent provenance proving an untouched model draft should it be labeled:
 
-For the edited subset, it may additionally state:
+> **model draft → human correction**
 
-> Human-edited items preserve the exact pre-review Thai and final human-reviewed Thai as paired evidence of the editorial correction.
+Precision strengthens the dataset claim.
 
-These statements should not be used before the review round reaches 948/948 completed records.
+---
+
+## 10. Publication lineage after review
+
+The completed review was applied through deliberately separated stages.
+
+### v119 — frozen review source
+
+`6dc18662953f897a390eea0a038f0edf`
+
+### v120 — reviewed Thai only
+
+Path:
+
+`/wip/fg-page-answers-v120-thai-human-v1-preview.js`
+
+MD5:
+
+`7773badc93f5d8887945729c2ea1703f`
+
+Exactly the 384 human-edited Thai fields changed from v119. English and non-Thai structure remained unchanged.
+
+### v121 — English adaptation
+
+Path:
+
+`/wip/answers-human-thai-english-v121-preview.js`
+
+MD5:
+
+`235e80362da4bf4a3543692311140a0f`
+
+The English adaptation audit changed 140 English siblings.
+
+Audit evidence:
+
+`/wip/answers-english-v121-audit.jsonl`
+
+MD5 `98ecf39199171ac6fc4c25c853b22432`
+
+### v122 — bilingual QA / copy freeze
+
+Canonical copy snapshot:
+
+`/wip/answers-bilingual-canonical-v122-948.js`
+
+MD5:
+
+`d12ef72740edd955ddc11aedfe232c2c`
+
+QA evidence:
+
+- `/wip/answers-bilingual-v122-qa.jsonl` — `c5b4fdbba1971da5e7073a35340b9fb4`
+- `/wip/answers-bilingual-v122-final-changes.jsonl` — `41d13215807b73b70036a87bc23a56c1`
+- `/wip/answers-bilingual-v122-production-manifest.md` — `ee27c570e4ab5cd0126465d04933ebc2`
+
+Final English result vs v120:
+
+- **149 unique English siblings changed**;
+- 145 on human-edited Thai rows;
+- 4 on Thai rows accepted unchanged.
+
+### v123 — current live controller state
+
+Canonical runtime snapshot:
+
+`/wip/answers-bilingual-canonical-v123-948.js`
+
+MD5:
+
+`4f4cebce4460cec5d826796cb119a5f3`
+
+v123 changes **no Thai or English answer copy** from v122. It adds one routing dictionary alias:
+
+```text
+ทะเล → beach
+```
+
+Removing only that alias reconstructs the v122 MD5 exactly.
+
+---
+
+## 11. English adaptation evidence
+
+The English layer was intentionally produced **after** Thai became canonical.
+
+It is not a literal translation exercise. Final English is expected to preserve:
+
+- recommendation direction;
+- stance;
+- emotional temperature;
+- humor/camp weight where possible;
+- practical/social meaning.
+
+It may change joke mechanics or syntax to become natural English.
+
+Examples from final QA:
+
+### #552
+
+Old English:
+
+`Salary just arrived. Do not let every dream invoice you at once.`
+
+Final:
+
+`Payday just happened. Where did the money go?`
+
+### #794
+
+Old:
+
+`Draft the resignation. Sleep once. Read it again.`
+
+Final:
+
+`Start the resignation letter. Sleep on it. Then think again.`
+
+### #863
+
+Old:
+
+`When the rain arrives, loyalty to public transport may take the night off.`
+
+Final:
+
+`If it rains: Grab, come get me. I'm out.`
+
+The completed English passes should not be described as pending in future documentation.
+
+---
+
+## 12. Buyer/research-facing dataset layers
+
+Useful derived products include:
+
+### Full reviewed corpus
+
+All 948 review records with exact original/final Thai and provenance.
+
+### Edited subset
+
+384 correction/preference pairs.
+
+### Accepted subset
+
+564 individually human-accepted examples.
+
+### Final bilingual corpus
+
+Reviewed Thai + final v122/v123 English siblings + stable answer ID and appropriate semantic metadata.
+
+### Human-readable case study
+
+Selected before/after pairs with authored line breaks intact and qualitative annotations.
+
+### Data card / provenance manifest
+
+Methodology, stages, hashes, limitations and intended uses.
+
+The review table itself must remain untouched while these derived products are generated.
+
+---
+
+## 13. Appropriate commercial/research claims
+
+After completion, the project may accurately state:
+
+> Every Thai answer in this 948-answer corpus was individually reviewed by a human editor against one frozen source. Each item has an auditable accepted-as-is or human-edited record tied to source version/hash and reviewer timestamp.
+
+For the edited subset:
+
+> Human-edited items preserve the exact pre-review Thai and final human-reviewed Thai as paired editorial evidence.
+
+For the production corpus:
+
+> The reviewed Thai was published in a Thai-only stage, followed by a separate English adaptation and bilingual QA stage, preserving an auditable language-production lineage.
+
+Avoid claiming:
+
+- that one reviewer represents all Thai speakers;
+- that each original is pure AI output;
+- that the corpus proves universal Thai correctness;
+- that the asset is already “RLHF data” without specifying a training-task transformation;
+- category-level correction percentages that have not been formally annotated.
+
+---
+
+## 14. Limitations
+
+- One human reviewer does not represent every Thai region, age, gender, subculture or register.
+- The corpus expresses one deliberate house voice and product context.
+- Contemporary slang and lexical preferences can age.
+- The qualitative Case Study categories are illustrative, not an exhaustive coded taxonomy.
+- English siblings were editorially adapted/QA'd after Thai review; they were not independently reviewed through the same 948-item human acceptance protocol.
+
+The evidence is strongest when used to study **editorial decisions and pragmatic alignment**, not to claim one wording is universally correct Thai.
+
+---
+
+## 15. Immutability rule
+
+The completed `thai-human-v1` table and frozen exports are provenance evidence.
+
+Do not:
+
+- rewrite original Thai;
+- rewrite reviewed Thai;
+- normalize line breaks;
+- change statuses;
+- bulk-reapprove;
+- delete rows;
+- repoint rows to v122/v123;
+- replace the frozen v119 source hash with the current production hash.
+
+Production can continue to evolve through new versioned stages. The review evidence must continue to describe exactly what was reviewed on 16 August 2026.
