@@ -8,9 +8,12 @@ It governs:
 
 - Thai voice and naturalness;
 - contemporary register;
+- BFF / chat / DM register;
 - queer/camp energy;
+- humor-first editorial judgement;
 - implication and omission;
 - particles and conversational timing;
+- sound, internal rhyme and end/external rhyme;
 - borrowed/embedded English inside Thai;
 - true code-switching when context genuinely changes the discourse language;
 - humor and social specificity;
@@ -24,7 +27,7 @@ Editorial precedence:
 
 > **direct user-approved wording → this guide → established human-reviewed corpus voice → generic grammar/style convention**
 
-If a technically less-complete Thai line is more natural in the social situation, natural Thai wins.
+If a technically less-complete Thai line is more natural, funnier and more socially alive in the situation, that version wins as long as the intended meaning remains clear.
 
 ---
 
@@ -140,6 +143,7 @@ Thai social intent
 → Thai spoken rhythm
 → implication / omission / particles
 → lexical choice natural to this register
+→ humor + mouthfeel
 → editorial line composition
 → English sibling adaptation
 ```
@@ -208,7 +212,8 @@ A text-only book cannot literally raise an eyebrow or pause, so the page uses:
 - repetition;
 - line breaks;
 - short final landings;
-- naturally embedded borrowed words.
+- naturally embedded borrowed words;
+- sound echo and rhyme when they arrive naturally.
 
 Think of typography as partly **breath** and partly **body language**.
 
@@ -240,9 +245,31 @@ It should not sound like:
 
 Useful test:
 
-> **Would a funny Thai friend actually say or type this in this exact situation?**
+> **Would your BFF actually send this in chat or DM in this exact situation?**
 
 If not, rewrite the thought, not just the vocabulary.
+
+### 6.1 Editing instinct — BFF mode
+
+This subsection is **direct house editorial authority from the human editor**, not a statistical inference from the 948-review dataset.
+
+Default mode:
+
+> **BFF in the DMs. Casual, intimate, funny, queer-aware, quick, socially fluent.**
+
+House priorities:
+
+- **Humor before textbook grammar.** Outside CARE, when a grammatically cleaner version competes with a funnier natural spoken version, keep the funnier version if the meaning remains clear.
+- **Casual by default.** Outside CARE or a deliberately formal comic setup, polished written Thai should lose to natural chat/DM Thai.
+- **BFF intimacy.** The voice is a close friend replying, not an advisor, narrator, brand, therapist or copywriter.
+- **Chat/DM mechanics are language.** Fragments, omission, ellipses, particles, reaction-like phrasing, abrupt endings and deliberate incompleteness are valid when that is how the thought would actually arrive in chat.
+- **Queerness is part of the social temperature.** Camp, shade, softness, drama, playful certainty and feminine performance can shape the line naturally without becoming caricature.
+- **Sound matters.** If two versions are equally natural and semantically correct, prefer the one with better mouthfeel: internal rhyme, end/external rhyme, vowel or consonant echo, repetition, parallel cadence or a cleaner rhythmic landing.
+- **Rhyme is preferred, never compulsory.** Do not bend vocabulary, grammar or social reality merely to manufacture a rhyme.
+
+A useful tie-breaker:
+
+> **If both versions mean the same thing and both sound natural, choose the one that is funnier to say and better to hear.**
 
 ---
 
@@ -462,7 +489,12 @@ Good Answers humor usually comes from:
 - understatement;
 - final-line reversal;
 - treating a small problem with ceremonial seriousness;
-- treating a dramatic problem with calm practicality.
+- treating a dramatic problem with calm practicality;
+- sound play or rhyme that makes the line more satisfying without calling attention to the writing.
+
+Outside CARE:
+
+> **Humor may outrank textbook grammatical neatness when meaning remains clear and the spoken/chat version is more natural.**
 
 Avoid:
 
@@ -471,7 +503,8 @@ Avoid:
 - generic motivational language;
 - cruelty disguised as sass;
 - humiliation, body shaming or punching down;
-- forced comedy in serious safety situations.
+- forced comedy in serious safety situations;
+- rhyme that sounds engineered rather than spoken.
 
 The book can be bitchy. It should not be mean.
 
@@ -556,6 +589,8 @@ Latin text is visually wider and may need more room.
 
 Protect the final landing when a short last line carries the look/punchline.
 
+Sound can also inform composition. A line break may expose an internal echo, protect an end rhyme, or create a call-and-response rhythm — but only when the spoken result remains natural.
+
 ### Direct evidence
 
 #405:
@@ -601,13 +636,16 @@ Do not use ordinary house-style evidence to weaken CARE.
 For every new/revised answer:
 
 1. **Identify the actual Thai social thought.** What would a Thai person naturally say here?
-2. **Remove unnecessary completeness.** What can context carry?
-3. **Choose the performance.** Dry, warm, resigned, camp, practical, flirty, annoyed, absurd?
-4. **Choose vocabulary situationally.** Thai, borrowed English, shorthand, brand, slang or plain word?
-5. **Compose the Thai page.** Width, breath, timing and landing.
-6. **Read it mentally aloud.** Does it sound spoken/social or written/localized?
-7. **Only then adapt English.** Preserve the decision, not the syntax.
-8. **Confirm semantics afterward.** Focus/Support/Topic/Helper ownership must still fit.
+2. **Enter BFF mode.** How would a close friend actually send this in chat or DM?
+3. **Remove unnecessary completeness.** What can context carry?
+4. **Choose the performance.** Dry, warm, resigned, camp, practical, flirty, annoyed, absurd?
+5. **Choose vocabulary situationally.** Thai, borrowed English, shorthand, brand, slang or plain word?
+6. **Find the joke before polishing grammar.** If a natural funny line and a tidier written line compete, keep the funny spoken line when meaning remains clear.
+7. **Listen for mouthfeel.** Is there a natural internal rhyme, end rhyme, sound echo, repetition or parallel cadence available without forcing it?
+8. **Compose the Thai page.** Width, breath, timing and landing.
+9. **Read it mentally aloud.** Does it sound spoken/social or written/localized?
+10. **Only then adapt English.** Preserve the decision, not the syntax.
+11. **Confirm semantics afterward.** Focus/Support/Topic/Helper ownership must still fit.
 
 Do not start from the English sibling when revising Thai.
 
@@ -736,6 +774,7 @@ Common imitation failures:
 - making every answer sarcastic or queer-coded;
 - shortening every answer regardless of natural rhythm;
 - using ellipses decoratively;
+- forcing rhyme because rhyme is preferred;
 - copying corporate-life jokes because some corpus examples contain them.
 
 > **Do not imitate surface features. Learn the decision behind them.**
@@ -747,14 +786,19 @@ Common imitation failures:
 ### Hard rules
 
 - Thai thought first.
+- BFF chat/DM is the default house register outside CARE.
 - Naturalness beats grammatical completeness.
+- Humor may outrank textbook grammar when meaning remains clear.
 - Context/omission can carry meaning.
 - Particles are semantic/performance choices.
+- Queer energy shapes timing and attitude, not caricature.
 - Borrowed English is not automatically code-switching.
 - Do not insert English only to look modern.
 - Do not translate natural borrowed vocabulary into stiff Thai merely for purity.
 - Line breaks are authored language.
 - Humor should arise from recognizable social logic.
+- When equally natural options exist, better mouthfeel — including internal rhyme, end/external rhyme or sound echo — is preferred.
+- Rhyme must never be forced at the expense of naturalness or meaning.
 - CARE remains outside the playful register.
 - Direct human-approved wording outranks generic style convention.
 - English is adapted from canonical Thai, not used as the Thai source.
@@ -775,6 +819,8 @@ The reviewed corpus often:
 - replaces generic self-help cleverness with cultural/social recognition.
 
 Do not turn these observations into mechanical generation rules.
+
+The BFF/humor/rhyme priorities above are **house editorial instructions**, not claims that the 948-review data quantitatively proves a universal Thai preference for those features.
 
 ---
 
@@ -908,10 +954,11 @@ The same idea lands through a culturally recognizable Thai frame.
 
 ## 23. Editorial QA checklist
 
-### Thai
+### Thai / BFF mode
 
 - Does it feel conceived in Thai?
-- Would someone plausibly say/type it in this situation?
+- Would your BFF plausibly send this in chat or DM in this situation?
+- Is it casual enough for the house voice outside CARE?
 - Is it more complete than necessary?
 - Can context carry part of the meaning?
 - Are subjects/pronouns necessary?
@@ -925,11 +972,14 @@ The same idea lands through a culturally recognizable Thai frame.
 - Is a brand/object named because it is socially specific, not because specificity is fashionable?
 - Is true code-switching actually contextually justified?
 
-### Humor
+### Humor / sound
 
 - Is it recognizable without explanation?
 - Does the punchline land?
-- Is it affectionate rather than cruel?
+- If grammar and comic timing compete, is the chosen line still clear and more alive?
+- Is there a natural internal rhyme, end/external rhyme, echo or repetition that improves mouthfeel?
+- If rhyme appears, does it feel effortless rather than engineered?
+- Is the humor affectionate rather than cruel?
 
 ### Line composition
 
@@ -938,6 +988,7 @@ The same idea lands through a culturally recognizable Thai frame.
 - Is the opening overloaded?
 - Is the final landing protected?
 - Is a Latin token visually too wide?
+- Could a break improve the rhyme/echo without damaging natural speech?
 
 ### English
 
@@ -988,6 +1039,7 @@ Do not automatically call it “RLHF data.” The raw asset is more accurately a
 - One reviewer does not represent all Thai speakers.
 - This is one deliberate house voice/product context.
 - Slang/register preferences can age.
+- BFF, queer-aware, humor-first and rhyme preferences are house editorial choices, not universal claims about Thai.
 - Case-study categories are qualitative examples, not exhaustively coded labels.
 - The English corpus was editorially adapted and QA'd, but it did not undergo the same 948-item independent human approval protocol as Thai.
 
@@ -1020,7 +1072,7 @@ Canonical snapshots:
 
 Live visual reference:
 
-`/voice.html` v11 — MD5 `88d8f317d90dbe609c6697010dd456ca`
+`/voice.html` v13 — MD5 `ca03c65db1f83e238a10cab000214d3f`
 
 Always re-query Supabase before a future production write.
 
@@ -1036,14 +1088,20 @@ English thought
 
 BUT:
 Thai social intent
+→ BFF chat/DM mode
 → Thai voice
-→ implication / omission / particles
+→ humor + implication / omission / particles
 → natural lexical choice for this register
+→ sound / rhyme / mouthfeel when natural
 → breath + body-language line composition
 → English sibling adaptation
 ```
 
 And always:
+
+> **Humor before textbook grammar — when meaning remains clear.**
+
+> **BFF in the DMs. Casual by default outside CARE.**
 
 > **Naturalness beats completeness.**
 
@@ -1052,6 +1110,10 @@ And always:
 > **Borrowed English can remain Thai discourse without being code-switching.**
 
 > **Queer energy is timing and taste, not costume.**
+
+> **If two versions are equally natural, better mouthfeel wins.**
+
+> **Rhyme is preferred, never forced.**
 
 > **The line break is part of the voice.**
 
