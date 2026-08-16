@@ -5,563 +5,441 @@
 **Repository:** `dechadae/flipgazine`  
 **Supabase project:** `sjpvhgxacsiorrtijqua`
 
-> **Read this file first when opening a new chat for The Book of Answers.**
+> **Read this file first in a new Answers chat.**
 >
-> It records the current finished corpus state, the frozen human-review state, the production ownership boundaries, and the exact next mission: an isolated Three.js book-mechanism experiment.
+> The Thai human-review phase is now COMPLETE: all 948 answers were individually reviewed by the user against the frozen v119 source. The next mission is no longer review and is not the Three.js mechanism experiment. The next mission is the controlled corpus-application phase: freeze the evidence, build a staged Thai-reviewed v120, validate it, then adapt English siblings and complete final QA.
 >
-> Do not assume older corpus/version numbers in `AGENTS.md` are current. Re-query Supabase before a live write. This handoff records the verified state at the time above.
+> Do not rely on old counts in `AGENTS.md`. Re-query Supabase before live writes.
 
 ---
 
-## 1. Read these project authorities
+## 1. Authorities and precedence
 
-Before changing anything substantial, read:
+Read before substantial work:
 
-1. `AGENTS.md` — overall Flipgazine / Answers architecture, ownership and routing principles.
-2. `ANSWERS-VOICE-TONE.md` — canonical Thai/English editorial voice, queerness, slang and line-break rules.
-3. `ANSWERS-HUMAN-REVIEW.md` — human review protocol and provenance requirements.
-4. This file — current operational state and next task.
+1. `BOOK-OF-ANSWERS-HANDOFF.md` — this file; current operational state and next mission.
+2. `ANSWERS-VOICE-TONE.md` — canonical Thai/English editorial rules. It currently predates the final 948-review statistics and must be upgraded later.
+3. `ANSWERS-HUMAN-REVIEW.md` — review/provenance/export requirements.
+4. `AGENTS.md` — broader Flipgazine architecture; some Answers snapshot numbers are stale.
 
-For conflicts:
+Editorial precedence:
 
-- live Supabase state beats stale snapshot numbers;
-- direct user-approved wording beats generic style rules;
-- `ANSWERS-VOICE-TONE.md` governs editorial Thai/English decisions;
-- `AGENTS.md` governs architecture unless this handoff records a newer verified state.
+**direct user-approved wording → voice guide → established human-reviewed corpus voice → generic grammar/style convention**.
 
----
+Architecture precedence:
 
-## 2. Current verified live state
-
-Verified immediately before this handoff:
-
-| path | version | MD5 | chars |
-|---|---:|---|---:|
-| `/answers.html` | 98 | `e97e821b71c02e9d4831dcba1087c2a9` | 30670 |
-| `/fg-page-answers.js` | **119** | `6dc18662953f897a390eea0a038f0edf` | 270553 |
-| `/answers-thai-review.html` | **2** | `4d01e1355f5bbe4a369723c752b677b1` | 8067 |
-| `/fg-page-answers-thai-review.js` | **3** | `49455a79f6eff499f4f732f57d3f7e07` | 13053 |
-| `/wip/answers-human-review-source-v119-948.js` | 1 | `6dc18662953f897a390eea0a038f0edf` | 270553 |
-
-The frozen human-review source is therefore byte-identical to the current v119 live controller.
-
-Current human-review rows for review round `thai-human-v1`:
-
-**0 / 948**
-
-Nothing has been pre-approved on the user's behalf.
+**live Supabase state → current handoff → older repo snapshots**.
 
 ---
 
-## 3. Corpus state — finished before human review
+## 2. Final human-review milestone — COMPLETE
 
-The corpus-expansion phase is finished.
+Review round:
 
-Current authored corpus:
+`thai-human-v1`
 
-- **948 normal authored answers**
-- **3 CARE responses** handled separately before normal routing
-- **75 Universal answers**
-- **42 Support answers**
-- **183 Focus concepts** after vocabulary consolidation
+Frozen source:
 
-IDs **904–948** are the final new-answer expansion.
-
-The last production copy pass was v118 → v119. It changed only **13 English sibling adaptations** in IDs 904–948 so they better reflected the final Thai wording. The validation proved that reversing those 13 English changes reconstructed v118 exactly.
-
-Therefore in v119:
-
-- all Thai strings were unchanged from v118;
-- all Thai line breaks were unchanged;
-- all semantic metadata was unchanged;
-- Focus dictionary/index/runtime was unchanged;
-- routing was unchanged;
-- all 948 answer IDs were preserved.
-
-Do not add more answers or casually rewrite the corpus during the upcoming Three.js mechanism experiment.
-
-The next corpus operation is the user's own human Thai review, not more AI bulk writing.
-
----
-
-## 4. What The Book of Answers is
-
-It is deliberately **not a chatbot**.
-
-The public ritual is:
-
-```text
-question
-→ ถามดิ
-→ question committed
-→ user physically drags across the paper/book edge
-→ release at a depth
-→ book opens
-→ bilingual answer appears
-→ ถามอีกดิ resets
-```
-
-Important product invariant:
-
-**Physical page depth is theatrical interaction, not answer ID.**
-
-Semantic routing chooses the eligible answer. The physical book makes the answer feel discovered.
-
-Do not collapse this into a simple “press button → answer appears” interaction.
-
----
-
-## 5. Current visual/product character
-
-The Answers page is intentionally standalone and headerless.
-
-Visual language:
-
-- dark restrained background;
-- one dominant physical book;
-- generous negative space;
-- Noto Sans Thai for Thai;
-- light typography;
-- right page Thai / left page English when open;
-- vertical/standing physical book presence;
-- visible page thickness / paper-edge cues;
-- tactile opening ritual;
-- minimal controls;
-- editorial and contemporary, not mystical/tarot;
-- no chatbot bubbles;
-- no unnecessary navigation chrome.
-
-The book should feel like a small designed object that happens to know the answer.
-
-The existing product is already stable. A Three.js experiment must improve the physical mechanism without losing the calm editorial design.
-
----
-
-## 6. Routing architecture — preserve, do not reinvent during visual experiment
-
-The active routing model is the inverted-index Focus system.
-
-Mental model:
-
-> **Focus thinks like a librarian.**
-
-Core principle:
-
-> **Precision chooses the pool. Chance chooses the answer.**
-
-Normal order:
-
-```text
-CARE
-→ semantic parsing
-→ Focus subject owner
-→ relevant Support joins
-→ recent-answer handling
-→ 2 distinct random Universal answers join matched non-generic pools
-→ uniform random final choice
-```
-
-If nothing is understood, use the full 75-answer Universal pool.
-
-Important distinctions:
-
-- **Focus** = concrete subject owner.
-- **Support** = secondary advice/action pattern.
-- **Universal** = explicitly subject-neutral.
-
-Do not reintroduce Router v4, score weighting, legacy parallel truth, or direct physical-page-depth→answer mapping.
-
-For the Three.js lab, the safest approach is to **leave the routing engine completely alone**. The lab may use a fixed/dummy answer until the visual mechanism is approved.
-
----
-
-## 7. Thai editorial authority
-
-`ANSWERS-VOICE-TONE.md` is now the canonical editorial guide.
-
-Most important rule:
-
-> **Thai is the original. English is the adaptation.**
-
-Do not think in polished English first and then translate into Thai.
-
-Thai naturalness may depend on:
-
-- omission;
-- implication;
-- fragments;
-- social context;
-- particles;
-- timing;
-- pause;
-- code-switching;
-- queer/camp energy;
-- modern slang;
-- typography and line breaks acting like breath/body language.
-
-Examples of approved native-style thinking include constructions such as:
-
-```text
-chemistry
-มี
-แต่ consistency
-ยัง
-```
-
-and
-
-```text
-ความเป๊ะ
-มี limit
-กดปุ่มหยุด
-แล้ว move on
-```
-
-Natural Thai beats textbook completeness.
-
-Line breaks are authored language data, not formatting noise.
-
-Do not normalize them mechanically.
-
----
-
-## 8. Human Thai review — frozen but not started
-
-The user intends to review **every one of the 948 Thai answers personally** after the Three.js mechanism experiment.
-
-Private reviewer:
-
-`https://flipgazine.pages.dev/answers-thai-review.html`
-
-Source:
-
-- review round: `thai-human-v1`
-- source path: `/wip/answers-human-review-source-v119-948.js`
-- source version: `119`
-- source MD5: `6dc18662953f897a390eea0a038f0edf`
-- source answer count: `948`
+- path: `/wip/answers-human-review-source-v119-948.js`
+- source version: **119**
+- source MD5: **`6dc18662953f897a390eea0a038f0edf`**
+- answer count: **948**
 
 Database table:
 
 `public.answers_thai_reviews`
 
-Review workflow:
+Final live audit verified:
 
-- page shows Thai only;
-- existing line breaks are visible from the start;
-- Enter inserts a real authored line break;
-- unchanged good answer → tick Approve;
-- edited answer autosaves as `draft`;
-- after editing, reviewer must tick approval to make it `edited`;
-- editing a previously approved item invalidates that approval and returns it to `draft` until re-approved;
-- only `approved` and `edited` count as completed human review.
+- **948 / 948 reviewed**
+- **0 drafts**
+- **0 missing IDs**
+- IDs exactly **1–948**
+- **0 missing `reviewed_at`**
+- **0 source-version/hash mismatches**
+- **1 reviewer identity** across all rows
+- **0 broken approved semantics** (`approved` always equals source)
+- **0 broken edited semantics** (`edited` always differs from source)
+- first formal review timestamp: `2026-08-16 04:01:59.145+00`
+- last formal review timestamp: `2026-08-16 14:58:26.765+00`
 
-Current review count is **0 / 948**.
+Final status split:
 
-Do not create fake review rows, bulk-approve, infer approval from inactivity, or pre-populate records.
+- **564 approved unchanged = 59.5%**
+- **384 human edited = 40.5%**
 
-The provenance claim is only valid when all 948 are individually reviewed by the human user.
+Edit structure:
 
----
+- **348** edits changed wording and/or punctuation
+- **36** edits changed line composition only
+- **107** answers changed line count
+- **55** gained lines
+- **52** lost lines
 
-## 9. NEXT CHAT MISSION — Three.js book mechanism experiment
+Length evidence:
 
-The user is leaving the Thai-review phase temporarily and opening a new chat specifically to experiment with the **book mechanism in Three.js**.
+- average pre-review Thai: **36.4 characters**
+- average reviewed Thai: **36.8 characters**
+- net change across all 948: **+436 characters**
 
-This is a visual/interaction R&D task, not a corpus/routing task.
+This is important: the review changed how Thai is expressed far more than how much information it contains.
 
-### First action in the new chat
+Final structural sweep across all 948 is clean:
 
-Read this handoff, then inspect the current live owners:
+- no trailing spaces;
+- no spaces immediately before/after line breaks;
+- no CR characters;
+- no unwanted terminal newlines;
+- no double-space artifacts.
 
-- `/answers.html`
-- `/fg-page-answers.js`
-
-Do not design from memory alone. Understand the current DOM/CSS book mechanism, interaction states and mobile behavior first.
-
-### Experiment boundary
-
-Build the Three.js mechanism on a **separate experimental page/controller**.
-
-Do **not** replace `/answers.html` or `/fg-page-answers.js` until the user explicitly approves the Three.js experiment for integration.
-
-Do not touch:
-
-- answer copy;
-- Focus/Support/Universal semantics;
-- CARE;
-- dictionary/index;
-- Answers Library;
-- human-review table or frozen review source;
-- Main Admin.
-
-### Goal of the experiment
-
-Test whether Three.js can make the book feel substantially more physical and beautiful while preserving the simple ritual.
-
-The experiment should explore:
-
-- a vertical standing closed book;
-- believable cover/page-block thickness;
-- visible paper edge depth;
-- touch/pointer drag directly on the paper edge;
-- page-stack response to drag depth;
-- tactile resistance/easing rather than a generic UI slider;
-- release-to-open behavior;
-- convincing transition from closed/edge-drag state into an open bilingual spread;
-- page curvature/deformation if it materially improves realism;
-- subtle lighting/shadow that makes the object physical without becoming glossy game-render art;
-- stable centering and scale on mobile;
-- good performance on the user's Android phone;
-- graceful resize/orientation behavior;
-- no accidental scroll/selection during the book gesture;
-- no visible debug UI in the final experiment view.
-
-### Important design constraint
-
-The Three.js book must still feel **editorial**, not like a 3D tech demo.
-
-Avoid:
-
-- excessive orbit-camera movement;
-- shiny/plastic materials;
-- overdramatic lighting;
-- particle effects;
-- mystical visual language;
-- complex controls;
-- physics that feel impressive but slow down the ritual.
-
-The sophistication belongs backstage.
-
-### Text strategy in the lab
-
-Do not compromise Thai typography just to force everything into a WebGL texture.
-
-A hybrid approach is acceptable if it produces better typography and accessibility:
-
-- Three.js owns physical book geometry/mechanism;
-- DOM may own final Thai/English text overlay if necessary;
-- the visual result should still feel like text printed on/in the book.
-
-If rendering Thai into texture/canvas, use Noto Sans Thai and preserve authored line breaks exactly.
-
-### Interaction states that must remain understandable
-
-At minimum the experiment should have clear equivalents of:
-
-1. closed / awaiting question;
-2. question committed / `ถามดิ` disabled or visually committed;
-3. user invited to drag the page edge;
-4. active drag with depth feedback through the book itself;
-5. release/open transition;
-6. answer spread;
-7. reset / `ถามอีกดิ`.
-
-For early R&D it is acceptable to hard-code a sample answer and focus only on states 3–6.
-
-### Acceptance test before production integration
-
-Do not integrate just because it renders.
-
-The user should approve that it is:
-
-- more physical than the current mechanism;
-- at least as fast/responsive;
-- correctly centered on mobile;
-- visually consistent with Answers;
-- easy to understand without instructions becoming UI clutter;
-- stable across repeated open/reset cycles;
-- compatible with Thai/English spread layout;
-- worth the added Three.js complexity.
-
-If Three.js does not clearly improve the experience, keep the current production mechanism.
+**Do not edit or “clean up” the review table. It is now evidence.**
 
 ---
 
-## 10. Safe experiment naming / ownership
+## 3. Provenance language — use precisely
 
-Most live Flipgazine pages/controllers are served from Supabase `public.site_files`, not static GitHub page files.
+Do not claim every original v119 Thai string was untouched AI output. Some source items already contained earlier human influence during development.
 
-A new lab should therefore normally live as a separate `site_files` page/controller, with names clearly indicating that it is experimental.
+Default commercial/research wording:
 
-Do not create a duplicate production source in the Cloudflare static shell.
+**pre-human-review source → human-reviewed final**
 
-Potential lab naming can be decided in the new chat, but it should be unmistakably separate from production, e.g. an Answers book lab/experiment route.
+For `edited` rows:
 
-If a change is only in `site_files`, **do not redeploy Cloudflare Pages**.
+- `original_thai` = frozen pre-human-review source
+- `reviewed_thai` = final human-edited preference
 
-Only shell-owned assets such as `_worker.js`, `_headers`, `_redirects`, `sw.js`, manifests, icons etc. require GitHub/Cloudflare shell deployment.
+For `approved` rows:
 
----
+- source was explicitly human-accepted unchanged
 
-## 11. Connected tools / practical capabilities
+Only label an individual example **model draft → human correction** if its provenance independently proves that.
 
-Useful connected apps available in ChatGPT:
-
-- **GitHub** — connected and usable for repo read/write.
-- **Supabase** — connected and usable for live `site_files` and database work.
-- **Figma** — connected if design transfer/prototyping becomes useful.
-
-Cloudflare and Sentry should not be treated as active account connectors for this project. The user previously said to forget both.
-
-For ordinary Answers work, GitHub + Supabase are sufficient.
+Do not casually call the dataset “RLHF.” It can support supervised correction, preference/evaluation tasks, or be transformed into DPO/RLHF-style formats later.
 
 ---
 
-## 12. Source-of-truth discipline
+## 4. Current live Supabase owners
 
-Repository:
+Verified after review completion:
 
-`dechadae/flipgazine`
+| path | version | MD5 | chars |
+|---|---:|---|---:|
+| `/answers.html` | 99 | `ec265ada07b882356699ef6b118b0167` | 30691 |
+| `/fg-page-answers.js` | **119** | **`6dc18662953f897a390eea0a038f0edf`** | 270553 |
+| `/answers-admin.html` | 45 | `0c8ebc38df87f2acd5275ba081f1343b` | 15562 |
+| `/fg-page-answers-admin.js` | 22 | `35153068bc4ade1e97ae9b0490bf2f65` | 25608 |
+| `/answers-thai-review.html` | 2 | `4d01e1355f5bbe4a369723c752b677b1` | 8067 |
+| `/fg-page-answers-thai-review.js` | 3 | `49455a79f6eff499f4f732f57d3f7e07` | 13053 |
+| `/voice.html` | 7 | `571f9756780eef858a2391ad084f1b69` | 22932 |
+| `/fg-devnav.js` | 29 | `679095417a3a8052624d648c86a6df76` | 29449 |
+| `/wip/answers-human-review-source-v119-948.js` | 1 | **`6dc18662953f897a390eea0a038f0edf`** | 270553 |
 
-Cloudflare shell folder:
+The live controller is still v119. **The human-reviewed Thai has NOT yet been applied to production.**
 
-`flipgazine-root-3/`
+`/voice.html` is a CI-style internal Voice reference page linked from the centralized diamond menu. Its evidence section still reflects the earlier 400-answer checkpoint and must later be upgraded to the full 948 evidence.
 
-Supabase project:
-
-`sjpvhgxacsiorrtijqua`
-
-Main live Answers owners:
-
-- `/answers.html`
-- `/fg-page-answers.js`
-- `/answers-admin.html`
-- `/fg-page-answers-admin.js`
-- `/answers.webmanifest`
-
-Human reviewer owners:
-
-- `/answers-thai-review.html`
-- `/fg-page-answers-thai-review.js`
-- `public.answers_thai_reviews`
-
-Frozen final source for human review:
-
-- `/wip/answers-human-review-source-v119-948.js`
-
-Before a risky live controller change:
-
-1. re-query current version/hash;
-2. make a `/wip/` backup;
-3. stage exact preview;
-4. validate independently;
-5. promote exact preview;
-6. verify live hash equals staged hash.
-
-Do not blind-replace large portions of the 270k controller.
+`/answers-admin.html` now includes a **Thai Audit ↗** button linking to `/answers-thai-review.html`.
 
 ---
 
-## 13. Important recent backups / previews
+## 5. Corpus / routing invariants — preserve exactly
 
-Useful continuity artifacts in Supabase include:
+Current normal corpus:
 
-- `/wip/answers-pre-final-new-copy-v118-2026-08-16.js`
-- `/wip/answers-final-new-copy-v119-preview.js`
-- `/wip/answers-human-review-source-v119-948.js`
-- `/wip/answers-pre-thai-first-948-v117-2026-08-16.js`
-- `/wip/answers-thai-first-948-v118-preview.js`
-- `/wip/answers-pre-vocab-consolidation-v116-2026-08-16.js`
-- `/wip/answers-vocab-consolidation-v117-preview.js`
-- `/wip/fg-page-answers-thai-review-v1-2026-08-16.js`
-- `/wip/fg-page-answers-thai-review-pre-v119-source-v2-2026-08-16.js`
+- **948 authored answers**
+- **75 Universal**
+- **42 Support**
+- **183 Focus concepts**
+- CARE handled separately before normal routing
 
-These are for comparison/recovery. They are not parallel live truth.
+Core routing principle:
 
----
+> **Precision chooses the pool. Chance chooses the answer.**
 
-## 14. Do not accidentally resume the wrong phase
-
-### In the Three.js chat
-
-Focus only on the book mechanism experiment.
-
-Do not start human Thai review or rewrite corpus content just because the reviewer exists.
-
-### When the user returns to the Thai review
-
-Resume from:
-
-`https://flipgazine.pages.dev/answers-thai-review.html`
-
-Expected starting state is currently:
-
-**0 / 948 reviewed**
-
-The user will personally read every Thai answer, edit where needed, and approve each one.
-
-After 948/948:
-
-1. verify all rows belong to the frozen v119 source/hash;
-2. export/apply only the final reviewed Thai strings back to canonical answer rows;
-3. preserve answer IDs and semantics;
-4. re-adapt English only where a human Thai edit changes the meaning/tone enough to require it;
-5. run duplicate, line-break, semantic-index and routing QA;
-6. freeze the human-reviewed corpus;
-7. reevaluate the dataset as a commercial Thai-language AI asset.
-
----
-
-## 15. Commercial/provenance intent
-
-The corpus may later be evaluated/licensed as a contemporary Thai language asset.
-
-The value proposition is not token volume. It is curated Thai pragmatics and preference-quality editorial data:
-
-- native conversational Thai;
-- modern Thai/English code-switching;
-- implication and omission;
-- slang/register;
-- queer/camp social voice without caricature;
-- line-break/breath composition;
-- English sibling adaptations;
-- semantic annotation via Focus/Support/Topic/Helper;
-- future rejected→preferred revision pairs;
-- explicit per-answer human review provenance.
-
-Do not make the claim “every Thai answer was human reviewed” until review is truly 948/948.
-
----
-
-## 16. User/product working style
-
-The user is highly sensitive to:
-
-- mobile alignment drift;
-- book centering;
-- typography and Thai font correctness;
-- line breaks;
-- interaction-state changes after button press;
-- duplicated systems;
-- override/fix-the-fix spirals;
-- speculative architecture changes;
-- accidental exposure of unfinished work.
-
-Preferred engineering behavior:
-
-> **Find the real owner, preserve the invariant, and make the smallest coherent change.**
-
-Always inspect the current live source before claiming how it works.
-
----
-
-## 17. Short handoff for the next agent
-
-If you are the new agent/chat, start here:
+Normal architecture:
 
 ```text
-Read BOOK-OF-ANSWERS-HANDOFF.md, AGENTS.md, ANSWERS-VOICE-TONE.md,
-and ANSWERS-HUMAN-REVIEW.md.
-
-Then re-query live Supabase for /answers.html and /fg-page-answers.js.
-
-The corpus is finished at v119 / 948 answers and must not be changed.
-The human Thai review is frozen at 0/948 and must not be started or simulated.
-
-Your task is an isolated Three.js experiment for the physical book mechanism.
-Inspect the current mechanism first, build a separate lab, use dummy/fixed answer data if useful,
-and do not touch production until the user explicitly approves integration.
+CARE
+→ semantic parsing
+→ precise Focus / Topic / Helper matching
+→ relevant Support
+→ recent-answer handling
+→ exactly 2 distinct Universal answers join matched non-generic pools
+→ uniform random choice inside eligible pool
 ```
 
-That is the current project boundary.
+If nothing is understood, use the full 75 Universal pool.
+
+Do not reintroduce Router v4, legacy parallel tags, probability weighting, or physical page depth as an answer selector.
+
+The next corpus apply must preserve:
+
+- all 948 answer IDs;
+- Focus/Topic/Helper metadata;
+- Universal/Support assignments;
+- Focus dictionary/index;
+- CARE;
+- routing and widening behavior;
+- randomness behavior;
+- runtime mechanics.
+
+Only reviewed copy should change during the first apply step.
+
+---
+
+## 6. Thai voice — distilled full-review rules
+
+Central principle:
+
+> **Contemporary natural Thai is not defined by slang, English words, short sentences, or grammatical informality. It is defined by choosing what a Thai speaker would naturally say in that exact social situation, including what they would leave unsaid.**
+
+Hard rules supported by the completed review:
+
+- Thai thought comes first. Do not construct English logic then translate it.
+- Natural Thai may intentionally leave meaning incomplete.
+- Omit pronouns/subjects when context carries them.
+- Particles are semantic/performance decisions, not decoration.
+- Line breaks are authored language and body/breath rhythm, not mechanical wrapping.
+- Humor should come from recognizable social reality rather than constructed cleverness.
+- Specific Thai social/cultural references often beat abstract generic concepts.
+- Do not insert English merely to sound modern.
+- Do not translate naturally embedded English into stiff Thai merely because a Thai equivalent exists.
+- CARE stays clear, direct and grounded outside the playful house register.
+
+### Borrowed English is NOT automatically code-switching
+
+This distinction is critical.
+
+Contemporary Thai naturally incorporates foreign lexical items without necessarily switching languages.
+
+Examples such as `deadline`, `meeting`, `mute`, `jobsdb`, `OT`, `GPS`, `read`, `Fit check`, `chemistry`, `consistency`, etc. can remain Thai discourse when Thai grammar/rhythm/social framing continues around them.
+
+**True code-switching** means an actual discourse-level language shift because context/audience requires it.
+
+Do not describe the corpus as “Thai speakers code-switch constantly.”
+
+Also do not imitate surface features mechanically. Learn the decision behind the human preference.
+
+---
+
+## 7. NEXT CHAT MISSION — controlled v120 apply
+
+The immediate mission is:
+
+> **Freeze the completed human-review evidence, then create a staged v120 from v119 in which ONLY Thai answer strings are replaced by the final `reviewed_thai`, preserving every ID and every semantic/runtime invariant.**
+
+Do not begin with English adaptation. First prove the Thai apply is exact.
+
+### Step A — freeze review evidence
+
+Before touching the controller, export/snapshot the completed `thai-human-v1` rows with at least:
+
+- answer ID
+- `original_thai`
+- `reviewed_thai`
+- `review_status`
+- reviewer ID
+- `reviewed_at`
+- source path/version/hash
+- review round
+
+Preferred durable outputs later include CSV, JSONL and a human-readable Markdown/PDF comparison set.
+
+The review table itself remains immutable evidence.
+
+### Step B — build staged v120, Thai only
+
+Use `/fg-page-answers.js` v119 as the production base.
+
+For each answer ID 1–948:
+
+- replace the canonical Thai string with exactly `reviewed_thai` from `thai-human-v1`;
+- preserve authored line breaks exactly;
+- do not normalize spelling, punctuation or borrowed English;
+- do not touch the English sibling yet;
+- do not change metadata or routing.
+
+Stage to a clear `/wip/` preview first. Do not directly overwrite live v119.
+
+Also create a `/wip/` backup of the current live v119 owner before promotion work.
+
+### Step C — prove the Thai-only diff
+
+Before any production promotion, validate mechanically that:
+
+1. answer count remains exactly 948;
+2. answer IDs remain exactly 1–948, same order;
+3. for every answer, staged Thai equals `reviewed_thai` byte-for-byte;
+4. every non-Thai field is identical to v119;
+5. English strings are identical to v119;
+6. Focus/Topic/Helper arrays are identical;
+7. Universal/Support membership is identical;
+8. dictionary/index/runtime logic is identical;
+9. CARE is identical;
+10. controller parses successfully;
+11. no structural whitespace artifacts were introduced.
+
+A reverse/reconstruction test is desirable: replacing staged Thai with `original_thai` should reconstruct the relevant v119 answer content.
+
+### Step D — stop and report
+
+After staged Thai-only v120 passes, report the exact preview path, version/hash, count checks and diff proof to the user.
+
+**Do not promote to live and do not adapt English until the user approves the staged Thai apply.**
+
+---
+
+## 8. After Thai-only v120 is approved
+
+The next phases are deliberately separate so provenance stays easy to audit.
+
+### English sibling adaptation
+
+Revisit English siblings with the final reviewed Thai as authority.
+
+Priority:
+
+- all **384 edited** Thai answers must be checked;
+- the **564 approved** answers can generally retain existing English unless the sibling is already mismatched.
+
+English is an adaptation, not a literal translation. Preserve:
+
+- recommendation;
+- attitude;
+- joke weight;
+- emotional temperature;
+- social intent.
+
+Do not preserve Thai word order mechanically.
+
+Prefer a separate staged version after Thai-only v120 has been proven, so Thai application and English adaptation remain independently auditable.
+
+### Final corpus QA
+
+After English adaptation:
+
+- duplicate/near-duplicate review;
+- Thai/English sibling alignment;
+- line-break QA;
+- JS parse;
+- answer count/ID integrity;
+- semantic-index/routing invariants;
+- CARE regression;
+- matched and generic routing smoke tests;
+- mobile Answers ritual smoke test.
+
+Only then freeze the human-reviewed production corpus.
+
+---
+
+## 9. Voice guide upgrade after corpus apply
+
+`/voice.html` and `ANSWERS-VOICE-TONE.md` currently contain evidence from the earlier 400-answer milestone.
+
+After the corpus application is stable, upgrade them to the full 948 evidence:
+
+- 948 reviewed
+- 564 accepted unchanged
+- 384 human edited
+- 59.5% / 40.5%
+- 348 wording/punctuation edits
+- 36 pure line-composition edits
+- 107 line-count changes
+- +436 net characters across all 948
+
+Add strong rejected/preferred pairs from the completed review and distinguish:
+
+- hard rules supported repeatedly;
+- observed tendencies that remain context-sensitive.
+
+Do not turn human tendencies into mechanical slang rules.
+
+---
+
+## 10. Commercial dataset / buyer-facing outputs
+
+After production corpus freeze, package the completed review as a contemporary Thai language asset.
+
+Useful product layers:
+
+### Core Corpus
+
+- 948 final human-reviewed Thai answers
+- English siblings
+- answer IDs
+- basic semantic labels
+
+### Thai Preference / Alignment Layer
+
+- all **384 edited** pre-review → human-final pairs
+- all **564 accepted-as-is** validations
+- exact authored line breaks
+- source version/hash
+- review timestamps/reviewer metadata as appropriate
+- voice methodology / failure taxonomy
+
+### Research / Enterprise layer
+
+- benchmark/evaluation tasks
+- model failure analysis
+- naturalness/pragmatics categories
+- optional ontology/aliases/mappings
+
+Strong positioning:
+
+> **How to stop an LLM sounding like it thought in English and translated into Thai.**
+
+Better formal framing:
+
+> **A production-derived, human-validated contemporary Thai corpus developed inside a functioning consumer application.**
+
+Do not overclaim enterprise readiness until schema, data card, rights/provenance, license terms and evaluation package are complete.
+
+---
+
+## 11. Product invariant — The Book of Answers is not a chatbot
+
+The public ritual remains:
+
+```text
+question
+→ ถามดิ
+→ question committed
+→ tactile paper/book gesture
+→ release/open
+→ bilingual answer
+→ ถามอีกดิ
+```
+
+Physical page depth is theatrical interaction, not answer ID.
+
+The current Three.js/book-mechanism work is a separate project thread. Do not let it contaminate corpus/routing work in the v120 apply chat.
+
+---
+
+## 12. Source-of-truth discipline for live changes
+
+Most Answers owners live in Supabase `public.site_files`.
+
+Before a risky controller change:
+
+1. re-query current live version/hash;
+2. create a `/wip/` backup;
+3. create a separate staged preview;
+4. validate counts/diff independently;
+5. ask for user approval where the handoff requires it;
+6. promote the exact staged bytes;
+7. verify live MD5 equals staged MD5.
+
+Do not blind-replace large sections of the ~270k controller.
+
+Supabase `site_files` changes do not require a Cloudflare Pages redeploy.
+
+Main Admin is separate from Answers Library. Do not touch Main Admin for Answers work.
+
+---
+
+## 13. Current checkpoint in one sentence
+
+**The user has personally completed the first auditable Thai review of all 948 frozen v119 Answers items; the evidence is clean and complete, while live production still runs v119, so the next task is to freeze/export that evidence and build a rigorously validated Thai-only staged v120 without changing English, semantics, routing, CARE or runtime.**
