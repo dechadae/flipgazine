@@ -1,6 +1,6 @@
 # The Book of Answers — Thai Voice, Tone & Line-Break Guide
 
-**Editorial authority · revised 16 August 2026**
+**Editorial authority · full-corpus revision · 16 August 2026**
 
 This file is the canonical writing guide for Thai and English copy in **The Book of Answers**.
 
@@ -23,9 +23,50 @@ It does **not** replace `AGENTS.md` for routing, architecture, CARE, Focus/Suppo
 
 For editorial decisions, use this priority:
 
-> **direct user-approved wording → this guide → established approved corpus voice → generic grammar/style convention**
+> **direct user-approved wording → this guide → established human-reviewed corpus voice → generic grammar/style convention**
 
 If a Thai sentence is technically less complete but sounds more naturally Thai, the natural Thai version wins.
+
+---
+
+## Final evidence checkpoint — 948/948 reviewed
+
+The Thai human-review phase is complete.
+
+Frozen review source:
+
+- source controller version: **v119**;
+- source MD5: `6dc18662953f897a390eea0a038f0edf`;
+- review round: `thai-human-v1`;
+- authored Thai answers reviewed: **948 / 948**;
+- missing IDs: **0**;
+- drafts remaining: **0**.
+
+Final review outcomes:
+
+- **564 accepted unchanged — 59.5%**;
+- **384 human edited — 40.5%**;
+- **107 answers changed line count**;
+- **55 answers gained lines / 52 answers lost lines**;
+- **36 edits changed only composition when all whitespace is ignored**;
+- of those, **27 are strict newline-only edits with otherwise byte-identical text**;
+- **+436 net characters** across the complete 948-answer review.
+
+The most important quantitative finding is not the edit rate by itself.
+
+More than two in five answers needed human intervention, but the final corpus gained only 436 characters net. The review therefore changed **how the Thai is expressed** far more than **how much information it contains**.
+
+> **Large editorial impact. Almost no increase in information volume.**
+
+This guide treats that result as evidence for pragmatic and sociolinguistic alignment: lexical choice, implication, social specificity, particles, register, humor and delivery.
+
+Do not infer unsupported category percentages from this study. The 384 edits have not been exhaustively coded into a mutually exclusive linguistic taxonomy.
+
+Provenance wording:
+
+> **pre-human-review source → human-reviewed final**
+
+Do not label every pre-review line “AI-generated.” The frozen v119 source already contained earlier human influence from the development process.
 
 ---
 
@@ -49,7 +90,7 @@ English proposition
 Correct workflow:
 
 ```text
-Thai thought
+Thai social intent
 → Thai spoken rhythm
 → implication / omission / particle
 → borrowed English only where it is already the natural Thai lexical choice
@@ -194,14 +235,9 @@ Examples:
 
 ```text
 ไปค่ะ
-
 พอค่ะ
-
 ศีลไม่ขาด
-
 ไม่ต้องมีซีน
-
-เดี๋ยวยอดร้องไห้
 ```
 
 Queerness must **not** become:
@@ -224,9 +260,9 @@ If the reader notices that the writer is *trying to sound queer*, pull it back.
 
 Slang is allowed and important, but it has to behave like real spoken/social Thai.
 
-### 6.1 Use slang because it is the best word
+Use slang because it is the best word, not because the model wants to signal youth.
 
-Good:
+Examples:
 
 ```text
 ก็ไม่โอ
@@ -240,58 +276,39 @@ Good:
 
 One natural slang beat is usually stronger than five.
 
-### 6.2 Durable vs trend-sensitive
-
-Relatively durable contemporary language includes forms such as:
-
-- `โอ`
-- `พอละ`
-- `มีซีน`
-- `มูฟออน / move on`
-- `mute`
-- `block`
-- `default`
-- `low profile`
-
-Highly trend-sensitive meme language should be used more sparingly.
-
 Plain natural Thai is often more contemporary than forced youth language.
+
+Trend-sensitive meme language should be used more sparingly than durable conversational language.
 
 ---
 
 ## 7. Borrowed English is not automatically code-switching
 
-This distinction is now a project rule.
+This distinction is a project rule.
 
 ### 7.1 Borrowed / embedded English
 
 When a Thai speaker remains in Thai and uses an English lexical item because that is simply the normal, easiest or most intelligible word in that register, treat it as **borrowed / embedded English in Thai**, not as a language switch.
 
-Common reasons include:
-
-- there is no useful everyday Thai equivalent;
-- the Thai equivalent exists but is too formal, technical or difficult;
-- the English form is already the normal social/work term;
-- the English item has effectively become part of contemporary Thai usage in that context.
-
-Examples:
+Typical examples include:
 
 ```text
 meeting
 deadline
 fit check
 service charge
-default
 mute
 block
 chemistry
 consistency
-spark
+OT
+CV
+brief
 ```
 
-In these cases the speaker does not need to mentally leave Thai. The syntax, social frame and rhythm remain Thai.
+The syntax, rhythm and social frame remain Thai.
 
-Examples from the corpus:
+Examples:
 
 ```text
 chemistry
@@ -301,20 +318,15 @@ chemistry
 ```
 
 ```text
-spark ดีค่ะ
-แต่ดูด้วยว่า
-หลัง spark
-ยัง speak มั้ย
+mute ก่อน
 ```
 
 ```text
-ความเป๊ะ
-มี limit
-กดปุ่มหยุด
-แล้ว move on
+ถ้าทุกวัน
+คือ OT
+ปัญหาที่มี
+ไม่ใช่เวลา
 ```
-
-These English forms behave like lexical material inside Thai discourse. Do not label them as code-switching merely because they use Latin script.
 
 ### 7.2 True code-switching
 
@@ -330,16 +342,33 @@ Typical triggers include:
 
 True code-switching is contextual. It is **not a house-style trick** for making the book sound modern.
 
-### 7.3 Use borrowed English only when it is the natural word
+### 7.3 No language-purity rule
 
-Use an English lexical item when a contemporary Thai speaker would naturally choose it.
+The full human review reinforces a stronger rule:
 
-Avoid it when:
+> **Use the lexical item the situation naturally wants.**
 
-- a natural Thai word is clearly better;
-- English is being inserted only to look modern;
-- the sentence starts feeling like English syntax wearing Thai particles;
-- the English item requires the reader to translate mentally when Thai would be easier.
+Sometimes human review preserved or introduced English:
+
+```text
+OT
+jobsdb
+mute
+CV
+brief
+timeline
+```
+
+Sometimes it removed English:
+
+```text
+client → ลูกค้า
+resignation draft → ใบลาออก
+timer แดง → ป้ายแดง
+pin → โล
+```
+
+This is not inconsistency. It is register-sensitive lexical choice.
 
 ### 7.4 English lexical items can participate in Thai grammar
 
@@ -347,23 +376,21 @@ Examples:
 
 ```text
 mute ก่อน
-
 ยัง speak มั้ย
-
 มี limit
-
 แล้ว move on
+ไม่ต้องทำ OT
 ```
 
 Do not force English grammar around the borrowed word.
 
-### 7.5 Case
+### 7.5 Case and brands
 
-Conversational borrowed English can stay lowercase when that matches the visual/social voice:
+Conversational borrowed English can stay lowercase when that matches the visual/social voice.
 
-`chemistry`, `consistency`, `spark`, `speak`, `default`, `destination`, `hobby`.
+Preserve normal capitalization where it matters for brands, acronyms and established forms: `TikTok`, `PowerPoint`, `CV`, `OT`.
 
-Preserve normal capitalization for proper nouns and brands where useful: `TikTok`, `FaceTime`, `Google`, etc.
+Do not mechanically normalize case across the corpus when the human-approved form is deliberate.
 
 ---
 
@@ -371,7 +398,7 @@ Preserve normal capitalization for proper nouns and brands where useful: `TikTok
 
 Thai particles are not filler.
 
-Words such as `ค่ะ`, `นะ`, `สิ`, `ดิ`, `อะ`, `มั้ง`, `ปะ`, `เหรอ`, `มั้ย` can alter intimacy, confidence, softness, challenge, irony, camp, annoyance, affection and social distance.
+Words such as `ค่ะ`, `นะ`, `สิ`, `ดิ`, `อะ`, `มั้ง`, `ปะ`, `ป่ะ`, `เหรอ`, `มั้ย` can alter intimacy, confidence, softness, challenge, irony, camp, annoyance, affection and social distance.
 
 Do not mechanically standardize them.
 
@@ -383,7 +410,7 @@ Use the form that sounds right in the speaker’s mouth.
 
 English frequently requires explicit subjects. Thai frequently does not.
 
-Do not add `คุณ`, `เรา`, `เขา` or a repeated noun unless the sentence actually needs it.
+Do not add `คุณ`, `เรา`, `เขา`, `เค้า` or a repeated noun unless the sentence actually needs it.
 
 Compare:
 
@@ -418,12 +445,31 @@ Humor should usually come from:
 - unexpectedly practical advice;
 - treating something trivial with ceremonial seriousness;
 - treating something dramatic with calm practicality;
+- deliberate irrationality when the social joke is obvious;
 - a final-line reversal;
 - affectionate shade.
 
 Avoid explaining the joke, generic motivational language, punching down, humiliation, body shaming, cruelty disguised as sass, or forced punchlines on serious situations.
 
 The book can be bitchy. It should not be mean.
+
+A useful full-corpus example:
+
+```text
+Pre-review:
+เล่นบอร์ดเกม
+กับที่บ้าน
+แพ้ได้
+อย่าตัดญาติ
+
+Human-reviewed:
+เล่นบอร์ดเกม
+กับที่บ้าน
+แพ้ไม่ได้
+ตัดญาติได้
+```
+
+The reviewed proposition is less sensible advice and better humor because the social performance is immediately recognizable.
 
 ---
 
@@ -475,8 +521,6 @@ Priority:
 
 > **visual width → spoken rhythm → pragmatic meaning → grammar**
 
-Use `จำชื่อเราได้ไหม` as an approximate pure-Thai comfort-width reference, not a fixed limit.
-
 Latin-script words are visually wider and may need earlier breaks.
 
 ### 12.4 Script / lexical boundaries can be useful break points
@@ -492,7 +536,7 @@ A long borrowed English expression can sit alone if that improves balance.
 
 ### 12.5 Fragments are allowed
 
-A line can be only `ยัง`, `พอ`, `ก่อน`, `ได้อยู่`, `พอละ` if that is how the answer lands naturally.
+A line can be only `ยัง`, `พอ`, `ก่อน`, `ได้อยู่`, `พอละ`, `จบ` if that is how the answer lands naturally.
 
 ### 12.6 Protect the final landing
 
@@ -500,7 +544,28 @@ The last line often carries the punchline, implication, particle, one-word judge
 
 Do not absorb it into the line above if the pause is doing work.
 
-### 12.7 Review notation
+### 12.7 Human-review evidence
+
+The completed review contains **36 edits where the non-whitespace wording is unchanged and only composition differs**.
+
+Example #405:
+
+```text
+Pre-review:
+วาดต่อ
+เส้นเบี้ยวคือสไตล์
+
+Human-reviewed:
+วาดต่อ
+เส้นเบี้ยว
+คือสไตล์
+```
+
+Twenty-seven of the 36 are strict newline-only changes with otherwise byte-identical text.
+
+This is direct evidence that line composition is authored delivery, not rendering noise.
+
+### 12.8 Review notation
 
 In review documents/chat, `/` may represent an authored line break.
 
@@ -532,10 +597,11 @@ For every new or revised answer:
 2. **Remove unnecessary completeness.** Delete explanations, subjects and connective tissue that context already supplies.
 3. **Find the social performance.** Teasing? Resigned? Camp? Gentle? Unimpressed? Practical? Flirty? Tired?
 4. **Use borrowed English only if that is genuinely the natural Thai lexical choice.** Do not insert English to manufacture modernity. True code-switching should occur only when discourse context genuinely calls for a language shift.
-5. **Compose the Thai page.** Break by width, breath and timing.
-6. **Read it aloud mentally.** If it sounds written rather than spoken, revise.
-7. **Write the English adaptation.** Preserve attitude and practical meaning; do not translate every word.
-8. **Assign semantics.** Only after the copy is right, confirm Focus / Support / Topic / Helper ownership.
+5. **Choose the lived context.** Prefer the actual person, food, app, place, behavior or social ritual when abstraction weakens the line.
+6. **Compose the Thai page.** Break by width, breath and timing.
+7. **Read it aloud mentally.** If it sounds written rather than spoken, revise.
+8. **Write the English adaptation.** Preserve attitude and practical meaning; do not translate every word.
+9. **Assign semantics.** Only after the copy is right, confirm Focus / Support / Topic / Helper ownership.
 
 ---
 
@@ -549,7 +615,8 @@ It does not need to reproduce:
 - every particle;
 - every omission;
 - every borrowed English item present in the Thai;
-- exact joke mechanics if another English joke lands better.
+- exact joke mechanics if another English joke lands better;
+- Thai line breaks line-for-line.
 
 It **does** need to preserve recommendation direction, emotional stance, level of certainty, humor/camp where possible, and practical meaning.
 
@@ -575,6 +642,14 @@ Not:
 ```text
 There is chemistry, but there is not yet consistency.
 ```
+
+### 15.1 Current evidence boundary
+
+The completed 948-review study validates the **Thai human-review layer**.
+
+It does **not** yet validate a final English sibling corpus. The dedicated English adaptation pass must be evaluated separately after the reviewed Thai becomes canonical.
+
+When a human Thai edit materially changes the joke, metaphor, stance or social frame, re-adapt the English from the reviewed Thai. Do not patch the old English mechanically.
 
 ---
 
@@ -623,6 +698,7 @@ The following are powerful because they are not constant:
 - dramatic exaggeration;
 - slang;
 - queer shade;
+- ellipses;
 - work/corporate vocabulary applied to life.
 
 Do not make every answer structurally identical.
@@ -692,9 +768,12 @@ Useful failure modes include:
 - missed Thai implication;
 - poor particle choice;
 - poor line composition;
-- culturally weaker metaphor or social framing.
+- culturally weaker metaphor or social framing;
+- abstract cleverness where a specific social behavior would land better.
 
 Do not call ordinary embedded English a code-switching error unless an actual language shift occurred.
+
+The review pair itself is evidence. Do not overwrite the original with the final and discard the provenance.
 
 ---
 
@@ -712,13 +791,6 @@ chemistry
 เหมือน timelapse
 ตอนแยกกัน
 เหมือน time out
-```
-
-```text
-spark ดีค่ะ
-แต่ดูด้วยว่า
-หลัง spark
-ยัง speak มั้ย
 ```
 
 ```text
@@ -742,12 +814,7 @@ spark ดีค่ะ
 พอละ
 ```
 
-```text
-ช่วยได้
-แต่อย่ากลายเป็น
-customer service
-ประจำบ้าน
-```
+Full-review examples should also be treated as canonical evidence, including #386, #405, #517, #552, #774, #778, #783, #868 and #935 documented below.
 
 ---
 
@@ -797,6 +864,7 @@ customer service
 - Is it an adaptation rather than a literal translation?
 - Does it preserve stance and recommendation?
 - Is it concise?
+- Does it avoid explaining a Thai joke that should instead be re-authored for English?
 
 ### Semantics
 
@@ -807,20 +875,31 @@ customer service
 
 ---
 
-## 25. Full-corpus review protocol
+## 25. Completed full-corpus review protocol
 
-The current editorial phase is a one-time human review of **all 948 authored Thai answers** against this guide.
+The one-time human review of **all 948 authored Thai answers** is complete.
 
-Workflow:
+The protocol was:
 
 1. review in stable ID order;
 2. preserve ID numbers;
-3. record original and reviewed Thai separately;
+3. retain original and reviewed Thai separately;
 4. preserve direct human-approved wording exactly;
-5. update English only after Thai review is complete;
+5. edit approval was invalidated whenever copy changed and required re-approval;
 6. preserve authored line breaks exactly;
-7. rerun duplicate/index/semantic QA after publication;
-8. freeze the final human-reviewed corpus.
+7. only `approved` and `edited` counted as complete;
+8. do not bulk-approve or infer approval;
+9. keep all rows tied to the frozen v119 source hash;
+10. run structural/provenance QA at completion.
+
+Final audit result:
+
+- **948 / 948 complete**;
+- **0 drafts**;
+- **0 missing IDs**;
+- **0 source mismatches**;
+- **564 approved unchanged**;
+- **384 edited**.
 
 This is an editorial normalization of **quality**, not a normalization of **voice**.
 
@@ -828,22 +907,19 @@ Do not make all 948 answers sound the same.
 
 ---
 
-## 26. Current corpus checkpoint
+## 26. Corpus checkpoint and source discipline
 
-As of 16 August 2026:
+The authoritative human-review source is:
 
-- live public controller: `/fg-page-answers.js` **v119**;
-- MD5: `6dc18662953f897a390eea0a038f0edf`;
-- authored answers: **948**;
-- CARE responses: **3**, separate from the authored corpus;
-- Universal answers: **75**;
-- Support answers: **42**;
-- Focus concepts: **183**;
-- Focus dictionary version: **4**;
-- human review source: `/wip/answers-human-review-source-v119-948.js`;
-- human review round: `thai-human-v1`.
+- `/wip/answers-human-review-source-v119-948.js`;
+- source version **119**;
+- source MD5 `6dc18662953f897a390eea0a038f0edf`;
+- authored-answer count **948**;
+- review round `thai-human-v1`.
 
-Always re-query live state before a future write.
+This checkpoint describes the **review source**, not necessarily the current live production controller after later migration/application work.
+
+Always re-query Supabase before a future production write. Do not copy stale live version numbers from this guide.
 
 ---
 
@@ -876,3 +952,297 @@ And always:
 > **Queer energy is timing and taste, not costume.**
 
 > **The line break is part of the voice.**
+
+> **Do not imitate surface features. Learn the decision behind them.**
+
+---
+
+## 28. Full-corpus case study — what changed when 948 Thai answers met a human editor?
+
+### Method
+
+One frozen source of 948 authored Thai answers was reviewed answer-by-answer by one human reviewer.
+
+Each item was either:
+
+- accepted unchanged; or
+- explicitly edited and then re-approved.
+
+Original and reviewed Thai were retained as paired evidence. IDs and source provenance remained fixed during the review.
+
+This is an editorial corpus study, not a controlled experiment claiming that every Thai speaker would make the same choice.
+
+### Quantitative result
+
+- 948 reviewed;
+- 564 accepted unchanged;
+- 384 edited;
+- 107 changed line count;
+- 55 answers gained lines;
+- 52 answers lost lines;
+- 36 composition-only edits under a non-whitespace comparison;
+- +436 net characters across the whole corpus.
+
+The data does **not** show a simple tendency toward shorter answers, longer answers, more Thai words, more English words or more slang.
+
+It shows repeated human decisions about **what fits the social situation**.
+
+### Case A — pragmatic omission
+
+#386
+
+```text
+Pre-review:
+โต๊ะริมหน้าต่าง
+เหมาะกับคิดเรื่อง
+ที่ไม่ควรคิด
+
+Human-reviewed:
+โต๊ะริมหน้าต่าง
+เหมาะกับคิดเรื่อง
+ที่ไม่ควร
+```
+
+The final verb disappears because the listener already completes the thought.
+
+### Case B — grammatically fine, socially wrong
+
+#552
+
+```text
+Pre-review:
+เงินเดือนเพิ่งเข้า
+อย่าเพิ่งให้
+ความฝัน
+เข้าพร้อมกัน
+
+Human-reviewed:
+เงินเดือนเพิ่งออก
+แล้วมันหาย
+ไปไหนวะ
+```
+
+The source is polished and grammatical. The reviewed version is stronger because it performs a familiar reaction rather than presenting a crafted maxim.
+
+### Case C — language choice is situational, not ideological
+
+#778
+
+```text
+Pre-review:
+client บอก
+นิดเดียว
+อย่าแปลว่า
+รื้อทั้งโลก
+
+Human-reviewed:
+ลูกค้าบอก
+แก้นิดเดียว
+แปลว่า...
+แก้ทั้งหมด
+```
+
+Here `ลูกค้า` is more natural than `client`.
+
+#783
+
+```text
+Pre-review:
+ถ้าทุกวัน
+คือ overtime
+ปัญหาไม่ใช่
+productivity
+
+Human-reviewed:
+ถ้าทุกวัน
+คือ OT
+ปัญหาที่มี
+ไม่ใช่เวลา
+```
+
+Here the English-origin workplace shorthand `OT` is the natural Thai lexical choice.
+
+#794 gives the opposite direction again:
+
+```text
+resignation draft → ใบลาออก
+```
+
+There is no “more English = more contemporary” rule and no “more Thai = more natural” rule.
+
+### Case D — social specificity beats abstraction
+
+#774
+
+```text
+Pre-review:
+งานใหม่
+ไม่เดินมาหา
+เปิด tab แล้ว
+กดจริงด้วย
+
+Human-reviewed:
+งานใหม่
+ไม่ได้เดินมาหา
+เปิด jobsdb
+แล้วกดสมัครด้วย
+```
+
+The reviewed answer names the actual behavior and environment.
+
+The same pattern appears elsewhere when generic concepts become LINE, แม่, หมูกระทะ, GPS, OT or another socially recognizable object.
+
+### Case E — humor is social performance
+
+#517
+
+```text
+Pre-review:
+เล่นบอร์ดเกม
+กับที่บ้าน
+แพ้ได้
+อย่าตัดญาติ
+
+Human-reviewed:
+เล่นบอร์ดเกม
+กับที่บ้าน
+แพ้ไม่ได้
+ตัดญาติได้
+```
+
+The reviewed answer is literally less responsible advice and more effective humor because the reversal is socially legible without explanation.
+
+### Case F — line composition is language
+
+#405
+
+```text
+Pre-review:
+วาดต่อ
+เส้นเบี้ยวคือสไตล์
+
+Human-reviewed:
+วาดต่อ
+เส้นเบี้ยว
+คือสไตล์
+```
+
+No lexical content changes. The delivery changes.
+
+The complete review contains 36 such composition-only decisions under a non-whitespace comparison.
+
+### Case G — contemporary Thai can replace visible English with Thai shorthand
+
+#868
+
+```text
+Pre-review:
+ส่ง pin ค่ะ
+คำว่า ‘แถวนี้’
+ไม่ใช่พิกัด
+
+Human-reviewed:
+ส่งโลค่ะ
+คำว่า ‘แถวนี้’
+ไม่ใช่พิกัด
+```
+
+Modernity is not measured by Latin characters. `โล` is the lexical shorthand the social situation wants.
+
+### Case H — cultural recognition can replace translation-shaped cleverness
+
+#935
+
+```text
+Pre-review:
+คิดไม่ออก
+กะเพราไข่ดาว
+default
+ที่ไม่เคย betray
+
+Human-reviewed:
+ถ้าคิดไม่ออก
+ก็กะเพราไข่ดาว
+เมนูสิ้นคิด
+ที่ไม่เคยทรยศ
+```
+
+The underlying idea survives, but the joke is relocated into culturally recognizable Thai framing.
+
+### Case-study conclusion
+
+The completed corpus supports this practical thesis:
+
+> **The hardest gap is often not Thai grammar or missing information. It is pragmatic alignment — knowing what this speaker would naturally say here, what they would leave unsaid, which lexical item belongs to the register, and how the line should land.**
+
+---
+
+## 29. Hard rules vs observed tendencies
+
+Future writers and models must not confuse evidence with a recipe.
+
+### Hard rules
+
+- Thai thought first.
+- Naturalness beats grammatical completeness.
+- Context and omission can carry meaning.
+- Particles are semantic/performance choices, not decoration.
+- Borrowed English is not automatically code-switching.
+- Do not insert English merely to look modern.
+- Do not translate ordinary borrowed workplace/social vocabulary into stiff Thai merely for purity.
+- Line breaks are authored language.
+- Humor should arise from recognizable social logic rather than ornamental cleverness.
+- CARE remains outside the playful house register.
+- Direct human-approved wording outranks generic style convention.
+
+### Observed tendencies, not templates
+
+The human-reviewed corpus often:
+
+- removes explanatory tails;
+- makes subjects/pronouns implicit;
+- chooses socially specific apps, foods, relationships or behaviors;
+- changes abstract metaphors into recognizable Thai situations;
+- uses particles selectively to establish stance;
+- uses ellipses as timing/body language;
+- preserves English-origin words when they are genuinely natural;
+- removes English when Thai is the better lexical choice;
+- recomposes line breaks without changing wording;
+- lets culturally specific humor replace generic self-help language.
+
+Do **not** mechanically imitate these surface features.
+
+Do not add `ค่ะ`, ellipses, English, slang, brand names or profanity merely because the corpus sometimes contains them.
+
+> **Learn the decision behind the edit, not the decoration left on the page.**
+
+---
+
+## 30. Evidence use and limitations
+
+The review is unusually valuable because it preserves both acceptance and correction:
+
+- 564 answers show what the frozen source already got right;
+- 384 edited pairs show where human intervention changed the output;
+- line-composition decisions preserve delivery information that ordinary text datasets often discard.
+
+Appropriate uses include:
+
+- Thai naturalness evaluation;
+- pragmatic-alignment evaluation;
+- supervised correction tasks;
+- preference-pair construction;
+- editorial benchmarking;
+- bilingual adaptation research after the English pass is complete.
+
+Do not automatically call the dataset “RLHF data.” The current asset is more accurately a **human-reviewed correction / acceptance / evaluation corpus** that can later be transformed into preference-training formats when appropriate.
+
+Limitations:
+
+- one human reviewer does not represent all Thai speakers;
+- this is one house voice and one product context;
+- slang and register can age;
+- categories in the Case Study are qualitative examples, not exhaustively coded labels;
+- the completed Thai review does not yet constitute a completed validation of the final English siblings.
+
+The evidence is strongest when used to study **decisions**, not to claim that one wording is universally correct Thai.
