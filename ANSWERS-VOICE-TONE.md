@@ -1,6 +1,6 @@
 # The Book of Answers — Thai Voice, Tone & Line-Break Guide
 
-**Editorial authority · approved direction 16 August 2026**
+**Editorial authority · revised 16 August 2026**
 
 This file is the canonical writing guide for Thai and English copy in **The Book of Answers**.
 
@@ -9,7 +9,8 @@ It governs:
 - Thai voice and naturalness;
 - contemporary register;
 - queer/camp energy;
-- code-switching;
+- borrowed / embedded English in Thai;
+- true code-switching when discourse context genuinely requires it;
 - slang;
 - implication and omission;
 - particles and conversational timing;
@@ -41,7 +42,7 @@ Wrong workflow:
 ```text
 English proposition
 → translate into correct Thai
-→ add slang
+→ add slang / English words
 → break into lines
 ```
 
@@ -50,14 +51,13 @@ Correct workflow:
 ```text
 Thai thought
 → Thai spoken rhythm
-→ implication / omission / particle / code-switch if natural
+→ implication / omission / particle
+→ borrowed English only where it is already the natural Thai lexical choice
 → editorial line composition
 → English sibling adaptation
 ```
 
 The English is a counterpart, not the source.
-
-This distinction is fundamental.
 
 ---
 
@@ -99,7 +99,7 @@ chemistry มี
 รอดูต่อไปก่อน
 ```
 
-The short `ยัง` already carries the social meaning: not enough evidence yet, do not get carried away, keep observing, this is not a rejection but it is not approval either.
+The short `ยัง` already carries the social meaning: not enough evidence yet, do not get carried away, keep observing, this is not rejection but it is not approval either.
 
 Thai listeners complete the thought themselves.
 
@@ -131,7 +131,7 @@ In Answers, the equivalents are:
 - a short final line;
 - particles;
 - repetition;
-- deliberate code-switching;
+- naturally embedded borrowed English where Thai speakers actually use it;
 - sometimes no punctuation at all.
 
 Think of the line break as partly **breath** and partly **body language**.
@@ -163,7 +163,7 @@ It should not sound like:
 - an ad agency trying to sound young;
 - a textbook;
 - a literal translator;
-- someone collecting slang from TikTok and forcing it into every sentence.
+- someone collecting slang or English words from social media and forcing them into every sentence.
 
 A useful test:
 
@@ -177,8 +177,6 @@ If not, rewrite.
 
 The book may carry a **queer-aware, lightly camp Thai social voice**.
 
-This is part of its charm, but it must remain natural.
-
 Queerness can appear through:
 
 - timing;
@@ -186,13 +184,13 @@ Queerness can appear through:
 - affectionate shade;
 - playful certainty;
 - feminine/camp particles such as `ค่ะ` where they fit;
-- code-switching;
 - fashion/social vocabulary;
+- naturally borrowed English terms used in contemporary Thai;
 - self-aware exaggeration;
 - turning a mundane situation into a tiny performance;
 - knowing when one word is funnier than a paragraph.
 
-Examples of the energy:
+Examples:
 
 ```text
 ไปค่ะ
@@ -218,8 +216,6 @@ Queerness must **not** become:
 
 The book persona can use `ค่ะ` without assigning gender to the reader. It is a voice/performance choice, not a claim about identity.
 
-Queer energy is strongest when it feels effortless.
-
 If the reader notices that the writer is *trying to sound queer*, pull it back.
 
 ---
@@ -242,17 +238,11 @@ Good:
 ไม่ไหว
 ```
 
-Bad:
-
-```text
-a sentence loaded with three viral phrases merely to prove it is current
-```
-
 One natural slang beat is usually stronger than five.
 
-### 6.2 Distinguish durable from trend-sensitive language
+### 6.2 Durable vs trend-sensitive
 
-Some contemporary words are relatively durable:
+Relatively durable contemporary language includes forms such as:
 
 - `โอ`
 - `พอละ`
@@ -263,51 +253,51 @@ Some contemporary words are relatively durable:
 - `default`
 - `low profile`
 
-Some are highly trend-sensitive and should be used more sparsely:
-
-- viral catchphrases;
-- meme formats;
-- celebrity-derived sayings;
-- trend-cycle queer slang;
-- intentionally absurd internet vocabulary.
-
-Trend-sensitive slang is welcome when the joke genuinely needs it, but the corpus should not become timestamped by every passing meme.
-
-### 6.3 Never inflate slang for coverage
-
-A Focus concept does not need slang merely because the rest of the corpus has some.
+Highly trend-sensitive meme language should be used more sparingly.
 
 Plain natural Thai is often more contemporary than forced youth language.
 
 ---
 
-## 7. Code-switching
+## 7. Borrowed English is not automatically code-switching
 
-Thai/English code-switching is a native feature of this voice, not decoration.
+This distinction is now a project rule.
 
-Use English where a contemporary Thai speaker would naturally choose it because:
+### 7.1 Borrowed / embedded English
 
-- the English word is the normal social/work term;
-- it is shorter;
-- it carries the right register;
-- it creates rhythm;
-- it makes the joke work;
-- the Thai equivalent would sound formal or translated.
+When a Thai speaker remains in Thai and uses an English lexical item because that is simply the normal, easiest or most intelligible word in that register, treat it as **borrowed / embedded English in Thai**, not as a language switch.
 
-Good examples:
+Common reasons include:
+
+- there is no useful everyday Thai equivalent;
+- the Thai equivalent exists but is too formal, technical or difficult;
+- the English form is already the normal social/work term;
+- the English item has effectively become part of contemporary Thai usage in that context.
+
+Examples:
+
+```text
+meeting
+deadline
+fit check
+service charge
+default
+mute
+block
+chemistry
+consistency
+spark
+```
+
+In these cases the speaker does not need to mentally leave Thai. The syntax, social frame and rhythm remain Thai.
+
+Examples from the corpus:
 
 ```text
 chemistry
 มี
 แต่ consistency
 ยัง
-```
-
-```text
-ตอนคุยกัน
-เหมือน timelapse
-ตอนแยกกัน
-เหมือน time out
 ```
 
 ```text
@@ -324,18 +314,36 @@ spark ดีค่ะ
 แล้ว move on
 ```
 
-The English words here are doing linguistic work. They are not pasted on top.
+These English forms behave like lexical material inside Thai discourse. Do not label them as code-switching merely because they use Latin script.
 
-Avoid code-switching when:
+### 7.2 True code-switching
+
+Reserve **code-switching** for a genuine change in the active language of discourse.
+
+Typical triggers include:
+
+- a mixed Thai/non-Thai meeting;
+- changing audience mid-conversation;
+- addressing a foreign participant;
+- deliberately shifting a whole clause, sentence or turn into English;
+- an environment where two languages genuinely need to coexist as discourse languages.
+
+True code-switching is contextual. It is **not a house-style trick** for making the book sound modern.
+
+### 7.3 Use borrowed English only when it is the natural word
+
+Use an English lexical item when a contemporary Thai speaker would naturally choose it.
+
+Avoid it when:
 
 - a natural Thai word is clearly better;
-- English is being used only to look modern;
+- English is being inserted only to look modern;
 - the sentence starts feeling like English syntax wearing Thai particles;
-- more than one code-switch competes for attention without a payoff.
+- the English item requires the reader to translate mentally when Thai would be easier.
 
-### 7.1 English can participate in Thai grammar
+### 7.4 English lexical items can participate in Thai grammar
 
-It is acceptable for an English word to behave like a Thai lexical item:
+Examples:
 
 ```text
 mute ก่อน
@@ -347,11 +355,11 @@ mute ก่อน
 แล้ว move on
 ```
 
-Do not force English grammar around it.
+Do not force English grammar around the borrowed word.
 
-### 7.2 Case
+### 7.5 Case
 
-Conversational English can stay lowercase when that matches the visual/social voice:
+Conversational borrowed English can stay lowercase when that matches the visual/social voice:
 
 `chemistry`, `consistency`, `spark`, `speak`, `default`, `destination`, `hobby`.
 
@@ -363,33 +371,9 @@ Preserve normal capitalization for proper nouns and brands where useful: `TikTok
 
 Thai particles are not filler.
 
-Words such as:
-
-- `ค่ะ`
-- `นะ`
-- `สิ`
-- `ดิ`
-- `อะ`
-- `มั้ง`
-- `ปะ`
-- `เหรอ`
-- `มั้ย`
-
-can alter:
-
-- intimacy;
-- confidence;
-- softness;
-- challenge;
-- irony;
-- camp;
-- annoyance;
-- affection;
-- social distance.
+Words such as `ค่ะ`, `นะ`, `สิ`, `ดิ`, `อะ`, `มั้ง`, `ปะ`, `เหรอ`, `มั้ย` can alter intimacy, confidence, softness, challenge, irony, camp, annoyance, affection and social distance.
 
 Do not mechanically standardize them.
-
-`ไหม` and `มั้ย`, for example, may carry different conversational texture even when the literal meaning is the same.
 
 Use the form that sounds right in the speaker’s mouth.
 
@@ -399,14 +383,7 @@ Use the form that sounds right in the speaker’s mouth.
 
 English frequently requires explicit subjects. Thai frequently does not.
 
-Do not add:
-
-- `คุณ`;
-- `เรา`;
-- `เขา`;
-- a repeated noun;
-
-unless the sentence actually needs it.
+Do not add `คุณ`, `เรา`, `เขา` or a repeated noun unless the sentence actually needs it.
 
 Compare:
 
@@ -417,7 +394,7 @@ Compare:
 ก็ไม่โอ
 ```
 
-versus the more translated-feeling:
+with the translated-feeling:
 
 ```text
 ของเดิมของคุณยังสามารถใช้งานได้
@@ -425,61 +402,26 @@ versus the more translated-feeling:
 คุณก็ควรพิจารณาเปลี่ยนใหม่
 ```
 
-The second may be grammatically complete. It is completely wrong for this book.
+The second may be grammatically complete. It is wrong for this book.
 
 ---
 
 ## 10. Humor
 
-Humor should usually come from one of these mechanisms:
+Humor should usually come from:
 
 - recognition;
 - understatement;
 - escalation;
 - social truth;
-- code-switch wordplay;
+- Thai/borrowed-English wordplay when natural;
 - unexpectedly practical advice;
 - treating something trivial with ceremonial seriousness;
 - treating something dramatic with calm practicality;
 - a final-line reversal;
 - affectionate shade.
 
-Good:
-
-```text
-หน้าร้านยังเจ็บ
-กลับบ้าน
-จะหายเอง
-เหรอคะ
-```
-
-Good:
-
-```text
-งานฝีมือค่ะ
-เบี้ยวนิด
-เรียก handmade
-ได้อยู่
-```
-
-Good:
-
-```text
-เหลือชิ้นสุดท้าย
-เป็นข้อมูลค่ะ
-ไม่ใช่คำสั่ง
-ให้รูดบัตร
-```
-
-Avoid:
-
-- explaining the joke;
-- generic motivational language;
-- punching down;
-- humiliation;
-- body shaming;
-- cruelty disguised as sass;
-- forced punchlines on serious situations.
+Avoid explaining the joke, generic motivational language, punching down, humiliation, body shaming, cruelty disguised as sass, or forced punchlines on serious situations.
 
 The book can be bitchy. It should not be mean.
 
@@ -498,8 +440,6 @@ For self-harm/suicide, medical emergency, violence, abuse or immediate safety si
 - no joke that could minimize danger;
 - no random funny answer.
 
-The normal voice resumes only outside CARE.
-
 ---
 
 ## 12. Line breaks are authored language
@@ -510,23 +450,15 @@ Never treat them as automatic wrapping.
 
 Never normalize them globally.
 
-Never reflow an approved answer merely because another break looks more grammatical.
-
 ### 12.1 Default shape
 
 Most medium/long answers should land naturally in **3–4 short lines**.
 
-Two lines are fine for a compact answer.
-
-Five lines are acceptable when the rhythm genuinely needs them.
+Two lines are fine for a compact answer. Five lines are acceptable when the rhythm genuinely needs them.
 
 There is no mandatory line count.
 
-The 904–948 Thai-first batch intentionally uses four-line compositions heavily because the ideas benefit from four beats. This is not a new hard rule.
-
 ### 12.2 One visual beat per line
-
-Prefer each line to carry one beat:
 
 ```text
 วันนี้เอา
@@ -535,18 +467,9 @@ Prefer each line to carry one beat:
 พอละ
 ```
 
-The visual sequence is:
-
-1. decision;
-2. object;
-3. reason;
-4. landing.
-
 Do not force a grammatical clause to remain on one line if breaking it creates better timing.
 
 ### 12.3 Visual width beats character count
-
-Do not wrap by character number.
 
 Priority:
 
@@ -554,11 +477,9 @@ Priority:
 
 Use `จำชื่อเราได้ไหม` as an approximate pure-Thai comfort-width reference, not a fixed limit.
 
-English text is visually wider and may need earlier breaks.
+Latin-script words are visually wider and may need earlier breaks.
 
-### 12.4 Language boundaries are useful break points
-
-Good:
+### 12.4 Script / lexical boundaries can be useful break points
 
 ```text
 ช่วยได้
@@ -567,89 +488,29 @@ customer service
 ประจำบ้าน
 ```
 
-A long English expression can sit alone if that improves balance.
+A long borrowed English expression can sit alone if that improves balance.
 
 ### 12.5 Fragments are allowed
 
-A line can be only:
+A line can be only `ยัง`, `พอ`, `ก่อน`, `ได้อยู่`, `พอละ` if that is how the answer lands naturally.
 
-```text
-ยัง
-พอ
-ก่อน
-ได้อยู่
-พอละ
-```
+### 12.6 Protect the final landing
 
-if that is how the answer lands naturally.
+The last line often carries the punchline, implication, particle, one-word judgement or emotional turn.
 
-Do not merge it upward merely to make the page look “full.”
+Do not absorb it into the line above if the pause is doing work.
 
-### 12.6 Do not overload the first line
+### 12.7 Review notation
 
-Bad tendency:
+In review documents/chat, `/` may represent an authored line break.
 
-```text
-วันนี้ยังไม่ต้องสารภาพความรู้สึก
-...
-```
-
-Better:
-
-```text
-วันนี้ยัง
-ไม่ต้องสารภาพ
-ดูก่อนว่าเขา
-จำชื่อเราได้ไหม
-```
-
-Give the setup room to breathe.
-
-### 12.7 Protect the final landing
-
-The last line often carries:
-
-- the punchline;
-- implication;
-- a particle;
-- a one-word judgement;
-- the emotional turn.
-
-Examples:
-
-```text
-ก็ไม่โอ
-```
-
-```text
-ยัง
-```
-
-```text
-พอละ
-```
-
-```text
-ได้อยู่
-```
-
-Do not absorb these into the line above if the pause is doing work.
-
-### 12.8 Review notation
-
-In review documents/chat, `/` may represent an authored line break:
-
-```text
-ความเป๊ะ / มี limit / กดปุ่มหยุด / แล้ว move on
-```
-
-In live JavaScript, the approved breaks must be represented by intentional `\n` inside the Thai string.
+In live JavaScript, approved breaks must be intentional `\n` inside the Thai string.
 
 ---
 
 ## 13. Body-language test for line breaking
 
-When deciding where to break, imagine the answer being spoken.
+Imagine the answer being spoken.
 
 Ask:
 
@@ -661,71 +522,20 @@ Ask:
 
 Then use the line break to imitate that timing.
 
-Example:
-
-```text
-spark ดีค่ะ
-แต่ดูด้วยว่า
-หลัง spark
-ยัง speak มั้ย
-```
-
-The second `spark` resets the rhythm; `speak มั้ย` is the look-at-you landing.
-
 ---
 
 ## 14. Thai-first editing workflow
 
 For every new or revised answer:
 
-### Step 1 — identify the real Thai thought
-
-Do not write the English sentence first.
-
-Ask: what would a Thai friend actually say?
-
-### Step 2 — remove unnecessary completeness
-
-Delete explanations, subjects and connective tissue that context already supplies.
-
-### Step 3 — find the social performance
-
-Is the line:
-
-- teasing?
-- resigned?
-- camp?
-- gentle?
-- unimpressed?
-- practical?
-- flirty?
-- tired?
-
-Choose particles and omission accordingly.
-
-### Step 4 — code-switch only if it improves the Thai
-
-English must earn its place.
-
-### Step 5 — compose the Thai page
-
-Break by width, breath and timing.
-
-### Step 6 — read it aloud mentally
-
-If it sounds written rather than spoken, revise.
-
-### Step 7 — write the English adaptation
-
-Preserve the attitude and practical meaning.
-
-Do not translate every word.
-
-### Step 8 — assign semantics
-
-Only after the copy is right, confirm Focus / Support / Topic / Helper ownership.
-
-Do not distort the Thai just to make tagging easier.
+1. **Identify the real Thai thought.** What would a Thai friend actually say?
+2. **Remove unnecessary completeness.** Delete explanations, subjects and connective tissue that context already supplies.
+3. **Find the social performance.** Teasing? Resigned? Camp? Gentle? Unimpressed? Practical? Flirty? Tired?
+4. **Use borrowed English only if that is genuinely the natural Thai lexical choice.** Do not insert English to manufacture modernity. True code-switching should occur only when discourse context genuinely calls for a language shift.
+5. **Compose the Thai page.** Break by width, breath and timing.
+6. **Read it aloud mentally.** If it sounds written rather than spoken, revise.
+7. **Write the English adaptation.** Preserve attitude and practical meaning; do not translate every word.
+8. **Assign semantics.** Only after the copy is right, confirm Focus / Support / Topic / Helper ownership.
 
 ---
 
@@ -738,16 +548,10 @@ It does not need to reproduce:
 - Thai word order;
 - every particle;
 - every omission;
-- every code-switched word;
+- every borrowed English item present in the Thai;
 - exact joke mechanics if another English joke lands better.
 
-It **does** need to preserve:
-
-- recommendation direction;
-- emotional stance;
-- level of certainty;
-- humor/camp where possible;
-- practical meaning.
+It **does** need to preserve recommendation direction, emotional stance, level of certainty, humor/camp where possible, and practical meaning.
 
 Example:
 
@@ -760,19 +564,17 @@ chemistry
 ยัง
 ```
 
-Good English adaptation:
+Good English:
 
 ```text
 There is chemistry. Consistency? Not yet.
 ```
 
-Do not write:
+Not:
 
 ```text
 There is chemistry, but there is not yet consistency.
 ```
-
-The second is literal and loses the social voice.
 
 ---
 
@@ -785,33 +587,11 @@ A Thai answer probably started from English if it has several of these symptoms:
 - unnecessary pronouns;
 - explanatory final clause;
 - English metaphor translated literally into Thai;
-- slang added only at the end;
+- slang or English inserted only after the sentence was already formed;
 - a sentence that could be translated back into exactly one polished English sentence;
 - every thought fully resolved instead of allowing implication.
 
 When detected, throw away the English logic and rewrite from Thai social intent.
-
-Example of translated-feeling construction:
-
-```text
-ไปค่ะ
-แต่กันวันกลับ
-ไว้พักจาก
-การพักด้วย
-```
-
-Approved Thai-native direction:
-
-```text
-ไปค่ะ
-แต่เหลือวัน
-ไว้พัก
-หลังกลับมาด้วย
-```
-
-The second is less clever on paper and much more believable in Thai.
-
-That is the goal.
 
 ---
 
@@ -819,13 +599,7 @@ That is the goal.
 
 Contemporary voice is not achieved by inserting trendy words.
 
-Avoid:
-
-```text
-random viral slang + English noun + ค่ะ + meme reference
-```
-
-unless that exact combination is genuinely how the joke works.
+Naturalness beats novelty.
 
 A simple line such as:
 
@@ -836,8 +610,6 @@ A simple line such as:
 
 can sound more current than a sentence containing five internet terms.
 
-Naturalness beats novelty.
-
 ---
 
 ## 18. Do not overuse the house tricks
@@ -845,7 +617,7 @@ Naturalness beats novelty.
 The following are powerful because they are not constant:
 
 - `ค่ะ`;
-- English code-switches;
+- borrowed English lexical items;
 - one-word final lines;
 - relationship jokes;
 - dramatic exaggeration;
@@ -855,21 +627,7 @@ The following are powerful because they are not constant:
 
 Do not make every answer structurally identical.
 
-The corpus should have range:
-
-- dry;
-- warm;
-- absurd;
-- plain;
-- poetic;
-- bitchy;
-- practical;
-- romantic;
-- resigned;
-- very short;
-- slightly lyrical.
-
-The shared identity comes from Thai naturalness and taste, not a formula.
+The corpus should have range: dry, warm, absurd, plain, poetic, bitchy, practical, romantic, resigned, very short, slightly lyrical.
 
 ---
 
@@ -885,7 +643,7 @@ Useful techniques:
 - one-word reversal;
 - semantic compression;
 - juxtaposition;
-- code-switch rhyme/echo;
+- Thai/borrowed-English sound echo when naturally available;
 - leaving the final inference unstated.
 
 Example:
@@ -899,8 +657,6 @@ Example:
 
 The appeal comes from rhythm and conceptual mirroring, not grammatical complexity.
 
-Do not over-polish this into literary prose.
-
 ---
 
 ## 20. Semantic meaning must survive style
@@ -908,8 +664,6 @@ Do not over-polish this into literary prose.
 Natural voice does not excuse semantic mismatch.
 
 Every answer still has to plausibly answer the Focus pool it belongs to.
-
-A good joke that cannot answer the user’s question is the wrong answer for that pool.
 
 Style QA and routing QA are separate gates.
 
@@ -919,43 +673,32 @@ Style QA and routing QA are separate gates.
 
 Universal answers must remain genuinely subject-neutral.
 
-Because they can appear beside any understood subject or as full fallback, avoid Universals that secretly assume:
+Avoid Universals that secretly assume romance, work, shopping, a specific gender, a specific social platform or a specific action.
 
-- romance;
-- work;
-- shopping;
-- a specific gender;
-- a specific social platform;
-- a specific action.
-
-Universal voice can still be Thai-native, queer-aware and funny. It just cannot invent missing subject context.
+Universal voice can still be Thai-native, queer-aware and funny.
 
 ---
 
 ## 22. Preference-pair preservation
 
-When a user directly improves an answer from less-natural Thai to approved natural Thai, that before/after pair is valuable editorial evidence.
+When a human reviewer improves an answer from less-natural Thai to approved natural Thai, preserve the before/after pair.
 
-Where practical, preserve revision history rather than treating the rejected wording as meaningless trash.
-
-These pairs demonstrate failure modes such as:
+Useful failure modes include:
 
 - English-first thinking;
 - over-completion;
 - unnatural connective logic;
-- weak code-switch rhythm;
+- unnatural or decorative English borrowing;
 - missed Thai implication;
-- poor line composition.
+- poor particle choice;
+- poor line composition;
+- culturally weaker metaphor or social framing.
 
-They may later support a Thai-native preference/evaluation dataset.
-
-Do **not** expose or commercialize user/private material without an explicit project decision and rights review. This section only states that revision history has linguistic value.
+Do not call ordinary embedded English a code-switching error unless an actual language shift occurred.
 
 ---
 
 ## 23. Canonical approved examples
-
-These examples define the current target voice.
 
 ```text
 chemistry
@@ -1006,39 +749,9 @@ customer service
 ประจำบ้าน
 ```
 
-```text
-วันนี้ยัง
-ไม่ต้องสารภาพ
-ดูก่อนว่าเขา
-จำชื่อเราได้ไหม
-```
-
-```text
-กอดได้
-แต่ถามก่อน
-consent น่ารักกว่า
-surprise
-```
-
-```text
-กลับพร้อม
-หนึ่ง connection ที่ดี
-ดีกว่ายี่สิบชื่อ
-ที่จำหน้าไม่ได้
-```
-
-```text
-ถ้าพัดลมดัง
-เหมือนจะบิน
-save งานก่อน
-philosophize
-```
-
 ---
 
 ## 24. Review checklist for every answer
-
-During the full corpus re-review, inspect each answer in this order.
 
 ### Thai voice
 
@@ -1052,9 +765,10 @@ During the full corpus re-review, inspect each answer in this order.
 ### Contemporary register
 
 - Is the slang natural?
-- Is any slang forced or already stale?
-- Does code-switching sound native?
+- Is any slang forced or stale?
+- If English appears, is it genuinely the natural lexical item in Thai here?
 - Is the answer trying too hard to sound young?
+- If there is an actual language switch, does the discourse context justify it?
 
 ### Queer/camp register
 
@@ -1067,7 +781,7 @@ During the full corpus re-review, inspect each answer in this order.
 
 - Does the joke land without explanation?
 - Is the final beat strong?
-- Is the answer funny because it is recognizable, not because it is random?
+- Is the answer funny because it is recognizable, not random?
 
 ### Line composition
 
@@ -1075,7 +789,7 @@ During the full corpus re-review, inspect each answer in this order.
 - Does the break follow breath/timing?
 - Is the opening overloaded?
 - Is the final landing protected?
-- Is an English token visually too wide?
+- Is a Latin-script token visually too wide?
 - Would removing or adding one break improve the implied body language?
 
 ### English
@@ -1095,20 +809,18 @@ During the full corpus re-review, inspect each answer in this order.
 
 ## 25. Full-corpus review protocol
 
-The next editorial phase is a one-time review of **all authored answers** against this guide.
+The current editorial phase is a one-time human review of **all 948 authored Thai answers** against this guide.
 
-Recommended workflow:
+Workflow:
 
 1. review in stable ID order;
-2. work in manageable batches;
-3. preserve ID numbers;
-4. do not alter semantics unless the wording reveals a genuine semantic mismatch;
-5. record original and proposed Thai for any substantial rewrite;
-6. preserve direct user-approved wording exactly;
-7. update English only after Thai approval;
-8. preserve authored line breaks exactly in live data;
-9. rerun duplicate/index/semantic QA after each published batch;
-10. perform one final whole-corpus consistency pass at the end.
+2. preserve ID numbers;
+3. record original and reviewed Thai separately;
+4. preserve direct human-approved wording exactly;
+5. update English only after Thai review is complete;
+6. preserve authored line breaks exactly;
+7. rerun duplicate/index/semantic QA after publication;
+8. freeze the final human-reviewed corpus.
 
 This is an editorial normalization of **quality**, not a normalization of **voice**.
 
@@ -1118,21 +830,20 @@ Do not make all 948 answers sound the same.
 
 ## 26. Current corpus checkpoint
 
-As of the completion of the Thai-first expansion/consolidation phase on 16 August 2026:
+As of 16 August 2026:
 
-- live public controller: `/fg-page-answers.js` **v118**;
-- MD5: `6fdb83f33f1cf768d97a190be8279777`;
+- live public controller: `/fg-page-answers.js` **v119**;
+- MD5: `6dc18662953f897a390eea0a038f0edf`;
 - authored answers: **948**;
 - CARE responses: **3**, separate from the authored corpus;
 - Universal answers: **75**;
 - Support answers: **42**;
 - Focus concepts: **183**;
 - Focus dictionary version: **4**;
-- IDs 904–948 are the first batch written explicitly under the Thai-first direction;
-- all 45 of IDs 904–948 use approved four-line Thai compositions;
-- direct user edits to #906, #910, #911, #912, #918, #921 and #936 are canonical examples and must not be silently normalized.
+- human review source: `/wip/answers-human-review-source-v119-948.js`;
+- human review round: `thai-human-v1`.
 
-This snapshot is a checkpoint, not an excuse to skip live re-querying before future edits.
+Always re-query live state before a future write.
 
 ---
 
@@ -1142,13 +853,14 @@ This snapshot is a checkpoint, not an excuse to skip live re-querying before fut
 NOT:
 English thought
 → Thai translation
-→ slang
+→ slang / English decoration
 
 BUT:
 Thai social intent
 → Thai voice
 → implication / omission / particles
-→ code-switch only when natural
+→ borrowed English only when it is already the natural Thai lexical choice
+→ true code-switch only when discourse context genuinely requires a language shift
 → breath + body-language line breaks
 → English sibling adaptation
 ```
@@ -1158,6 +870,8 @@ And always:
 > **Naturalness beats completeness.**
 
 > **Implication is meaning.**
+
+> **Borrowed English can be Thai discourse without being code-switching.**
 
 > **Queer energy is timing and taste, not costume.**
 
