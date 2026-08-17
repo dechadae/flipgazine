@@ -1,0 +1,40 @@
+name: Answers Thai Audit fix smoke
+on:
+  push:
+    paths:
+      - '.github/workflows/answers-thai-audit-fix-smoke.yml'
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate live controller and devnav
+        shell: bash
+        env:
+          SUPA: https://sjpvhgxacsiorrtijqua.supabase.co
+          APIKEY: sb_publishable_NcIExScIXkqsK1ZNNu5a-Q_zZ4afIHz
+        run: |
+          set -euo pipefail
+          curl -fsS "$SUPA/rest/v1/site_files?path=eq.%2Ffg-page-answers-thai-review.js&select=content,version" -H "apikey: $APIKEY" > /tmp/controller.json
+          test "$(jq -r '.[0].version' /tmp/controller.json)" = "6"
+          jq -r '.[0].content' /tmp/controller.json > /tmp/controller.js
+          node --check /tmp/controller.js
+          ! grep -q 'progressBar.style.width' /tmp/controller.js
+          ! grep -q 'querySelector("#progressBar")' /tmp/controller.js
+          grep -q 'answers-admin-service' /tmp/controller.js
+          grep -q 'expected_revision:loadedRevision' /tmp/controller.js
+
+          curl -fsS "$SUPA/rest/v1/site_files?path=eq.%2Ffg-devnav.js&select=content,version" -H "apikey: $APIKEY" > /tmp/devnav.json
+          test "$(jq -r '.[0].version' /tmp/devnav.json)" = "30"
+          jq -r '.[0].content' /tmp/devnav.json > /tmp/devnav.js
+          node --check /tmp/devnav.js
+          python3 - <<'PY'
+from pathlib import Path
+s=Path('/tmp/devnav.js').read_text()
+a=s.index("id:'fgAnswersEditorChip'")
+b=s.index("id:'fgThaiAuditChip'")
+c=s.index("id:'fgClaudeChip'")
+assert a < b < c
+assert "href:'/answers-thai-review.html'" in s[b:c]
+assert "label:'thai audit'" in s[b:c]
+print('{"status":"PASS","controller_version":6,"devnav_version":30,"menu_order":"answer library > thai audit > claude guide"}')
+PY
