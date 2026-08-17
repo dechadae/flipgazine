@@ -58,7 +58,6 @@ jobs:
             printf '%s' "$sid" | sha256sum | awk '{print $1}'
           }
 
-          # Normal prepare -> reveal -> replay.
           C1="$T/c1"; B="$T/b"; H="$T/h"
           CODE="$(prepare "$C1" 'มัทฉะหรือชาไทยดี?' "$B" "$H")"
           test "$CODE" = '200'
@@ -71,7 +70,6 @@ jobs:
           CODE="$(reveal "$C1" "$TOKEN" "$B" "$H")"
           test "$CODE" = '404'
 
-          # Session binding: token prepared in C1 cannot reveal without C1.
           CODE="$(prepare "$C1" 'คืนนี้ออกไปเจอเพื่อนดีปะ?' "$B" "$H")"
           test "$CODE" = '200'
           TOKEN2="$(token_from "$B")"
@@ -79,7 +77,6 @@ jobs:
           CODE="$(reveal "$CWRONG" "$TOKEN2" "$B" "$H")"
           test "$CODE" = '404'
 
-          # CARE must still be tokenized and reveal only after the gesture call.
           CODE="$(prepare "$C1" 'ปวดหน้าอกควรทำไง' "$B" "$H")"
           test "$CODE" = '200'
           CARE_TOKEN="$(token_from "$B")"
@@ -87,22 +84,17 @@ jobs:
           test "$CODE" = '200'
           node -e 'const fs=require("fs"); const x=JSON.parse(fs.readFileSync(process.argv[1],"utf8")); if(x.id!==null||typeof x.thai!=="string"||!x.thai||typeof x.english!=="string"||!x.english) process.exit(1)' "$B"
 
-          # Cross-origin and oversized input are rejected at Cloudflare.
           CODE="$(curl --silent --show-error --max-time 30 -o "$B" \
             -H 'content-type: application/json' -H 'origin: https://example.com' \
             -X POST "$BASE/api/answers/prepare" --data '{"question":"hello"}' -w '%{http_code}')"
           test "$CODE" = '403'
-          LONG="$(python - <<'PY'
-print('x'*501)
-PY
-)"
+          LONG="$(node -e 'process.stdout.write("x".repeat(501))')"
           CODE="$(curl --silent --show-error --max-time 30 -o "$B" \
             -H 'content-type: application/json' -H "origin: $BASE" \
             -X POST "$BASE/api/answers/prepare" \
             --data "$(node -e 'process.stdout.write(JSON.stringify({question:process.argv[1]}))' "$LONG")" -w '%{http_code}')"
           test "$CODE" = '413'
 
-          # The underlying Supabase function cannot be bypassed directly.
           CODE="$(curl --silent --show-error --max-time 30 -o "$B" \
             -H 'content-type: application/json' -X POST "$UPSTREAM" \
             --data '{"action":"prepare","question":"hello"}' -w '%{http_code}')"
@@ -112,7 +104,6 @@ PY
             -X POST "$UPSTREAM" --data '{"action":"prepare","question":"hello"}' -w '%{http_code}')"
           test "$CODE" = '401'
 
-          # Outstanding-token ceiling: 3 live tokens allowed, fourth rejected.
           C2="$T/c2"; touch "$C2"
           for n in 1 2 3; do
             CODE="$(prepare "$C2" "outstanding test $n" "$B" "$H")"
@@ -123,8 +114,6 @@ PY
           test "$CODE" = '429'
           grep -qi '^retry-after:' "$H"
 
-          # Independent session prepare limiter: 10 successful prepare/reveal
-          # cycles in one minute, then prepare 11 is throttled.
           C3="$T/c3"; touch "$C3"
           for n in $(seq 1 10); do
             CODE="$(prepare "$C3" "rate test coffee $n" "$B" "$H")"
