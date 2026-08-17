@@ -12,7 +12,6 @@ const COOKIE_NAME = 'fg_ans_sid';
 const OPAQUE_RE = /^[A-Za-z0-9_-]{43}$/;
 const HEX64_RE = /^[a-f0-9]{64}$/i;
 const CF_RAY_RE = /^[A-Za-z0-9-]{1,80}$/;
-const FROZEN_ANSWER_COUNT = 948;
 const MAX_QUESTION_CHARS = 500;
 
 // The raw boundary key remains encrypted in Cloudflare. This verifier is a
@@ -172,7 +171,7 @@ async function prepare(req: Request, body: any, auth: AuthContext) {
   const cookieHeaders = createdSessionCookie ? { 'set-cookie': sessionCookie(rawSid) } : {};
 
   const claim = unwrapResult(await sql`
-    select private.answer_prepare_claim(
+    select private.answer_prepare_claim_current(
       ${sessionHash}, ${tokenHash}, ${auth.ipHash}, ${auth.kind}, ${auth.cfRay},
       ${ROUTER_VERSION}, ${SOURCE_FINGERPRINTS.sourceControllerMd5}
     ) as result
@@ -193,13 +192,18 @@ async function prepare(req: Request, body: any, auth: AuthContext) {
     throw new Error('router setting drift');
   }
   if (!claim.dictionary || !claim.index) throw new Error('routing assets missing');
+  const maxAnswerId = Number(claim.max_answer_id);
+  const activeIds = Array.isArray(claim.active_ids) ? claim.active_ids.map(Number) : [];
+  const activeSet = new Set(activeIds);
+  if (!Number.isInteger(maxAnswerId) || maxAnswerId < 1 || !activeIds.length) throw new Error('active corpus missing');
 
   let chosen: any;
   try {
     chosen = chooseAnswer(question, claim.dictionary, claim.index, recent, {
       minPool: MIN_POOL,
       maxBroadWiden: MAX_BROAD_WIDEN,
-      answerCount: FROZEN_ANSWER_COUNT,
+      answerCount: maxAnswerId,
+      answerExists: (id: number) => activeSet.has(Number(id)),
     });
 
     let responseKind: 'normal' | 'care';
@@ -215,7 +219,7 @@ async function prepare(req: Request, body: any, auth: AuthContext) {
     } else {
       responseKind = 'normal';
       answerId = Number(chosen.id);
-      if (!Number.isInteger(answerId) || answerId < 1 || answerId > FROZEN_ANSWER_COUNT) {
+      if (!Number.isInteger(answerId) || !activeSet.has(answerId)) {
         throw new Error('normal answer selection invalid');
       }
     }
@@ -248,7 +252,7 @@ async function reveal(req: Request, body: any, auth: AuthContext) {
   const tokenHash = await sha256Hex(requestToken);
   const sessionHash = await sha256Hex(rawSid);
   const revealed = unwrapResult(await sql`
-    select private.answer_reveal_guarded(
+    select private.answer_reveal_guarded_current(
       ${sessionHash}, ${tokenHash}, ${auth.ipHash}, ${auth.kind}, ${auth.cfRay}, ${ROUTER_VERSION}
     ) as result
   `);
@@ -263,7 +267,7 @@ async function reveal(req: Request, body: any, auth: AuthContext) {
   if (revealed.status === 'unavailable') return responseJson({ error: 'reveal_unavailable' }, 404);
   if (revealed.status !== 'ok') throw new Error('reveal result invalid');
 
-  const normal = Number.isInteger(revealed.id) && revealed.id >= 1 && revealed.id <= FROZEN_ANSWER_COUNT;
+  const normal = Number.isInteger(revealed.id) && revealed.id >= 1;
   const care = revealed.id === null;
   if ((!normal && !care) || typeof revealed.thai !== 'string' || !revealed.thai || typeof revealed.english !== 'string' || !revealed.english) {
     throw new Error('reveal payload invalid');

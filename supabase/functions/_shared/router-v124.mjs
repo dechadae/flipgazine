@@ -225,8 +225,8 @@ export function chooseAnswer(question, dictionary, index, recent, options){
     var recentIds=recent||[];
     var fallback=(index.generic||[]).filter(function(x){return recentIds.indexOf(x)<0});
     if(!fallback.length)fallback=(index.generic||[]).slice();
-    if(!fallback.length){for(var z=1;z<=answerCount;z++)if(recentIds.indexOf(z)<0)fallback.push(z)}
-    if(!fallback.length){for(var y=1;y<=answerCount;y++)fallback.push(y)}
+    if(!fallback.length){for(var z=1;z<=answerCount;z++)if(answerExists(z)&&recentIds.indexOf(z)<0)fallback.push(z)}
+    if(!fallback.length){for(var y=1;y<=answerCount;y++)if(answerExists(y))fallback.push(y)}
     id=fallback[Math.floor(rng()*fallback.length)]||1;
   }
 
