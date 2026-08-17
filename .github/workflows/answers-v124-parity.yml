@@ -6,6 +6,7 @@ on:
     paths:
       - 'answers-private-server/router-v124.mjs'
       - 'answers-private-server/parity-v124.mjs'
+      - 'answers-private-server/parity-v124-runner.mjs'
       - '.github/workflows/answers-v124-parity.yml'
 
 permissions:
@@ -25,4 +26,4 @@ jobs:
           node-version: '22'
 
       - name: Deterministic frozen-v124 parity gate
-        run: node answers-private-server/parity-v124.mjs
+        run: node answers-private-server/parity-v124-runner.mjs
