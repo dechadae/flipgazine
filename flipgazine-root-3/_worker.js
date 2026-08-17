@@ -12,6 +12,7 @@
 
 const SUPABASE = "https://sjpvhgxacsiorrtijqua.supabase.co";
 const ANSWERS_SERVICE = SUPABASE + "/functions/v1/answers-service";
+const ANSWERS_REGION = "ap-southeast-1";
 const ANSWERS_PREPARE = "/api/answers/prepare";
 const ANSWERS_REVEAL = "/api/answers/reveal";
 const ANSWERS_MAX_BODY_BYTES = 4096;
@@ -206,6 +207,7 @@ async function answersApi(request, env, url) {
       "content-type": "application/json",
       "x-fg-answers-key": upstreamKey,
       "x-fg-ip-hash": ipHash,
+      "x-region": ANSWERS_REGION,
     });
     const cfRay = request.headers.get("CF-Ray");
     if (cfRay) headers.set("x-fg-cf-ray", cfRay);
