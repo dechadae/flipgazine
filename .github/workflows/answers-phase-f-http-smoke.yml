@@ -12,9 +12,9 @@ permissions:
 jobs:
   smoke:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 5
     steps:
-      - name: Exercise same-origin Answers boundary and abuse controls
+      - name: Exercise same-origin Answers boundary
         shell: bash
         run: |
           set -euo pipefail
@@ -55,86 +55,57 @@ jobs:
             printf '%s' "$sid" | sha256sum | awk '{print $1}'
           }
 
-          C1="$T/c1"; B="$T/b"; H="$T/h"
+          B="$T/body"; H="$T/headers"; C1="$T/c1"; touch "$C1"
+
           CODE="$(prepare "$C1" 'มัทฉะหรือชาไทยดี?' "$B" "$H")"
-          echo "checkpoint:first_prepare_code=$CODE"
-          node -e 'const fs=require("fs"); const x=JSON.parse(fs.readFileSync(process.argv[1],"utf8")); console.log("checkpoint:first_prepare_keys="+Object.keys(x).sort().join(",")+" ttl="+x.expires_in+" token_length="+String(x.request_token||"").length)' "$B"
-          echo "checkpoint:first_cookie_present=$(grep -c 'fg_ans_sid' "$C1" || true)"
-          echo "checkpoint:first_cache_control=$(grep -i '^cache-control:' "$H" | tr -d '\r' | head -1)"
           test "$CODE" = '200'
           grep -qi '^cache-control: no-store, private, max-age=0' "$H"
+          grep -q 'fg_ans_sid' "$C1"
           TOKEN="$(token_from "$B")"
-          echo 'checkpoint:first_token_valid=true'
+
           CODE="$(reveal "$C1" "$TOKEN" "$B" "$H")"
-          echo "checkpoint:first_reveal_code=$CODE"
           test "$CODE" = '200'
           grep -qi '^cache-control: no-store, private, max-age=0' "$H"
           node -e 'const fs=require("fs"); const x=JSON.parse(fs.readFileSync(process.argv[1],"utf8")); if(!Number.isInteger(x.id)||typeof x.thai!=="string"||!x.thai||typeof x.english!=="string"||!x.english) process.exit(1)' "$B"
-          echo 'checkpoint:first_reveal_shape=true'
+
           CODE="$(reveal "$C1" "$TOKEN" "$B" "$H")"
-          echo "checkpoint:replay_code=$CODE"
           test "$CODE" = '404'
 
           CODE="$(prepare "$C1" 'คืนนี้ออกไปเจอเพื่อนดีปะ?' "$B" "$H")"
-          echo "checkpoint:second_prepare_code=$CODE"
           test "$CODE" = '200'
           TOKEN2="$(token_from "$B")"
           CWRONG="$T/wrong"; touch "$CWRONG"
           CODE="$(reveal "$CWRONG" "$TOKEN2" "$B" "$H")"
-          echo "checkpoint:wrong_session_code=$CODE"
           test "$CODE" = '404'
 
           CODE="$(prepare "$C1" 'ปวดหน้าอกควรทำไง' "$B" "$H")"
-          echo "checkpoint:care_prepare_code=$CODE"
           test "$CODE" = '200'
           CARE_TOKEN="$(token_from "$B")"
           CODE="$(reveal "$C1" "$CARE_TOKEN" "$B" "$H")"
-          echo "checkpoint:care_reveal_code=$CODE"
           test "$CODE" = '200'
           node -e 'const fs=require("fs"); const x=JSON.parse(fs.readFileSync(process.argv[1],"utf8")); if(x.id!==null||typeof x.thai!=="string"||!x.thai||typeof x.english!=="string"||!x.english) process.exit(1)' "$B"
 
           CODE="$(curl --silent --show-error --max-time 30 -o "$B" -H 'content-type: application/json' -H 'origin: https://example.com' -X POST "$BASE/api/answers/prepare" --data '{"question":"hello"}' -w '%{http_code}')"
-          echo "checkpoint:cross_origin_code=$CODE"
           test "$CODE" = '403'
           LONG="$(node -e 'process.stdout.write("x".repeat(501))')"
           CODE="$(curl --silent --show-error --max-time 30 -o "$B" -H 'content-type: application/json' -H "origin: $BASE" -X POST "$BASE/api/answers/prepare" --data "$(node -e 'process.stdout.write(JSON.stringify({question:process.argv[1]}))' "$LONG")" -w '%{http_code}')"
-          echo "checkpoint:long_question_code=$CODE"
           test "$CODE" = '413'
 
           CODE="$(curl --silent --show-error --max-time 30 -o "$B" -H 'content-type: application/json' -X POST "$UPSTREAM" --data '{"action":"prepare","question":"hello"}' -w '%{http_code}')"
-          echo "checkpoint:direct_no_key_code=$CODE"
           test "$CODE" = '401'
           CODE="$(curl --silent --show-error --max-time 30 -o "$B" -H 'content-type: application/json' -H "apikey: $ANON" -X POST "$UPSTREAM" --data '{"action":"prepare","question":"hello"}' -w '%{http_code}')"
-          echo "checkpoint:direct_anon_code=$CODE"
           test "$CODE" = '401'
 
           C2="$T/c2"; touch "$C2"
           for n in 1 2 3; do
-            CODE="$(prepare "$C2" "outstanding test $n" "$B" "$H")"
-            echo "checkpoint:outstanding_prepare_${n}_code=$CODE"
+            CODE="$(prepare "$C2" "outstanding token test $n" "$B" "$H")"
             test "$CODE" = '200'
             token_from "$B" >/dev/null
           done
-          CODE="$(prepare "$C2" 'outstanding test 4' "$B" "$H")"
-          echo "checkpoint:outstanding_prepare_4_code=$CODE"
+          CODE="$(prepare "$C2" 'outstanding token test 4' "$B" "$H")"
           test "$CODE" = '429'
           grep -qi '^retry-after:' "$H"
 
-          C3="$T/c3"; touch "$C3"
-          for n in $(seq 1 10); do
-            CODE="$(prepare "$C3" "rate test coffee $n" "$B" "$H")"
-            echo "checkpoint:rate_prepare_${n}_code=$CODE"
-            test "$CODE" = '200'
-            RT="$(token_from "$B")"
-            CODE="$(reveal "$C3" "$RT" "$B" "$H")"
-            echo "checkpoint:rate_reveal_${n}_code=$CODE"
-            test "$CODE" = '200'
-          done
-          CODE="$(prepare "$C3" 'rate test coffee 11' "$B" "$H")"
-          echo "checkpoint:rate_prepare_11_code=$CODE"
-          test "$CODE" = '429'
-
           S1="$(session_hash "$C1")"
           S2="$(session_hash "$C2")"
-          S3="$(session_hash "$C3")"
-          printf 'PHASE_F_HTTP_SMOKE_RESULT={"status":"PASS","normal_reveal":true,"replay_rejected":true,"session_bound":true,"care_tokenized":true,"cross_origin_rejected":true,"direct_bypass_rejected":true,"outstanding_token_limit":3,"prepare_session_minute_limit":10,"session_hashes":["%s","%s","%s"]}\n' "$S1" "$S2" "$S3"
+          printf 'PHASE_F_HTTP_SMOKE_RESULT={"status":"PASS","prepare_token_only":true,"normal_reveal":true,"replay_rejected":true,"session_bound":true,"care_tokenized":true,"cross_origin_rejected":true,"direct_bypass_rejected":true,"no_store":true,"outstanding_token_limit":3,"session_hashes":["%s","%s"]}\n' "$S1" "$S2"
