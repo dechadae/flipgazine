@@ -1,0 +1,35 @@
+name: Answers Phase J mobile fit diagnostic v2
+on:
+  push:
+    paths: ['.github/workflows/answers-phase-j-mobile-fit-diagnostic-v2.yml']
+permissions: {contents: read}
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - run: |
+          mkdir -p /tmp/pj && cd /tmp/pj && npm --silent init -y >/dev/null 2>&1 && npm --silent install playwright >/dev/null 2>&1 && npx playwright install chromium >/dev/null
+      - shell: bash
+        run: |
+          cat >/tmp/pj/d.mjs <<'NODE'
+          import {chromium} from 'playwright';
+          const A={id:870,thai:'เขาจำเมนูได้\nให้ทิปใจ 5% พอ',english:'They remember your order. Tip the heart five percent and stop there.'};
+          const b=await chromium.launch({headless:true});
+          async function run(path){
+            const c=await b.newContext({viewport:{width:412,height:915},deviceScaleFactor:2.625,isMobile:true,hasTouch:true}); const p=await c.newPage(); const api=[];
+            p.on('response',r=>{if(r.url().includes('/api/answers/'))api.push({url:r.url(),status:r.status()})});
+            await p.route('**/api/answers/reveal',r=>r.fulfill({status:200,contentType:'application/json',body:JSON.stringify(A)}));
+            await p.goto('https://flipgazine.pages.dev/'+path+'?fit='+Date.now(),{waitUntil:'domcontentloaded',timeout:60000});
+            await p.waitForFunction(()=>document.body?.dataset?.stage==='ask'&&document.querySelector('#bookEdge'),null,{timeout:60000});
+            await p.locator('#question').fill('barista หล่อไหม'); await p.locator('#questionForm button').click();
+            await p.waitForFunction(()=>document.body?.dataset?.stage==='pick',null,{timeout:30000});
+            await p.evaluate(()=>{const e=document.querySelector('#bookEdge'),r=e.getBoundingClientRect(),y=r.top+r.height/2,o=e.setPointerCapture;e.setPointerCapture=()=>{};for(const [t,x,bt] of [['pointerdown',.2,1],['pointermove',.82,1],['pointerup',.82,0]])e.dispatchEvent(new PointerEvent(t,{bubbles:true,pointerId:9,pointerType:'touch',isPrimary:true,clientX:r.left+r.width*x,clientY:y,buttons:bt,button:0}));e.setPointerCapture=o;});
+            await p.waitForFunction(()=>document.body?.dataset?.stage==='open',null,{timeout:30000}); await p.evaluate(async()=>{if(document.fonts?.ready)await document.fonts.ready;await new Promise(r=>setTimeout(r,1200))});
+            const s=await p.evaluate(()=>{const t=document.querySelector('#thaiAnswer'),pg=t.closest('.page-right'),ps=getComputedStyle(pg),mw=Math.max(1,pg.clientWidth-(parseFloat(ps.paddingLeft)||0)-(parseFloat(ps.paddingRight)||0)-2);return{font:getComputedStyle(t).fontSize,clientW:t.clientWidth,scrollW:t.scrollWidth,clientH:t.clientHeight,scrollH:t.scrollHeight,maxW:mw,kids:[...t.children].map(x=>({text:x.innerText,scrollW:x.scrollWidth,clientW:x.clientWidth,rectW:x.getBoundingClientRect().width})),heightFit:t.scrollHeight<=t.clientHeight+1,childrenFit:[...t.children].every(x=>x.scrollWidth<=mw+1)}}); await c.close(); return {s,api};
+          }
+          const prod=await run('answers.html'); const lab=await run('answers-server-lab.html'); console.log('PHASE_J_FIT_V2='+JSON.stringify({prod,lab})); await b.close();
+          NODE
+          node /tmp/pj/d.mjs
