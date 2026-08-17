@@ -48,10 +48,16 @@ jobs:
           async function askAndOpen(question,frac=.5){ await page.locator('#question').fill(question); const tSubmit=Date.now(); await page.getByRole('button',{name:'ถามดิ'}).click(); await stage('pick'); const tRelease=Date.now(); await dragRelease(frac); await stage('opening'); const tOpening=Date.now(); await stage('open'); const thai=(await page.locator('#thaiAnswer').innerText()).trim(); const english=(await page.locator('#englishAnswer').innerText()).trim(); if(!thai||!english) throw new Error('blank bilingual answer'); const prep=apiResponses.find(x=>x.url.endsWith('/prepare')&&x.at>=tSubmit); return {tSubmit,tRelease,tOpening,prepareMs:prep?prep.at-tSubmit:null,releaseToOpeningMs:tOpening-tRelease}; }
           await page.goto(BASE+'/answers-server-lab.html',{waitUntil:'domcontentloaded',timeout:30000});
           await page.locator('#question').waitFor({state:'visible',timeout:30000}); await stage('ask'); await page.waitForTimeout(2500);
-          const registration=await page.evaluate(()=>({fgModules:typeof window.FGModules,fgNav:typeof window.FGNav,controllerKeys:Object.keys(window.FGPageControllers||{}),labType:typeof (window.FGPageControllers||{})['/fg-page-answers-server-lab.js'],buttonDisabled:document.querySelector('#questionForm button')?.disabled,stage:document.body.getAttribute('data-stage')}));
+          const registration=await page.evaluate(()=>({fgModules:typeof window.FGModules,fgNav:typeof window.FGNav,controllerKeys:Object.keys(window.FGPageControllers||{}),labType:typeof (window.FGPageControllers||{})['/fg-page-answers-server-lab.js'],activeClass:document.body.classList.contains('fg-answers-active'),buttonDisabled:document.querySelector('#questionForm button')?.disabled,stage:document.body.getAttribute('data-stage')}));
           console.log('LAB_REGISTRATION='+JSON.stringify(registration));
-          if(pageErrors.length) console.log('LAB_PAGE_ERRORS='+JSON.stringify(pageErrors)); if(consoleErrors.length) console.log('LAB_CONSOLE_ERRORS='+JSON.stringify(consoleErrors));
           if(registration.labType!=='object') throw new Error('lab controller did not register');
+          const remount=await page.evaluate(()=>{
+            const c=(window.FGPageControllers||{})['/fg-page-answers-server-lab.js']; const main=document.querySelector('body > main[data-fg-page]');
+            try{ c.unmount(); c.mount(main); return {ok:true,activeClass:document.body.classList.contains('fg-answers-active')}; }
+            catch(e){ return {ok:false,name:e?.name||'',message:e?.message||String(e),stack:e?.stack||''}; }
+          });
+          console.log('LAB_REMOUNT='+JSON.stringify(remount));
+          if(!remount.ok) throw new Error('lab mount failed: '+remount.name+': '+remount.message+' '+remount.stack);
           const normal=await askAndOpen('มัทฉะหรือชาไทยดี?',.25);
           const prepReq=apiRequests.find(x=>x.url.endsWith('/prepare')); const revealReq=apiRequests.find(x=>x.url.endsWith('/reveal'));
           if(!prepReq||JSON.stringify(Object.keys(prepReq.body||{}).sort())!==JSON.stringify(['question'])) throw new Error('prepare payload leaked extra fields');
