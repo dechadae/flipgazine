@@ -222,8 +222,18 @@ async function answersApi(request, env, url) {
     const outHeaders = answersNoStoreHeaders();
     const upstreamType = upstream.headers.get("content-type");
     if (upstreamType) outHeaders.set("content-type", upstreamType);
-    const setCookie = upstream.headers.get("set-cookie");
-    if (setCookie) outHeaders.set("set-cookie", setCookie);
+
+    let setCookies = [];
+    if (typeof upstream.headers.getSetCookie === "function") {
+      setCookies = upstream.headers.getSetCookie();
+    } else if (typeof upstream.headers.getAll === "function") {
+      setCookies = upstream.headers.getAll("Set-Cookie");
+    } else {
+      const oneCookie = upstream.headers.get("set-cookie");
+      if (oneCookie) setCookies = [oneCookie];
+    }
+    setCookies.forEach((cookieValue) => outHeaders.append("Set-Cookie", cookieValue));
+
     const retryAfter = upstream.headers.get("retry-after");
     if (retryAfter) outHeaders.set("retry-after", retryAfter);
 
