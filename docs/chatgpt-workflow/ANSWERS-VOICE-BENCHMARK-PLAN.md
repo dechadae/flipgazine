@@ -2,6 +2,7 @@
 
 **Status:** APPROVED PLAN  
 **Created:** 17 August 2026  
+**Updated:** 17 August 2026  
 **Project:** Flipgazine / The Book of Answers  
 **Placement:** `/voice.html`, after the AI probe sections and before the final Mental Model section  
 **Editorial authority:** `ANSWERS-VOICE-TONE.md`
@@ -80,12 +81,15 @@ The lightbox contains:
 
 No correction or rewrite appears anywhere.
 
-At the bottom, a future human-contact CTA may use only quiet non-commercial language such as:
+At the bottom, the human-contact CTA uses quiet non-commercial language only:
 
 ```text
 Want a human opinion?
+I work best with contemporary Thai conversation, editorial voice and creative/product contexts. I’m not the right reviewer for every field, and I may decline work outside my expertise.
 Ask Decha
 ```
+
+Do not add pricing, quote, package, subscription, consultation-sales, or upgrade language around this CTA.
 
 ---
 
@@ -535,7 +539,8 @@ Add:
 - View details lightbox;
 - Test another action;
 - CARE state;
-- mobile/desktop QA.
+- mobile/desktop QA;
+- quiet human-contact CTA with scope disclosure.
 
 ### Phase F — Acceptance test
 
@@ -574,9 +579,46 @@ The benchmark is complete when:
 - no private corpus data is sent to or exposed by the evaluator;
 - the API key remains private;
 - monthly spend is capped;
-- the page remains free and non-commercial in presentation.
+- the page remains free and non-commercial in presentation;
+- the human-contact CTA clearly discloses specialist scope and the possibility of declining unsuitable work.
 
-## 18. Product principle
+---
+
+## 18. Human contact scope and limitations
+
+The human-contact layer must be as explicit about its limits as the Voice page is about the limits of the benchmark itself.
+
+The human reviewer is a Thai designer and solo developer with strong editorial judgment in selected fields, not a universal Thai-language authority and not a general-purpose language-services company.
+
+Strongest-fit work includes areas such as:
+
+- contemporary conversational Thai;
+- editorial voice and tone;
+- creative and product language;
+- hospitality;
+- lifestyle;
+- culture and social context;
+- adjacent design-led or consumer-facing fields where the reviewer has real subject familiarity.
+
+The site must not imply equivalent expertise in every specialist domain. Work may be declined when the subject requires knowledge, professional credentials, technical depth, legal/medical expertise, industry experience, or linguistic context outside the reviewer’s competence.
+
+This is a quality-control principle, not an apology:
+
+> **Know where the judgement is strong. Do not overclaim beyond it.**
+
+The preferred public copy is:
+
+```text
+Want a human opinion?
+I work best with contemporary Thai conversation, editorial voice and creative/product contexts. I’m not the right reviewer for every field, and I may decline work outside my expertise.
+Ask Decha
+```
+
+Do not replace this with sales language. Contact should begin as a human conversation; any scope, availability or commercial terms happen privately only after fit is established.
+
+---
+
+## 19. Product principle
 
 The benchmark exists to answer one question:
 
