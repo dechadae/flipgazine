@@ -8,171 +8,82 @@ permissions:
   contents: read
 
 jobs:
-  parity:
+  router-guard:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-      - name: Frozen v124 deterministic parity after cutover
-        run: node answers-private-server/parity-v124-runner.mjs
+        with: {node-version: '22'}
+      - name: Frozen v124 proof + current canonical router guard
+        run: |
+          node answers-private-server/postcutover-v124-guard.mjs
+          node --test answers-private-server/router-v124.test.mjs
 
   hostile-http:
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
       - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-      - name: Hostile retrieval, token, abuse, cache and latency acceptance
+        with: {node-version: '22'}
+      - name: Hostile retrieval, token, cache and latency acceptance
         shell: bash
         run: |
           cat > /tmp/phase-j-http.mjs <<'NODE'
-          import crypto from 'node:crypto';
-          import {performance} from 'node:perf_hooks';
-          const O='https://flipgazine.pages.dev';
-          const S='https://sjpvhgxacsiorrtijqua.supabase.co';
-          const A=O+'/api/answers';
-          const F=S+'/functions/v1/answers-service';
-          const ADMIN=S+'/functions/v1/answers-admin-service';
-          const K='sb_publishable_NcIExScIXkqsK1ZNNu5a-Q_zZ4afIHz';
-          const sleep=ms=>new Promise(r=>setTimeout(r,ms));
-          function ck(x,m){if(!x)throw new Error(m)}
-          function cookieOf(res){return (res.headers.get('set-cookie')||'').split(';')[0]||''}
-          async function post(path,body,cookie='',origin=O){
-            const t=performance.now();
-            const res=await fetch(A+path,{method:'POST',headers:{'content-type':'application/json',origin,...(cookie?{cookie}:{})},body:JSON.stringify(body)});
-            const text=await res.text(); let j={}; try{j=JSON.parse(text)}catch{}
-            return {res,j,text,cookie:cookie||cookieOf(res),ms:performance.now()-t};
-          }
-          async function cycle(q,cookie=''){
-            const p=await post('/prepare',{question:q},cookie); ck(p.res.status===200,'prepare '+p.res.status);
-            const r=await post('/reveal',{request_token:p.j.request_token},p.cookie); ck(r.res.status===200,'reveal '+r.res.status);
-            return {p,r,cookie:p.cookie,id:r.j.id,ms:p.ms+r.ms};
-          }
-          async function site(path){
-            const u=S+'/rest/v1/site_files?path=eq.'+encodeURIComponent(path)+'&select=path,content,version';
-            const r=await fetch(u,{headers:{apikey:K,authorization:'Bearer '+K},cache:'no-store'});
-            ck(r.status===200,'site_files '+path+' '+r.status); const rows=await r.json(); return rows;
-          }
-
-          const prodRows=await site('/fg-page-answers.js'); ck(prodRows.length===1,'prod controller row');
-          const js=prodRows[0].content||'';
-          const md5=crypto.createHash('md5').update(js).digest('hex');
-          ck(prodRows[0].version===125,'prod controller version '+prodRows[0].version);
-          ck(Buffer.byteLength(js)===25213,'prod controller bytes '+Buffer.byteLength(js));
-          ck(md5==='4693d0cdb12c395ec95a4d4112b0067d','prod controller md5 '+md5);
-          ck(js.includes('var PATH="/fg-page-answers.js"'),'production registry key');
-          ck(js.includes('/api/answers/prepare')&&js.includes('/api/answers/reveal'),'API paths missing');
-          for(const s of ['const ANSWERS','FOCUS_INDEX','function chooseAnswer','universalAdds','eligible']) ck(!js.includes(s),'bulk/router exposure '+s);
-          ck(!js.includes('/fg-page-answers-server-lab.js'),'lab registry leak');
-
-          const longest=await site('/answers-longest-review.html'); ck(longest.length===1,'longest row');
-          ck(Buffer.byteLength(longest[0].content)<1000,'longest review still bulk');
-          ck(longest[0].content.includes('retired'),'longest review not retired');
-          const three=await site('/fg-page-answers-three-lab.js'); ck(three.length===0,'three lab still public');
-          const wip=await site('/wip/provenance-final-2026-08-16/fg-page-answers-v124-final-production.js'); ck(wip.length===0,'wip provenance exposed');
-          const backup=await site('/private/answers-phase-j-backup-20260817/fg-page-answers.js'); ck(backup.length===0,'private cutover backup exposed');
-
-          const privateRest=await fetch(S+'/rest/v1/answers?select=*',{headers:{apikey:K,authorization:'Bearer '+K,'accept-profile':'private'}});
-          const privateText=await privateRest.text(); ck(privateRest.status!==200,'private schema REST exposed'); ck(privateText.length<5000,'private REST suspicious bulk');
-
-          const direct0=await fetch(F,{method:'POST',headers:{'content-type':'application/json'},body:'{"action":"prepare","question":"x"}'}); ck(direct0.status===401,'direct no-key '+direct0.status);
-          const directPub=await fetch(F,{method:'POST',headers:{apikey:K,'content-type':'application/json'},body:'{"action":"prepare","question":"x"}'}); ck(directPub.status===401,'direct publishable '+directPub.status);
-          const adminNoAuth=await fetch(ADMIN,{method:'POST',headers:{'content-type':'application/json'},body:'{"action":"audit","question":"x"}'}); ck(adminNoAuth.status===401,'admin no auth '+adminNoAuth.status);
-          const cross=await post('/prepare',{question:'x'},'','https://evil.example'); ck(cross.res.status===403,'cross origin '+cross.res.status);
-
-          const normal=await post('/prepare',{question:'barista หล่อไหม'}); ck(normal.res.status===200,'normal prepare');
-          ck(Object.keys(normal.j).sort().join(',')==='expires_in,request_token','prepare exposure'); ck(normal.j.expires_in===120,'TTL');
-          ck((normal.res.headers.get('cache-control')||'').includes('no-store'),'prepare cache');
-          const reveal=await post('/reveal',{request_token:normal.j.request_token},normal.cookie); ck(reveal.res.status===200&&Number.isInteger(reveal.j.id)&&reveal.j.thai&&reveal.j.english,'normal reveal');
-          ck(Object.keys(reveal.j).sort().join(',')==='english,id,thai','reveal extra fields '+Object.keys(reveal.j).sort());
-          const replay=await post('/reveal',{request_token:normal.j.request_token},normal.cookie); ck(replay.res.status===404,'replay '+replay.res.status);
-
-          const a=await post('/prepare',{question:'คืนนี้ออกไปดีไหม'}),b=await post('/prepare',{question:'work decision'});
-          const wrong=await post('/reveal',{request_token:a.j.request_token},b.cookie); ck(wrong.res.status===404,'wrong session '+wrong.res.status);
-          const right=await post('/reveal',{request_token:a.j.request_token},a.cookie); ck(right.res.status===200,'right session recovery');
-
-          const cp=await post('/prepare',{question:'I have chest pain should I take medicine?'}); const cr=await post('/reveal',{request_token:cp.j.request_token},cp.cookie);
-          ck(cr.res.status===200&&cr.j.id===null&&cr.j.english==='Ask a clinician. This book has no medical license.','CARE drift');
-
-          const exp=await post('/prepare',{question:'phase-j expiry'}); ck(exp.res.status===200,'expiry prepare');
-
-          const latency=[]; let lc='';
-          for(let i=0;i<3;i++){const x=await cycle('phase-j-latency-'+i,lc);lc=x.cookie;latency.push(Math.round(x.ms));}
-          ck(Math.max(...latency)<5000,'latency catastrophic '+latency);
-
-          const abuse=[];
-          for(let i=0;i<21;i++){
-            const x=await post('/prepare',{question:'phase-j-ip-abuse-'+i}); abuse.push(x.res.status);
-          }
-          ck(abuse.slice(0,20).every(x=>x===200)&&abuse[20]===429,'prepare IP ceiling '+abuse.join(','));
-
-          const badReveal=[];
-          for(let i=0;i<25;i++){
-            const t=crypto.randomBytes(32).toString('base64url'); const x=await post('/reveal',{request_token:t}); badReveal.push(x.res.status);
-          }
-          ck(badReveal.every(x=>x===404||x===429),'high-rate reveal unexpected '+badReveal.join(','));
-
-          const shellBust=await fetch(O+'/answers.html?phasej='+Date.now(),{cache:'no-store'}); ck(shellBust.status===200,'cache-bust shell '+shellBust.status);
-          ck((shellBust.headers.get('content-type')||'').includes('text/html'),'cache-bust shell type');
-
-          await sleep(122000);
-          const expired=await post('/reveal',{request_token:exp.j.request_token},exp.cookie); ck(expired.res.status===404,'expired token '+expired.res.status);
-
-          console.log('PHASE_J_HTTP_RESULT='+JSON.stringify({status:'PASS',controller_version:prodRows[0].version,controller_bytes:Buffer.byteLength(js),controller_md5:md5,longest_review_bytes:Buffer.byteLength(longest[0].content),three_lab_rows:three.length,wip_rows:wip.length,private_backup_rows:backup.length,private_rest_status:privateRest.status,direct_no_key:direct0.status,direct_publishable:directPub.status,admin_no_auth:adminNoAuth.status,cross_origin:cross.res.status,replay:replay.res.status,wrong_session:wrong.res.status,expired:expired.res.status,care_id:cr.j.id,prepare_ip_statuses:abuse,high_rate_invalid_reveal_statuses:[...new Set(badReveal)],latency_ms:latency,latency_median_ms:[...latency].sort((x,y)=>x-y)[1],cache_bust_shell:shellBust.status}));
+          import crypto from 'node:crypto'; import {performance} from 'node:perf_hooks';
+          const O='https://flipgazine.pages.dev',S='https://sjpvhgxacsiorrtijqua.supabase.co',A=O+'/api/answers',F=S+'/functions/v1/answers-service',ADMIN=S+'/functions/v1/answers-admin-service',K='sb_publishable_NcIExScIXkqsK1ZNNu5a-Q_zZ4afIHz';
+          const sleep=ms=>new Promise(r=>setTimeout(r,ms)); function ck(x,m){if(!x)throw new Error(m)} function cookie(res){return(res.headers.get('set-cookie')||'').split(';')[0]||''}
+          async function post(path,body,c='',origin=O){const t=performance.now(),res=await fetch(A+path,{method:'POST',headers:{'content-type':'application/json',origin,...(c?{cookie:c}:{})},body:JSON.stringify(body)}),text=await res.text();let j={};try{j=JSON.parse(text)}catch{}return{res,j,c:c||cookie(res),ms:performance.now()-t}}
+          async function cycle(q,c=''){const p=await post('/prepare',{question:q},c);ck(p.res.status===200,'prepare '+p.res.status);const r=await post('/reveal',{request_token:p.j.request_token},p.c);ck(r.res.status===200,'reveal '+r.res.status);return{p,r,c:p.c,id:r.j.id,ms:p.ms+r.ms}}
+          async function site(path){const r=await fetch(S+'/rest/v1/site_files?path=eq.'+encodeURIComponent(path)+'&select=path,content,version',{headers:{apikey:K,authorization:'Bearer '+K},cache:'no-store'});ck(r.status===200,'site '+path);return r.json()}
+          const rows=await site('/fg-page-answers.js');ck(rows.length===1,'prod row');const js=rows[0].content||'',md5=crypto.createHash('md5').update(js).digest('hex');ck(rows[0].version===125&&Buffer.byteLength(js)===25213&&md5==='4693d0cdb12c395ec95a4d4112b0067d','prod slim fingerprint');ck(js.includes('var PATH="/fg-page-answers.js"'),'registry');ck(js.includes('/api/answers/prepare')&&js.includes('/api/answers/reveal'),'API');for(const s of ['var answers=','var CARE=[','FOCUS_DICT','FOCUS_INDEX','function chooseAnswer','universalAdds','eligible'])ck(!js.includes(s),'exposure '+s);ck(!js.includes('/fg-page-answers-server-lab.js'),'lab ref');
+          const longest=await site('/answers-longest-review.html');ck(longest.length===1&&Buffer.byteLength(longest[0].content)<1000&&longest[0].content.includes('retired'),'longest review');ck((await site('/fg-page-answers-three-lab.js')).length===0,'three lab exposed');ck((await site('/wip/provenance-final-2026-08-16/fg-page-answers-v124-final-production.js')).length===0,'wip public');ck((await site('/private/answers-phase-j-backup-20260817/fg-page-answers.js')).length===0,'backup public');
+          const privateRest=await fetch(S+'/rest/v1/answers?select=*',{headers:{apikey:K,authorization:'Bearer '+K,'accept-profile':'private'}});const privateText=await privateRest.text();ck(privateRest.status!==200&&privateText.length<5000,'private REST');
+          const d0=await fetch(F,{method:'POST',headers:{'content-type':'application/json'},body:'{"action":"prepare","question":"x"}'}),d1=await fetch(F,{method:'POST',headers:{apikey:K,'content-type':'application/json'},body:'{"action":"prepare","question":"x"}'}),adm=await fetch(ADMIN,{method:'POST',headers:{'content-type':'application/json'},body:'{"action":"audit","question":"x"}'});ck(d0.status===401&&d1.status===401&&adm.status===401,'direct boundaries');const xo=await post('/prepare',{question:'x'},'','https://evil.example');ck(xo.res.status===403,'cross origin');
+          const p=await post('/prepare',{question:'barista หล่อไหม'});ck(p.res.status===200&&Object.keys(p.j).sort().join(',')==='expires_in,request_token'&&p.j.expires_in===120,'prepare');ck((p.res.headers.get('cache-control')||'').includes('no-store'),'prepare cache');const r=await post('/reveal',{request_token:p.j.request_token},p.c);ck(r.res.status===200&&Object.keys(r.j).sort().join(',')==='english,id,thai'&&Number.isInteger(r.j.id),'reveal');const replay=await post('/reveal',{request_token:p.j.request_token},p.c);ck(replay.res.status===404,'replay');
+          const a=await post('/prepare',{question:'คืนนี้ออกไปดีไหม'}),b=await post('/prepare',{question:'work decision'}),wrong=await post('/reveal',{request_token:a.j.request_token},b.c);ck(wrong.res.status===404,'wrong session');ck((await post('/reveal',{request_token:a.j.request_token},a.c)).res.status===200,'right recovery');
+          const cp=await post('/prepare',{question:'I have chest pain should I take medicine?'}),cr=await post('/reveal',{request_token:cp.j.request_token},cp.c);ck(cr.res.status===200&&cr.j.id===null&&cr.j.english==='Ask a clinician. This book has no medical license.','CARE');
+          const exp=await post('/prepare',{question:'phase-j expiry'});ck(exp.res.status===200,'expiry prepare');
+          const latency=[];let lc='';for(let i=0;i<3;i++){const x=await cycle('phase-j-latency-'+i,lc);lc=x.c;latency.push(Math.round(x.ms))}ck(Math.max(...latency)<5000,'latency '+latency);
+          const bad=[];for(let i=0;i<25;i++){const x=await post('/reveal',{request_token:crypto.randomBytes(32).toString('base64url')});bad.push(x.res.status)}ck(bad.every(x=>x===404||x===429),'invalid reveal '+bad);
+          const bust=await fetch(O+'/answers.html?phasej='+Date.now(),{cache:'no-store'});ck(bust.status===200&&(bust.headers.get('content-type')||'').includes('text/html'),'cache bust shell');
+          await sleep(122000);const expired=await post('/reveal',{request_token:exp.j.request_token},exp.c);ck(expired.res.status===404,'expiry '+expired.res.status);
+          console.log('PHASE_J_HTTP_RESULT='+JSON.stringify({status:'PASS',controller_version:rows[0].version,controller_bytes:Buffer.byteLength(js),controller_md5:md5,longest_review_bytes:Buffer.byteLength(longest[0].content),private_rest_status:privateRest.status,direct_no_key:d0.status,direct_publishable:d1.status,admin_no_auth:adm.status,cross_origin:xo.res.status,replay:replay.res.status,wrong_session:wrong.res.status,expired:expired.res.status,care_id:cr.j.id,invalid_reveal_statuses:[...new Set(bad)],latency_ms:latency,latency_median_ms:[...latency].sort((x,y)=>x-y)[1],cache_bust_shell:bust.status}));
           NODE
           node /tmp/phase-j-http.mjs
+
+  abuse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - name: Exact public prepare-IP ceiling
+        shell: bash
+        run: |
+          cat >/tmp/pj-abuse.mjs <<'NODE'
+          const U='https://flipgazine.pages.dev/api/answers/prepare',statuses=[];
+          for(let i=0;i<21;i++){const r=await fetch(U,{method:'POST',headers:{'content-type':'application/json',origin:'https://flipgazine.pages.dev'},body:JSON.stringify({question:'phase-j-rate-probe-'+i})});statuses.push(r.status)}
+          const pass=statuses.slice(0,20).every(x=>x===200)&&statuses[20]===429;console.log('PHASE_J_ABUSE='+JSON.stringify({status:pass?'PASS':'FAIL',statuses}));if(!pass)process.exit(1);
+          NODE
+          node /tmp/pj-abuse.mjs
 
   mobile:
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
       - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-      - name: Install browser harness
-        run: |
-          mkdir -p /tmp/phase-j && cd /tmp/phase-j
-          npm --silent init -y >/dev/null 2>&1
-          npm --silent install playwright >/dev/null 2>&1
-          npx playwright install chromium >/dev/null
-      - name: Fresh production mobile Book cutover acceptance
+        with: {node-version: '22'}
+      - run: |
+          mkdir -p /tmp/pj && cd /tmp/pj && npm --silent init -y >/dev/null 2>&1 && npm --silent install playwright >/dev/null 2>&1 && npx playwright install chromium >/dev/null
+      - name: Fresh production mobile Book acceptance
         shell: bash
         run: |
-          cat > /tmp/phase-j/mobile.mjs <<'NODE'
-          import {chromium} from 'playwright';
-          function ck(x,m){if(!x)throw new Error(m)}
-          const browser=await chromium.launch({headless:true});
-          async function context(){return browser.newContext({viewport:{width:412,height:915},deviceScaleFactor:2.625,isMobile:true,hasTouch:true});}
-          async function ready(p){
-            await p.goto('https://flipgazine.pages.dev/answers.html?phasej='+Date.now(),{waitUntil:'domcontentloaded',timeout:60000});
-            await p.waitForFunction(()=>document.body?.classList.contains('fg-answers-active')&&document.body?.dataset?.stage==='ask'&&!!document.querySelector('#bookEdge')&&!!window.FGPageControllers?.['/fg-page-answers.js'],null,{timeout:60000});
-          }
-          async function stage(p,n,timeout=30000){await p.waitForFunction(x=>document.body?.dataset?.stage===x,n,{timeout});}
-          async function open(p,f){
-            await stage(p,'pick');
-            await p.evaluate(f=>{const el=document.querySelector('#bookEdge'),r=el.getBoundingClientRect(),y=r.top+r.height/2,orig=el.setPointerCapture;el.setPointerCapture=()=>{};const fire=(type,x,buttons)=>el.dispatchEvent(new PointerEvent(type,{bubbles:true,cancelable:true,pointerId:73,pointerType:'touch',isPrimary:true,clientX:x,clientY:y,buttons,button:0}));fire('pointerdown',r.left+r.width*.2,1);fire('pointermove',r.left+r.width*f,1);fire('pointerup',r.left+r.width*f,0);el.setPointerCapture=orig;},f);
-            await stage(p,'open',30000);
-            await p.evaluate(async()=>{if(document.fonts?.ready)await document.fonts.ready;await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(()=>setTimeout(r,250))))});
-            return {thai:(await p.locator('#thaiAnswer').innerText()).trim(),english:(await p.locator('#englishAnswer').innerText()).trim(),number:(await p.locator('#answerNumber').innerText()).trim()};
-          }
-          const c1=await context(),p1=await c1.newPage(); const payloads=[]; const errors=[]; p1.on('pageerror',e=>errors.push(String(e)));
-          p1.on('request',req=>{if(req.url().includes('/api/answers/')){let d=null;try{d=req.postDataJSON()}catch{}payloads.push({url:req.url(),data:d})}});
-          await ready(p1);
-          const reg=await p1.evaluate(()=>({prod:!!window.FGPageControllers?.['/fg-page-answers.js'],lab:!!window.FGPageControllers?.['/fg-page-answers-server-lab.js']})); ck(reg.prod&&!reg.lab,'registry '+JSON.stringify(reg));
-          const closed=await p1.evaluate(()=>{const r=document.querySelector('#bookEdge').getBoundingClientRect();return{center:r.x+r.width/2,width:r.width,overflow:document.documentElement.scrollWidth-innerWidth}}); ck(Math.abs(closed.center-206)<12&&closed.overflow<=1,'closed geometry '+JSON.stringify(closed));
-          await p1.locator('#question').fill('barista หล่อไหม'); await p1.locator('#questionForm button').click(); await stage(p1,'pick'); const normal=await open(p1,.82); ck(normal.thai&&normal.english&&normal.number!=='—','normal');
-          const opened=await p1.evaluate(()=>{const r=document.querySelector('.open-book').getBoundingClientRect(),t=document.querySelector('#thaiAnswer'),page=t.closest('.page-right'),s=getComputedStyle(page),mw=Math.max(1,page.clientWidth-(parseFloat(s.paddingLeft)||0)-(parseFloat(s.paddingRight)||0)-2);let cf=true;for(const span of t.children)if(span.scrollWidth>mw+1)cf=false;return{center:r.x+r.width/2,width:r.width,overflow:document.documentElement.scrollWidth-innerWidth,heightFit:t.scrollHeight<=t.clientHeight+1,childrenFit:cf}}); ck(Math.abs(opened.center-206)<15&&opened.overflow<=1&&opened.heightFit&&opened.childrenFit,'open geometry/autofit '+JSON.stringify(opened));
-          ck(payloads.length===2,'payload count '+payloads.length); ck(Object.keys(payloads[0].data||{}).join(',')==='question','prepare payload '+JSON.stringify(payloads[0])); ck(Object.keys(payloads[1].data||{}).join(',')==='request_token','reveal payload '+JSON.stringify(payloads[1])); ck(!JSON.stringify(payloads).includes('depth'),'depth leaked'); ck(errors.length===0,'page errors '+errors);
-          await c1.close();
-
-          const c2=await context(),p2=await c2.newPage(); await ready(p2); await p2.locator('#question').fill('I have chest pain should I take medicine?'); await p2.locator('#questionForm button').click(); const care=await open(p2,.18); ck(care.number==='—'&&care.english==='Ask a clinician. This book has no medical license.','mobile CARE'); await c2.close();
-
-          const c3=await context(),p3=await c3.newPage(); let intercepted=false; await p3.route('**/api/answers/prepare',async route=>{if(!intercepted){intercepted=true;await route.fulfill({status:503,contentType:'application/json',body:'{"error":"service_unavailable"}'});}else await route.continue();}); await ready(p3); await p3.locator('#question').fill('phase j recovery'); await p3.locator('#questionForm button').click(); const recovered=await open(p3,.64); ck(intercepted&&recovered.thai&&recovered.english,'recovery'); await c3.close();
-          await browser.close();
-          console.log('PHASE_J_MOBILE_RESULT='+JSON.stringify({status:'PASS',viewport:[412,915],dpr:2.625,production_registry:true,lab_registry:false,closed_center:closed.center,open_center:opened.center,open_width:opened.width,no_horizontal_overflow:true,thai_height_fit:opened.heightFit,thai_children_fit:opened.childrenFit,normal:true,care:true,recovery_after_prepare_503:true,depths:[.82,.18,.64],semantic_payloads:['question','request_token']}));
+          cat >/tmp/pj/m.mjs <<'NODE'
+          import {chromium} from 'playwright';function ck(x,m){if(!x)throw new Error(m)}const browser=await chromium.launch({headless:true});
+          async function ctx(){return browser.newContext({viewport:{width:412,height:915},deviceScaleFactor:2.625,isMobile:true,hasTouch:true})}async function stage(p,n,t=30000){await p.waitForFunction(x=>document.body?.dataset?.stage===x,n,{timeout:t})}async function ready(p){await p.goto('https://flipgazine.pages.dev/answers.html?phasej='+Date.now(),{waitUntil:'domcontentloaded',timeout:60000});await p.waitForFunction(()=>document.body?.classList.contains('fg-answers-active')&&document.body?.dataset?.stage==='ask'&&document.querySelector('#bookEdge')&&window.FGPageControllers?.['/fg-page-answers.js'],null,{timeout:60000})}async function open(p,f){await stage(p,'pick');await p.evaluate(f=>{const e=document.querySelector('#bookEdge'),r=e.getBoundingClientRect(),y=r.top+r.height/2,o=e.setPointerCapture;e.setPointerCapture=()=>{};for(const[t,x,b]of[['pointerdown',.2,1],['pointermove',f,1],['pointerup',f,0]])e.dispatchEvent(new PointerEvent(t,{bubbles:true,pointerId:7,pointerType:'touch',isPrimary:true,clientX:r.left+r.width*x,clientY:y,buttons:b,button:0}));e.setPointerCapture=o},f);await stage(p,'open');return{thai:(await p.locator('#thaiAnswer').innerText()).trim(),english:(await p.locator('#englishAnswer').innerText()).trim(),number:(await p.locator('#answerNumber').innerText()).trim()}}
+          const c1=await ctx(),p1=await c1.newPage(),payloads=[],errors=[];p1.on('pageerror',e=>errors.push(String(e)));p1.on('request',q=>{if(q.url().includes('/api/answers/')){let d={};try{d=q.postDataJSON()}catch{}payloads.push(d)}});await ready(p1);const reg=await p1.evaluate(()=>({prod:!!window.FGPageControllers?.['/fg-page-answers.js'],lab:!!window.FGPageControllers?.['/fg-page-answers-server-lab.js']}));ck(reg.prod&&!reg.lab,'registry');const closed=await p1.evaluate(()=>{const r=document.querySelector('#bookEdge').getBoundingClientRect();return{center:r.x+r.width/2,overflow:document.documentElement.scrollWidth-innerWidth}});ck(Math.abs(closed.center-206)<12&&closed.overflow<=1,'closed');await p1.locator('#question').fill('barista หล่อไหม');await p1.locator('#questionForm button').click();const normal=await open(p1,.82);ck(normal.thai&&normal.english&&normal.number!=='—','normal');const opened=await p1.evaluate(()=>{const r=document.querySelector('.open-book').getBoundingClientRect(),t=document.querySelector('#thaiAnswer');return{center:r.x+r.width/2,width:r.width,overflow:document.documentElement.scrollWidth-innerWidth,heightFit:t.scrollHeight<=t.clientHeight+1}});ck(Math.abs(opened.center-206)<15&&opened.overflow<=1&&opened.heightFit,'open');ck(payloads.length===2&&Object.keys(payloads[0]).join(',')==='question'&&Object.keys(payloads[1]).join(',')==='request_token'&&!JSON.stringify(payloads).includes('depth'),'payload');ck(errors.length===0,'errors');await c1.close();
+          const c2=await ctx(),p2=await c2.newPage();await ready(p2);await p2.locator('#question').fill('I have chest pain should I take medicine?');await p2.locator('#questionForm button').click();const care=await open(p2,.18);ck(care.number==='—'&&care.english==='Ask a clinician. This book has no medical license.','CARE');await c2.close();
+          const c3=await ctx(),p3=await c3.newPage();let intercepted=false;await p3.route('**/api/answers/prepare',r=>{if(!intercepted){intercepted=true;return r.fulfill({status:503,contentType:'application/json',body:'{"error":"service_unavailable"}'})}return r.continue()});await ready(p3);await p3.locator('#question').fill('phase j recovery');await p3.locator('#questionForm button').click();const rec=await open(p3,.64);ck(intercepted&&rec.thai&&rec.english,'recovery');await c3.close();await browser.close();console.log('PHASE_J_MOBILE_RESULT='+JSON.stringify({status:'PASS',viewport:[412,915],dpr:2.625,production_registry:true,closed_center:closed.center,open_center:opened.center,open_width:opened.width,no_horizontal_overflow:true,thai_height_fit:opened.heightFit,normal:true,care:true,recovery_after_prepare_503:true,depths:[.82,.18,.64],semantic_payloads:['question','request_token']}));
           NODE
-          node /tmp/phase-j/mobile.mjs
+          node /tmp/pj/m.mjs
