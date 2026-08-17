@@ -1,0 +1,37 @@
+name: Answers Thai Edit CI smoke
+on:
+  push:
+    paths:
+      - '.github/workflows/answers-thai-edit-ci-smoke.yml'
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate live Thai Edit rebuild
+        shell: bash
+        env:
+          SUPA: https://sjpvhgxacsiorrtijqua.supabase.co
+          APIKEY: sb_publishable_NcIExScIXkqsK1ZNNu5a-Q_zZ4afIHz
+        run: |
+          set -euo pipefail
+          curl -fsS "$SUPA/rest/v1/site_files?path=eq.%2Ffg-page-answers-thai-review.js&select=content,version" -H "apikey: $APIKEY" > /tmp/controller.json
+          test "$(jq -r '.[0].version' /tmp/controller.json)" = "5"
+          jq -r '.[0].content' /tmp/controller.json > /tmp/controller.js
+          node --check /tmp/controller.js
+          grep -q 'answers-admin-service' /tmp/controller.js
+          grep -q 'expected_revision:loadedRevision' /tmp/controller.js
+          grep -q 'filterTabs' /tmp/controller.js
+          ! grep -q '/wip/' /tmp/controller.js
+          ! grep -q 'new Function' /tmp/controller.js
+          curl -fsS "$SUPA/rest/v1/site_files?path=eq.%2Fanswers-thai-review.html&select=content,version" -H "apikey: $APIKEY" > /tmp/page.json
+          test "$(jq -r '.[0].version' /tmp/page.json)" = "4"
+          jq -r '.[0].content' /tmp/page.json > /tmp/page.html
+          grep -q '@keyframes fgEnter{from{opacity:0}to{opacity:1}}' /tmp/page.html
+          grep -q '1.06s var(--ease-soft,cubic-bezier(.4,0,.2,1)) backwards' /tmp/page.html
+          grep -q 'max-width:720px' /tmp/page.html
+          grep -q 'class="tabs filter-tabs"' /tmp/page.html
+          grep -q 'data-fg-persist="interactive-v1"' /tmp/page.html
+          grep -q 'data-fg-controller="/fg-page-answers-thai-review.js"' /tmp/page.html
+          ! grep -q 'FGModules.load' /tmp/page.html
+          ! grep -q 'fg-devnav.js' /tmp/page.html
+          echo '{"status":"PASS","page_version":4,"controller_version":5}'
