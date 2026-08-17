@@ -1,0 +1,196 @@
+{
+  "status": "PASS",
+  "phase": "K — Post-Cutover Proof",
+  "migration_status": "COMPLETE",
+  "generated_at": {
+    "utc": "2026-08-17T13:01:55.098166Z",
+    "bangkok": "2026-08-17T20:01:55.098166+07:00"
+  },
+  "cutover": {
+    "utc": "2026-08-17T12:36:42.515112Z",
+    "bangkok": "2026-08-17T19:36:42.515112+07:00",
+    "canonical_corpus_owner": "private_db",
+    "public_controller_mode": "private_server"
+  },
+  "frozen_v124": {
+    "controller_path": "/fg-page-answers.js",
+    "version": 124,
+    "bytes": 342604,
+    "md5": "c8a382f0562737422e891e3300bb08f6",
+    "private_backup_path": "/private/answers-phase-j-backup-20260817/fg-page-answers.js",
+    "private_backup_version": 124,
+    "private_backup_bytes": 342604,
+    "private_backup_md5": "c8a382f0562737422e891e3300bb08f6",
+    "anon_visibility_rows": 0,
+    "rollback_policy": "Prefer last-known-good secure server/API rollback. Keep corpus private; gate/disable public Answers rather than republishing v124 public JS."
+  },
+  "private_corpus": {
+    "revision": 124,
+    "source": "frozen-v124",
+    "active_answers": 948,
+    "inactive_answers": 0,
+    "max_answer_id": 948,
+    "corpus_md5": "46ef8b51cf90d847523b82d823c6e796",
+    "routing_index_md5": "b837414f2930498fba61022dde0263c8",
+    "runtime_sessions": 0,
+    "runtime_requests": 0,
+    "runtime_usage": 0
+  },
+  "router": {
+    "version": "1.0.0-wip",
+    "source_controller_md5": "c8a382f0562737422e891e3300bb08f6",
+    "answers_literal_md5": "c8e159c6f32ce9513056fbbe4585830d",
+    "dictionary_source_md5": "c488cef1270aed127cfd0e6d86452bfd",
+    "index_source_md5": "0fca819ceb7bc2832d052e2e56b801f9",
+    "intents_source_md5": "895bdcb00bfeddb1fe0f33be0fe83bcb",
+    "care_source_md5": "406dd4fb9bd3278e5300a1b46d86fd8e",
+    "router_constants_md5": "fdda764fa67985aa66bd396630ec3cd6",
+    "router_core_md5": "0136cd0b127f4c6c30c8ec098d7ac2e8",
+    "final_fallback_md5": "76abfbf89bb565575a48f2bead0c6981",
+    "min_pool": 2,
+    "max_broad_widen": 12,
+    "recent_limit": 6
+  },
+  "parity": {
+    "artifact_path": "answers-private-server/phase-h-parity-proof.json",
+    "artifact_bytes": 1422,
+    "artifact_md5": "6387c91b07a6014b367d55e61da1ac39",
+    "artifact_sha256": "32c368d9f68c8d8c0409818c38f3f69f62216c6e06da33371cdbf159e156e2b0",
+    "git_blob_sha": "4c5d57c29ae106f370c44f2f24e683659519b56e",
+    "workflow_run_id": 32020882761,
+    "job_id": 95360120852,
+    "tested_commit": "07f013dc6e26c4b84827aa9eb60ba823a87c6495",
+    "generated_questions": 5386,
+    "seeds": [1, 42, 12648430],
+    "route_cases": 64626,
+    "route_differences": 0,
+    "care_cases": 6,
+    "normal_choose_answer_cases": 15,
+    "final_fallback_cases": 4,
+    "exactly_two_universals_on_matched_non_generic": true,
+    "uniform_probability_one_over_eligible": true,
+    "postcutover_guard_run_id": 32031693881,
+    "postcutover_guard_status": "PASS",
+    "postcutover_router_tests_passed": 11,
+    "postcutover_router_tests_failed": 0
+  },
+  "public_production": {
+    "page": {
+      "path": "/answers.html",
+      "version": 99,
+      "bytes": 31216,
+      "md5": "ec265ada07b882356699ef6b118b0167"
+    },
+    "controller": {
+      "path": "/fg-page-answers.js",
+      "version": 125,
+      "bytes": 25213,
+      "md5": "4693d0cdb12c395ec95a4d4112b0067d",
+      "accepted_lab_equivalence": "identical except self-registration path",
+      "bulk_corpus_absent": true,
+      "focus_dictionary_absent": true,
+      "focus_index_absent": true,
+      "choose_answer_absent": true,
+      "eligible_pool_absent": true,
+      "universal_diagnostics_absent": true
+    },
+    "retired_longest_review": {
+      "path": "/answers-longest-review.html",
+      "version": 2,
+      "bytes": 284,
+      "md5": "ce28521ba666f97cf587ddb94e3ce78b"
+    },
+    "three_lab_public_rows": 0
+  },
+  "api": {
+    "cloudflare_boundary": {
+      "path": "flipgazine-root-3/_worker.js",
+      "git_blob_sha": "bea294daf6362b7b5c15ea23a88c6152434ba573",
+      "prepare_route": "/api/answers/prepare",
+      "reveal_route": "/api/answers/reveal",
+      "same_origin_enforced": true,
+      "server_only_upstream_header": true,
+      "no_store": true
+    },
+    "answers_service": {
+      "slug": "answers-service",
+      "version": 7,
+      "status": "ACTIVE",
+      "verify_jwt": false,
+      "custom_server_to_server_auth": true,
+      "sha256": "72fea6c9a8d6b6365a83e41f52c8435c58784905cd6e6cc16ec839742d2b4998"
+    }
+  },
+  "admin": {
+    "page": {
+      "path": "/answers-admin.html",
+      "version": 46,
+      "bytes": 15673,
+      "md5": "22f6083ec713bb9fda8a104c2f136a94"
+    },
+    "controller": {
+      "path": "/fg-page-answers-admin.js",
+      "version": 23,
+      "bytes": 20615,
+      "md5": "1934a265ab7d7b3212391db1df4a8790",
+      "db_native": true,
+      "references_old_public_corpus_controller": false,
+      "contains_focus_index": false,
+      "references_admin_service": true
+    },
+    "service": {
+      "slug": "answers-admin-service",
+      "version": 1,
+      "status": "ACTIVE",
+      "verify_jwt": true,
+      "sha256": "b48fc7f702c78ab150d3df57c26dd0190827edb078d0dbe4cbc2b118ff90f4db"
+    },
+    "authenticated_non_admin_audit_http": 403,
+    "authorization_probe_run_id": 32031376156
+  },
+  "public_exposure_scan": {
+    "status": "PASS",
+    "bulk_corpus_paths": 0,
+    "production_controller_corpus_free": true,
+    "longest_review_corpus_free": true,
+    "three_lab_absent": true,
+    "anon_private_schema_usage": false,
+    "authenticated_private_schema_usage": false,
+    "anon_answers_select": false,
+    "authenticated_answers_select": false,
+    "anon_routing_assets_select": false,
+    "authenticated_routing_assets_select": false,
+    "private_backup_visible_to_anon_rows": 0,
+    "wip_source_visible_to_anon_rows": 0,
+    "tmp_rows_visible_to_anon": 0,
+    "voice_html_curated_answer_matches": {
+      "thai": 16,
+      "english": 2,
+      "classification": "small deliberate human-review examples; no bulk array, dictionary or routing index"
+    },
+    "thai_review_legacy_parser": {
+      "path": "/fg-page-answers-thai-review.js",
+      "embedded_answer_matches": 0,
+      "contains_parser_marker": true,
+      "contains_new_function_parser": true,
+      "referenced_source": "/wip/answers-human-review-source-v119-948.js",
+      "referenced_source_visible_to_anon_rows": 0,
+      "classification": "legacy non-authoritative review parser; source blocked by site_files RLS and no corpus bodies embedded in the public controller"
+    },
+    "site_files_public_policy_excludes": ["/wip/%", "/tmp/%", "/private/%"],
+    "phase_j_hostile_http_run_id": 32031621194,
+    "phase_j_hostile_http_status": "PASS"
+  },
+  "phase_j_artifacts": {
+    "report_path": "ANSWERS-PRIVATE-SERVER-PHASE-J-CUTOVER-REPORT.md",
+    "report_git_blob_sha": "01cc91f5ca6794ae57ce37e47f29045374fdffdb",
+    "proof_path": "answers-private-server/phase-j-cutover-proof.json",
+    "proof_git_blob_sha": "ac3521ebb515b227f2081a913ec61c3c50a196dd"
+  },
+  "phase_k_exit_gate": "PASS",
+  "definition_of_success": {
+    "behavior": "PASS",
+    "security": "PASS",
+    "operations": "PASS"
+  }
+}
