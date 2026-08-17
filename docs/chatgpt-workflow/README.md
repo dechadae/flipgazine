@@ -13,8 +13,9 @@ For current Answers work, use this order:
 1. `ANSWERS-COMMERCIAL-EXECUTION-TIMELINE.md` — current dated execution schedule and next milestones.
 2. `ANSWERS-COMMERCIAL-BENCHMARK-PLAN.md` — commercial strategy, Batch 2 methodology, positioning, licensing scope and claim boundaries.
 3. `ANSWERS-VOICE-TONE.md` — canonical Thai/English editorial authority and AI-transfer findings.
-4. `ANSWERS-HUMAN-REVIEW.md` — immutable Batch 1 Thai human-review methodology and provenance record.
-5. `ANSWERS-PRIVATE-SERVER-PHASE-K-MIGRATION-MANIFEST.md` — current frozen proof of the completed private-server migration.
+4. `ANSWERS-VOICE-BENCHMARK-PLAN.md` — approved public Thai-response evaluator: human-style rubric, deterministic scoring, calibration, lightbox UX and safeguards.
+5. `ANSWERS-HUMAN-REVIEW.md` — immutable Batch 1 Thai human-review methodology and provenance record.
+6. `ANSWERS-PRIVATE-SERVER-PHASE-K-MIGRATION-MANIFEST.md` — current frozen proof of the completed private-server migration.
 
 ## Security migration archive
 
@@ -41,6 +42,7 @@ Phase K is the best single document for the final post-cutover state. Phase J re
 - **Current schedule:** `ANSWERS-COMMERCIAL-EXECUTION-TIMELINE.md`.
 - **Commercial methodology / claims / licensing:** `ANSWERS-COMMERCIAL-BENCHMARK-PLAN.md`.
 - **Thai and English editorial decisions:** `ANSWERS-VOICE-TONE.md`.
+- **Public Voice evaluator design / rubric / scoring:** `ANSWERS-VOICE-BENCHMARK-PLAN.md`.
 - **Batch 1 provenance:** `ANSWERS-HUMAN-REVIEW.md`.
 - **Completed migration proof:** `ANSWERS-PRIVATE-SERVER-PHASE-K-MIGRATION-MANIFEST.md`.
 
@@ -61,6 +63,7 @@ Historical Supabase `/wip/` and `/private/` corpus artifacts remain evidence/rec
 - Canonical corpus revision: 124.
 - Normal reviewed Batch 1 records: 948.
 - Public Answers controller after cutover: v125 corpus-free client controller.
+- Thai Voice benchmark design: **APPROVED**; implementation follows `ANSWERS-VOICE-BENCHMARK-PLAN.md`.
 - Active commercial work: Batch 1 commercial checkpoint, OpenAI first-look package and Batch 2 creation according to the execution timeline.
 
 Do not reopen the completed security migration as a planning dependency unless a verified security regression appears.
