@@ -2,9 +2,9 @@
 
 > **Read this file before changing Flipgazine.**
 >
-> This is the operational architecture guide for coding agents, with detailed coverage of **The Book of Answers**. It records ownership boundaries, live-source discipline, product invariants, routing semantics, bilingual corpus provenance, QA expectations and failure modes learned during the August 2026 build.
+> This is the operational architecture guide for coding agents. It records ownership boundaries, source-of-truth discipline, current Answers architecture, routing invariants, editorial authority, QA expectations and failure modes.
 >
-> **Core rule:** understand who owns a behavior before patching it. Do not solve a local symptom by stacking CSS, duplicating routing logic, inventing a second source of truth or changing several systems at once.
+> **Core rule:** find the real owner of a behavior before patching it. Do not solve a local symptom by stacking CSS, duplicating routing logic, inventing a second source of truth or changing several systems at once.
 
 ---
 
@@ -26,7 +26,7 @@ The owner is both product/creative director and primary tester. Changes are comm
 
 ---
 
-## 2. Repository vs live source of truth
+## 2. Repository and live sources of truth
 
 Repository:
 
@@ -42,24 +42,46 @@ Supabase project:
 
 Most Flipgazine pages/controllers are stored in Supabase `public.site_files`, not as page files in GitHub.
 
-### Current Answers checkpoint — 16 August 2026
+### Answers post-migration checkpoint — 17 August 2026
 
-| path | version | MD5 |
-|---|---:|---|
-| `/answers.html` | 99 | `ec265ada07b882356699ef6b118b0167` |
-| `/fg-page-answers.js` | **123** | **`4f4cebce4460cec5d826796cb119a5f3`** |
-| `/answers-admin.html` | 45 | `0c8ebc38dfbe6e00414457d9195854174` |
-| `/fg-page-answers-admin.js` | 22 | `35153068bc4ade1e97ae9b0490bf2f65` |
-| `/answers.webmanifest` | 3 | `b678d8ca258e19eefeff2119d6cfafac` |
-| `/voice.html` | 11 | `88d8f317d90dbe609c6697010dd456ca` |
+The private-server security migration is **COMPLETE**.
 
-These are snapshots, not eternal constants. **Always re-query Supabase before a live write.**
+Current frozen production proof is recorded in:
+
+- `ANSWERS-PRIVATE-SERVER-PHASE-J-CUTOVER-REPORT.md`;
+- `ANSWERS-PRIVATE-SERVER-PHASE-K-MIGRATION-MANIFEST.md`.
+
+Verified cutover state:
+
+```text
+/answers.html
+  version 99
+  MD5 ec265ada07b882356699ef6b118b0167
+
+/fg-page-answers.js
+  version 125
+  25,213 bytes
+  MD5 4693d0cdb12c395ec95a4d4112b0067d
+
+canonical corpus owner
+  private_db
+
+canonical corpus revision
+  124
+
+active normal answers
+  948
+```
+
+The old v124 controller remains frozen only as private provenance/rollback evidence. It is **not** a public source of truth.
+
+Always re-query live Supabase state before a production write. Version/hash values in documentation are verified checkpoints, not permission to overwrite a newer live row.
 
 ### Deployment rule
 
 If a change is owned by `site_files`, do **not** redeploy Cloudflare Pages.
 
-Only redeploy the shell when the real owner is shell-level infrastructure such as:
+Redeploy the shell only when the real owner is shell-level infrastructure such as:
 
 - `_worker.js`;
 - `_headers`;
@@ -74,20 +96,27 @@ Do not copy a database-served page into the static bundle as a shortcut. That cr
 
 ## 3. Documentation authority
 
-For Answers work, read:
+For current Answers work, use this order:
 
-1. `BOOK-OF-ANSWERS-HANDOFF.md` — current state and next mission.
-2. `ANSWERS-VOICE-TONE.md` — Thai/English editorial authority.
-3. `ANSWERS-HUMAN-REVIEW.md` — completed review/provenance record.
-4. this file — architecture/ownership/QA.
+1. **Current live Supabase state** — operational truth before any write.
+2. `AGENTS.md` — architecture, ownership, invariants and QA.
+3. `ANSWERS-VOICE-TONE.md` — canonical Thai/English editorial authority.
+4. `ANSWERS-HUMAN-REVIEW.md` — immutable Batch-1 human-review/provenance record.
+5. `ANSWERS-PRIVATE-SERVER-PHASE-K-MIGRATION-MANIFEST.md` — completed migration proof/current secure architecture checkpoint.
+6. `ANSWERS-COMMERCIAL-BENCHMARK-PLAN.md` — commercial positioning, methodology, licensing and claim boundaries.
+7. `ANSWERS-COMMERCIAL-EXECUTION-TIMELINE.md` — active dated commercialization schedule.
+
+`ANSWERS-PRIVATE-SERVER-MIGRATION-PLAN.md` is now a **historical implementation specification**. The migration is complete; do not read its future-tense execution instructions as unfinished work.
+
+Phase A–K migration reports are audit/provenance evidence, not competing current architecture documents.
 
 Editorial precedence:
 
-> **direct user-approved wording → Voice/Tone guide → established human-reviewed corpus voice → generic convention**
+> **direct user-approved wording → `ANSWERS-VOICE-TONE.md` → established human-reviewed corpus voice → generic convention**
 
 Architecture precedence:
 
-> **current live Supabase state → current handoff → historical snapshots**
+> **current live Supabase state → this file → Phase K proof → historical plans/snapshots**
 
 ---
 
@@ -102,54 +131,85 @@ Owns Books, New, Palette, Media, Links, Team, Settings, etc.
 
 It is **not** the Answers Library.
 
-Do not touch Main Admin for an Answers-only task unless the user explicitly asks.
+### Answers Library / Admin
 
-### Answers Library
+The Answers Admin is now DB-native and works through authenticated private-corpus services.
 
-- `/answers-admin.html`
-- `/fg-page-answers-admin.js`
+It owns:
 
-Owns authored answer editing and canonical semantic metadata.
-
-The Library serializer must preserve:
-
-- Thai;
-- English;
-- Topics;
+- authored Thai/English answer editing;
 - Focus;
 - Support;
-- Helpers.
+- Topics;
+- Helpers;
+- Universal membership;
+- deterministic index regeneration;
+- corpus revision concurrency control;
+- admin-only routing diagnostics through the canonical router.
+
+Do not restore the retired workflow that parsed and rewrote the public JS controller as the corpus database.
+
+### Private Answers corpus
+
+Canonical corpus data lives in the private database, not in public JavaScript.
+
+Public/ordinary authenticated clients must not receive bulk access to:
+
+- all 948 answers;
+- CARE corpus as a downloadable asset;
+- Focus dictionary/index;
+- Support pools;
+- Universal membership in bulk;
+- eligible answer pools;
+- routing diagnostics.
 
 ### Public Answers
 
 - `/answers.html`
 - `/fg-page-answers.js`
 
-Owns:
+The public controller owns the visible ritual and API interaction only. It is deliberately corpus-free.
 
-- public ritual;
-- CARE routing;
-- Focus/Support/Universal runtime;
-- corpus data;
-- book interaction;
-- answer rendering;
-- review mode;
-- sharing;
-- placeholder guard;
-- ask-again state.
+Public flow:
+
+```text
+question
+→ ถามดิ
+→ same-origin prepare request
+→ opaque short-lived token
+→ user drags physical paper edge
+→ release
+→ reveal request
+→ ONE bilingual answer
+```
+
+The browser must not reintroduce a hidden local fallback corpus.
+
+### Canonical server routing core
+
+There is exactly one canonical routing implementation serving:
+
+- public prepare/reveal;
+- admin dry audit;
+- deterministic parity/regression tests.
+
+Do not create a second admin router or an approximate scoring implementation.
 
 ### Thai human-review evidence
 
-- `/answers-thai-review.html`
-- `/fg-page-answers-thai-review.js`
-- `public.answers_thai_reviews`
+Review round `thai-human-v1` is complete and immutable.
 
-The `thai-human-v1` round is complete. This system is now evidence/audit infrastructure, not a moving production-copy source.
+Canonical record:
+
+`ANSWERS-HUMAN-REVIEW.md`
+
+The historical review table/exports are evidence, not a moving production editor.
 
 ### Voice reference
 
-- `/voice.html`
-- linked centrally through `/fg-devnav.js`
+Canonical editorial authority:
+
+`ANSWERS-VOICE-TONE.md`
 
 ### Social previews
 
@@ -173,154 +233,99 @@ Ritual:
 
 1. user types a real question;
 2. presses **ถามดิ**;
-3. question is committed;
+3. question is committed and prepare begins;
 4. user drags across the physical paper/book edge;
 5. releases at a page depth;
-6. book opens;
-7. bilingual Thai/English answer appears;
+6. reveal returns one bilingual answer;
+7. book opens;
 8. **ถามอีกดิ** resets.
 
 The physical step is intentionally theatrical.
 
-> **Physical page depth is not answer ID.**
+> **Physical page depth is not answer ID and does not affect probability.**
 
-Semantic routing chooses an eligible answer. The physical book makes the result feel discovered.
-
-Do not collapse this into “button → answer” unless the user explicitly changes the product direction.
+Do not collapse this into “button → answer” unless the user explicitly changes product direction.
 
 Public Answers remains intentionally headerless unless explicitly requested otherwise.
 
 ---
 
-## 6. Current corpus
+## 6. Corpus and copy provenance
 
-Current normal authored corpus:
+Current normal corpus:
 
 - **948 answers**;
 - **75 Universal answers**;
 - **42 Support answers**;
 - **183 canonical Focus concepts**;
-- **3 CARE responses** handled separately before normal routing.
+- **3 CARE responses** checked before ordinary routing.
 
-Conceptual answer row:
+All normal answer IDs remain stable **1–948**.
 
-```js
-{
-  thai: "...",
-  english: "...",
-  topics: [...],
-  focus: [...],
-  support: [...],
-  helpers: [...]
-}
-```
-
-`support` is first-class data. Do not erase it during serialization/refactoring.
-
-All normal answer IDs remain stable 1–948.
-
----
-
-## 7. Canonical bilingual corpus lineage
-
-Do not flatten these stages into one undifferentiated “latest file.” The lineage is useful evidence.
-
-### v119 — frozen pre-human-review source
-
-- `/wip/answers-human-review-source-v119-948.js`
-- MD5 `6dc18662953f897a390eea0a038f0edf`
-
-### v120 — reviewed Thai only
-
-- `/wip/fg-page-answers-v120-thai-human-v1-preview.js`
-- MD5 `7773badc93f5d8887945729c2ea1703f`
-- exactly 384 Thai fields changed from v119
-- English/non-Thai structure preserved
-
-### v121 — English adaptation
-
-- `/wip/answers-human-thai-english-v121-preview.js`
-- MD5 `235e80362da4bf4a3543692311140a0f`
-- 140 English siblings changed in the first dedicated pass
-
-### v122 — bilingual QA / copy freeze
-
-- `/wip/answers-bilingual-canonical-v122-948.js`
-- MD5 `d12ef72740edd955ddc11aedfe232c2c`
-- 149 unique final English changes vs v120
-- final Thai/English copy stage
-
-### v123 — current live controller
-
-- live `/fg-page-answers.js`
-- `/wip/answers-bilingual-canonical-v123-948.js`
-- MD5 `4f4cebce4460cec5d826796cb119a5f3`
-
-v123 changes exactly one routing dictionary item from v122:
+Canonical editorial lineage:
 
 ```text
-beach aliases += ทะเล
+v119 — frozen pre-human-review source
+      ↓
+v120 — reviewed Thai only
+      ↓
+v121 — English adaptation
+      ↓
+v122 — bilingual copy freeze
+      ↓
+v123 — same copy + beach alias routing fix
+      ↓
+v124 — same copy + final semantic/reachability freeze
+      ↓
+private-server migration
+      ↓
+public controller v125 + private corpus revision 124
 ```
 
-Removing only that alias reconstructs v122 exactly.
+Important distinction:
 
-Therefore:
-
-- v122 remains canonical bilingual **copy** freeze;
-- v123 is canonical current **runtime/controller** state;
-- Thai and English answer fields are identical between v122 and v123.
+- **v122** remains the canonical bilingual copy freeze;
+- v123/v124 made routing/semantic changes only;
+- private corpus revision 124 preserves the frozen v124 semantic state;
+- public controller v125 is the secure client controller and does not contain the corpus.
 
 Do not overwrite historical stages in place.
 
 ---
 
-## 8. Thai human-review evidence
+## 7. Thai human-review evidence
 
-Review round:
+Final Batch-1 Thai review:
 
-`thai-human-v1`
+```text
+948 / 948 reviewed
+564 accepted unchanged
+384 human edited
+40.5% intervention
+0 drafts
+0 missing IDs
+```
 
-Frozen source:
-
-- v119;
-- MD5 `6dc18662953f897a390eea0a038f0edf`;
-- IDs 1–948.
-
-Final result:
-
-- **948 / 948 reviewed**;
-- **564 approved unchanged**;
-- **384 human edited**;
-- **0 drafts**;
-- **0 missing IDs**;
-- **0 source mismatches**.
-
-Review exports:
-
-- `/wip/answers-thai-human-v1-complete-948.jsonl`
-- `/wip/answers-thai-human-v1-complete-948.csv`
-- `/wip/answers-thai-human-v1-manifest.md`
-
-The review table is immutable evidence.
+The evidence source remains immutable.
 
 Do not:
 
 - normalize reviewed Thai;
-- rewrite line breaks;
-- change statuses;
-- repoint source hash/version to v122/v123;
+- rewrite historical line breaks;
+- change review statuses;
 - delete original Thai;
-- use the table as a future production editor.
+- retroactively relabel the frozen source as pure untouched AI output;
+- use the historical review table as a future production editor.
 
 See `ANSWERS-HUMAN-REVIEW.md` for full provenance rules.
 
 ---
 
-## 9. Thai copy is layout-sensitive language data
+## 8. Thai copy is layout-sensitive language data
 
 Thai line breaks are authored editorial composition, not incidental whitespace.
 
-Never wrap/normalize globally by character count.
+Never globally wrap/normalize by character count.
 
 Priority:
 
@@ -328,323 +333,181 @@ Priority:
 
 Useful principles:
 
-- medium/long answers often land naturally in 3–4 short lines, but there is no fixed quota;
 - one visual phrase per line is often useful;
 - mixed Thai/English needs visual room because Latin text is wider;
 - fragments may stand alone when the pause is the performance;
 - protect a short final punchline/landing;
-- do not make a grammatically neat line if the spoken timing is worse.
+- do not make a grammatically neat line if spoken timing is worse.
 
-The completed human review contains **36 composition-only edits** under a non-whitespace comparison, direct evidence that line breaks are part of language delivery.
+Canonical editorial guide: `ANSWERS-VOICE-TONE.md`.
 
-Correct inside a JavaScript string:
+---
 
-```js
-{thai:"บรรทัดหนึ่ง\nบรรทัดสอง"}
+## 9. CARE is always first
+
+CARE handles safety-critical situations before normal routing.
+
+Preserve precedence:
+
+```text
+CARE match
+→ return CARE response
+→ do not enter normal Focus/Support/Universal routing
 ```
-
-Invalid between JavaScript statements:
-
-```js
-var a=1;\nvar b=2;
-```
-
-After SQL/text surgery on JS, inspect actual newline/escape boundaries. Literal slash-n text between statements has broken controllers before.
-
----
-
-## 10. Thai voice — project authority
-
-Canonical guide:
-
-`ANSWERS-VOICE-TONE.md`
-
-Central principle:
-
-> **Contemporary natural Thai is defined by choosing what a Thai speaker would naturally say in that exact social situation — including what they would leave unsaid.**
-
-Hard rules:
-
-- Thai thought first, not English proposition → translation;
-- natural Thai may intentionally be incomplete;
-- omit subjects/pronouns when context carries them;
-- particles are stance/performance choices;
-- social specificity often beats generic abstraction;
-- humor should be recognizable social performance rather than ornamental cleverness;
-- borrowed English is not automatically code-switching;
-- use Thai or English-origin vocabulary according to the actual register;
-- line breaks are authored breath/timing/body-language cues;
-- CARE remains clear/direct outside the playful voice.
-
-Guardrail:
-
-> **Do not imitate surface features. Learn the decision behind them.**
-
----
-
-## 11. English adaptation rules
-
-English is written from canonical reviewed Thai, not used as the Thai source.
-
-Preserve:
-
-- recommendation direction;
-- certainty;
-- emotional temperature;
-- social intent;
-- joke/camp weight where possible.
-
-Do not preserve:
-
-- Thai word order mechanically;
-- every particle;
-- every omission;
-- a stale English metaphor after Thai review changed the joke.
-
-The v121/v122 passes are complete. Do not describe English adaptation as pending.
-
-Evidence:
-
-- `/wip/answers-english-v121-audit.jsonl`
-- `/wip/answers-bilingual-v122-qa.jsonl`
-- `/wip/answers-bilingual-v122-final-changes.jsonl`
-
-v123 changes no English copy.
-
----
-
-## 12. CARE is always first
-
-CARE handles at least:
-
-1. suicide/self-harm;
-2. medical emergency/medicine-related emergency;
-3. unsafe/abuse/violence scenarios.
 
 CARE must never be randomized with ordinary funny answers.
 
-Preserve order:
-
-```text
-CARE
-→ semantic routing
-→ precise/support pool
-→ Universal additions where applicable
-→ anti-repeat / eligible pool
-→ uniform random answer
-```
-
-Do not weaken CARE while refactoring routing or corpus data.
+Outside CARE, the house voice may be playful; CARE remains clear, direct and grounded.
 
 ---
 
-## 13. Routing philosophy
-
-The active architecture is the inverted-index Focus system, not Router v4.
-
-Mental model:
-
-> **Focus thinks like a librarian.**
+## 10. Routing invariants — do not casually change
 
 Core principle:
 
 > **Precision chooses the pool. Chance chooses the answer.**
 
-Uniform randomness inside the final eligible pool is intentional.
+Locked constants:
 
-Do not add score weighting to a correctly selected pool unless product direction explicitly changes.
+```text
+MIN_POOL = 2
+MAX_BROAD_WIDEN = 12
+RECENT_LIMIT = 6
+```
+
+Preserve exactly:
+
+- current normalization behavior;
+- current alias/typo matching;
+- Focus / Slang / Bridge / Support / Topic / Helper distinctions;
+- separate Support overlap lane;
+- collision repairs;
+- tier order;
+- widening semantics;
+- Support join semantics;
+- recent-six behavior;
+- exactly two distinct Universal additions on matched non-generic routes;
+- uniform final choice across every eligible ID;
+- generic route = full Universal pool;
+- final fallback order;
+- physical depth non-semantic behavior.
+
+The migration parity proof covered **64,626 route cases with 0 differences**. Treat parity regression as a hard requirement for routing changes.
 
 ---
 
-## 14. Semantic hierarchy: Focus → Support → Universal
+## 11. Semantic hierarchy: Focus → Support → Universal
 
-### Focus — subject owner
+### Focus
 
-Focus identifies the concrete subject:
+Focus owns the concrete subject.
 
-- dessert;
-- salary;
-- ex;
-- handsome;
-- barista;
-- coffee;
-- moo-kratha;
-- trip;
-- ghosting;
-- beach;
-- etc.
+### Support
 
-Focus should remain precise.
+Support is a broad secondary advice/action pattern that supplements a subject without competing with Focus ownership.
 
-### Support — secondary advice/action pattern
+Support matching uses a separate overlap lane so a longer Support phrase cannot suppress a shorter concrete Focus phrase inside it.
 
-Support is broad enough to supplement multiple subjects but not broad enough to answer anything.
+### Universal
 
-Examples:
-
-- retry;
-- continue;
-- regret;
-- take-action;
-- risk;
-- stop;
-- trust;
-- readiness;
-- fine-print;
-- plan-b;
-- honesty;
-- overexplain.
-
-Support must supplement the subject without competing with Focus ownership.
-
-### Universal — genuinely subject-neutral
-
-Universal answers plausibly answer almost any ordinary question without inventing context.
+Universal answers are genuinely subject-neutral.
 
 Current count: **75**.
 
-Universal is explicit through helper/index semantics. **No Focus + no Topic is not automatically Universal.**
+Universal is explicit. “No Focus + no Topic” does not automatically make an answer Universal.
 
-Universal rows may not simultaneously carry Focus, Support or Topic semantics.
+Universal rows may not simultaneously carry Focus, Support or Topic ownership.
 
-### Topics / Helpers
+### Universal mix-in
 
-Topics are broader editorial groupings.
+For every matched non-generic route:
 
-Helpers include broad utility dimensions such as:
+1. select semantic owner pool;
+2. append relevant Support additions;
+3. apply recent-answer handling;
+4. sample exactly **2 distinct Universal IDs** where possible;
+5. append them to eligible;
+6. choose uniformly across the full eligible list.
 
-- `general`;
-- `decision`;
-- `timing`;
-- `universal`.
-
-`universal` is special and explicit.
-
----
-
-## 15. Support parser lane
-
-Support matching uses a separate overlap lane from ordinary Focus/Slang/Topic matching.
-
-Why:
-
-A longer support phrase must never suppress a shorter concrete subject phrase contained inside it.
-
-Example:
-
-```text
-go back to my ex
-```
-
-should preserve:
-
-- Focus: `ex`;
-- Support: `go-back`.
-
-Do not collapse Support into the same occupied-span lane as Focus.
-
-Support answers must not leak into ordinary Focus/Topic/Helper tiers through historical metadata.
+If nothing is understood, use the full Universal pool; do not merely sample two Universals.
 
 ---
 
-## 16. Universal mix-in behavior
+## 12. Parser collision discipline
 
-For a matched non-generic pool:
-
-1. select precise Focus/Topic/Helper owner pool;
-2. merge relevant Support answers;
-3. apply recent-answer handling to subject/support base;
-4. sample **2 distinct Universal answers** from the 75 Universal pool;
-5. merge those 2 into the eligible pool;
-6. choose uniformly across the whole final eligible pool.
-
-If the router understands nothing, do **not** sample only two Universals. Fall back to the full **75-answer Universal pool**.
-
-Universal mix-ins are randomly sampled per draw, not a fixed pair.
-
----
-
-## 17. Parser collision discipline
-
-Thai does not provide reliable word spaces. Short aliases can collide inside unrelated words.
+Thai substring collisions remain a major risk.
 
 Historical traps include:
 
-- `หน้า` ≠ `หัวหน้า`;
-- `รัก` ≠ `น่ารัก`;
-- `ไลน์` ≠ `เดดไลน์`;
-- `ตอบ` ≠ `คำตอบ`;
-- `เพื่อน` ≠ `เพื่อนร่วมงาน`;
-- `พัก` ≠ `พักเที่ยง`;
-- `ทะเล` ≠ `ทะเลาะ`;
-- `ถูก` ≠ `ถูกใจ`;
-- `ย่าง` ≠ `อย่าง`;
-- English `date` ≠ `due date`.
+- `หน้า` vs `หัวหน้า`;
+- `รัก` vs `น่ารัก`;
+- `ไลน์` vs `เดดไลน์`;
+- `ตอบ` vs `คำตอบ`;
+- `เพื่อน` vs `เพื่อนร่วมงาน`;
+- `พัก` vs `พักเที่ยง`;
+- `ทะเล` vs `ทะเลาะ`;
+- `ถูก` vs `ถูกใจ`;
+- `ย่าง` vs `อย่าง`;
+- English `date` vs `due date`.
 
-The v123 `ทะเล` → `beach` alias was added intentionally after testing a routing gap. Because `ทะเล` is a known substring-risk token, future edits around beach/conflict vocabulary must re-test `ทะเลาะ` false positives.
-
-Never add a short Thai alias without collision testing.
+Never add a short Thai alias without collision tests.
 
 ---
 
-## 18. Widening behavior
+## 13. Server-owned recent history and reveal state
 
-Base semantic widening remains conceptually:
+The browser does not own authoritative recent-answer history.
+
+Server behavior:
 
 ```text
-all focus
-→ near / N−1 focus
-→ any focus
-→ topics
-→ helpers
-→ generic/universal
+remove last 6 revealed normal-answer IDs from current pool
+IF something remains:
+    use filtered pool
+ELSE:
+    restore original pool
 ```
 
-Known runtime constraints include:
+Recent history updates only after a successful reveal.
 
-- `MIN_POOL = 2`;
-- `MAX_BROAD_WIDEN = 12`;
-- recent-answer memory limit = 6.
+Prepared but abandoned answers must not enter recent history.
 
-When a Focus seed exists, widening should remain a superset of that seed rather than jumping to unrelated content solely to increase pool size.
-
-A singleton may remain intentionally precise.
-
-Support is supplemental, not another subject classifier.
+Do not accept a client-supplied recent list as authority.
 
 ---
 
-## 19. Answer ID convention
+## 14. Prepare/reveal security contract
 
-Generated semantic indexes use **1-based answer IDs**.
+Prepare returns only an opaque short-lived token.
 
-JavaScript arrays use zero-based indices.
+Prepare must not expose:
 
-```js
-var id = route.pick; // 1-based
-var index = id - 1;
-var answer = answers[index];
-```
+- answer ID;
+- Thai;
+- English;
+- selected tier;
+- pool IDs;
+- Focus concepts;
+- probability;
+- diagnostics.
 
-Do not mix the conventions.
+Reveal is:
+
+- session-bound;
+- short-lived;
+- atomic single-use;
+- no-store/private cache policy;
+- one-answer only.
+
+If secure reveal fails, keep the Book closed/retry. Do not fall back to a public local answer array.
 
 ---
 
-## 20. Answers Library canonical semantics
+## 15. Answers Admin semantics
 
-Answer rows are canonical. Derived indexes are generated from rows.
+Answer rows are canonical; indexes are derived.
 
-Generated structures include at least:
-
-- Focus;
-- Support;
-- Topics;
-- Helpers;
-- Generic/Universal ID list.
-
-Do not reintroduce a second semantic truth such as legacy Router weights, static parallel tags or a separate matrix that can drift from the rows.
-
-Library save validation must continue to protect:
+Admin validation should protect:
 
 - Thai required;
 - English required;
@@ -653,49 +516,40 @@ Library save validation must continue to protect:
 - Support IDs valid;
 - Topics canonical;
 - Helpers canonical;
-- Universal cannot also have Focus/Support/Topic;
-- serializer preserves `support`;
-- index builder regenerates support automatically.
+- Universal cannot also carry Focus/Support/Topic ownership;
+- `support` preserved;
+- deterministic index regeneration;
+- answer changes + index regeneration + revision increment transactionally;
+- optimistic corpus revision gate;
+- authenticated non-admin access rejected.
+
+Admin routing test must call the same canonical router in dry-audit mode, not public prepare and not duplicated JS logic.
 
 ---
 
-## 21. Placeholder submission invariant
+## 16. Public interaction invariants
 
-Rotating example questions are HTML placeholders only.
+### Placeholder submission
 
-They must never become routable user questions.
+Example questions are placeholders only.
 
-Invariant:
-
-- examples live in `.placeholder`, never `.value`;
-- real input marks the question as user-edited;
-- submitted question comes from real trimmed `.value`;
+- examples live in `.placeholder`, not `.value`;
+- submission uses real trimmed user input;
 - blank/unedited/placeholder-equal submits are rejected;
 - Enter and **ถามดิ** use the same guarded path;
-- **ถามอีกดิ** resets the guard.
+- **ถามอีกดิ** resets the state.
 
-If an empty submit unexpectedly reloads the page, first suspect controller parse/mount failure before redesigning form behavior.
+### UX timing
 
----
+Prepare should begin when the user genuinely submits the question so the physical drag time hides normal network latency.
 
-## 22. Review mode
+Release/reveal should preserve the existing physical seam/opening beat.
 
-Hidden QA review mode remains useful:
-
-```text
-/answers.html?review=363
-/answers.html?review=351
-/answers.html?review=119
-/answers.html?review=longest
-```
-
-Numeric review opens an exact authored answer and bypasses question/random routing.
-
-Do not mistake review-mode screenshots for routing results.
+Do not change routing to use drag depth.
 
 ---
 
-## 23. Public visual system
+## 17. Public visual system
 
 Answers remains intentionally standalone/headerless.
 
@@ -719,101 +573,62 @@ Avoid:
 - extra navigation chrome;
 - UI added merely because space exists.
 
-Flipgazine CI is the broader design authority.
-
-The Three.js mechanism experiment is a separate thread. Do not merge it into production unless the user explicitly approves integration.
+Flipgazine CI remains the broader design authority.
 
 ---
 
-## 24. Share / preview behavior
+## 18. Share / preview behavior
 
 Public share identity is managed through the existing Links/edge system.
 
-Desired chat preview is text-first/text-only for Answers.
+Desired chat preview for Answers is text-first/text-only.
 
-Social crawler behavior may be rewritten by `_worker.js`; do not assume deleting a client-side `og:image` is enough.
+Social crawler behavior may be rewritten by `_worker.js`; do not assume deleting client-side `og:image` is sufficient.
 
-Keep share/QR ownership centralized rather than adding Answers-specific infrastructure.
-
----
-
-## 25. Canonical backups / evidence
-
-Important current artifacts include:
-
-### Review / copy lineage
-
-- `/wip/answers-human-review-source-v119-948.js`
-- `/wip/fg-page-answers-v120-thai-human-v1-preview.js`
-- `/wip/answers-human-thai-english-v121-preview.js`
-- `/wip/answers-bilingual-canonical-v122-948.js`
-- `/wip/answers-bilingual-canonical-v123-948.js`
-
-### Review exports
-
-- `/wip/answers-thai-human-v1-complete-948.jsonl`
-- `/wip/answers-thai-human-v1-complete-948.csv`
-- `/wip/answers-thai-human-v1-manifest.md`
-
-### English/bilingual QA
-
-- `/wip/answers-english-v121-audit.jsonl`
-- `/wip/answers-bilingual-v122-qa.jsonl`
-- `/wip/answers-bilingual-v122-final-changes.jsonl`
-- `/wip/answers-bilingual-v122-production-manifest.md`
-- `/wip/answers-bilingual-v123-production-manifest.md`
-
-Historical `/wip/` files are comparison/recovery evidence, not live dependencies.
-
-Always create a new timestamped snapshot before a risky controller rewrite.
+Keep share/QR ownership centralized.
 
 ---
 
-## 26. Current QA baseline
+## 19. Evidence and rollback
 
-Current corpus-level invariants:
+The Phase A–K reports and `answers-private-server/` proof files are migration evidence.
 
-- 948 normal answers;
-- 3 CARE responses;
-- 75 Universal;
-- 42 Support;
-- 183 Focus concepts;
-- all normal answer IDs stable 1–948;
-- Thai human review complete 948/948;
-- 564 accepted / 384 edited;
-- v120 changed only the expected 384 Thai fields from v119;
-- v122 final English change set = 149 unique normal-answer IDs vs v120;
-- v123 answer Thai/English fields = v122;
-- v123 differs from v122 only by `ทะเล` added to `beach` aliases.
+The exact old v124 public-controller bytes are preserved privately for provenance/rollback evidence.
 
-Historical routing test counts from earlier migration phases remain useful as regression inspiration, but do not treat old 717-answer pool counts as current truth.
+Preferred rollback:
 
-When making a substantial routing change, run fresh reachability/pool/collision QA.
+- revert secure server/API implementation to last-known-good secure version;
+- keep private corpus private;
+- keep public controller corpus-free.
+
+Do **not** make “restore corpus-bearing v124 JS publicly” the normal rollback path.
+
+If secure service cannot be restored promptly, temporarily gate/disable Answers rather than re-exposing the corpus.
 
 ---
 
-## 27. Change discipline
+## 20. Change discipline
 
 For any live Answers change:
 
 1. identify the real owner;
-2. query current live version/hash;
+2. query current live version/hash/revision;
 3. inspect enough surrounding code/data to understand behavior;
-4. back up risky rows under `/wip/`;
+4. back up risky state when appropriate;
 5. make the smallest coherent change;
-6. use optimistic version checks where possible;
-7. prove anchors/markers are unique before text replacement;
-8. verify removed/replaced code paths are actually gone;
-9. verify copy unchanged when task is semantic/runtime only;
-10. verify semantics unchanged when task is copy-only;
-11. inspect newline/escape boundaries after SQL text surgery;
-12. test user behavior and routing invariants, not merely string presence.
+6. use optimistic revision/version checks;
+7. verify removed/replaced code paths are actually gone;
+8. verify copy unchanged when task is semantic/runtime only;
+9. verify semantics unchanged when task is copy-only;
+10. test user behavior and routing invariants, not merely string presence;
+11. run security checks when touching auth/private data/API boundaries;
+12. run deterministic routing regression when touching router semantics.
 
-Avoid blind global replacement on the ~270k controller.
+Do not reintroduce browser corpus ownership for convenience.
 
 ---
 
-## 28. CSS discipline
+## 21. CSS discipline
 
 Do not solve design bugs by stacking override after override.
 
@@ -829,18 +644,20 @@ Do not create `.fix`, `.fix2`, `.fix-the-fix` cascades without a real responsive
 
 ---
 
-## 29. Architectural discipline
+## 22. Architectural discipline
 
 Before creating a new system, search for an existing owner.
 
 Past lessons:
 
-- Links already owns short links/QR;
+- Links owns short links/QR;
 - Media owns general uploads;
 - `_worker.js` owns crawler metadata;
-- Router v4 was inferior to inverted Focus ownership;
+- Router v4 is retired;
 - broad accidental “generic” semantics were replaced by explicit Universal + Support layers;
-- Voice is centralized as an editorial reference rather than duplicated prompts in each tool.
+- Voice is centralized in one editorial guide;
+- corpus ownership moved from public JS to the private database;
+- one canonical server router replaced duplicated/evaluated client routing paths.
 
 Recurring rule:
 
@@ -848,36 +665,7 @@ Recurring rule:
 
 ---
 
-## 30. Do not casually change these decisions
-
-Unless explicitly requested, preserve:
-
-- public Answers headerless design;
-- tactile drag/open ritual;
-- CARE first;
-- Focus as subject owner;
-- Support as supplemental;
-- separate Support parser overlap lane;
-- explicit Universal semantics;
-- 2 random Universals added to matched non-generic pools;
-- full 75 Universal fallback when nothing is understood;
-- uniform randomness across final eligible pool;
-- Router v4 retired;
-- physical page depth not mapped to answer ID;
-- Thai line breaks as authored language;
-- reviewed Thai as canonical copy;
-- final English v122 copy unless a new explicit editorial change is approved;
-- v119 review evidence immutable;
-- Noto Sans Thai for Thai UI/answers;
-- Main Admin separate from Answers Library;
-- Links as shortlink/QR owner;
-- Worker as social metadata owner;
-- `site_files` as live content source;
-- no unnecessary Cloudflare redeploy for content changes.
-
----
-
-## 31. Routing test checklist
+## 23. Routing test checklist
 
 When changing routing, test at least:
 
@@ -896,20 +684,19 @@ When changing routing, test at least:
 - no Support leakage through Helper/Topic tiers;
 - no Support phrase suppressing overlapping Focus;
 - two Universal additions distinct where possible;
-- final eligible answers equal probability.
+- final eligible answers equal probability;
+- deterministic parity/regression against the canonical core.
 
-For v123 specifically, include:
+Include beach collision regression:
 
 - `ทะเล` → beach;
 - `ไปทะเล` → beach;
 - `ทะเลไหม/ทะเลมั้ย` → beach;
 - `ทะเลาะ` must **not** become beach.
 
-Inspect parsed Focus, parsed Support, alias hits, base tier, Support additions, Universal additions, final eligible IDs and chosen ID.
-
 ---
 
-## 32. Corpus/editor test checklist
+## 24. Corpus/editor test checklist
 
 When changing answer content or semantics, verify:
 
@@ -924,14 +711,15 @@ When changing answer content or semantics, verify:
 - Universal exclusivity;
 - generated Focus/Support/Universal indexes;
 - reachability;
-- Library save round-trip;
+- Admin save round-trip;
+- corpus revision increment/concurrency behavior;
 - no accidental changes to historical review evidence;
-- if copy-only, routing/runtime reconstructs previous stage;
-- if routing-only, Thai/English copy reconstructs previous stage.
+- if copy-only, routing semantics remain unchanged;
+- if routing-only, Thai/English copy remains unchanged.
 
 ---
 
-## 33. Debugging philosophy
+## 25. Debugging philosophy
 
 When a bug appears:
 
@@ -939,16 +727,16 @@ When a bug appears:
 2. identify owner/layer;
 3. inspect the whole relevant block;
 4. inspect data invariants;
-5. inspect runtime/session/cache possibility;
+5. inspect server/session/token/cache state;
 6. only then modify.
 
 Do not patch the screenshot. Fix the ownership/invariant that explains the screenshot.
 
-A controller parse failure can masquerade as UI logic failure. A stale runtime can masquerade as bad semantics. A broad alias can masquerade as a bad answer pool. Diagnose before retagging or styling.
+A client parse failure can masquerade as UI logic failure. A stale runtime can masquerade as bad semantics. A broad alias can masquerade as a bad answer pool. A token/session failure can masquerade as an animation bug. Diagnose before retagging or styling.
 
 ---
 
-## 34. Product-quality bar
+## 26. Product-quality bar
 
 The owner notices and cares about:
 
@@ -968,42 +756,41 @@ These are product correctness, not “mere cosmetics.”
 
 ---
 
-## 35. Short mental model
+## 27. Short mental model
 
 ```text
 GITHUB / CLOUDFLARE SHELL
-  static infrastructure + edge metadata
+  static infrastructure + edge boundary
 
 SUPABASE site_files
-  live pages/controllers
+  live page/controller shells
 
-ANSWERS ROWS
+PRIVATE ANSWERS DATABASE
   Thai + English + Focus + Support + Topics + Helpers
           ↓
-  generated Focus / Support / Universal indexes
+  canonical routing assets/indexes
           ↓
-PUBLIC QUESTION
+CANONICAL SERVER ROUTER
           ↓
-CARE
+  CARE first
           ↓
-subject parser + separate Support lane
+  Focus owns subject
           ↓
-Focus owns subject
+  relevant Support joins
           ↓
-relevant Support joins
+  recent-six handling
           ↓
-2 random Universal answers join
+  exactly 2 random Universal answers join matched pools
           ↓
-anti-repeat / final eligible pool
+  uniform random pick
           ↓
-uniform random answer
-
-IF NOTHING IS UNDERSTOOD
+  opaque prepare token
           ↓
-full 75-answer Universal pool
-
-USER EXPERIENCE
-  question → ถามดิ → drag physical page → open book → bilingual answer
+USER DRAGS PHYSICAL BOOK
+          ↓
+  single-use reveal
+          ↓
+ONE BILINGUAL ANSWER
 
 COPY PROVENANCE
   v119 source
@@ -1016,19 +803,19 @@ COPY PROVENANCE
       ↓
   v122 bilingual copy freeze
       ↓
-  v123 same copy + beach alias runtime fix
+  v124 semantic freeze
+      ↓
+  private DB revision 124
 ```
 
 The sophistication belongs backstage. The front stage should continue to feel like a very simple little book.
 
 ---
 
-## 36. Final principle
+## 28. Final principle
 
-The Book of Answers reached its current quality by repeatedly replacing accidental complexity with the correct owner or abstraction.
+The Book of Answers reached its quality by repeatedly replacing accidental complexity with the correct owner or abstraction.
 
 When something breaks, the best fix is usually not “more code.”
-
-It is usually:
 
 > **Find the real owner, preserve the product invariant, and change the smallest correct layer.**
