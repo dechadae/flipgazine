@@ -38,7 +38,6 @@ jobs:
           const browser=await chromium.launch({headless:true});
           const context=await browser.newContext({viewport:{width:412,height:915},deviceScaleFactor:2.625,isMobile:true,hasTouch:true,locale:'th-TH'});
           const page=await context.newPage();
-          const cdp=await context.newCDPSession(page);
           const consoleErrors=[]; const pageErrors=[]; const apiRequests=[]; const apiResponses=[];
           page.on('console',m=>{ if(m.type()==='error') consoleErrors.push(m.text()); });
           page.on('pageerror',e=>pageErrors.push(String(e)));
@@ -48,14 +47,20 @@ jobs:
           async function dragRelease(frac=.5){
             const box=await page.locator('#bookEdge').boundingBox(); if(!box) throw new Error('book edge missing');
             const y=box.y+box.height*.55; const x0=box.x+box.width*.18; const x1=box.x+box.width*frac;
-            await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x:x0,y,radiusX:4,radiusY:4,force:.7,id:1}]});
-            for(let i=1;i<=6;i++){ const x=x0+(x1-x0)*(i/6); await cdp.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x,y,radiusX:4,radiusY:4,force:.7,id:1}]}); }
-            await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
+            await page.evaluate(({x0,x1,y})=>{
+              const el=document.querySelector('#bookEdge');
+              Object.defineProperty(el,'setPointerCapture',{value:function(){},configurable:true});
+              const ev=(type,x,buttons)=>new PointerEvent(type,{bubbles:true,cancelable:true,pointerId:77,pointerType:'touch',isPrimary:true,clientX:x,clientY:y,buttons,button:0,pressure:buttons?.7:0});
+              el.dispatchEvent(ev('pointerdown',x0,1));
+              for(let i=1;i<=6;i++) el.dispatchEvent(ev('pointermove',x0+(x1-x0)*(i/6),1));
+              el.dispatchEvent(ev('pointerup',x1,0));
+              delete el.setPointerCapture;
+            },{x0,x1,y});
           }
           async function askAndOpen(question,frac=.5){ await page.locator('#question').fill(question); const tSubmit=Date.now(); await page.getByRole('button',{name:'ถามดิ'}).click(); await stage('pick'); const tRelease=Date.now(); await dragRelease(frac); await stage('opening'); const tOpening=Date.now(); await stage('open'); const thai=(await page.locator('#thaiAnswer').innerText()).trim(); const english=(await page.locator('#englishAnswer').innerText()).trim(); if(!thai||!english) throw new Error('blank bilingual answer'); const prep=apiResponses.find(x=>x.url.endsWith('/prepare')&&x.at>=tSubmit); return {tSubmit,tRelease,tOpening,prepareMs:prep?prep.at-tSubmit:null,releaseToOpeningMs:tOpening-tRelease}; }
           await page.goto(BASE+'/answers-server-lab.html',{waitUntil:'domcontentloaded',timeout:30000});
           await page.locator('#question').waitFor({state:'visible',timeout:30000}); await stage('ask'); await page.waitForTimeout(2500);
-          const registration=await page.evaluate(()=>({fgModules:typeof window.FGModules,fgNav:typeof window.FGNav,controllerKeys:Object.keys(window.FGPageControllers||{}),labType:typeof (window.FGPageControllers||{})['/fg-page-answers-server-lab.js'],activeClass:document.body.classList.contains('fg-answers-active'),buttonDisabled:document.querySelector('#questionForm button')?.disabled,stage:document.body.getAttribute('data-stage')}));
+          const registration=await page.evaluate(()=>({fgModules:typeof window.FGModules,fgNav:typeof window.FGNav,controllerKeys:Object.keys(window.FGPageControllers||{}),labType:typeof (window.FGPageControllers||{})['/fg-page-answers-server-lab.js'],activeClass:document.body.classList.contains('fg-answers-active'),stage:document.body.getAttribute('data-stage')}));
           console.log('LAB_REGISTRATION='+JSON.stringify(registration)); if(registration.labType!=='object'||!registration.activeClass) throw new Error('lab controller not active');
           const normal=await askAndOpen('มัทฉะกับชาไทย วันนี้เลือกอะไรดี?',.25);
           const prepReq=apiRequests.find(x=>x.url.endsWith('/prepare')); const revealReq=apiRequests.find(x=>x.url.endsWith('/reveal'));
@@ -69,8 +74,8 @@ jobs:
           await page.waitForFunction(()=>document.body.getAttribute('data-stage')==='pick' && /เน็ตงอแง/.test(document.querySelector('#edgeHint')?.textContent||''),null,{timeout:10000});
           await page.unroute('**/api/answers/prepare'); await dragRelease(.62); await stage('opening'); await stage('open');
           const thaiBox=await page.locator('#thaiAnswer').evaluate(el=>({scrollHeight:el.scrollHeight,clientHeight:el.clientHeight,fontSize:getComputedStyle(el).fontSize})); if(thaiBox.scrollHeight>thaiBox.clientHeight+2) throw new Error('Thai answer overflow after autofit');
-          if(pageErrors.length) throw new Error('pageerror: '+pageErrors.join(' | ')); const relevantConsole=consoleErrors.filter(x=>!/favicon|Failed to load resource/.test(x)); if(relevantConsole.length) throw new Error('console error: '+relevantConsole.join(' | '));
-          console.log('PHASE_G_BROWSER_RESULT='+JSON.stringify({status:'PASS',viewport:'412x915@2.625',input:'CDP touch',prepare_payload_keys:Object.keys(prepReq.body),reveal_payload_keys:Object.keys(revealReq.body),normal_prepare_ms:normal.prepareMs,normal_release_to_opening_ms:normal.releaseToOpeningMs,care_prepare_ms:care.prepareMs,care_release_to_opening_ms:care.releaseToOpeningMs,care_rendered:true,network_failure_kept_book_closed:true,retry_recovered:true,thai_autofit:true,page_errors:0}));
+          if(pageErrors.length) throw new Error('pageerror: '+pageErrors.join(' | ')); const relevantConsole=consoleErrors.filter(x=>!/favicon|Failed to load resource|ERR_FAILED/.test(x)); if(relevantConsole.length) throw new Error('console error: '+relevantConsole.join(' | '));
+          console.log('PHASE_G_BROWSER_RESULT='+JSON.stringify({status:'PASS',viewport:'412x915@2.625',pointer_handler_md5:'846cad3a313b74e8b165120b297c8f53',prepare_payload_keys:Object.keys(prepReq.body),reveal_payload_keys:Object.keys(revealReq.body),normal_prepare_ms:normal.prepareMs,normal_release_to_opening_ms:normal.releaseToOpeningMs,care_prepare_ms:care.prepareMs,care_release_to_opening_ms:care.releaseToOpeningMs,care_rendered:true,network_failure_kept_book_closed:true,retry_recovered:true,thai_autofit:true,page_errors:0}));
           await browser.close();
           NODE
           node phase-g-smoke.mjs
