@@ -1,0 +1,62 @@
+name: Answers Phase I mobile final
+
+on:
+  push:
+    paths:
+      - '.github/workflows/answers-phase-i-mobile-final.yml'
+permissions:
+  contents: read
+jobs:
+  mobile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browser harness
+        run: |
+          mkdir -p /tmp/phase-i && cd /tmp/phase-i
+          npm --silent init -y >/dev/null 2>&1
+          npm --silent install playwright >/dev/null 2>&1
+          npx playwright install chromium >/dev/null
+      - name: Exercise live secure Book on mobile
+        shell: bash
+        run: |
+          cat > /tmp/phase-i/mobile-final.mjs <<'NODE'
+          import {chromium} from 'playwright';
+          function check(ok,msg){if(!ok)throw new Error(msg)}
+          const browser=await chromium.launch({headless:true});
+          async function ctx(){return browser.newContext({viewport:{width:412,height:915},deviceScaleFactor:2.625,isMobile:true,hasTouch:true});}
+          async function ready(p){
+            await p.goto('https://flipgazine.pages.dev/answers-server-lab.html',{waitUntil:'domcontentloaded',timeout:60000});
+            await p.waitForFunction(()=>document.body?.classList.contains('fg-answers-active')&&document.body?.dataset?.stage==='ask'&&!!document.querySelector('#bookEdge'),null,{timeout:60000});
+          }
+          async function stage(p,n){await p.waitForFunction(x=>document.body?.dataset?.stage===x,n,{timeout:30000});}
+          async function openAt(p,f){
+            await stage(p,'pick');
+            const b=await p.locator('#bookEdge').boundingBox();check(b&&b.width>100,'book bounds');
+            await p.mouse.move(b.x+b.width*.2,b.y+b.height*.5);await p.mouse.down();await p.mouse.move(b.x+b.width*f,b.y+b.height*.5,{steps:10});await p.mouse.up();
+            await stage(p,'open');
+            return {thai:(await p.locator('#thaiAnswer').innerText()).trim(),english:(await p.locator('#englishAnswer').innerText()).trim()};
+          }
+
+          const c1=await ctx(),p1=await c1.newPage();await ready(p1);
+          const initial=await p1.evaluate(()=>{const r=document.querySelector('#bookEdge').getBoundingClientRect();return{scrollWidth:document.documentElement.scrollWidth,innerWidth,center:r.x+r.width/2,width:r.width}});
+          check(initial.scrollWidth<=initial.innerWidth+1,'horizontal overflow');check(Math.abs(initial.center-206)<12,'closed book center '+initial.center);
+          await p1.locator('#question').fill('barista หล่อไหม');await p1.locator('#questionForm button').click();await stage(p1,'pick');
+          check(await p1.locator('#questionForm button').isDisabled(),'submit not disabled');
+          const normal=await openAt(p1,.82);check(normal.thai&&normal.english,'normal blank');
+          const opened=await p1.evaluate(()=>{const r=document.querySelector('.open-book').getBoundingClientRect();return{center:r.x+r.width/2,width:r.width,overflow:document.documentElement.scrollWidth-innerWidth}});
+          check(Math.abs(opened.center-206)<15,'open book center '+opened.center);check(opened.overflow<=1,'open overflow');check(await p1.locator('#askAgain').isEnabled(),'ask again disabled');
+          await p1.locator('#askAgain').click();await stage(p1,'ask');await c1.close();
+
+          const c2=await ctx(),p2=await c2.newPage();await ready(p2);await p2.locator('#question').fill('I have chest pain should I take medicine?');await p2.locator('#questionForm button').click();const care=await openAt(p2,.18);check(care.english==='Ask a clinician. This book has no medical license.','CARE drift');await c2.close();
+
+          const c3=await ctx(),p3=await c3.newPage();let intercepted=false;
+          await p3.route('**/api/answers/prepare',async route=>{if(!intercepted){intercepted=true;await route.fulfill({status:503,contentType:'application/json',body:'{"error":"service_unavailable"}'});}else await route.continue();});
+          await ready(p3);await p3.locator('#question').fill('recovery after one prepare failure');await p3.locator('#questionForm button').click();const recovered=await openAt(p3,.64);check(intercepted&&recovered.thai&&recovered.english,'retry recovery failed');await c3.close();
+          await browser.close();
+          console.log('PHASE_I_MOBILE_FINAL='+JSON.stringify({status:'PASS',viewport:[412,915],dpr:2.625,closed_center:initial.center,closed_width:initial.width,open_center:opened.center,open_width:opened.width,no_horizontal_overflow:true,normal:true,care:true,recovery_after_prepare_503:true,depths:[.82,.18,.64]}));
+          NODE
+          node /tmp/phase-i/mobile-final.mjs
