@@ -4,7 +4,7 @@ import crypto from 'node:crypto';
 const LIVE_CONTROLLER_URL = 'https://flipgazine.pages.dev/fg-page-answers.js';
 const SUPABASE = 'https://sjpvhgxacsiorrtijqua.supabase.co/rest/v1';
 // Public anon key, identical to the key already shipped in the Flipgazine shell.
-const ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXAiLCJyZWYiOiJzanB2aGd4YWNzaW9ycnRpand1YSIsInJvbGUiOiJhbm9uIiwiaWF0IjoxNzgzNzQxOTI3LCJleHAiOjIwOTkzMTc5Mjd9.9rQa7r9pxoBwh5SrYLlBGzzvbZkkUXKdvahCPugZncY';
+const ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNqcHZoZ3hhY3Npb3JydGlqcXVhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM3NDE5MjcsImV4cCI6MjA5OTMxNzkyN30.9rQa7r9pxoBwh5SrYLlBGzzvbZkkUXKdvahCPugZncY';
 const EXPECTED_VERSION = 124;
 const EXPECTED_MD5 = 'c8a382f0562737422e891e3300bb08f6';
 const nativeFetch = globalThis.fetch.bind(globalThis);
