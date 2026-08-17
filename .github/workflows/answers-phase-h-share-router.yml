@@ -1,0 +1,38 @@
+name: Answers Phase H share canonical router
+
+on:
+  push:
+    paths:
+      - '.github/workflows/answers-phase-h-share-router.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  share:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Move canonical router to shared source
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p supabase/functions/_shared
+          cp supabase/functions/answers-service/router-v124.mjs supabase/functions/_shared/router-v124.mjs
+          printf "export * from '../_shared/router-v124.mjs';\n" > supabase/functions/answers-service/router-v124.mjs
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('.github/workflows/answers-v124-parity.yml')
+          s=p.read_text()
+          needle="      - 'supabase/functions/answers-service/router-v124.mjs'\n"
+          extra="      - 'supabase/functions/_shared/router-v124.mjs'\n"
+          if extra not in s:
+              if needle not in s: raise SystemExit('parity watch anchor missing')
+              s=s.replace(needle, extra+needle)
+          p.write_text(s)
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add supabase/functions/_shared/router-v124.mjs supabase/functions/answers-service/router-v124.mjs .github/workflows/answers-v124-parity.yml
+          git commit -m 'Share canonical Answers router for admin audit'
+          git push
