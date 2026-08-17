@@ -13,6 +13,20 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
+      - name: Verify browser CORS preflight
+        shell: bash
+        run: |
+          set -euo pipefail
+          H="$(mktemp)"
+          CODE="$(curl --silent --show-error --max-time 30 -D "$H" -o /dev/null -w '%{http_code}' -X OPTIONS \
+            -H 'Origin: https://flipgazine.pages.dev' \
+            -H 'Access-Control-Request-Method: POST' \
+            -H 'Access-Control-Request-Headers: authorization,apikey,content-type' \
+            'https://sjpvhgxacsiorrtijqua.supabase.co/functions/v1/answers-admin-service')"
+          test "$CODE" = '204'
+          grep -qi '^access-control-allow-origin: https://flipgazine.pages.dev' "$H"
+          grep -qi '^access-control-allow-methods:.*POST' "$H"
+          rm -f "$H"
       - name: Exercise authenticated private Admin API
         shell: bash
         run: |
