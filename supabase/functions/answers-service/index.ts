@@ -277,7 +277,7 @@ async function logUsage(
         ...metadata,
         auth_kind: auth.kind,
         ...(auth.cfRay ? { cf_ray: auth.cfRay } : {}),
-      })}::jsonb
+      })}::text::jsonb
     )
   `;
 }
