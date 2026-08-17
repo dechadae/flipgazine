@@ -1,11 +1,13 @@
-# Phase G recheck trigger; workflow behavior is unchanged.
+# Phase H: canonical router now lives in supabase/functions/_shared.
 name: Answers v124 deterministic parity
 
 on:
   workflow_dispatch:
   push:
     paths:
+      - 'supabase/functions/_shared/router-v124.mjs'
       - 'supabase/functions/answers-service/router-v124.mjs'
+      - 'supabase/functions/answers-admin-service/router-v124.mjs'
       - 'answers-private-server/router-v124.mjs'
       - 'answers-private-server/parity-v124.mjs'
       - 'answers-private-server/parity-v124-runner.mjs'
