@@ -126,7 +126,7 @@ async function saveAdmin(tx: any, actor: string, body: any) {
   const expected = Number(body?.expected_revision);
   if (!Number.isInteger(expected) || expected < 1) return { status:'invalid', error:'invalid_revision' };
   if (!Array.isArray(body?.answers)) return { status:'invalid', error:'invalid_answers' };
-  const rows = await tx`select private.answer_admin_save(${expected}::bigint,${actor}::uuid,${JSON.stringify(body.answers)}::jsonb) as result`;
+  const rows = await tx`select private.answer_admin_save_guarded(${expected}::bigint,${actor}::uuid,${sql.json(body.answers)}::jsonb) as result`;
   return rows?.[0]?.result || { status:'error' };
 }
 
