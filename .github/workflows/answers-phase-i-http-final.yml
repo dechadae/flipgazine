@@ -1,0 +1,43 @@
+name: Answers Phase I HTTP final
+
+on:
+  push:
+    paths:
+      - '.github/workflows/answers-phase-i-http-final.yml'
+permissions:
+  contents: read
+jobs:
+  http:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Exercise live HTTP boundary and exposure
+        shell: bash
+        run: |
+          cat > /tmp/phase-i-http-final.mjs <<'NODE'
+          import crypto from 'node:crypto';import {performance} from 'node:perf_hooks';
+          const O='https://flipgazine.pages.dev',A=O+'/api/answers',S='https://sjpvhgxacsiorrtijqua.supabase.co',F=S+'/functions/v1/answers-service';
+          const K='sb_publishable_NcIExScIXkqsK1ZNNu5a-Q_zZ4afIHz';
+          function ck(x,m){if(!x)throw new Error(m)} function c(res){return (res.headers.get('set-cookie')||'').split(';')[0]}
+          async function post(path,body,cookie='',origin=O){const t=performance.now(),res=await fetch(A+path,{method:'POST',headers:{'content-type':'application/json',origin,...(cookie?{cookie}:{})},body:JSON.stringify(body)}),text=await res.text();let j={};try{j=JSON.parse(text)}catch{}return{res,j,cookie:cookie||c(res),ms:performance.now()-t}}
+          async function cycle(q,cookie=''){const p=await post('/prepare',{question:q},cookie);ck(p.res.status===200,'prepare '+p.res.status);const r=await post('/reveal',{request_token:p.j.request_token},p.cookie);ck(r.res.status===200,'reveal '+r.res.status);return{id:r.j.id,cookie:p.cookie,ms:p.ms+r.ms}}
+          const d0=await fetch(F,{method:'POST',headers:{'content-type':'application/json'},body:'{"action":"prepare","question":"x"}'});ck(d0.status===401,'direct no-key');
+          const d1=await fetch(F,{method:'POST',headers:{apikey:K,'content-type':'application/json'},body:'{"action":"prepare","question":"x"}'});ck(d1.status===401,'direct publishable');
+          const xo=await post('/prepare',{question:'x'},'','https://evil.example');ck(xo.res.status===403,'cross origin '+xo.res.status);
+          const p=await post('/prepare',{question:'ควรไปกินหมูกระทะไหม'});ck(p.res.status===200,'normal prepare');ck(Object.keys(p.j).sort().join(',')==='expires_in,request_token','prepare fields');ck(p.j.expires_in===120&&/^[A-Za-z0-9_-]{43}$/.test(p.j.request_token),'token');ck((p.res.headers.get('cache-control')||'').includes('no-store'),'prepare cache');
+          const r=await post('/reveal',{request_token:p.j.request_token},p.cookie);ck(r.res.status===200&&r.j.id>=1&&r.j.thai&&r.j.english,'normal reveal');ck(!('eligible'in r.j)&&!('route'in r.j)&&!('pool'in r.j),'diagnostics leak');
+          const replay=await post('/reveal',{request_token:p.j.request_token},p.cookie);ck(replay.res.status===404,'replay');
+          const a=await post('/prepare',{question:'barista หล่อไหม'}),b=await post('/prepare',{question:'คืนนี้ออกไปดีไหม'});const wrong=await post('/reveal',{request_token:a.j.request_token},b.cookie);ck(wrong.res.status===404,'session binding');const ar=await post('/reveal',{request_token:a.j.request_token},a.cookie);ck(ar.res.status===200,'session recovery');
+          const cp=await post('/prepare',{question:'I have chest pain should I take medicine?'}),cr=await post('/reveal',{request_token:cp.j.request_token},cp.cookie);ck(cr.res.status===200&&cr.j.id===null&&cr.j.english==='Ask a clinician. This book has no medical license.','CARE');
+          let oc='',os=[];for(let i=0;i<4;i++){const x=await post('/prepare',{question:'outstanding final '+i},oc);oc=x.cookie||oc;os.push(x.res.status)}ck(os.join(',')==='200,200,200,429','outstanding '+os);
+          let hc='',ids=[];for(let i=0;i<7;i++){const x=await cycle('phase-i-final-generic-'+i,hc);hc=x.cookie;ids.push(x.id)}ck(new Set(ids).size===7,'recent repeat '+ids);
+          const bad=await post('/reveal',{request_token:'x'.repeat(43)},hc);ck(bad.res.status===404,'bad token');const rec=await cycle('final recovery',hc);ck(Number.isInteger(rec.id),'recovery');
+          let lc='',lat=[];for(let i=0;i<3;i++){const x=await cycle('latency final '+i,lc);lc=x.cookie;lat.push(Math.round(x.ms))}ck(Math.max(...lat)<5000,'latency');
+          const shell=await fetch(O+'/answers-server-lab.html');ck(shell.status===200&&(shell.headers.get('content-type')||'').includes('text/html'),'shell');
+          const rest=S+'/rest/v1/site_files?path=eq.%2Ffg-page-answers-server-lab.js&select=content';const sr=await fetch(rest,{headers:{apikey:K,authorization:'Bearer '+K}});ck(sr.status===200,'controller rest '+sr.status);const rows=await sr.json(),js=rows?.[0]?.content||'';ck(js.length>10000&&js.length<50000,'controller bytes');for(const s of ['const ANSWERS','FOCUS_INDEX','function chooseAnswer','universalAdds','eligible'])ck(!js.includes(s),'controller exposure '+s);ck(js.includes('apiJson("/api/answers/prepare",{question:question})')&&js.includes('apiJson("/api/answers/reveal",{request_token:token})'),'secure payload shape');
+          console.log('PHASE_I_HTTP_FINAL='+JSON.stringify({status:'PASS',direct_no_key:d0.status,direct_publishable:d1.status,cross_origin:xo.res.status,ttl:p.j.expires_in,replay:replay.res.status,wrong_session:wrong.res.status,care_id:cr.j.id,outstanding:os,recent_ids:ids,recent_unique:new Set(ids).size,recovery_id:rec.id,latency_ms:lat,latency_median_ms:[...lat].sort((a,b)=>a-b)[1],secure_controller_bytes:Buffer.byteLength(js),secure_controller_md5:crypto.createHash('md5').update(js).digest('hex'),shell_http:shell.status}));
+          NODE
+          node /tmp/phase-i-http-final.mjs
