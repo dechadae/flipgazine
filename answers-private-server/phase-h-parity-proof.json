@@ -1,0 +1,37 @@
+{
+  "status": "PASS",
+  "source": "Answers v124 deterministic parity workflow after Phase H fallback revert",
+  "workflow_run_id": 32020882761,
+  "job_id": 95360120852,
+  "tested_commit": "07f013dc6e26c4b84827aa9eb60ba823a87c6495",
+  "storedSourceControllerMd5": "c8a382f0562737422e891e3300bb08f6",
+  "transportControllerMd5": "c8a382f0562737422e891e3300bb08f6",
+  "transportBytes": 342604,
+  "frozenCriticalSlicesVerified": true,
+  "dictionaryConcepts": 268,
+  "focusIndexKeys": 220,
+  "supportIndexKeys": 36,
+  "universalIds": 75,
+  "generatedQuestions": 5386,
+  "deterministicSeeds": [1, 42, 12648430],
+  "routeCases": 64626,
+  "routeDifferences": 0,
+  "careCases": 6,
+  "normalChooseAnswerCases": 15,
+  "finalFallbackCases": 4,
+  "invariants": {
+    "minPool": 2,
+    "maxBroadWiden": 12,
+    "recentLimit": 6,
+    "exactlyTwoUniversalOnMatchedNonGeneric": true,
+    "uniformProbabilityOneOverEligible": true
+  },
+  "phase_h_closeout": {
+    "failed_recording_workflow_run_id": 32021623353,
+    "recording_failure_reason": "parity passed but git push was rejected because main advanced concurrently",
+    "deployed_answers_service_version": 7,
+    "deployed_answers_service_sha256": "72fea6c9a8d6b6365a83e41f52c8435c58784905cd6e6cc16ec839742d2b4998",
+    "deployed_answers_admin_service_version": 1,
+    "deployed_answers_admin_service_sha256": "b48fc7f702c78ab150d3df57c26dd0190827edb078d0dbe4cbc2b118ff90f4db"
+  }
+}
