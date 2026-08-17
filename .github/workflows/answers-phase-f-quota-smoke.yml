@@ -1,0 +1,22 @@
+name: Answers Phase F deterministic quota smoke
+
+on:
+  push:
+    paths:
+      - '.github/workflows/answers-phase-f-quota-smoke.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Exercise configured session IP and distinct quotas
+        shell: bash
+        run: |
+          set -euo pipefail
+          OUT="$(curl --fail --silent --show-error --max-time 180 'https://sjpvhgxacsiorrtijqua.supabase.co/functions/v1/answers-service-phase-f-quota-smoke?cap=KwPIkYZ_sFZhMVnAdrVeOa6GLXg6oH1Raxxo88qmpmA')"
+          printf '%s\n' "$OUT"
+          node -e 'const x=JSON.parse(process.argv[1]); if(x.status!=="PASS") process.exit(1);' "$OUT"
