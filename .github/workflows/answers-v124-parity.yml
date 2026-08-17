@@ -1,5 +1,5 @@
 # Phase H: canonical router now lives in supabase/functions/_shared.
-# Phase H compatibility gate: sparse active-ID fallback must remain frozen-v124 identical on the 1..948 corpus.
+# Phase H closeout gate: frozen-v124 emergency fallback restored exactly.
 name: Answers v124 deterministic parity
 
 on:
