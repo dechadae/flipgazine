@@ -11,11 +11,12 @@ jobs:
         shell: bash
         env:
           SUPA: https://sjpvhgxacsiorrtijqua.supabase.co
+          APIKEY: sb_publishable_NcIExScIXkqsK1ZNNu5a-Q_zZ4afIHz
           ANON: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzIiwicmVmIjoic2pwdmhneGFjc2lvcnJ0aWpxdWEiLCJyb2xlIjoiYW5vbiIsImlhdCI6MTc4Mzc0MTkyNywiZXhwIjoyMDk5MzE3OTI3fQ.9rQa7r9pxoBwh5SrYLlBGzzvbZkkUXKdvahCPugZncY
         run: |
           set -euo pipefail
           curl -fsS "$SUPA/rest/v1/site_files?path=eq.%2Ffg-page-answers-thai-review.js&select=content,version" \
-            -H "apikey: $ANON" -H "Authorization: Bearer $ANON" > /tmp/controller.json
+            -H "apikey: $APIKEY" -H "Authorization: Bearer $ANON" > /tmp/controller.json
           test "$(jq -r '.[0].version' /tmp/controller.json)" = "4"
           jq -r '.[0].content' /tmp/controller.json > /tmp/controller.js
           node --check /tmp/controller.js
@@ -25,7 +26,7 @@ jobs:
           grep -q 'action:"save"' /tmp/controller.js
           grep -q 'expected_revision:loadedRevision' /tmp/controller.js
           curl -fsS "$SUPA/rest/v1/site_files?path=eq.%2Fanswers-thai-review.html&select=content,version" \
-            -H "apikey: $ANON" -H "Authorization: Bearer $ANON" > /tmp/page.json
+            -H "apikey: $APIKEY" -H "Authorization: Bearer $ANON" > /tmp/page.json
           test "$(jq -r '.[0].version' /tmp/page.json)" = "3"
           jq -r '.[0].content' /tmp/page.json | grep -q 'Thai Edit</h1>'
           jq -r '.[0].content' /tmp/page.json | grep -q 'Save edit live'
