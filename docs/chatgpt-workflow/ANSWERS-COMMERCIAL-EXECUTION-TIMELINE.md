@@ -1,37 +1,36 @@
 # The Book of Answers — Commercial Execution Timeline
 
-**Status:** ACTIVE MASTER EXECUTION PLAN — FINAL SEQUENCE  
+**Status:** ACTIVE MASTER EXECUTION PLAN — VOICE/BENCHMARK GATE COMPLETE  
 **Created:** 17 August 2026  
-**Updated:** 17 August 2026  
+**Updated:** 18 August 2026  
 **Project:** Flipgazine / The Book of Answers  
 **Repository:** `dechadae/flipgazine`  
 **Supabase:** `sjpvhgxacsiorrtijqua`  
 **Commercial authority:** `ANSWERS-COMMERCIAL-BENCHMARK-PLAN.md`  
 **Public benchmark authority:** `ANSWERS-VOICE-BENCHMARK-PLAN.md`  
 **Human evaluation authority:** `ANSWERS-HUMAN-EVALUATION-SCHEME.md`  
-**Security gate:** COMPLETE — 17 August 2026
+**Benchmark implementation record:** `ANSWERS-VOICE-BENCHMARK-IMPLEMENTATION-REPORT.md`  
+**Benchmark acceptance record:** `ANSWERS-VOICE-BENCHMARK-ACCEPTANCE-2026-08-18.md`  
+**Security gate:** COMPLETE — 17 August 2026  
+**Voice/public-benchmark gate:** COMPLETE — 18 August 2026
 
 ---
 
 # 1. Executive direction
 
-The security migration and Book showcase are complete. Do not reopen them as dependencies unless a verified regression appears.
+The security migration, Book showcase, Voice methodology page, public Voice benchmark and evaluator selection are complete. Do not reopen them as dependencies unless a verified production regression appears.
 
-The remaining work follows one short sequential gate and then three parallel tracks:
+The project now moves into the three already-approved parallel tracks:
 
 ```text
-GATE — finish Voice + public benchmark
-       + calibrate/select evaluator judge
-
-THEN IN PARALLEL:
 TRACK A — OpenAI corpus/evaluation pitch
 TRACK B — Thai + SEA LLM developer benchmark/rubric outreach
 TRACK C — build and review Batch 2 (1,000 new records)
 ```
 
-The key operating principle is:
+The key operating principle remains:
 
-> **Finish the demonstrator first. Then let outreach and dataset expansion happen at the same time.**
+> **The demonstrator is finished. Let outreach and dataset expansion happen at the same time.**
 
 Do not wait for Batch 2 before making contact, and do not wait for OpenAI before speaking with Thai/SEA LLM teams.
 
@@ -42,8 +41,8 @@ Do not wait for Batch 2 before making contact, and do not wait for OpenAI before
 | Date | Milestone |
 |---|---|
 | **17 Aug 2026** | ✅ Security migration complete; final commercial/benchmark strategy locked |
-| **18–19 Aug** | Finish Voice benchmark UI/backend; create human calibration set; compare free-tier judge candidates |
-| **19 Aug target** | Select sufficiently reliable free-tier evaluator and make Voice benchmark public |
+| **18 Aug 2026** | ✅ Voice benchmark UI/backend shipped; 36-case editor-grounded selective calibration completed; Groq judge selected |
+| **18 Aug 2026** | ✅ `qwen/qwen3.6-27b` selected; production acceptance tests passed; public benchmark gate complete |
 | **19–20 Aug** | Launch OpenAI outreach and Thai/SEA LLM developer outreach in parallel |
 | **18–20 Aug** | Freeze 1,000 Batch 2 source questions/scenarios |
 | **20–21 Aug** | Generate and preserve Batch 2 raw drafts |
@@ -73,17 +72,15 @@ The live Book remains a product demonstration, not a public bulk-data endpoint.
 
 ---
 
-# 4. Phase 1 — finish the Voice benchmark
+# 4. Phase 1 — Voice benchmark implementation
 
-## Target
+## Status
 
-**18–19 August 2026**
+**COMPLETE — 18 August 2026.**
 
-## Objective
+Live `/voice.html` now contains the approved public benchmark after the AI-probe material and before the final Mental Model section.
 
-Turn `/voice.html` into the complete public demonstration before outreach begins.
-
-The visitor experience is intentionally simple:
+The visitor flow is:
 
 ```text
 Question / scenario
@@ -92,128 +89,145 @@ Question / scenario
 → overall score
 → View details
 → human-style rubric lightbox
+→ Test another
 ```
 
-The automated benchmark must:
+Production behavior:
 
-- evaluate the six rubric dimensions;
-- return 1–4 ratings;
-- return severity, flags, rationale and confidence;
-- let the backend calculate the final 0–100 score deterministically;
-- never rewrite;
-- never suggest corrections;
-- never expose the private corpus.
+- evaluates the six frozen rubric dimensions;
+- returns 1–4 ratings;
+- returns severity, flags, rationale and confidence;
+- calculates the final 0–100 score deterministically on the backend;
+- never rewrites;
+- never suggests corrections;
+- keeps CARE separate;
+- never exposes or sends the private 948-row corpus to the judge.
 
-Public design remains editorial and understandable. Technical implementation stays behind the interface.
+Live implementation evidence is frozen in:
+
+```text
+ANSWERS-VOICE-BENCHMARK-IMPLEMENTATION-REPORT.md
+ANSWERS-VOICE-BENCHMARK-ACCEPTANCE-2026-08-18.md
+```
+
+Do not redesign the public benchmark into a SaaS dashboard.
 
 ---
 
-# 5. Phase 2 — human calibration set
+# 5. Phase 2 — selective calibration set
 
-## Target
+## Status
 
-**18–19 August 2026**, overlapping benchmark implementation.
+**COMPLETE — 18 August 2026.**
 
 ## Size
 
-Approximately **30–50 selected cases**, preferably around **36–48** if that gives full coverage without unnecessary repetition.
+**36 selected cases.**
 
-Do not deeply re-evaluate all 948 Batch 1 rows.
+The set deliberately covers the rubric surface rather than deeply re-evaluating all 948 Batch 1 rows.
 
-## Selection principle
+Provenance:
 
-Choose cases to cover the **rubric surface**, not to produce a representative census of Batch 1.
+```text
+24 editor-grounded cases
+  = 12 documented native-editor pre/final pairs
 
-Cover:
+6 constructed rubric-edge cases
+  = advisor-like prose, weak stance, natural/forced code-mixing,
+    semantic drift and nuanced stance
+
+6 constructed CARE cases
+  = self-harm, medical emergency and violence/abuse,
+    with safe and unsafe/minimizing variants
+```
+
+Coverage includes:
 
 - all six dimensions;
-- 1/4, 2/4, 3/4 and 4/4 ratings where practical;
-- PASS / MINOR / MAJOR / CRITICAL where applicable;
+- 1/4, 2/4, 3/4 and 4/4 across every dimension;
+- PASS / MINOR / MAJOR / CRITICAL;
 - semantic success with pragmatic failure;
 - translation-shaped Thai;
 - advisor-like delivery;
 - weak stance;
-- weak composition;
-- weak landing;
+- weak composition and landing;
 - natural vs forced code-mixing;
 - excessive slang/camp;
 - semantic drift;
 - genuinely excellent responses;
 - several CARE cases.
 
-## Human gold format
+## Claims discipline
 
-Each selected case may receive the complete human scheme:
+Call this an **editor-grounded selective calibration set**.
 
-```text
-six scores
-+ comment on every score
-+ severity
-+ diagnostic flags
-+ overall editorial judgment
-+ at least two human rewrite options
-```
+Do **not** describe it as a new blind 36-case multi-annotator human panel, and do not claim that all 36 cases were newly independently rescored by multiple humans.
 
-These labels become the benchmark calibration truth set.
+The private calibration rows and comparison evidence remain in Supabase `private` schema and are not public endpoints.
 
 ---
 
-# 6. Phase 3 — select the evaluator API
+# 6. Phase 3 — evaluator API selection
 
-## Target
+## Status
 
-**By 19 August 2026 if calibration results are sufficient.**
+**COMPLETE — 18 August 2026.**
 
-## Rule
-
-Prefer a **free-tier model API** if it agrees sufficiently with the human gold cases.
-
-Compare candidate judges on:
+Three suitable models available through the configured Groq project were compared on the same 36-case surface:
 
 ```text
-criterion-score agreement
-severity agreement
-diagnostic usefulness
-rationale quality
-repeat-test consistency
-latency
-free-tier practicality
+qwen/qwen3.6-27b
+openai/gpt-oss-20b
+openai/gpt-oss-120b
 ```
 
-Do not choose by model size or provider reputation.
+Selection result:
 
-If a free-tier judge passes the quality threshold, use it. The benchmark may therefore have effectively zero model-API cost within the free allowance.
+| Judge | Rating exact | Rating MAE | Severity accuracy | Mean latency | Rewrite leakage |
+|---|---:|---:|---:|---:|---:|
+| **Qwen3.6-27B** | **70.5%** | **0.462** | **57.1%** | **488 ms** | **0** |
+| GPT-OSS 20B | 40.9% | 1.111 | 36.4% | 705 ms | 0 |
+| GPT-OSS 120B | 33.3% | 1.194 | 41.7% | 1,161 ms | 0 |
 
-Only move to a paid evaluator if the free candidates are materially inadequate.
+**Selected production judge: `qwen/qwen3.6-27b`.**
 
-Keep provider keys server-side and maintain invisible abuse controls.
+The selection was based on agreement with the editor-grounded rubric behavior, not model size or provider reputation.
+
+Production adds strict server validation and one constrained repair retry for malformed judge output.
+
+Provider keys remain server-side and invisible abuse/spend controls are active.
 
 ---
 
-# 7. Phase 4 — launch Voice + benchmark
+# 7. Phase 4 — Voice + benchmark launch
 
-## Target
+## Status
 
-**19 August 2026**
+**COMPLETE — 18 August 2026.**
 
-## Acceptance conditions
+Acceptance evidence includes:
 
-Before calling the public benchmark ready:
+- two-input workflow present in live `/voice.html`;
+- overall result and qualitative label;
+- complete six-dimension details lightbox;
+- deterministic backend score;
+- malformed/missing input rejection;
+- strict judge-output validation;
+- three identical production repeat tests returning identical six 4/4 ratings, 100/100, PASS, empty flags and high confidence;
+- CARE-safe response returning CARE + 100/100 + PASS;
+- forced camp/code-mixing regression returning 23/100 + MAJOR;
+- semantic-drift regression returning 0/100 + CRITICAL;
+- no rewrite leakage detected in calibration;
+- private corpus excluded from the service;
+- `GROQ_API_KEY` server-side only;
+- rate and token-budget protection active;
+- no permanent submitted-text storage by Flipgazine;
+- quiet human-contact CTA with scope limitations;
+- no SaaS-style commercial funnel.
 
-- two-input workflow works on mobile and desktop;
-- overall result is simple and readable;
-- View details opens the complete rubric lightbox;
-- score is deterministic from the rubric ratings;
-- malformed output is safely rejected;
-- repeated identical tests are acceptably stable;
-- CARE behavior works;
-- no automated result contains a rewrite;
-- private corpus is not sent to the evaluator;
-- API secrets remain private;
-- human-contact CTA includes the reviewer's scope limitations;
-- no SaaS-style commercial funnel appears.
+The execution environment could not perform a visual headless-browser screenshot because its organization policy blocks browser navigation to the Pages domain. The public shell/network path, live Supabase source and browser-facing API/CORS contract were verified independently. Treat this as a QA-environment limitation, not a known production defect.
 
-Once this is true, treat Book + Voice + Benchmark as the completed public showroom.
+Book + Voice + Benchmark are now the completed public showroom.
 
 ---
 
@@ -234,7 +248,7 @@ Present:
 - the working benchmark;
 - secured Batch 1 provenance;
 - Batch 1 review statistics;
-- selected human-gold calibration cases;
+- selected editor-grounded calibration evidence;
 - Batch 2 as actively in progress;
 - the planned 1,948-record combined suite.
 
@@ -470,7 +484,7 @@ THAI-PRAGMATIC-EVALUATION-SUITE/
 ├── METHODOLOGY.md
 ├── RUBRIC.md
 ├── BENCHMARK-CALIBRATION/
-│   └── selected-human-gold-cases
+│   └── selected-editor-grounded-cases
 │
 ├── BATCH-1-948/
 │   ├── final-reviewed.jsonl
@@ -518,16 +532,18 @@ Do not send repetitive generic follow-ups where active human discussion is alrea
 The project may honestly say:
 
 - Batch 1 contains 948 reviewed records;
-- Batch 2 adds 1,000 independently reviewed records;
-- the combined suite reaches 1,948 normal records;
+- Batch 2 adds 1,000 independently reviewed records once that phase is complete;
+- the planned combined suite reaches 1,948 normal records;
 - the benchmark uses a six-dimension rubric;
-- the automated judge is calibrated/selected against native-editor gold labels if the calibration actually supports that statement;
+- the automated judge was selected using a 36-case editor-grounded selective calibration set plus constructed rubric-edge/CARE cases;
+- Qwen3.6-27B materially outperformed the compared GPT-OSS judges on the frozen calibration surface;
 - the public benchmark evaluates alignment with the Book's editorial/pragmatic criteria;
 - the corpus is no longer bulk-publicly exposed.
 
 Do not say:
 
 - every record is fully human-authored;
+- all 36 calibration cases were a new blind multi-annotator human panel;
 - the benchmark is universal Thai correctness;
 - the automated judge is equivalent to a human;
 - the corpus is unrestricted third-party training data;
@@ -549,9 +565,9 @@ Do not spend time on:
 - automated public rewrites;
 - SaaS-style funnel mechanics.
 
-The final priority is:
+The final priority is now:
 
-> **finish the showroom → prove the rubric on a selective human gold set → expand the corpus → talk to the right people in parallel.**
+> **use the finished showroom → expand the corpus → talk to the right people in parallel → preserve provenance.**
 
 ---
 
@@ -560,15 +576,15 @@ The final priority is:
 Each project check-in should answer:
 
 ```text
-1. Is Voice + benchmark complete?
-2. How many calibration cases are human-scored?
-3. Has a free-tier judge passed the quality threshold?
-4. Is OpenAI outreach active?
-5. Is Thai/SEA developer outreach active?
-6. How many Batch 2 source questions are frozen?
-7. How many Batch 2 rows are generated/reviewed?
-8. What is blocked?
-9. Is any shortcut weakening provenance or human-review quality?
+1. Has any verified Voice/benchmark regression appeared? (Otherwise keep the gate closed.)
+2. Is OpenAI outreach active?
+3. Is Thai/SEA developer outreach active?
+4. How many Batch 2 source questions are frozen?
+5. How many Batch 2 rows are generated/reviewed?
+6. Is the English sibling layer progressing in parallel?
+7. What is blocked?
+8. Is any shortcut weakening provenance or human-review quality?
+9. Is public benchmark usage/abuse still within the conservative limits?
 10. What is the smallest action that advances the next milestone today?
 ```
 
@@ -576,4 +592,4 @@ Each project check-in should answer:
 
 # 21. Current next action
 
-> **Finish `/voice.html` with the Thai Voice Benchmark and complete the selected 30–50 human calibration cases. Compare free-tier evaluator candidates, select the strongest sufficiently reliable judge, make the benchmark public, then begin OpenAI + Thai/SEA outreach and Batch 2 production in parallel.**
+> **Begin OpenAI corpus/evaluation outreach and Thai/SEA benchmark/rubric outreach while freezing the 1,000 Batch 2 source scenarios. Then generate and preserve Batch 2 raw drafts and start the documented native-editor review workflow. Do not reopen the completed Voice benchmark unless a verified regression appears.**
