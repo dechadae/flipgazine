@@ -1,6 +1,6 @@
 # The Book of Answers — Voice Benchmark Acceptance Record
 
-**Status:** ACCEPTED FOR PUBLIC USE — QUALITATIVE VERDICT REVISION  
+**Status:** ACCEPTED FOR PUBLIC USE — QUALITATIVE VERDICT + SECURITY HARDENING  
 **Date:** 18 August 2026  
 **Benchmark version:** `voice-2026-08-18-v3`  
 **Implementation report:** `ANSWERS-VOICE-BENCHMARK-IMPLEMENTATION-REPORT.md`
@@ -8,7 +8,7 @@
 ## Current production state
 
 ```text
-/voice.html site_files version: 30
+/voice.html site_files version: 32
 voice-eval Edge Function version: 9
 voice-eval status: ACTIVE
 judge: qwen/qwen3.6-27b
@@ -95,6 +95,72 @@ human-corrected Thai      → Fluent
 
 The guard is deliberately narrow. The project should not attempt to encode all Thai naturalness as regex rules; future human-found false positives should become reviewed regression evidence, not broad speculative heuristics.
 
+## Security hardening follow-up — 18 August 2026
+
+A later security review flagged `voice_eval_*` / `capture_voice_eval_calibration` activity as potentially unexplained elevated-access third-party model execution.
+
+The live audit established that the observed model activity was expected benchmark/calibration work from this implementation cycle, not unexplained corpus exfiltration or an unknown caller:
+
+- production/test usage rows were all for `qwen/qwen3.6-27b` and correspond to the public evaluator/regression testing;
+- `private.voice_eval_calibration_runs` contains the deliberate three-model calibration batches used to select the production judge;
+- calibration evidence remains in the `private` schema for audit provenance;
+- no submitted public question/response text is stored in `voice_eval_usage`.
+
+The review did identify one unnecessary residual privileged execution object:
+
+```text
+private.capture_voice_eval_calibration(text, integer)
+SECURITY DEFINER
+owner: postgres
+purpose: outbound HTTP call to the temporary calibration runner
+```
+
+Before removal, privilege verification showed:
+
+```text
+anon            schema USAGE: no   EXECUTE: no
+authenticated   schema USAGE: no   EXECUTE: no
+service_role    schema USAGE: no   EXECUTE: no
+postgres        schema USAGE: yes  EXECUTE: yes
+```
+
+So the function was not publicly callable through normal Supabase roles. However it was no longer necessary after calibration and retained outbound-execution capability under `postgres`, so it was removed rather than merely left dormant.
+
+Applied production migration:
+
+```text
+remove_voice_eval_calibration_executor
+DROP FUNCTION private.capture_voice_eval_calibration(text, integer)
+```
+
+Post-migration verification:
+
+```text
+capture_voice_eval_calibration function count: 0
+```
+
+The production-only database functions remain because the public evaluator needs them:
+
+```text
+private.voice_eval_claim(...)
+private.voice_eval_finish(...)
+```
+
+Both remain inaccessible to `anon`, `authenticated`, and `service_role`; only `postgres` can execute them through the server-side database connection.
+
+Temporary Voice probe Edge Functions were also hardened. They contain only inert `404 not_found` handlers and now require JWT:
+
+```text
+voice-eval-calibration-runner-20260818   inert 404 + verify_jwt=true
+voice-eval-regression-20260818           inert 404 + verify_jwt=true
+voice-groq-models-20260818               inert 404 + verify_jwt=true
+voice-thai-audit-probe-20260818          inert 404 + verify_jwt=true
+```
+
+The `http` extension was intentionally not removed because it is project-wide infrastructure and may be used by unrelated components. Removing the obsolete executor itself closes the Voice-specific outbound calibration path without damaging unrelated services.
+
+**Security conclusion:** the flagged historical activity is accounted for, the unnecessary privileged executor is gone, temporary probe routes are inert and authenticated, and the remaining `voice_eval_*` functions are production-required private controls rather than public RPC surface.
+
 ## Existing acceptance checks retained
 
 | Check | Result |
@@ -110,15 +176,19 @@ The guard is deliberately narrow. The project should not attempt to encode all T
 | Private 948-row corpus used by judge | NO |
 | `GROQ_API_KEY` exposed to browser/repo | NO |
 | Public overall numeric score | REMOVED |
+| Obsolete calibration executor | REMOVED |
+| Temporary Voice probe routes | INERT 404 + JWT REQUIRED |
 
 ## Visual/browser state
 
-Human mobile testing confirmed the evaluator is working on the live page after the Android submit/init fixes. The details lightbox was also adjusted for mobile viewport height and header clearance.
+Human mobile testing confirmed the evaluator is working on the live page after the Android submit/init fixes. The details lightbox is centered on mobile with an internal height cap, and the two input fields were subsequently compacted for better mobile use.
 
 Current live `/voice.html` source contains no `/100`, `voiceEvalScore`, numeric overall-score rendering, or old alignment labels.
 
 ## Decision
 
-The Voice benchmark remains accepted for public use, but its role is now more accurately framed as an **AI-assisted editorial diagnostic**, not a numeric authority on Thai language quality.
+The Voice benchmark remains accepted for public use, framed as an **AI-assisted editorial diagnostic**, not a numeric authority on Thai language quality.
+
+The separate security finding is now resolved: historical calibration activity is accounted for, the obsolete outbound `SECURITY DEFINER` executor has been removed, and temporary probe routes are inert and JWT-protected.
 
 Human review remains especially important for native spoken-Thai naturalness.
