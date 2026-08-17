@@ -4,6 +4,7 @@ on:
   workflow_dispatch:
   push:
     paths:
+      - 'supabase/functions/answers-service/router-v124.mjs'
       - 'answers-private-server/router-v124.mjs'
       - 'answers-private-server/parity-v124.mjs'
       - 'answers-private-server/parity-v124-runner.mjs'
