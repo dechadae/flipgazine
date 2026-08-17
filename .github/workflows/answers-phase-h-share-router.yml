@@ -1,4 +1,4 @@
-name: Answers Phase H apply runtime patch
+name: Answers Phase H patch admin save boundary
 
 on:
   push:
@@ -13,14 +13,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Apply runtime patch
-        run: python answers-private-server/phase-h-runtime-patch.py
-      - name: Commit runtime patch
+      - name: Patch Admin save JSON parameter
         shell: bash
         run: |
           set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('supabase/functions/answers-admin-service/index.ts')
+          s=p.read_text()
+          old="const rows = await tx`select private.answer_admin_save(${expected}::bigint,${actor}::uuid,${JSON.stringify(body.answers)}::jsonb) as result`;"
+          new="const rows = await tx`select private.answer_admin_save_guarded(${expected}::bigint,${actor}::uuid,${sql.json(body.answers)}::jsonb) as result`;"
+          if s.count(old)!=1: raise SystemExit(f'admin save anchor mismatch {s.count(old)}')
+          p.write_text(s.replace(old,new))
+          PY
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add supabase/functions/_shared/router-v124.mjs supabase/functions/answers-service/index.ts
-          git commit -m 'Make Answers runtime revision-aware'
+          git add supabase/functions/answers-admin-service/index.ts
+          git commit -m 'Fix Answers Admin JSON save boundary'
           git push
