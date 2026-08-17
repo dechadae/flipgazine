@@ -30,7 +30,7 @@ assert.equal(proof.deterministic_parity.recent_limit, 6);
 
 assert.equal(SOURCE_FINGERPRINTS.sourceControllerMd5, FROZEN.sourceControllerMd5, 'live canonical router provenance source MD5 drift');
 assert.equal(SOURCE_FINGERPRINTS.routerCoreMd5, FROZEN.routerCoreMd5, 'live canonical router core provenance drift');
-assert.equal(SOURCE_FINGERPRINTS.careMd5, FROZEN.careMd5, 'live CARE provenance drift');
+assert.equal(SOURCE_FINGERPRINTS.careSourceMd5, FROZEN.careMd5, 'live CARE provenance drift');
 assert.equal(SOURCE_FINGERPRINTS.finalFallbackMd5, FROZEN.finalFallbackMd5, 'live final fallback provenance drift');
 assert.equal(MIN_POOL, 2);
 assert.equal(MAX_BROAD_WIDEN, 12);
@@ -45,7 +45,7 @@ console.log('POSTCUTOVER_V124_GUARD=' + JSON.stringify({
   frozen_route_differences: proof.deterministic_parity.route_differences,
   source_controller_md5: SOURCE_FINGERPRINTS.sourceControllerMd5,
   router_core_md5: SOURCE_FINGERPRINTS.routerCoreMd5,
-  care_md5: SOURCE_FINGERPRINTS.careMd5,
+  care_source_md5: SOURCE_FINGERPRINTS.careSourceMd5,
   final_fallback_md5: SOURCE_FINGERPRINTS.finalFallbackMd5,
   min_pool: MIN_POOL,
   max_broad_widen: MAX_BROAD_WIDEN,
