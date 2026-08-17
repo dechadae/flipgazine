@@ -1,6 +1,8 @@
-# Phase H: canonical router now lives in supabase/functions/_shared.
-# Phase H closeout gate: frozen-v124 emergency fallback restored exactly.
-name: Answers v124 deterministic parity
+# Post-Phase-J guard: the public controller is intentionally slim and no longer
+# contains the frozen v124 corpus/router. The immutable 64,626-case Phase I
+# proof remains the behavioral reference; current canonical router unit tests
+# plus provenance fingerprints guard subsequent server changes.
+name: Answers v124 post-cutover guard
 
 on:
   workflow_dispatch:
@@ -10,15 +12,16 @@ on:
       - 'supabase/functions/answers-service/router-v124.mjs'
       - 'supabase/functions/answers-admin-service/router-v124.mjs'
       - 'answers-private-server/router-v124.mjs'
-      - 'answers-private-server/parity-v124.mjs'
-      - 'answers-private-server/parity-v124-runner.mjs'
+      - 'answers-private-server/router-v124.test.mjs'
+      - 'answers-private-server/postcutover-v124-guard.mjs'
+      - 'answers-private-server/phase-i-acceptance-proof.json'
       - '.github/workflows/answers-v124-parity.yml'
 
 permissions:
   contents: read
 
 jobs:
-  parity:
+  guard:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -30,5 +33,8 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Deterministic frozen-v124 parity gate
-        run: node answers-private-server/parity-v124-runner.mjs
+      - name: Validate frozen full-parity proof and current provenance
+        run: node answers-private-server/postcutover-v124-guard.mjs
+
+      - name: Current canonical router regression tests
+        run: node --test answers-private-server/router-v124.test.mjs
