@@ -23,7 +23,7 @@ jobs:
           grep -q 'answers-admin-service' /tmp/controller.js
           grep -q 'expected_revision:loadedRevision' /tmp/controller.js
           curl -fsS "$SUPA/rest/v1/site_files?path=eq.%2Ffg-devnav.js&select=content,version" -H "apikey: $APIKEY" > /tmp/devnav.json
-          test "$(jq -r '.[0].version' /tmp/devnav.json)" = "30"
+          test "$(jq -r '.[0].version' /tmp/devnav.json)" = "31"
           jq -r '.[0].content' /tmp/devnav.json > /tmp/devnav.js
           node --check /tmp/devnav.js
           a=$(grep -n "id:'fgAnswersEditorChip'" /tmp/devnav.js | cut -d: -f1)
@@ -32,4 +32,4 @@ jobs:
           test -n "$a" && test -n "$b" && test -n "$c"
           test "$a" -lt "$b" && test "$b" -lt "$c"
           grep -q "href:'/answers-thai-review.html', label:'thai audit'" /tmp/devnav.js
-          echo '{"status":"PASS","controller_version":6,"devnav_version":30}'
+          echo '{"status":"PASS","controller_version":6,"devnav_version":31}'
