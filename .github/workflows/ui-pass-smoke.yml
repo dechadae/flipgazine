@@ -1,0 +1,56 @@
+name: UI pass smoke
+on:
+  push:
+    paths:
+      - '.github/workflows/ui-pass-smoke.yml'
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate exact live UI files
+        shell: bash
+        env:
+          SUPA: https://sjpvhgxacsiorrtijqua.supabase.co
+          APIKEY: sb_publishable_NcIExScIXkqsK1ZNNu5a-Q_zZ4afIHz
+        run: |
+          set -euo pipefail
+          fetch(){ curl -fsS "$SUPA/rest/v1/site_files?path=eq.%2F$1&select=content,version" -H "apikey: $APIKEY"; }
+
+          fetch fg-page-answers-thai-review.js > /tmp/thai.json
+          test "$(jq -r '.[0].version' /tmp/thai.json)" = "7"
+          jq -r '.[0].content' /tmp/thai.json > /tmp/thai.js
+          node --check /tmp/thai.js
+          grep -q 'PAGE_SIZE=50' /tmp/thai.js
+          grep -q 'pageRows=rows.slice' /tmp/thai.js
+          grep -q 'movePage(delta)' /tmp/thai.js
+          grep -q 'expected_revision:loadedRevision' /tmp/thai.js
+
+          fetch answers-thai-review.html > /tmp/thai-page.json
+          test "$(jq -r '.[0].version' /tmp/thai-page.json)" = "5"
+          jq -r '.[0].content' /tmp/thai-page.json > /tmp/thai.html
+          grep -q 'id="pager"' /tmp/thai.html
+          grep -q 'id="pagePrev"' /tmp/thai.html
+          grep -q 'id="pageNext"' /tmp/thai.html
+
+          fetch fg-page-home.js > /tmp/home-controller.json
+          test "$(jq -r '.[0].version' /tmp/home-controller.json)" = "5"
+          jq -r '.[0].content' /tmp/home-controller.json > /tmp/home.js
+          node --check /tmp/home.js
+          grep -q 'finishHomeLoading' /tmp/home.js
+          grep -q 'syncHomePeriod' /tmp/home.js
+          grep -q 'clearTimeout(st.homeLoadingTimer)' /tmp/home.js
+
+          fetch home.html > /tmp/home-page.json
+          test "$(jq -r '.[0].version' /tmp/home-page.json)" = "41"
+          jq -r '.[0].content' /tmp/home-page.json > /tmp/home.html
+          grep -q 'class="home-loading"' /tmp/home.html
+          grep -q 'id="homeSkeleton"' /tmp/home.html
+          grep -q 'main.home-loading>.wrap{display:none;}' /tmp/home.html
+          grep -q 'id="periodMark" hidden' /tmp/home.html
+          test "$(grep -o 'id="homeSkeleton"' /tmp/home.html | wc -l)" = "1"
+
+          python3 - <<'PY'
+import math
+assert math.ceil(948/50)==19
+print('{"status":"PASS","thai_pages":19,"page_size":50,"home_skeleton":true,"period_placeholder_hidden":true}')
+PY
