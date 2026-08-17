@@ -1,0 +1,33 @@
+name: Revert Phase H fallback semantic drift
+
+on:
+  push:
+    paths:
+      - '.github/workflows/answers-phase-h-revert-fallback.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  revert:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Restore exact frozen-v124 final fallback
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('supabase/functions/_shared/router-v124.mjs')
+          s=p.read_text()
+          old="if(!fallback.length){for(var z=1;z<=answerCount;z++)if(answerExists(z)&&recentIds.indexOf(z)<0)fallback.push(z)}\n    if(!fallback.length){for(var y=1;y<=answerCount;y++)if(answerExists(y))fallback.push(y)}"
+          new="if(!fallback.length){for(var z=1;z<=answerCount;z++)if(recentIds.indexOf(z)<0)fallback.push(z)}\n    if(!fallback.length){for(var y=1;y<=answerCount;y++)fallback.push(y)}"
+          if s.count(old)!=1: raise SystemExit(f'fallback anchor mismatch {s.count(old)}')
+          p.write_text(s.replace(old,new))
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add supabase/functions/_shared/router-v124.mjs
+          git commit -m 'Restore exact v124 final fallback semantics'
+          git push
