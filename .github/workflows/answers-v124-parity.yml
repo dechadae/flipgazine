@@ -1,0 +1,28 @@
+name: Answers v124 deterministic parity
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'answers-private-server/router-v124.mjs'
+      - 'answers-private-server/parity-v124.mjs'
+      - '.github/workflows/answers-v124-parity.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  parity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Deterministic frozen-v124 parity gate
+        run: node answers-private-server/parity-v124.mjs
