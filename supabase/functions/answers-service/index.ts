@@ -248,7 +248,7 @@ async function reveal(req: Request, body: any, auth: AuthContext) {
   const tokenHash = await sha256Hex(requestToken);
   const sessionHash = await sha256Hex(rawSid);
   const revealed = unwrapResult(await sql`
-    select private.answer_reveal_fast(
+    select private.answer_reveal_guarded(
       ${sessionHash}, ${tokenHash}, ${auth.ipHash}, ${auth.kind}, ${auth.cfRay}, ${ROUTER_VERSION}
     ) as result
   `);
