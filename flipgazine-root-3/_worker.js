@@ -1,37 +1,22 @@
 /**
- * flipgazine — link preview renderer
- * Pages Advanced mode. This file must sit at the root of the upload, beside
- * index.html. Do not rename it.
+ * flipgazine — Pages Advanced Mode edge worker
  *
- * WHY THIS FILE AND NOT functions/
- * Cloudflare's dashboard drag-and-drop deploy silently ignores a functions/
- * directory — it uploads the files and never compiles them, with no warning.
- * A root _worker.js is supported by drag-and-drop, so this is the version that
- * actually runs without a terminal or a Git connection.
+ * Owns two intentionally small server-side concerns:
+ * 1. same-origin private Answers prepare/reveal boundary;
+ * 2. link preview / shortlink rendering for the existing Supabase-backed shell.
  *
- * WHAT IT SOLVES
- * _redirects maps /* to /index.html, so every URL returns the same shell and
- * every link previewed as "flipgazine — Stories that inspire." The real page
- * arrives from Supabase after JavaScript runs, and link crawlers never run
- * JavaScript.
- *
- * HOW IT WORKS
- * It fetches the static asset as normal, then rewrites the title, description,
- * canonical and Open Graph tags on the way out, from values in Supabase:
- *
- *   ?s=<token>  ->  fg_shares.token      a shared board, card, or book
- *   otherwise   ->  fg_page_meta.path    an ordinary page
- *
- * The rewrite is streamed, so there is no redirect and no intermediate page.
- * People see exactly what they saw before.
- *
- * In Advanced mode this Worker owns every request, so anything that is not an
- * HTML document is passed straight through untouched. If Supabase is slow,
- * unreachable, or has no matching row, the original response is returned as-is.
- * A missing preview must never break a page.
+ * This file must sit at the deployment root beside index.html. Non-API behavior
+ * below remains the existing preview renderer: static assets pass through and
+ * HTML metadata is rewritten only when matching Supabase metadata exists.
  */
 
 const SUPABASE = "https://sjpvhgxacsiorrtijqua.supabase.co";
+const ANSWERS_SERVICE = SUPABASE + "/functions/v1/answers-service";
+const ANSWERS_PREPARE = "/api/answers/prepare";
+const ANSWERS_REVEAL = "/api/answers/reveal";
+const ANSWERS_MAX_BODY_BYTES = 4096;
+const ANSWERS_MAX_QUESTION_CHARS = 500;
+const ANSWERS_TOKEN_RE = /^[A-Za-z0-9_-]{43}$/;
 
 /* The public anon key, already present in the source of every page on the
    site. Not a secret. Set SUPABASE_ANON in the Pages dashboard to override. */
@@ -48,6 +33,10 @@ const FALLBACK_DESC = "Digital stories for curious minds, creators and dreamers.
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+
+    if (url.pathname === ANSWERS_PREPARE || url.pathname === ANSWERS_REVEAL) {
+      return answersApi(request, env, url);
+    }
 
     /* Resolve short codes at the edge before the shell is fetched. A short
        link is a redirect, not a page: returning the real 302 here prevents a
@@ -134,6 +123,192 @@ export default {
     return rw.transform(res);
   },
 };
+
+/* ------------------------------------------------------------- Answers API */
+
+async function answersApi(request, env, url) {
+  const started = Date.now();
+  const route = url.pathname === ANSWERS_PREPARE ? "prepare" : "reveal";
+  let status = 500;
+
+  try {
+    if (request.method !== "POST") {
+      status = 405;
+      return answersJson({ error: "method_not_allowed" }, status, { Allow: "POST" });
+    }
+
+    const origin = request.headers.get("Origin");
+    if (origin && origin !== url.origin) {
+      status = 403;
+      return answersJson({ error: "forbidden" }, status);
+    }
+
+    const fetchSite = request.headers.get("Sec-Fetch-Site");
+    if (fetchSite && !["same-origin", "same-site", "none"].includes(fetchSite)) {
+      status = 403;
+      return answersJson({ error: "forbidden" }, status);
+    }
+
+    const contentType = request.headers.get("Content-Type") || "";
+    if (!contentType.toLowerCase().includes("application/json")) {
+      status = 415;
+      return answersJson({ error: "unsupported_media_type" }, status);
+    }
+
+    const declaredLength = Number(request.headers.get("Content-Length") || 0);
+    if (Number.isFinite(declaredLength) && declaredLength > ANSWERS_MAX_BODY_BYTES) {
+      status = 413;
+      return answersJson({ error: "payload_too_large" }, status);
+    }
+
+    const parsed = await readJsonBounded(request, ANSWERS_MAX_BODY_BYTES);
+    if (parsed.tooLarge) {
+      status = 413;
+      return answersJson({ error: "payload_too_large" }, status);
+    }
+    if (parsed.invalid) {
+      status = 400;
+      return answersJson({ error: "invalid_json" }, status);
+    }
+
+    let upstreamBody;
+    if (route === "prepare") {
+      const question = typeof parsed.value?.question === "string" ? parsed.value.question : "";
+      if (!question.trim()) {
+        status = 400;
+        return answersJson({ error: "question_required" }, status);
+      }
+      if (question.length > ANSWERS_MAX_QUESTION_CHARS) {
+        status = 413;
+        return answersJson({ error: "question_too_long" }, status);
+      }
+      upstreamBody = { action: "prepare", question };
+    } else {
+      const requestToken = typeof parsed.value?.request_token === "string"
+        ? parsed.value.request_token
+        : "";
+      if (!ANSWERS_TOKEN_RE.test(requestToken)) {
+        status = 404;
+        return answersJson({ error: "reveal_unavailable" }, status);
+      }
+      upstreamBody = { action: "reveal", request_token: requestToken };
+    }
+
+    const upstreamKey = env && env.ANSWERS_UPSTREAM_KEY;
+    if (!upstreamKey) {
+      status = 503;
+      return answersJson({ error: "service_unavailable" }, status);
+    }
+
+    const rawIp = request.headers.get("CF-Connecting-IP") || "unknown";
+    const ipHash = await hmacHex(upstreamKey, rawIp);
+    const headers = new Headers({
+      "content-type": "application/json",
+      "x-fg-answers-key": upstreamKey,
+      "x-fg-ip-hash": ipHash,
+    });
+    const cfRay = request.headers.get("CF-Ray");
+    if (cfRay) headers.set("x-fg-cf-ray", cfRay);
+    const cookie = request.headers.get("Cookie");
+    if (cookie) headers.set("cookie", cookie);
+
+    const upstream = await fetch(ANSWERS_SERVICE, {
+      method: "POST",
+      headers,
+      body: JSON.stringify(upstreamBody),
+    });
+    status = upstream.status;
+
+    const outHeaders = answersNoStoreHeaders();
+    const upstreamType = upstream.headers.get("content-type");
+    if (upstreamType) outHeaders.set("content-type", upstreamType);
+    const setCookie = upstream.headers.get("set-cookie");
+    if (setCookie) outHeaders.set("set-cookie", setCookie);
+    const retryAfter = upstream.headers.get("retry-after");
+    if (retryAfter) outHeaders.set("retry-after", retryAfter);
+
+    return new Response(upstream.body, { status, headers: outHeaders });
+  } catch (e) {
+    status = 503;
+    return answersJson({ error: "service_unavailable" }, status);
+  } finally {
+    const cf = request.cf || {};
+    console.log(JSON.stringify({
+      event: "answers_api",
+      route,
+      status,
+      ms: Date.now() - started,
+      cf_ray: request.headers.get("CF-Ray") || null,
+      colo: cf.colo || null,
+    }));
+  }
+}
+
+function answersNoStoreHeaders() {
+  return new Headers({
+    "cache-control": "no-store, private, max-age=0",
+    pragma: "no-cache",
+    expires: "0",
+    "x-content-type-options": "nosniff",
+  });
+}
+
+function answersJson(body, status = 200, extraHeaders = {}) {
+  const headers = answersNoStoreHeaders();
+  headers.set("content-type", "application/json; charset=utf-8");
+  Object.entries(extraHeaders).forEach(([key, value]) => headers.set(key, String(value)));
+  return new Response(JSON.stringify(body), { status, headers });
+}
+
+async function readJsonBounded(request, maxBytes) {
+  if (!request.body) return { invalid: true };
+  const reader = request.body.getReader();
+  const chunks = [];
+  let total = 0;
+
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      total += value.byteLength;
+      if (total > maxBytes) {
+        await reader.cancel();
+        return { tooLarge: true };
+      }
+      chunks.push(value);
+    }
+  } catch (e) {
+    return { invalid: true };
+  }
+
+  const bytes = new Uint8Array(total);
+  let offset = 0;
+  chunks.forEach((chunk) => {
+    bytes.set(chunk, offset);
+    offset += chunk.byteLength;
+  });
+
+  try {
+    return { value: JSON.parse(new TextDecoder().decode(bytes)) };
+  } catch (e) {
+    return { invalid: true };
+  }
+}
+
+async function hmacHex(secret, value) {
+  const encoder = new TextEncoder();
+  const key = await crypto.subtle.importKey(
+    "raw",
+    encoder.encode(secret),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign"],
+  );
+  const signature = new Uint8Array(
+    await crypto.subtle.sign("HMAC", key, encoder.encode(value)),
+  );
+  return Array.from(signature, (byte) => byte.toString(16).padStart(2, "0")).join("");
+}
 
 /* ---------------------------------------------------------------- helpers */
 
