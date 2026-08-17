@@ -17,6 +17,10 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          OUT="$(curl --fail --silent --show-error --max-time 180 'https://sjpvhgxacsiorrtijqua.supabase.co/functions/v1/answers-service-phase-f-quota-smoke?cap=KwPIkYZ_sFZhMVnAdrVeOa6GLXg6oH1Raxxo88qmpmA')"
-          printf '%s\n' "$OUT"
+          T="$(mktemp)"
+          CODE="$(curl --silent --show-error --max-time 180 -o "$T" -w '%{http_code}' 'https://sjpvhgxacsiorrtijqua.supabase.co/functions/v1/answers-service-phase-f-quota-smoke?cap=KwPIkYZ_sFZhMVnAdrVeOa6GLXg6oH1Raxxo88qmpmA')"
+          OUT="$(cat "$T")"
+          rm -f "$T"
+          printf 'quota_smoke_http=%s\n%s\n' "$CODE" "$OUT"
+          test "$CODE" = '200'
           node -e 'const x=JSON.parse(process.argv[1]); if(x.status!=="PASS") process.exit(1);' "$OUT"
