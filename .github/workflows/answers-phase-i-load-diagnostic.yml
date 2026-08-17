@@ -1,0 +1,48 @@
+name: Answers Phase I load diagnostic
+
+on:
+  push:
+    paths:
+      - '.github/workflows/answers-phase-i-load-diagnostic.yml'
+permissions:
+  contents: read
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: HTTP shell diagnostics
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo '--- public lab headers ---'
+          curl -sS -D /tmp/h -o /tmp/b https://flipgazine.pages.dev/answers-server-lab.html
+          cat /tmp/h
+          printf 'public-bytes=%s md5=%s\n' "$(wc -c </tmp/b)" "$(md5sum /tmp/b | cut -d' ' -f1)"
+          printf 'public-has-boot=%s public-has-stage=%s\n' "$(grep -c 'id="boot"' /tmp/b || true)" "$(grep -c 'data-stage="ask"' /tmp/b || true)"
+      - name: Browser load diagnostics
+        shell: bash
+        run: |
+          mkdir -p /tmp/phase-i && cd /tmp/phase-i
+          npm --silent init -y >/dev/null 2>&1
+          npm --silent install playwright >/dev/null 2>&1
+          npx playwright install chromium >/dev/null
+          cat > diag.mjs <<'NODE'
+          import {chromium} from 'playwright';
+          const browser=await chromium.launch({headless:true});
+          const ctx=await browser.newContext({viewport:{width:412,height:915},deviceScaleFactor:2.625,isMobile:true,hasTouch:true});
+          const p=await ctx.newPage();
+          const failures=[];const errors=[];const consoles=[];
+          p.on('requestfailed',r=>failures.push({url:r.url(),failure:r.failure()}));
+          p.on('pageerror',e=>errors.push(String(e)));
+          p.on('console',m=>consoles.push({type:m.type(),text:m.text()}));
+          const res=await p.goto('https://flipgazine.pages.dev/answers-server-lab.html',{waitUntil:'domcontentloaded'});
+          await p.waitForTimeout(7000);
+          const state=await p.evaluate(()=>({url:location.href,title:document.title,ready:document.readyState,body:document.body?.getAttribute('data-stage')||null,bodyPersist:document.body?.getAttribute('data-fg-persist')||null,main:!!document.querySelector('#main'),book:!!document.querySelector('#bookEdge'),boot:document.querySelector('#boot')?.innerText||null,htmlClass:document.documentElement.className,htmlBytes:document.documentElement.outerHTML.length}));
+          console.log('PHASE_I_LOAD_DIAG='+JSON.stringify({http:res?.status(),state,failures,errors,consoles:consoles.slice(-20)}));
+          await browser.close();
+          NODE
+          node diag.mjs
