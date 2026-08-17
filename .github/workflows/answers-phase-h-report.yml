@@ -1,0 +1,316 @@
+name: Answers Phase H gated report
+
+on:
+  push:
+    paths:
+      - '.github/workflows/answers-phase-h-report.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Wait for exact parity proof
+        shell: bash
+        run: |
+          set -euo pipefail
+          for i in $(seq 1 50); do
+            git fetch origin main
+            if git cat-file -e origin/main:answers-private-server/phase-h-parity-proof.json 2>/dev/null; then
+              git checkout main
+              git pull --ff-only origin main
+              node -e 'const fs=require("fs");const x=JSON.parse(fs.readFileSync("answers-private-server/phase-h-parity-proof.json","utf8"));if(x.status!=="PASS"||x.generatedQuestions!==5386||x.routeCases!==64626||x.routeDifferences!==0||x.careCases!==6||x.normalChooseAnswerCases!==15||x.finalFallbackCases!==4||!x.invariants?.exactlyTwoUniversalOnMatchedNonGeneric||!x.invariants?.uniformProbabilityOneOverEligible)process.exit(2)'
+              exit 0
+            fi
+            sleep 15
+          done
+          exit 3
+      - name: Write Phase H report
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          proof=json.loads(Path('answers-private-server/phase-h-parity-proof.json').read_text())
+          proof_json=json.dumps(proof,ensure_ascii=False,indent=2)
+          report=f'''# The Book of Answers — Private Server Migration Phase H Report
+
+**Status:** PHASE H COMPLETE — DB-NATIVE ADMIN PASS  
+**Date:** 17 August 2026  
+**Supabase project:** `sjpvhgxacsiorrtijqua` (`ap-southeast-1`)  
+**Canonical frozen behavior:** `/fg-page-answers.js` v124  
+**Public Book cutover:** **NOT PERFORMED**
+
+> Phase H replaces the Answers Admin's raw production-controller parsing/rewrite workflow with an authenticated private-corpus API and explicit DB corpus revisions. The public Book remains on the untouched v124 browser controller until the later acceptance/cutover phases.
+
+---
+
+## H1. Starting point and rollback freeze
+
+Before Phase H, `/answers-admin.html` loaded `/fg-page-answers-admin.js`, which fetched `/fg-page-answers.js` from `site_files`, evaluated/parsing the production JavaScript, rebuilt `FOCUS_INDEX` client-side and rewrote the giant controller on save.
+
+The exact pre-H Admin was frozen before replacement:
+
+| Rollback path | Source version | Bytes | MD5 |
+|---|---:|---:|---|
+| `/wip/answers-private-server-phase-h/answers-admin-v45-raw-js-rollback.html` | 45 | 15,633 | `0c8ebc38df87f2acd5275ba081f1343b` |
+| `/wip/answers-private-server-phase-h/fg-page-answers-admin-v22-raw-js-rollback.js` | 22 | 25,645 | `35153068bc4ade1e97ae9b0490bf2f65` |
+
+These WIP copies are rollback artifacts only and remain excluded from anonymous `site_files` reads.
+
+---
+
+## H2. Private corpus revision model
+
+Phase H added `private.answer_corpus_revisions` and the private save/index helpers needed to make the database an operable corpus source of truth.
+
+The Phase H migration set includes:
+
+- `answers_private_phase_h_admin_revision_model`;
+- `answers_private_phase_h_preserve_copy_bytes`;
+- `answers_private_phase_h_preserve_tag_order`;
+- `answers_private_phase_h_universal_guard`;
+- `answers_private_phase_h_runtime_current_revision`;
+- `answers_private_phase_h_admin_json_compat`.
+
+The revision ledger stores parent revision, editor, source, active-answer count, maximum answer ID, corpus hash, routing-index hash and creation time. RLS is enabled and no client role has private-schema/table access.
+
+The seeded frozen revision is:
+
+- revision **124**;
+- active answers **948**;
+- max answer ID **948**;
+- corpus MD5 **`46ef8b51cf90d847523b82d823c6e796`**;
+- regenerated routing-index MD5 **`b837414f2930498fba61022dde0263c8`**;
+- regenerated index is exact JSON equality with the imported v124 index.
+
+No revision 125 was left persisted during Phase H testing.
+
+---
+
+## H3. Transactional Admin save contract
+
+`private.answer_admin_save(...)` / `private.answer_admin_save_guarded(...)` implement optimistic revision concurrency and transactional index regeneration.
+
+The save contract preserves the existing Admin semantics:
+
+- Thai and English copy are required; stored copy bytes are not silently normalized;
+- tag lists are lowercased, trimmed and deduplicated while preserving first-seen order;
+- Focus tags must exist as frozen dictionary Focus/Slang concepts;
+- Support tags must exist as Focus/Slang/Support concepts;
+- Topics are restricted to the existing 20-topic catalog;
+- Helpers are restricted to `general`, `decision`, `timing`, `universal`;
+- Universal answers cannot own Focus, Support or Topic tags;
+- at least **2 active Universal answers** must remain;
+- duplicate Thai copy is rejected using the pre-H whitespace-collapse/lowercase rule;
+- stale expected revision returns a conflict;
+- save refuses to change the corpus while a prepared unrevealed answer token is live.
+
+Stable answer IDs are now explicit DB semantics:
+
+- existing IDs are never renumbered;
+- a deleted Admin row becomes `active=false`;
+- new answers receive IDs above the historical maximum;
+- routing-index regeneration includes active rows only.
+
+Rollback tests proved:
+
+1. a no-op full save produces candidate revision 125 with the same corpus/index hashes, then rolls back;
+2. editing answer 1 produces revision 125 and an exact regenerated index, then rolls back;
+3. deleting ID 1 and adding one new Universal makes ID 1 inactive, allocates new ID **949**, places 949 in the Universal index, keeps 948 active rows, then rolls back.
+
+---
+
+## H4. Shared canonical routing core
+
+The canonical server routing module was moved to:
+
+`supabase/functions/_shared/router-v124.mjs`
+
+The service-specific router files are re-export wrappers. The shared file returned to the original Git blob **`5c9af9d03652a07c450cc21be53c463b921587d2`** before Phase H completion.
+
+A Phase H compatibility attempt briefly changed the emergency final fallback to filter via `answerExists()`. The deterministic parity harness caught that semantic difference in its deliberately adversarial missing-index/forced-missing fallback fixture. The change was **rejected and reverted**; the exact v124 emergency fallback is preserved.
+
+Sparse/deactivated-ID safety therefore sits outside the sacred routing core: generated indexes contain active IDs, the runtime passes an active-ID existence predicate, and the service refuses to commit/reveal a selected normal ID that is not active.
+
+---
+
+## H5. Revision-aware public answer service
+
+The public private-service backend is now revision-aware rather than hardcoded to corpus revision 124.
+
+`answers-service` uses:
+
+- `private.answer_prepare_claim_current(...)` to load the latest revision, its routing assets, active IDs and max ID;
+- the unchanged v124 `chooseAnswer()` core;
+- `private.answer_prepare_commit(...)` to bind the selected answer/CARE payload to the token revision;
+- `private.answer_reveal_guarded_current(...)` so reveal/usage logging follows the request's own corpus revision.
+
+The final Phase H deployment is `answers-service` **v7** on function ID `97eff1fe-ac32-42b9-a6dd-afa6ef7d0282`.
+
+A final real Cloudflare-boundary runtime smoke passed:
+
+- prepare: **200**;
+- prepare body: token + 120-second TTL only;
+- reveal: **200** with one bilingual answer;
+- replay: **404**;
+- no-store headers preserved;
+- stored request corpus revision: **124**.
+
+Cleanup was guarded: test state was removed only after asserting exactly one test session with exactly one revision-124 request, successful reveal, prepare/reveal usage events and replay rejection. Final interaction state returned to zero.
+
+---
+
+## H6. Authenticated private Admin API
+
+Phase H deployed `answers-admin-service` with Supabase platform JWT verification enabled.
+
+Authorization is layered:
+
+1. a valid signed-in Supabase JWT is required by the Edge gateway;
+2. the service validates that the JWT `sub` + `session_id` still correspond to a live Auth user/session;
+3. the DB request context is set to that user;
+4. `public.is_fg_admin()` must succeed;
+5. otherwise the request is rejected before private corpus data is returned.
+
+The service exposes only authenticated Admin operations:
+
+- `load` — current private corpus, current revision, dictionary and allowed tag catalogs;
+- `save` — guarded full-corpus transaction with expected revision;
+- `audit` — deterministic server-side dry routing through the shared canonical `resolve()` core, with no answer token/recent-history mutation.
+
+A disposable-account HTTP test proved:
+
+```json
+{{
+  "status": "PASS",
+  "non_admin_403": true,
+  "admin_load_948": true,
+  "audit_shared_core": true,
+  "stale": {{ "http": 409, "status": "conflict", "current_revision": 124 }},
+  "invalid": {{ "http": 422, "status": "invalid", "error": "insufficient_universal", "minimum": 2, "actual": 1 }}
+}}
+```
+
+Browser CORS preflight from `https://flipgazine.pages.dev` also passed with HTTP **204**, matching allow-origin and POST support.
+
+All disposable Auth users, automatically generated test connection rows, test Admin membership and test usage records were removed by exact IDs. The smoke function was replaced by an HTTP 410 tombstone.
+
+---
+
+## H7. DB-native Admin browser controller
+
+The live Admin UI now uses the authenticated Admin service instead of parsing or rebuilding production JavaScript.
+
+Current artifacts:
+
+| Path | Version | Bytes | MD5 |
+|---|---:|---:|---|
+| `/answers-admin.html` | 46 | 15,673 | `22f6083ec713bb9fda8a104c2f136a94` |
+| `/fg-page-answers-admin.js` | 23 | 20,615 | `1934a265ab7d7b3212391db1df4a8790` |
+
+Static exposure/dependency scan of the new controller:
+
+- `site_files` — absent;
+- `/fg-page-answers.js` — absent;
+- `new Function` — absent;
+- `FOCUS_INDEX` — absent;
+- local `chooseAnswer` — absent;
+- authenticated `answers-admin-service` path — present.
+
+The existing editorial Admin layout, search, Focus/Topic/QA filters, add, delete/undo, validation and routing-audit interface remain. Existing answer IDs are displayed as stable DB IDs; unsaved new rows display `NEW` until a successful revision save.
+
+Reload now discards unsaved client edits and reloads the private DB revision. Save uses `expected_revision`; conflict and live-token busy states are explicit rather than silently overwriting newer corpus state.
+
+---
+
+## H8. Final frozen-v124 parity proof
+
+The final proof was generated only after the emergency-fallback compatibility change had been reverted.
+
+```json
+{proof_json}
+```
+
+Hard acceptance values:
+
+- generated questions: **{proof['generatedQuestions']:,}**;
+- route cases: **{proof['routeCases']:,}**;
+- route differences: **{proof['routeDifferences']}**;
+- CARE cases: **{proof['careCases']}**;
+- normal `chooseAnswer` cases: **{proof['normalChooseAnswerCases']}**;
+- final-fallback cases: **{proof['finalFallbackCases']}**;
+- exactly 2 Universals on matched non-generic route: **PASS**;
+- uniform final probability `1 / eligible.length`: **PASS**.
+
+The proof is retained at `answers-private-server/phase-h-parity-proof.json`.
+
+---
+
+## H9. Security/advisor closeout
+
+Every new Phase H private function is non-executable by `anon`, `authenticated` and `service_role`, including:
+
+- Admin normalization/index/hash/save functions;
+- guarded save;
+- revision-aware prepare/reveal functions.
+
+`private.answer_corpus_revisions` has RLS enabled; anon/authenticated/service-role have neither private-schema usage nor table SELECT.
+
+Supabase security advisor continues to show the intentional `rls_enabled_no_policy` INFO notices for the sealed private Answers tables. No Phase-H-specific security ERROR/WARN was introduced. The relevant generic linter reference remains:
+
+`https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy`
+
+Performance advisor introduced no new Phase-H-specific unindexed foreign key; unrelated pre-existing public-schema warnings were not modified.
+
+---
+
+## H10. Final state and production integrity
+
+Final guarded DB assertions passed:
+
+- latest/persisted corpus revision: **124 only**;
+- active answers: **948**;
+- max active answer ID: **948**;
+- sessions: **0**;
+- requests: **0**;
+- usage events: **0**;
+- temporary Phase H Auth users/admins: **0**;
+- no persisted inactive answer from tests;
+- public Admin bundle contains no raw-controller routing/parsing dependency.
+
+Production Book remains intentionally unchanged:
+
+- `/answers.html` v99 still references `/fg-page-answers.js`;
+- live `/fg-page-answers.js` v124 remains **342,604 bytes**, MD5 `c8a382f0562737422e891e3300bb08f6`;
+- frozen provenance controller remains the same bytes/hash;
+- no Phase H corpus edit was applied to production;
+- no public Book cutover occurred.
+
+---
+
+## H11. Phase H exit decision
+
+**PASS.** The database can now be operated as the canonical Answers corpus through an authenticated Admin workflow without rebuilding or rewriting the public answer controller. Corpus writes are revisioned, validated and transactional; routing indexes are regenerated server-side; routing audit uses the shared canonical core; non-admin access is denied; and the public answer service can consume the latest private DB revision.
+
+Phase I can now perform the full acceptance matrix before any production cutover.
+'''
+          Path('ANSWERS-PRIVATE-SERVER-PHASE-H-REPORT.md').write_text(report)
+          PY
+      - name: Commit gated report and remove report workflow
+        shell: bash
+        run: |
+          set -euo pipefail
+          git rm .github/workflows/answers-phase-h-report.yml
+          git add ANSWERS-PRIVATE-SERVER-PHASE-H-REPORT.md
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Complete Answers private-server Phase H'
+          git push
