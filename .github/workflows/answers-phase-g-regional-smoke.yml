@@ -1,0 +1,30 @@
+name: Answers Phase G Singapore latency smoke
+
+on:
+  push:
+    paths:
+      - '.github/workflows/answers-phase-g-regional-smoke.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  measure:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Invoke probe in Singapore
+        shell: bash
+        run: |
+          set -euo pipefail
+          H="$(mktemp)"; B="$(mktemp)"
+          CODE="$(curl --silent --show-error --max-time 120 -D "$H" -o "$B" -w '%{http_code}' \
+            -H 'x-region: ap-southeast-1' \
+            'https://sjpvhgxacsiorrtijqua.supabase.co/functions/v1/answers-phase-g-regional-smoke?cap=fg-phase-g-regional-20260817-r8Q2mK9v')"
+          cat "$B"
+          echo
+          echo "http=$CODE"
+          grep -i '^x-sb-edge-region:' "$H" | tr -d '\r' || true
+          test "$CODE" = '200'
+          node -e 'const fs=require("fs"); const x=JSON.parse(fs.readFileSync(process.argv[1],"utf8")); if(x.status!=="PASS"||x.region!=="ap-southeast-1") process.exit(1)' "$B"
+          rm -f "$H" "$B"
