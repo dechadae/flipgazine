@@ -10,8 +10,11 @@ import {
 
 const COOKIE_NAME = 'fg_ans_sid';
 const OPAQUE_RE = /^[A-Za-z0-9_-]{43}$/;
+const HEX64_RE = /^[a-f0-9]{64}$/i;
+const CF_RAY_RE = /^[A-Za-z0-9-]{1,80}$/;
 const FROZEN_REVISION = 124;
 const FROZEN_ANSWER_COUNT = 948;
+const MAX_QUESTION_CHARS = 500;
 
 const dbUrl = Deno.env.get('SUPABASE_DB_URL');
 if (!dbUrl) throw new Error('SUPABASE_DB_URL is required');
@@ -31,6 +34,18 @@ const BASE_HEADERS: Record<string, string> = {
   pragma: 'no-cache',
   expires: '0',
   vary: 'Cookie',
+};
+
+type AuthContext = {
+  kind: 'cloudflare' | 'internal';
+  ipHash: string | null;
+  cfRay: string | null;
+};
+
+type LimitHit = {
+  error: string;
+  reason: string;
+  retryAfter: number;
 };
 
 function responseJson(body: unknown, status = 200, extraHeaders: Record<string, string> = {}) {
@@ -69,12 +84,6 @@ function configuredSecretKeys() {
   return [...new Set(keys)];
 }
 
-function isAuthorized(req: Request) {
-  const presented = req.headers.get('apikey') || '';
-  if (!presented) return false;
-  return configuredSecretKeys().some((key) => secureEqual(presented, key));
-}
-
 function parseCookie(header: string | null, name: string) {
   if (!header) return null;
   for (const part of header.split(';')) {
@@ -102,8 +111,8 @@ async function sha256Hex(value: string) {
 }
 
 function sessionCookie(rawSid: string) {
-  // Session cookie deliberately has no Max-Age/Expires. v124 recentAnswers is
-  // in-memory only; this avoids turning routing history into durable tracking.
+  // Deliberately no Max-Age/Expires: frozen v124 recent history is page-memory
+  // scoped, so the migration must not silently become durable tracking.
   return `${COOKIE_NAME}=${rawSid}; Path=/; HttpOnly; Secure; SameSite=Lax`;
 }
 
@@ -121,22 +130,51 @@ async function loadSettings(tx: any) {
       'prepare_token_ttl_seconds',
       'request_retention_seconds',
       'session_idle_ttl_seconds',
+      'usage_retention_seconds',
       'min_pool',
       'max_broad_widen',
-      'recent_limit'
+      'recent_limit',
+      'prepare_session_minute_limit',
+      'prepare_session_hour_limit',
+      'prepare_ip_minute_limit',
+      'prepare_ip_hour_limit',
+      'reveal_session_minute_limit',
+      'reveal_session_hour_limit',
+      'reveal_ip_minute_limit',
+      'reveal_ip_hour_limit',
+      'reveal_distinct_session_hour_limit',
+      'reveal_distinct_ip_hour_limit',
+      'outstanding_token_limit'
     )
   `;
   return {
     tokenTtl: numericSetting(rows, 'prepare_token_ttl_seconds', 120),
     requestRetention: numericSetting(rows, 'request_retention_seconds', 86400),
     sessionRetention: numericSetting(rows, 'session_idle_ttl_seconds', 86400),
+    usageRetention: numericSetting(rows, 'usage_retention_seconds', 604800),
     minPool: numericSetting(rows, 'min_pool', MIN_POOL),
     maxBroadWiden: numericSetting(rows, 'max_broad_widen', MAX_BROAD_WIDEN),
     recentLimit: numericSetting(rows, 'recent_limit', RECENT_LIMIT),
+    prepareSessionMinute: numericSetting(rows, 'prepare_session_minute_limit', 10),
+    prepareSessionHour: numericSetting(rows, 'prepare_session_hour_limit', 40),
+    prepareIpMinute: numericSetting(rows, 'prepare_ip_minute_limit', 20),
+    prepareIpHour: numericSetting(rows, 'prepare_ip_hour_limit', 100),
+    revealSessionMinute: numericSetting(rows, 'reveal_session_minute_limit', 20),
+    revealSessionHour: numericSetting(rows, 'reveal_session_hour_limit', 60),
+    revealIpMinute: numericSetting(rows, 'reveal_ip_minute_limit', 40),
+    revealIpHour: numericSetting(rows, 'reveal_ip_hour_limit', 120),
+    distinctSessionHour: numericSetting(rows, 'reveal_distinct_session_hour_limit', 50),
+    distinctIpHour: numericSetting(rows, 'reveal_distinct_ip_hour_limit', 100),
+    outstandingTokens: numericSetting(rows, 'outstanding_token_limit', 3),
   };
 }
 
-async function opportunisticCleanup(tx: any, requestRetention: number, sessionRetention: number) {
+async function opportunisticCleanup(
+  tx: any,
+  requestRetention: number,
+  sessionRetention: number,
+  usageRetention: number,
+) {
   await tx`
     delete from private.answer_requests
     where (revealed_at is null and expires_at <= now())
@@ -153,11 +191,277 @@ async function opportunisticCleanup(tx: any, requestRetention: number, sessionRe
           and r.expires_at > now()
       )
   `;
+  await tx`
+    delete from private.answer_usage
+    where occurred_at < now() - (${usageRetention} * interval '1 second')
+  `;
 }
 
-async function prepare(req: Request, body: any) {
+async function authenticate(req: Request): Promise<AuthContext | null> {
+  const internalKey = req.headers.get('apikey') || '';
+  if (
+    internalKey &&
+    configuredSecretKeys().some((key) => secureEqual(internalKey, key))
+  ) {
+    const candidateIp = req.headers.get('x-fg-ip-hash') || '';
+    return {
+      kind: 'internal',
+      ipHash: HEX64_RE.test(candidateIp) ? candidateIp.toLowerCase() : null,
+      cfRay: null,
+    };
+  }
+
+  const edgeKey = req.headers.get('x-fg-answers-key') || '';
+  if (!edgeKey) return null;
+
+  const expectedRows = await sql`
+    select value #>> '{}' as secret_hash
+    from private.answer_settings
+    where setting_key = 'cloudflare_shared_secret_sha256'
+    limit 1
+  `;
+  const expectedHash = String(expectedRows[0]?.secret_hash || '').toLowerCase();
+  if (!HEX64_RE.test(expectedHash)) return null;
+
+  const presentedHash = await sha256Hex(edgeKey);
+  if (!secureEqual(presentedHash, expectedHash)) return null;
+
+  // Cloudflare-authenticated traffic must carry a server-generated IP hash.
+  // The raw address is never persisted by this service.
+  const ipHash = req.headers.get('x-fg-ip-hash') || '';
+  if (!HEX64_RE.test(ipHash)) return null;
+
+  const ray = req.headers.get('x-fg-cf-ray') || '';
+  return {
+    kind: 'cloudflare',
+    ipHash: ipHash.toLowerCase(),
+    cfRay: CF_RAY_RE.test(ray) ? ray : null,
+  };
+}
+
+async function lockAbuseKeys(tx: any, sessionHash: string | null, ipHash: string | null) {
+  // Serialize quota decisions for the same anonymous session/IP cluster so a
+  // request burst cannot race the count-and-insert gate.
+  if (sessionHash) {
+    await tx`
+      select pg_advisory_xact_lock(
+        hashtextextended(${`fg_answers_session:${sessionHash}`}, 0)
+      )
+    `;
+  }
+  if (ipHash) {
+    await tx`
+      select pg_advisory_xact_lock(
+        hashtextextended(${`fg_answers_ip:${ipHash}`}, 0)
+      )
+    `;
+  }
+}
+
+async function logUsage(
+  tx: any,
+  auth: AuthContext,
+  eventType: string,
+  sessionHash: string | null,
+  answerId: number | null,
+  metadata: Record<string, unknown>,
+) {
+  await tx`
+    insert into private.answer_usage(
+      session_hash, answer_id, event_type, occurred_at,
+      corpus_revision, router_version, ip_hash, metadata
+    ) values (
+      ${sessionHash}, ${answerId}, ${eventType}, now(),
+      ${FROZEN_REVISION}, ${ROUTER_VERSION}, ${auth.ipHash},
+      ${JSON.stringify({
+        ...metadata,
+        auth_kind: auth.kind,
+        ...(auth.cfRay ? { cf_ray: auth.cfRay } : {}),
+      })}::jsonb
+    )
+  `;
+}
+
+function limitHit(reason: string, retryAfter: number): LimitHit {
+  return { error: 'rate_limited', reason, retryAfter };
+}
+
+async function prepareLimit(
+  tx: any,
+  settings: any,
+  sessionHash: string,
+  ipHash: string | null,
+): Promise<LimitHit | null> {
+  const sessionCounts = await tx`
+    select
+      count(*) filter (where occurred_at > now() - interval '1 minute')::int as minute_count,
+      count(*)::int as hour_count
+    from private.answer_usage
+    where session_hash = ${sessionHash}
+      and event_type = 'prepare'
+      and occurred_at > now() - interval '1 hour'
+  `;
+  const sc = sessionCounts[0] || {};
+  if (Number(sc.minute_count || 0) >= settings.prepareSessionMinute) {
+    return limitHit('prepare_session_minute', 60);
+  }
+  if (Number(sc.hour_count || 0) >= settings.prepareSessionHour) {
+    return limitHit('prepare_session_hour', 3600);
+  }
+
+  if (ipHash) {
+    const ipCounts = await tx`
+      select
+        count(*) filter (where occurred_at > now() - interval '1 minute')::int as minute_count,
+        count(*)::int as hour_count
+      from private.answer_usage
+      where ip_hash = ${ipHash}
+        and event_type = 'prepare'
+        and occurred_at > now() - interval '1 hour'
+    `;
+    const ic = ipCounts[0] || {};
+    if (Number(ic.minute_count || 0) >= settings.prepareIpMinute) {
+      return limitHit('prepare_ip_minute', 60);
+    }
+    if (Number(ic.hour_count || 0) >= settings.prepareIpHour) {
+      return limitHit('prepare_ip_hour', 3600);
+    }
+  }
+
+  const outstanding = await tx`
+    select count(*)::int as live_count
+    from private.answer_requests
+    where session_hash = ${sessionHash}
+      and revealed_at is null
+      and expires_at > now()
+  `;
+  if (Number(outstanding[0]?.live_count || 0) >= settings.outstandingTokens) {
+    return limitHit('outstanding_tokens', 120);
+  }
+
+  return null;
+}
+
+async function revealAttemptLimit(
+  tx: any,
+  settings: any,
+  sessionHash: string,
+  ipHash: string | null,
+): Promise<LimitHit | null> {
+  const sessionCounts = await tx`
+    select
+      count(*) filter (where occurred_at > now() - interval '1 minute')::int as minute_count,
+      count(*)::int as hour_count
+    from private.answer_usage
+    where session_hash = ${sessionHash}
+      and occurred_at > now() - interval '1 hour'
+      and (
+        event_type = 'reveal'
+        or (event_type = 'reject' and metadata ->> 'action' = 'reveal')
+      )
+  `;
+  const sc = sessionCounts[0] || {};
+  if (Number(sc.minute_count || 0) >= settings.revealSessionMinute) {
+    return limitHit('reveal_session_minute', 60);
+  }
+  if (Number(sc.hour_count || 0) >= settings.revealSessionHour) {
+    return limitHit('reveal_session_hour', 3600);
+  }
+
+  if (ipHash) {
+    const ipCounts = await tx`
+      select
+        count(*) filter (where occurred_at > now() - interval '1 minute')::int as minute_count,
+        count(*)::int as hour_count
+      from private.answer_usage
+      where ip_hash = ${ipHash}
+        and occurred_at > now() - interval '1 hour'
+        and (
+          event_type = 'reveal'
+          or (event_type = 'reject' and metadata ->> 'action' = 'reveal')
+        )
+    `;
+    const ic = ipCounts[0] || {};
+    if (Number(ic.minute_count || 0) >= settings.revealIpMinute) {
+      return limitHit('reveal_ip_minute', 60);
+    }
+    if (Number(ic.hour_count || 0) >= settings.revealIpHour) {
+      return limitHit('reveal_ip_hour', 3600);
+    }
+  }
+
+  return null;
+}
+
+async function distinctRevealLimit(
+  tx: any,
+  settings: any,
+  sessionHash: string,
+  ipHash: string | null,
+  tokenHash: string,
+): Promise<LimitHit | null> {
+  // Quota preview only. This SELECT never authorizes or consumes a reveal;
+  // the later compare-and-set UPDATE remains the sole token-consumption gate.
+  const candidateRows = await tx`
+    select response_kind, answer_id
+    from private.answer_requests
+    where token_hash = ${tokenHash}
+      and session_hash = ${sessionHash}
+    limit 1
+  `;
+  const candidate = candidateRows[0];
+  if (!candidate || candidate.response_kind !== 'normal' || candidate.answer_id == null) {
+    return null;
+  }
+  const answerId = Number(candidate.answer_id);
+
+  const sessionDistinct = await tx`
+    select
+      count(distinct answer_id)::int as distinct_count,
+      bool_or(answer_id = ${answerId}) as already_seen
+    from private.answer_usage
+    where session_hash = ${sessionHash}
+      and event_type = 'reveal'
+      and answer_id is not null
+      and occurred_at > now() - interval '1 hour'
+  `;
+  const sd = sessionDistinct[0] || {};
+  if (
+    Number(sd.distinct_count || 0) >= settings.distinctSessionHour &&
+    !Boolean(sd.already_seen)
+  ) {
+    return limitHit('reveal_distinct_session_hour', 3600);
+  }
+
+  if (ipHash) {
+    const ipDistinct = await tx`
+      select
+        count(distinct answer_id)::int as distinct_count,
+        bool_or(answer_id = ${answerId}) as already_seen
+      from private.answer_usage
+      where ip_hash = ${ipHash}
+        and event_type = 'reveal'
+        and answer_id is not null
+        and occurred_at > now() - interval '1 hour'
+    `;
+    const id = ipDistinct[0] || {};
+    if (
+      Number(id.distinct_count || 0) >= settings.distinctIpHour &&
+      !Boolean(id.already_seen)
+    ) {
+      return limitHit('reveal_distinct_ip_hour', 3600);
+    }
+  }
+
+  return null;
+}
+
+async function prepare(req: Request, body: any, auth: AuthContext) {
   const question = typeof body?.question === 'string' ? body.question : '';
   if (!question.trim()) return responseJson({ error: 'question_required' }, 400);
+  if (question.length > MAX_QUESTION_CHARS) {
+    return responseJson({ error: 'question_too_long' }, 413);
+  }
 
   let rawSid = parseCookie(req.headers.get('cookie'), COOKIE_NAME);
   let createdSessionCookie = false;
@@ -172,7 +476,14 @@ async function prepare(req: Request, body: any) {
   const prepared = await sql.begin(async (tx: any) => {
     const settings = await loadSettings(tx);
     if (settings.recentLimit !== RECENT_LIMIT) throw new Error('recent_limit drift');
-    await opportunisticCleanup(tx, settings.requestRetention, settings.sessionRetention);
+
+    await lockAbuseKeys(tx, sessionHash, auth.ipHash);
+    await opportunisticCleanup(
+      tx,
+      settings.requestRetention,
+      settings.sessionRetention,
+      settings.usageRetention,
+    );
 
     const sessions = await tx`
       insert into private.answer_sessions(session_hash, recent_revealed_answer_ids, created_at, last_seen_at)
@@ -181,6 +492,16 @@ async function prepare(req: Request, body: any) {
         set last_seen_at = now()
       returning recent_revealed_answer_ids
     `;
+
+    const blocked = await prepareLimit(tx, settings, sessionHash, auth.ipHash);
+    if (blocked) {
+      await logUsage(tx, auth, 'reject', sessionHash, null, {
+        action: 'prepare',
+        reason: blocked.reason,
+      });
+      return { blocked };
+    }
+
     const recent = Array.isArray(sessions[0]?.recent_revealed_answer_ids)
       ? sessions[0].recent_revealed_answer_ids.map(Number)
       : [];
@@ -225,6 +546,10 @@ async function prepare(req: Request, body: any) {
           ${asset.corpus_revision}, ${asset.router_version}
         )
       `;
+      await logUsage(tx, auth, 'prepare', sessionHash, null, {
+        action: 'prepare',
+        response_kind: 'care',
+      });
     } else {
       const answerId = Number(chosen.id);
       if (!Number.isInteger(answerId) || answerId < 1 || answerId > FROZEN_ANSWER_COUNT) {
@@ -241,20 +566,35 @@ async function prepare(req: Request, body: any) {
           ${asset.corpus_revision}, ${asset.router_version}
         )
       `;
+      await logUsage(tx, auth, 'prepare', sessionHash, answerId, {
+        action: 'prepare',
+        response_kind: 'normal',
+      });
     }
 
     return { expiresIn: settings.tokenTtl };
   });
 
-  const headers = createdSessionCookie ? { 'set-cookie': sessionCookie(rawSid) } : {};
+  const cookieHeaders = createdSessionCookie ? { 'set-cookie': sessionCookie(rawSid) } : {};
+  if ('blocked' in prepared) {
+    return responseJson(
+      { error: prepared.blocked.error },
+      429,
+      {
+        ...cookieHeaders,
+        'retry-after': String(prepared.blocked.retryAfter),
+      },
+    );
+  }
+
   return responseJson(
     { request_token: requestToken, expires_in: prepared.expiresIn },
     200,
-    headers,
+    cookieHeaders,
   );
 }
 
-async function reveal(req: Request, body: any) {
+async function reveal(req: Request, body: any, auth: AuthContext) {
   const requestToken = typeof body?.request_token === 'string' ? body.request_token : '';
   const rawSid = parseCookie(req.headers.get('cookie'), COOKIE_NAME);
   if (!OPAQUE_RE.test(requestToken) || !rawSid || !OPAQUE_RE.test(rawSid)) {
@@ -265,8 +605,46 @@ async function reveal(req: Request, body: any) {
   const sessionHash = await sha256Hex(rawSid);
 
   const revealed = await sql.begin(async (tx: any) => {
-    // Hard invariant: one compare-and-set consumes the token. There is no
-    // SELECT-before-UPDATE race window.
+    const settings = await loadSettings(tx);
+    await lockAbuseKeys(tx, sessionHash, auth.ipHash);
+    await opportunisticCleanup(
+      tx,
+      settings.requestRetention,
+      settings.sessionRetention,
+      settings.usageRetention,
+    );
+
+    const attemptBlocked = await revealAttemptLimit(
+      tx,
+      settings,
+      sessionHash,
+      auth.ipHash,
+    );
+    if (attemptBlocked) {
+      await logUsage(tx, auth, 'reject', sessionHash, null, {
+        action: 'reveal',
+        reason: attemptBlocked.reason,
+      });
+      return { blocked: attemptBlocked };
+    }
+
+    const distinctBlocked = await distinctRevealLimit(
+      tx,
+      settings,
+      sessionHash,
+      auth.ipHash,
+      tokenHash,
+    );
+    if (distinctBlocked) {
+      await logUsage(tx, auth, 'reject', sessionHash, null, {
+        action: 'reveal',
+        reason: distinctBlocked.reason,
+      });
+      return { blocked: distinctBlocked };
+    }
+
+    // Hard invariant: exactly one compare-and-set consumes a token. A quota
+    // preview above never grants the answer and cannot make this UPDATE succeed.
     const requests = await tx`
       update private.answer_requests
       set revealed_at = now()
@@ -276,7 +654,13 @@ async function reveal(req: Request, body: any) {
         and expires_at > now()
       returning response_kind, answer_id, care_thai, care_english
     `;
-    if (!requests.length) return null;
+    if (!requests.length) {
+      await logUsage(tx, auth, 'reject', sessionHash, null, {
+        action: 'reveal',
+        reason: 'reveal_unavailable',
+      });
+      return { unavailable: true };
+    }
 
     const prepared = requests[0];
     if (prepared.response_kind === 'care') {
@@ -285,10 +669,16 @@ async function reveal(req: Request, body: any) {
         set last_seen_at = now()
         where session_hash = ${sessionHash}
       `;
+      await logUsage(tx, auth, 'reveal', sessionHash, null, {
+        action: 'reveal',
+        response_kind: 'care',
+      });
       return {
-        id: null,
-        thai: String(prepared.care_thai),
-        english: String(prepared.care_english),
+        answer: {
+          id: null,
+          thai: String(prepared.care_thai),
+          english: String(prepared.care_english),
+        },
       };
     }
 
@@ -301,8 +691,6 @@ async function reveal(req: Request, body: any) {
     `;
     if (!answers.length) throw new Error('prepared answer missing');
 
-    // Append only after the token was successfully consumed, and keep exactly
-    // the latest six normal revealed answer IDs in chronological order.
     await tx`
       update private.answer_sessions s
       set recent_revealed_answer_ids = (
@@ -319,20 +707,37 @@ async function reveal(req: Request, body: any) {
       where session_hash = ${sessionHash}
     `;
 
+    await logUsage(tx, auth, 'reveal', sessionHash, answerId, {
+      action: 'reveal',
+      response_kind: 'normal',
+    });
+
     return {
-      id: Number(answers[0].answer_id),
-      thai: String(answers[0].thai),
-      english: String(answers[0].english),
+      answer: {
+        id: Number(answers[0].answer_id),
+        thai: String(answers[0].thai),
+        english: String(answers[0].english),
+      },
     };
   });
 
-  if (!revealed) return responseJson({ error: 'reveal_unavailable' }, 404);
-  return responseJson(revealed);
+  if ('blocked' in revealed) {
+    return responseJson(
+      { error: revealed.blocked.error },
+      429,
+      { 'retry-after': String(revealed.blocked.retryAfter) },
+    );
+  }
+  if ('unavailable' in revealed) {
+    return responseJson({ error: 'reveal_unavailable' }, 404);
+  }
+  return responseJson(revealed.answer);
 }
 
 Deno.serve(async (req: Request) => {
   try {
-    if (!isAuthorized(req)) return responseJson({ error: 'unauthorized' }, 401);
+    const auth = await authenticate(req);
+    if (!auth) return responseJson({ error: 'unauthorized' }, 401);
     if (req.method !== 'POST') return responseJson({ error: 'method_not_allowed' }, 405);
 
     let body: any;
@@ -342,12 +747,12 @@ Deno.serve(async (req: Request) => {
       return responseJson({ error: 'invalid_json' }, 400);
     }
 
-    if (body?.action === 'prepare') return await prepare(req, body);
-    if (body?.action === 'reveal') return await reveal(req, body);
+    if (body?.action === 'prepare') return await prepare(req, body, auth);
+    if (body?.action === 'reveal') return await reveal(req, body, auth);
     return responseJson({ error: 'unknown_action' }, 400);
   } catch (error) {
-    // Never log the request body/question. Operational logs get only a coarse
-    // error class; public callers receive no routing/database diagnostics.
+    // Never log the request body/question/token. Operational logs get only a
+    // coarse error class; public callers receive no routing/database detail.
     console.error('answers-service error', error instanceof Error ? error.message : 'unknown');
     return responseJson({ error: 'service_unavailable' }, 503);
   }
