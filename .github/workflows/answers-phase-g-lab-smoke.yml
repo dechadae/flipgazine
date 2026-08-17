@@ -38,13 +38,20 @@ jobs:
           const browser=await chromium.launch({headless:true});
           const context=await browser.newContext({viewport:{width:412,height:915},deviceScaleFactor:2.625,isMobile:true,hasTouch:true,locale:'th-TH'});
           const page=await context.newPage();
+          const cdp=await context.newCDPSession(page);
           const consoleErrors=[]; const pageErrors=[]; const apiRequests=[]; const apiResponses=[];
           page.on('console',m=>{ if(m.type()==='error') consoleErrors.push(m.text()); });
           page.on('pageerror',e=>pageErrors.push(String(e)));
           page.on('request',r=>{ if(r.url().includes('/api/answers/')){ let body=null; try{body=JSON.parse(r.postData()||'null')}catch{} apiRequests.push({url:r.url(),body,at:Date.now()}); }});
           page.on('response',r=>{ if(r.url().includes('/api/answers/')) apiResponses.push({url:r.url(),status:r.status(),at:Date.now()}); });
           async function stage(name,timeout=30000){ await page.waitForFunction(n=>document.body.getAttribute('data-stage')===n,name,{timeout}); }
-          async function dragRelease(frac=.5){ const box=await page.locator('#bookEdge').boundingBox(); if(!box) throw new Error('book edge missing'); const y=box.y+box.height*.55; const x0=box.x+box.width*.18; const x1=box.x+box.width*frac; await page.mouse.move(x0,y); await page.mouse.down(); await page.mouse.move(x1,y,{steps:6}); await page.mouse.up(); }
+          async function dragRelease(frac=.5){
+            const box=await page.locator('#bookEdge').boundingBox(); if(!box) throw new Error('book edge missing');
+            const y=box.y+box.height*.55; const x0=box.x+box.width*.18; const x1=box.x+box.width*frac;
+            await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x:x0,y,radiusX:4,radiusY:4,force:.7,id:1}]});
+            for(let i=1;i<=6;i++){ const x=x0+(x1-x0)*(i/6); await cdp.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x,y,radiusX:4,radiusY:4,force:.7,id:1}]}); }
+            await cdp.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
+          }
           async function askAndOpen(question,frac=.5){ await page.locator('#question').fill(question); const tSubmit=Date.now(); await page.getByRole('button',{name:'ถามดิ'}).click(); await stage('pick'); const tRelease=Date.now(); await dragRelease(frac); await stage('opening'); const tOpening=Date.now(); await stage('open'); const thai=(await page.locator('#thaiAnswer').innerText()).trim(); const english=(await page.locator('#englishAnswer').innerText()).trim(); if(!thai||!english) throw new Error('blank bilingual answer'); const prep=apiResponses.find(x=>x.url.endsWith('/prepare')&&x.at>=tSubmit); return {tSubmit,tRelease,tOpening,prepareMs:prep?prep.at-tSubmit:null,releaseToOpeningMs:tOpening-tRelease}; }
           await page.goto(BASE+'/answers-server-lab.html',{waitUntil:'domcontentloaded',timeout:30000});
           await page.locator('#question').waitFor({state:'visible',timeout:30000}); await stage('ask'); await page.waitForTimeout(2500);
@@ -63,7 +70,7 @@ jobs:
           await page.unroute('**/api/answers/prepare'); await dragRelease(.62); await stage('opening'); await stage('open');
           const thaiBox=await page.locator('#thaiAnswer').evaluate(el=>({scrollHeight:el.scrollHeight,clientHeight:el.clientHeight,fontSize:getComputedStyle(el).fontSize})); if(thaiBox.scrollHeight>thaiBox.clientHeight+2) throw new Error('Thai answer overflow after autofit');
           if(pageErrors.length) throw new Error('pageerror: '+pageErrors.join(' | ')); const relevantConsole=consoleErrors.filter(x=>!/favicon|Failed to load resource/.test(x)); if(relevantConsole.length) throw new Error('console error: '+relevantConsole.join(' | '));
-          console.log('PHASE_G_BROWSER_RESULT='+JSON.stringify({status:'PASS',viewport:'412x915@2.625',prepare_payload_keys:Object.keys(prepReq.body),reveal_payload_keys:Object.keys(revealReq.body),normal_prepare_ms:normal.prepareMs,normal_release_to_opening_ms:normal.releaseToOpeningMs,care_prepare_ms:care.prepareMs,care_release_to_opening_ms:care.releaseToOpeningMs,care_rendered:true,network_failure_kept_book_closed:true,retry_recovered:true,thai_autofit:true,page_errors:0}));
+          console.log('PHASE_G_BROWSER_RESULT='+JSON.stringify({status:'PASS',viewport:'412x915@2.625',input:'CDP touch',prepare_payload_keys:Object.keys(prepReq.body),reveal_payload_keys:Object.keys(revealReq.body),normal_prepare_ms:normal.prepareMs,normal_release_to_opening_ms:normal.releaseToOpeningMs,care_prepare_ms:care.prepareMs,care_release_to_opening_ms:care.releaseToOpeningMs,care_rendered:true,network_failure_kept_book_closed:true,retry_recovered:true,thai_autofit:true,page_errors:0}));
           await browser.close();
           NODE
           node phase-g-smoke.mjs
