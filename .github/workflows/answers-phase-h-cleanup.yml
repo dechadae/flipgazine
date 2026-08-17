@@ -1,0 +1,48 @@
+name: Answers Phase H cleanup after parity proof
+
+on:
+  push:
+    paths:
+      - '.github/workflows/answers-phase-h-cleanup.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Wait for and validate durable parity proof
+        shell: bash
+        run: |
+          set -euo pipefail
+          for i in $(seq 1 50); do
+            git fetch origin main
+            if git cat-file -e origin/main:answers-private-server/phase-h-parity-proof.json 2>/dev/null; then
+              git show origin/main:answers-private-server/phase-h-parity-proof.json > /tmp/proof.json
+              node -e 'const fs=require("fs");const x=JSON.parse(fs.readFileSync("/tmp/proof.json","utf8"));if(x.status!=="PASS"||x.generatedQuestions!==5386||x.routeCases!==64626||x.routeDifferences!==0||x.careCases!==6||x.normalChooseAnswerCases!==15||x.finalFallbackCases!==4||!x.invariants?.exactlyTwoUniversalOnMatchedNonGeneric||!x.invariants?.uniformProbabilityOneOverEligible)process.exit(2)'
+              exit 0
+            fi
+            sleep 15
+          done
+          echo 'Phase H parity proof did not appear' >&2
+          exit 3
+      - name: Remove temporary Phase H workflows
+        shell: bash
+        run: |
+          set -euo pipefail
+          git checkout main
+          git pull --ff-only origin main
+          git rm -f --ignore-unmatch \
+            .github/workflows/answers-phase-h-revert-fallback.yml \
+            .github/workflows/answers-phase-h-final-runtime-smoke.yml \
+            .github/workflows/answers-phase-h-parity-proof.yml \
+            .github/workflows/answers-phase-h-cleanup.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Remove Phase H temporary workflows'
+          git push
