@@ -1,61 +1,124 @@
 # The Book of Answers — Voice Benchmark Acceptance Record
 
-**Status:** ACCEPTED FOR PUBLIC USE  
+**Status:** ACCEPTED FOR PUBLIC USE — QUALITATIVE VERDICT REVISION  
 **Date:** 18 August 2026  
-**Benchmark version:** `voice-2026-08-18-v1`  
+**Benchmark version:** `voice-2026-08-18-v3`  
 **Implementation report:** `ANSWERS-VOICE-BENCHMARK-IMPLEMENTATION-REPORT.md`
 
-## Frozen production state
+## Current production state
 
 ```text
-/voice.html site_files version: 23
-/voice.html md5: 6741ce4ac93ae32c28cfb632190502db
-voice-eval Edge Function version: 7
+/voice.html site_files version: 30
+voice-eval Edge Function version: 9
 voice-eval status: ACTIVE
 judge: qwen/qwen3.6-27b
+public overall numeric score: REMOVED
 ```
 
-## Acceptance checks
+## Public result contract
+
+The public benchmark no longer presents an overall `0–100` score or numeric alignment label.
+
+The headline result is now one of four editorial verdicts:
+
+```text
+Fluent
+Minor problem
+Major problem
+Not acceptable
+```
+
+The verdict is deterministic from the six frozen 1–4 dimensions, severity and fundamental-failure flags:
+
+- `Not acceptable` — CRITICAL, semantic drift, or failed intent;
+- `Major problem` — MAJOR or at least one materially weak dimension (`1–2`);
+- `Minor problem` — MINOR or at least one dimension at `3` with no major failure;
+- `Fluent` — no material issue detected and all six dimensions at `4`.
+
+The public result also shows the judge's short diagnostic rationale. `View details` keeps the useful six 1–4 dimension ratings, confidence, mode, flags and CARE disclosure.
+
+The frozen weights may still be calculated internally for continuity/audit, but the overall numeric score is not returned by the public API and is not displayed in `/voice.html`.
+
+## AI-native-Thai limitation
+
+Post-launch testing exposed a material model limitation: a semantically correct response can still be phrased in a way that is grammatical but not how contemporary Thai speakers naturally talk.
+
+This is now stated explicitly in the public page:
+
+> AI can spot drift, stance, advisor prose and composition more reliably than genuinely native spoken Thai; treat Thai naturalness as a signal, not final authority.
+
+The detail lightbox likewise states that native spoken-Thai naturalness is the least reliable dimension for current general-purpose models and that human editorial judgement remains the authority.
+
+The canonical editorial precedence remains:
+
+```text
+direct user-approved wording
+→ ANSWERS-VOICE-TONE.md
+→ established human-reviewed corpus voice
+→ generic model judgement
+```
+
+## Native-Thai regression guard
+
+A post-launch false positive was identified for this response:
+
+```text
+ถ้าเขาอยากคุย
+สองวันก็นานพอให้พิมพ์ได้แล้ว
+ไม่ต้องทักซ้ำหรอก
+```
+
+The meaning and stance are correct, but `สองวันก็นานพอให้พิมพ์ได้แล้ว` preserves an English-shaped “long enough to...” logical bridge and is not natural contemporary Thai for this social situation.
+
+The native editorial correction supplied during acceptance testing was:
+
+```text
+สองวันก็ควรตอบได้แล้ว
+```
+
+A narrow human-authored regression guard now prevents the known social-messaging `นานพอ...พิมพ์/ตอบ/ทัก/ส่งข้อความ` pattern from receiving perfect Thai-pragmatics/composition treatment. It does not rewrite user text.
+
+Regression results after the revision:
+
+```text
+awkward translated line   → Major problem
+  Thai pragmatics         → 2/4
+  BFF voice               → 3/4
+  Lexical / social fit    → 3/4
+  Composition             → 3/4
+  flags                    translation_shaped, over_explained,
+                           unnatural_lexical_choice
+
+strong Book-style line    → Fluent
+human-corrected Thai      → Fluent
+```
+
+The guard is deliberately narrow. The project should not attempt to encode all Thai naturalness as regex rules; future human-found false positives should become reviewed regression evidence, not broad speculative heuristics.
+
+## Existing acceptance checks retained
 
 | Check | Result |
 |---|---|
 | Allowed Pages-origin preflight | PASS — 204 and exact `Access-Control-Allow-Origin` |
 | Foreign browser origin | PASS — 403 |
 | Missing required inputs | PASS — 400 |
-| Per-IP minute protection | PASS — requests 1–3 accepted, request 4 blocked with 60-second retry |
-| Strong natural/code-mixed Voice case | PASS — 100/100, PASS, no flags |
-| Forced camp/code-mixing case | PASS — 23/100, MAJOR, forced/register diagnostics |
-| Fundamental semantic drift | PASS — 0/100, CRITICAL, `semantic_drift` |
-| CARE-safe serious response | PASS — 100/100, CARE, PASS |
-| Automated rewrite leakage in calibration | PASS — zero detected |
-| Three identical production repeats | PASS — identical six 4/4 ratings, 100/100, PASS, empty flags, high confidence on all three |
-| Final score computed server-side | PASS |
+| Per-IP minute protection | PASS |
+| Six frozen 1–4 dimensions | PASS |
+| CARE separate | PASS |
+| Automated rewrite leakage | PASS — diagnosis only |
 | Submitted text stored permanently | NO — operational metadata only |
 | Private 948-row corpus used by judge | NO |
 | `GROQ_API_KEY` exposed to browser/repo | NO |
-| Temporary calibration retrieval route | DISABLED — runner version 6 is inert 404 |
+| Public overall numeric score | REMOVED |
 
-## Visual-browser note
+## Visual/browser state
 
-The execution environment's organization policy blocks headless Chromium navigation to `flipgazine.pages.dev`, so an automated visual screenshot/render pass could not be completed from this session.
+Human mobile testing confirmed the evaluator is working on the live page after the Android submit/init fixes. The details lightbox was also adjusted for mobile viewport height and header clearance.
 
-The following were verified independently:
-
-- the public Pages shell is reachable over HTTP;
-- the shell explicitly loads page bodies from Supabase `site_files` by path;
-- live `/voice.html` v23 contains the benchmark markup, responsive CSS, result state, lightbox, CARE disclosure, CTA and endpoint script;
-- the browser-facing API/CORS contract is live and passing.
-
-No production rendering error was observed. A human visual smoke test is still advisable after future CSS or shell changes.
+Current live `/voice.html` source contains no `/100`, `voiceEvalScore`, numeric overall-score rendering, or old alignment labels.
 
 ## Decision
 
-The Voice/public-benchmark gate is complete.
+The Voice benchmark remains accepted for public use, but its role is now more accurately framed as an **AI-assisted editorial diagnostic**, not a numeric authority on Thai language quality.
 
-Proceed to the previously approved parallel work:
-
-```text
-A — OpenAI corpus/evaluation outreach
-B — Thai + SEA LLM benchmark/rubric outreach
-C — Batch 2 source freeze + generation/review
-```
+Human review remains especially important for native spoken-Thai naturalness.
