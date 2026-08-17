@@ -7,7 +7,7 @@
 **Supabase:** `sjpvhgxacsiorrtijqua`  
 **Technical authority:** `ANSWERS-PRIVATE-SERVER-MIGRATION-PLAN.md`  
 **Commercial authority:** `ANSWERS-COMMERCIAL-BENCHMARK-PLAN.md`  
-**Operational assumption:** security gate completes on 17 August 2026; migration work is already approximately halfway complete.
+**Security gate:** COMPLETE — 17 August 2026
 
 > Read this file together with `ANSWERS-PRIVATE-SERVER-MIGRATION-PLAN.md` and `ANSWERS-COMMERCIAL-BENCHMARK-PLAN.md` before continuing the Answers project in a new chat.
 >
@@ -20,7 +20,7 @@
 Run the remaining work as three overlapping tracks rather than one sequential pipeline:
 
 ```text
-TRACK A — secure + freeze Batch 1
+TRACK A — freeze Batch 1 commercially
 TRACK B — OpenAI first-look outreach
 TRACK C — build Batch 2 during the OpenAI first-look window
 ```
@@ -77,7 +77,7 @@ Commercial work must never become an excuse to redesign or retune the router.
 
 | Date | Milestone |
 |---|---|
-| **17 Aug 2026** | Security gate complete; migration checkpoint frozen |
+| **17 Aug 2026** | ✅ Security gate complete; migration checkpoint frozen |
 | **18 Aug** | Batch 1 secure commercial checkpoint complete |
 | **18–19 Aug** | OpenAI first-look package prepared |
 | **18–20 Aug** | 1,000 Batch 2 source questions/scenarios frozen |
@@ -95,7 +95,7 @@ Commercial work must never become an excuse to redesign or retune the router.
 
 ---
 
-# 4. Phase 0 — finish the security gate
+# 4. Phase 0 — security gate
 
 ## Date
 
@@ -103,140 +103,11 @@ Commercial work must never become an excuse to redesign or retune the router.
 
 ## Status
 
-Already approximately halfway complete when this execution timeline was created.
+**COMPLETE.**
 
-## Objective
+The security/source-of-truth migration is no longer an outstanding dependency. Do not treat it as pending in future planning or daily check-ins.
 
-Finish the private-server/security migration completely before commercial submission.
-
-This remains a security/source-of-truth migration, not a routing redesign.
-
-## Required technical completion
-
-Before the gate can be declared closed:
-
-### Private corpus and assets
-
-- private corpus contains normal answer IDs 1–948 exactly;
-- Thai/English copy matches frozen production source;
-- semantic arrays match production;
-- exact v124 dictionary/index/intent/CARE assets imported;
-- corpus and router revisions recorded.
-
-### Canonical server router
-
-- one canonical routing core exists;
-- public prepare uses it;
-- admin audit uses it;
-- parity harness uses it;
-- no duplicate approximate router exists.
-
-### Deterministic parity
-
-Required tests include:
-
-- every Focus alias;
-- every typo alias;
-- Support aliases;
-- Topic aliases;
-- Slang and Bridge aliases;
-- all CARE triggers;
-- Thai/English mixed questions;
-- overlapping alias collision cases;
-- colleague/friend repairs;
-- work/hobby/colleague repairs;
-- reply/คำตอบ cases;
-- single, double and 3+ Focus cases;
-- Support-only;
-- Topic-only;
-- Helper-only;
-- generic questions;
-- small pools;
-- widened pools;
-- final fallback;
-- recent histories of 0, 1 and 6;
-- recent removal that leaves a pool;
-- recent removal that empties a pool and causes restore;
-- multiple deterministic RNG seeds.
-
-**Gate condition:** zero unexplained differences.
-
-### Prepare/reveal security
-
-- same-origin `/api/answers/prepare` equivalent works;
-- prepare returns only opaque token/capability;
-- answer ID, copy, pool, routing metadata and probability are not exposed on prepare;
-- reveal returns only one legitimate answer;
-- token is short-lived;
-- token is session-bound;
-- token is atomic single-use;
-- abandoned prepared answer does not enter recent history;
-- recent history updates only after reveal;
-- no-store cache behavior is active.
-
-### Abuse boundary
-
-- Cloudflare sits in front of the answer service;
-- server-only Cloudflare→Supabase credential exists;
-- direct underlying service bypass is rejected;
-- prepare and reveal are independently controlled;
-- token stockpiling is limited;
-- high-rate enumeration is throttled/challenged/rejected rather than silently corrupting answer quality.
-
-### Public exposure cleanup
-
-The following known corpus-bearing public routes must be secured in the same cutover:
-
-```text
-/fg-page-answers.js
-/fg-page-answers-three-lab.js
-/answers-longest-review.html
-```
-
-Also:
-
-- scan every public `site_files` row for answer signatures;
-- verify `/wip/`, `/private/` and `/tmp/` boundaries;
-- purge relevant Cloudflare cache entries;
-- verify PWA/service-worker caches cannot serve the old corpus;
-- test fresh incognito retrieval;
-- test old query-string/cache variants where controllable.
-
-### Admin cutover
-
-- DB-native Admin works;
-- canonical DB-backed admin authorization enforced;
-- authenticated non-admin gets 403;
-- validation rules retained;
-- explicit corpus revision gate replaces JS-controller version gate;
-- answer edits + index rebuild + revision increment are transactional;
-- Admin Test Routing calls canonical audit core;
-- old raw-JS Admin write path retired.
-
-## End-of-day security artifact
-
-Freeze a migration checkpoint such as:
-
-```text
-security-cutover-2026-08-17/
-```
-
-Record at minimum:
-
-- old v124 controller hash;
-- private corpus row count;
-- corpus hash summary;
-- router version/hash;
-- deterministic parity report and hash;
-- new public-controller hash;
-- API/function versions;
-- Admin versions;
-- public exposure audit result;
-- hostile retrieval audit result;
-- exact cutover timestamp;
-- secure rollback reference.
-
-Once this checkpoint is frozen, Phase 0 is closed.
+The completed gate establishes the baseline for all remaining commercial work. Preserve the completed migration artifacts and do not reopen routing/security work unless a verified regression or security issue appears.
 
 ---
 
@@ -996,7 +867,7 @@ If any milestone slips, recover using the smallest intervention that preserves e
 
 Priority order:
 
-1. never compromise the security/parity gate;
+1. never compromise the completed security/parity baseline;
 2. never compromise 100% explicit Batch 2 human review;
 3. never overwrite raw provenance;
 4. never fabricate QA symmetry between batches;
@@ -1027,6 +898,8 @@ The scheduled Answers commercialization check-in should answer:
 7. Has any action threatened security, provenance or claims discipline?
 ```
 
+The security gate was completed on 17 August 2026 and should not be reported as outstanding.
+
 ---
 
 # 24. Definition of complete
@@ -1035,14 +908,12 @@ The operational plan is complete when:
 
 ### Security
 
+- security migration remains complete and stable;
 - live Book remains visually/behaviorally intact;
 - v124 routing mechanics remain exact;
-- deterministic parity is proven;
 - corpus is no longer a one-request public download;
-- all known corpus-bearing public mirrors are secured;
-- public client receives one answer only;
-- DB-native Admin is authoritative;
-- secure rollback does not require republishing the corpus.
+- all known corpus-bearing public mirrors remain secured;
+- DB-native Admin remains authoritative.
 
 ### Batch 1
 
@@ -1084,4 +955,4 @@ The operational plan is complete when:
 
 Start with:
 
-> **Read `ANSWERS-PRIVATE-SERVER-MIGRATION-PLAN.md`, `ANSWERS-COMMERCIAL-BENCHMARK-PLAN.md`, and `ANSWERS-COMMERCIAL-EXECUTION-TIMELINE.md`. Treat the execution timeline as the operational schedule, the private-server plan as technical authority, and the commercial benchmark plan as commercial/provenance authority. Preserve v124 routing exactly. Security gate is targeted to close on 17 August 2026. Then execute the overlapping OpenAI-first-look + Batch-2 plan without reviving the blind-X/Y ThaiPrag protocol unless explicitly requested.**
+> **Read `ANSWERS-PRIVATE-SERVER-MIGRATION-PLAN.md`, `ANSWERS-COMMERCIAL-BENCHMARK-PLAN.md`, and `ANSWERS-COMMERCIAL-EXECUTION-TIMELINE.md`. Treat the execution timeline as the operational schedule, the private-server plan as technical authority, and the commercial benchmark plan as commercial/provenance authority. Preserve v124 routing exactly. SECURITY GATE COMPLETED on 17 August 2026; do not treat it as pending. Continue with the overlapping OpenAI-first-look + Batch-2 plan without reviving the blind-X/Y ThaiPrag protocol unless explicitly requested.**
