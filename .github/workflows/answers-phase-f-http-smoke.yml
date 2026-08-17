@@ -1,0 +1,142 @@
+name: Answers Phase F boundary smoke
+
+on:
+  push:
+    paths:
+      - '.github/workflows/answers-phase-f-http-smoke.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Exercise same-origin Answers boundary and abuse controls
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE='https://flipgazine.pages.dev'
+          UPSTREAM='https://sjpvhgxacsiorrtijqua.supabase.co/functions/v1/answers-service'
+          ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNqcHZoZ3hhY3Npb3JydGlqcXVhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM3NDE5MjcsImV4cCI6MjA5OTMxNzkyN30.9rQa7r9pxoBwh5SrYLlBGzzvbZkkUXKdvahCPugZncY'
+          T="$(mktemp -d)"
+          trap 'rm -rf "$T"' EXIT
+
+          prepare() {
+            local jar="$1" question="$2" body="$3" headers="$4"
+            touch "$jar"
+            curl --silent --show-error --max-time 60 \
+              -D "$headers" -o "$body" -c "$jar" -b "$jar" \
+              -H 'content-type: application/json' \
+              -H "origin: $BASE" \
+              -X POST "$BASE/api/answers/prepare" \
+              --data "$(node -e 'process.stdout.write(JSON.stringify({question:process.argv[1]}))' "$question")" \
+              -w '%{http_code}'
+          }
+
+          token_from() {
+            node -e 'const fs=require("fs"); const x=JSON.parse(fs.readFileSync(process.argv[1],"utf8")); const k=Object.keys(x).sort().join(","); if(k!=="expires_in,request_token"||x.expires_in!==120||!/^[A-Za-z0-9_-]{43}$/.test(x.request_token)) process.exit(1); process.stdout.write(x.request_token)' "$1"
+          }
+
+          reveal() {
+            local jar="$1" token="$2" body="$3" headers="$4"
+            curl --silent --show-error --max-time 60 \
+              -D "$headers" -o "$body" -b "$jar" \
+              -H 'content-type: application/json' \
+              -H "origin: $BASE" \
+              -X POST "$BASE/api/answers/reveal" \
+              --data "{\"request_token\":\"$token\"}" \
+              -w '%{http_code}'
+          }
+
+          session_hash() {
+            local sid
+            sid="$(awk '$6=="fg_ans_sid" {print $7}' "$1" | tail -1)"
+            test -n "$sid"
+            printf '%s' "$sid" | sha256sum | awk '{print $1}'
+          }
+
+          # Normal prepare -> reveal -> replay.
+          C1="$T/c1"; B="$T/b"; H="$T/h"
+          CODE="$(prepare "$C1" 'มัทฉะหรือชาไทยดี?' "$B" "$H")"
+          test "$CODE" = '200'
+          grep -qi '^cache-control: no-store, private, max-age=0' "$H"
+          TOKEN="$(token_from "$B")"
+          CODE="$(reveal "$C1" "$TOKEN" "$B" "$H")"
+          test "$CODE" = '200'
+          grep -qi '^cache-control: no-store, private, max-age=0' "$H"
+          node -e 'const fs=require("fs"); const x=JSON.parse(fs.readFileSync(process.argv[1],"utf8")); if(!Number.isInteger(x.id)||typeof x.thai!=="string"||!x.thai||typeof x.english!=="string"||!x.english) process.exit(1)' "$B"
+          CODE="$(reveal "$C1" "$TOKEN" "$B" "$H")"
+          test "$CODE" = '404'
+
+          # Session binding: token prepared in C1 cannot reveal without C1.
+          CODE="$(prepare "$C1" 'คืนนี้ออกไปเจอเพื่อนดีปะ?' "$B" "$H")"
+          test "$CODE" = '200'
+          TOKEN2="$(token_from "$B")"
+          CWRONG="$T/wrong"; touch "$CWRONG"
+          CODE="$(reveal "$CWRONG" "$TOKEN2" "$B" "$H")"
+          test "$CODE" = '404'
+
+          # CARE must still be tokenized and reveal only after the gesture call.
+          CODE="$(prepare "$C1" 'ปวดหน้าอกควรทำไง' "$B" "$H")"
+          test "$CODE" = '200'
+          CARE_TOKEN="$(token_from "$B")"
+          CODE="$(reveal "$C1" "$CARE_TOKEN" "$B" "$H")"
+          test "$CODE" = '200'
+          node -e 'const fs=require("fs"); const x=JSON.parse(fs.readFileSync(process.argv[1],"utf8")); if(x.id!==null||typeof x.thai!=="string"||!x.thai||typeof x.english!=="string"||!x.english) process.exit(1)' "$B"
+
+          # Cross-origin and oversized input are rejected at Cloudflare.
+          CODE="$(curl --silent --show-error --max-time 30 -o "$B" \
+            -H 'content-type: application/json' -H 'origin: https://example.com' \
+            -X POST "$BASE/api/answers/prepare" --data '{"question":"hello"}' -w '%{http_code}')"
+          test "$CODE" = '403'
+          LONG="$(python - <<'PY'
+print('x'*501)
+PY
+)"
+          CODE="$(curl --silent --show-error --max-time 30 -o "$B" \
+            -H 'content-type: application/json' -H "origin: $BASE" \
+            -X POST "$BASE/api/answers/prepare" \
+            --data "$(node -e 'process.stdout.write(JSON.stringify({question:process.argv[1]}))' "$LONG")" -w '%{http_code}')"
+          test "$CODE" = '413'
+
+          # The underlying Supabase function cannot be bypassed directly.
+          CODE="$(curl --silent --show-error --max-time 30 -o "$B" \
+            -H 'content-type: application/json' -X POST "$UPSTREAM" \
+            --data '{"action":"prepare","question":"hello"}' -w '%{http_code}')"
+          test "$CODE" = '401'
+          CODE="$(curl --silent --show-error --max-time 30 -o "$B" \
+            -H 'content-type: application/json' -H "apikey: $ANON" \
+            -X POST "$UPSTREAM" --data '{"action":"prepare","question":"hello"}' -w '%{http_code}')"
+          test "$CODE" = '401'
+
+          # Outstanding-token ceiling: 3 live tokens allowed, fourth rejected.
+          C2="$T/c2"; touch "$C2"
+          for n in 1 2 3; do
+            CODE="$(prepare "$C2" "outstanding test $n" "$B" "$H")"
+            test "$CODE" = '200'
+            token_from "$B" >/dev/null
+          done
+          CODE="$(prepare "$C2" 'outstanding test 4' "$B" "$H")"
+          test "$CODE" = '429'
+          grep -qi '^retry-after:' "$H"
+
+          # Independent session prepare limiter: 10 successful prepare/reveal
+          # cycles in one minute, then prepare 11 is throttled.
+          C3="$T/c3"; touch "$C3"
+          for n in $(seq 1 10); do
+            CODE="$(prepare "$C3" "rate test coffee $n" "$B" "$H")"
+            test "$CODE" = '200'
+            RT="$(token_from "$B")"
+            CODE="$(reveal "$C3" "$RT" "$B" "$H")"
+            test "$CODE" = '200'
+          done
+          CODE="$(prepare "$C3" 'rate test coffee 11' "$B" "$H")"
+          test "$CODE" = '429'
+
+          S1="$(session_hash "$C1")"
+          S2="$(session_hash "$C2")"
+          S3="$(session_hash "$C3")"
+          printf 'PHASE_F_HTTP_SMOKE_RESULT={"status":"PASS","normal_reveal":true,"replay_rejected":true,"session_bound":true,"care_tokenized":true,"cross_origin_rejected":true,"direct_bypass_rejected":true,"outstanding_token_limit":3,"prepare_session_minute_limit":10,"session_hashes":["%s","%s","%s"]}\n' "$S1" "$S2" "$S3"
