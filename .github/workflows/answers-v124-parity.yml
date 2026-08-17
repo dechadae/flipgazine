@@ -1,3 +1,4 @@
+# Phase G recheck trigger; workflow behavior is unchanged.
 name: Answers v124 deterministic parity
 
 on:
