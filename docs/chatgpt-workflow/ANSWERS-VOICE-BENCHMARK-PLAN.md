@@ -618,7 +618,93 @@ Do not replace this with sales language. Contact should begin as a human convers
 
 ---
 
-## 19. Product principle
+## 19. Human evaluation deliverable
+
+The automated benchmark and the human evaluation are deliberately different products of judgment.
+
+The automated benchmark remains diagnosis-only. It never rewrites.
+
+When a human evaluation is accepted, the reviewer may provide a much deeper deliverable for each submitted prompt/response pair.
+
+### Per-prompt structure
+
+For every prompt, the human evaluation should include:
+
+1. the original question/scenario;
+2. the original AI response exactly as submitted;
+3. the six benchmark scores using the same 1–4 rubric;
+4. the deterministic overall 0–100 score derived from those ratings;
+5. a written comment on **every benchmark dimension**, explaining why that specific score was given;
+6. severity and relevant diagnostic flags;
+7. an overall human editorial assessment;
+8. one or more optional human-written rewrite directions or complete rewrite options when useful.
+
+The human reviewer is not required to agree with the automated evaluator. If human and automated judgments differ, the human deliverable should explain the disagreement rather than silently forcing the human score to match the machine.
+
+### Point-by-point commentary
+
+Each dimension should receive its own short explanation, not merely a total score.
+
+Example structure:
+
+```text
+Intent / Cause — 4/4
+The response understands the actual dilemma and answers the intended question directly. No semantic drift.
+
+Thai Pragmatic Naturalness — 2/4
+The Thai is grammatical, but the final explanation states implications a Thai listener would normally infer. It feels more complete than the social situation requires.
+
+BFF Conversational Voice — 2/4
+The tone is polite and coherent, but it sounds like an advisor rather than a close friend replying in chat.
+```
+
+The same principle applies to all six dimensions.
+
+### Human rewrite options
+
+Unlike the automated benchmark, the human service **may rewrite**.
+
+For each prompt, the reviewer may provide one or more alternatives where a rewrite is useful. Multiple options are encouraged when there is more than one valid editorial direction—for example, a dry version, warmer version, sharper BFF version, or a different degree of decisiveness.
+
+A rewrite is an editorial option, not a declaration of universally correct Thai.
+
+The reviewer should preserve:
+
+- the intended meaning;
+- relevant factual constraints;
+- the appropriate degree of certainty;
+- the social relationship;
+- the strongest natural Thai register available within the reviewer’s expertise;
+- deliberate composition and line hierarchy where the format needs it.
+
+The reviewer should not manufacture slang, camp, English borrowing, cultural references, or line breaks simply to imitate the Book’s surface style.
+
+### Scope control still applies
+
+Human rewrite availability does not override the limitations in Section 18.
+
+The reviewer may:
+
+- decline the whole assignment;
+- decline specific prompts within a larger assignment;
+- evaluate a response but decline to rewrite it when the subject falls outside appropriate expertise;
+- state that specialist review is required where the content depends on legal, medical, technical, regulated, or other domain-specific knowledge.
+
+This preserves the core quality principle:
+
+> **A human rewrite is valuable because it is actual editorial judgment, not because a human must produce an answer to everything.**
+
+### Public/private boundary
+
+The public Voice benchmark must continue to show **no rewrite and no suggested correction**.
+
+Human commentary and rewrite options appear only after a person deliberately contacts the reviewer and the work is accepted as a suitable fit.
+
+Commercial terms, if any, remain part of that private conversation and are not surfaced as Pricing, Quote, Plans, Upgrade, or similar public-site language.
+
+---
+
+## 20. Product principle
 
 The benchmark exists to answer one question:
 
