@@ -49,24 +49,16 @@ jobs:
           await page.goto(BASE+'/answers-server-lab.html',{waitUntil:'domcontentloaded',timeout:30000});
           await page.locator('#question').waitFor({state:'visible',timeout:30000}); await stage('ask'); await page.waitForTimeout(2500);
           const registration=await page.evaluate(()=>({fgModules:typeof window.FGModules,fgNav:typeof window.FGNav,controllerKeys:Object.keys(window.FGPageControllers||{}),labType:typeof (window.FGPageControllers||{})['/fg-page-answers-server-lab.js'],activeClass:document.body.classList.contains('fg-answers-active'),buttonDisabled:document.querySelector('#questionForm button')?.disabled,stage:document.body.getAttribute('data-stage')}));
-          console.log('LAB_REGISTRATION='+JSON.stringify(registration));
-          if(registration.labType!=='object') throw new Error('lab controller did not register');
-          const remount=await page.evaluate(()=>{
-            const c=(window.FGPageControllers||{})['/fg-page-answers-server-lab.js']; const main=document.querySelector('body > main[data-fg-page]');
-            try{ c.unmount(); c.mount(main); return {ok:true,activeClass:document.body.classList.contains('fg-answers-active')}; }
-            catch(e){ return {ok:false,name:e?.name||'',message:e?.message||String(e),stack:e?.stack||''}; }
-          });
-          console.log('LAB_REMOUNT='+JSON.stringify(remount));
-          if(!remount.ok) throw new Error('lab mount failed: '+remount.name+': '+remount.message+' '+remount.stack);
-          const normal=await askAndOpen('มัทฉะหรือชาไทยดี?',.25);
+          console.log('LAB_REGISTRATION='+JSON.stringify(registration)); if(registration.labType!=='object'||!registration.activeClass) throw new Error('lab controller not active');
+          const normal=await askAndOpen('มัทฉะกับชาไทย วันนี้เลือกอะไรดี?',.25);
           const prepReq=apiRequests.find(x=>x.url.endsWith('/prepare')); const revealReq=apiRequests.find(x=>x.url.endsWith('/reveal'));
           if(!prepReq||JSON.stringify(Object.keys(prepReq.body||{}).sort())!==JSON.stringify(['question'])) throw new Error('prepare payload leaked extra fields');
           if(!revealReq||JSON.stringify(Object.keys(revealReq.body||{}).sort())!==JSON.stringify(['request_token'])) throw new Error('reveal payload leaked extra fields');
           if('depth' in (prepReq.body||{})||'position' in (prepReq.body||{})) throw new Error('depth influenced prepare payload');
           await page.getByRole('button',{name:'ถามอีกดิ'}).click(); await stage('ask');
-          const care=await askAndOpen('ปวดหน้าอกควรทำไง',.82); const answerNumber=(await page.locator('#answerNumber').innerText()).trim(); if(answerNumber!=='—') throw new Error('CARE did not render null answer number');
+          const care=await askAndOpen('ปวดหน้าอกตอนนี้ควรทำอะไรดี',.82); const answerNumber=(await page.locator('#answerNumber').innerText()).trim(); if(answerNumber!=='—') throw new Error('CARE did not render null answer number');
           await page.getByRole('button',{name:'ถามอีกดิ'}).click(); await stage('ask');
-          await page.route('**/api/answers/prepare',route=>route.abort('failed')); await page.locator('#question').fill('คืนนี้ออกไปเจอเพื่อนดีปะ?'); await page.getByRole('button',{name:'ถามดิ'}).click(); await stage('pick'); await dragRelease(.62);
+          await page.route('**/api/answers/prepare',route=>route.abort('failed')); await page.locator('#question').fill('คืนนี้ไปเจอแก๊งเพื่อนดีไหมนะ'); await page.getByRole('button',{name:'ถามดิ'}).click(); await stage('pick'); await dragRelease(.62);
           await page.waitForFunction(()=>document.body.getAttribute('data-stage')==='pick' && /เน็ตงอแง/.test(document.querySelector('#edgeHint')?.textContent||''),null,{timeout:10000});
           await page.unroute('**/api/answers/prepare'); await dragRelease(.62); await stage('opening'); await stage('open');
           const thaiBox=await page.locator('#thaiAnswer').evaluate(el=>({scrollHeight:el.scrollHeight,clientHeight:el.clientHeight,fontSize:getComputedStyle(el).fontSize})); if(thaiBox.scrollHeight>thaiBox.clientHeight+2) throw new Error('Thai answer overflow after autofit');
