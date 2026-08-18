@@ -109,6 +109,41 @@ The production Batch 2 reviewer must enforce:
 
 The public Voice methodology page describes this as **100% human-first review with post-human mechanical lint only**.
 
+## Live post-human mechanical-QA provenance
+
+The database now preserves this distinction directly.
+
+```text
+private.batch2_human_reviews
+  = immutable first blind human ACCEPT / EDIT / REWRITE and exact committed Thai
+
+private.batch2_posthuman_mechanical_qa
+  = optional post-decision AI mechanical flag + explicit human KEEP / CORRECT response
+
+private.batch2_deploy_reviews
+  = deployment view; uses the original blind human final unless the human explicitly confirms CORRECT
+```
+
+The post-human table is RLS-protected and append-only. Direct `anon`, `authenticated` and `service_role` table access is removed. Its recording/preparation functions are `SECURITY INVOKER` and are not executable by those roles.
+
+Mechanical QA must be resolved **before English adaptation or semantic staging**. This prevents a late typo correction from silently making the English or routing evidence stale.
+
+Allowed mechanical tags are deliberately narrow:
+
+```text
+possible_typo
+accidental_double_space
+stray_transport_character
+duplicate_punctuation
+formatting_artifact
+```
+
+For `KEEP`, the deployable Thai remains the exact first blind human final.
+
+For `CORRECT`, the first blind final and its hash remain immutable evidence, while the separately human-confirmed corrected Thai receives its own hash and becomes the deployable text used by English/semantic staging and corpus promotion.
+
+No mechanical-QA row exists unless there is something to ask the human about. A clean final with no plausible mechanical issue proceeds directly to English adaptation.
+
 ## Technical pilot caveat
 
 B2-0001–B2-0020 remain a **technical, non-metric-eligible pilot** because their frozen raw-draft line breaks were stored as escaped transport text rather than literal LF bytes. B2-0001 also retains its early machine-visibility exception.
