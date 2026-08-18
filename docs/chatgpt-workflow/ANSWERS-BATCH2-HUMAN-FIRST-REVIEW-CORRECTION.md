@@ -1,32 +1,88 @@
 # The Book of Answers — Batch 2 Human-First Review Correction
 
 **Effective:** 18 August 2026  
-**Status:** Governing operational correction before any metric-eligible Batch 2 human review
+**Updated:** 18 August 2026  
+**Status:** GOVERNING — applies to every metric-eligible Batch 2 human review
 
 ## Decision
 
-The reviewer must not see ChatGPT self-audit or Qwen independent-audit judgments before making the first human decision.
+Batch 2 human review is **fully blind to machine judgment**.
 
-For every Batch 2 row, the operational order is now:
+Before the native-human reviewer commits the first decision, the reviewer must not see any ChatGPT or Qwen:
+
+- score or Audit Index;
+- qualitative verdict;
+- dimension rating;
+- confidence;
+- diagnostic flag;
+- rationale or comment;
+- correction suggestion;
+- preferred wording.
+
+The human sees the source scenario and the frozen raw Thai draft only.
+
+For every clean Batch 2 row, the operational order is:
 
 ```text
 source scenario
 → one frozen ChatGPT raw draft
 → ChatGPT diagnosis-only audit
 → required/selected Qwen diagnosis-only audit
-→ machine evidence sealed from reviewer
+→ ALL machine evidence sealed from reviewer
 → native-human ACCEPT / EDIT / REWRITE
 → first human decision committed
 → machine judgments revealed for comparison
+→ post-human mechanical QA may flag possible typo / accidental double space / mechanical formatting issue
+→ HUMAN decides whether any mechanical correction is actually required
 ```
 
-The purpose of the machine audits is evidence, not reviewer assistance. They exist to measure where AI judgment agrees or disagrees with native-human editorial judgment and to support buyer diligence. They must not coach or bias the human reviewer.
+The purpose of the machine audits is evidence, not reviewer assistance. They exist to measure where AI judgment agrees or disagrees with native-human editorial judgment and to support buyer diligence. They must not coach, anchor or bias the human reviewer.
+
+## Human authority is final
+
+The native-human reviewer is the editorial judge.
+
+The first blind `ACCEPT`, `EDIT` or `REWRITE` decision is the authoritative human judgment for benchmark analysis. A machine score cannot overturn it, and disagreement with ChatGPT or Qwen is evidence rather than an error to be corrected toward the machine.
+
+The human-authored final may deliberately contain conversational spelling, fragments, unusual spacing for delivery, punctuation, ellipses, code-mixing or other authored surface choices. AI must not normalize those choices merely because they look nonstandard.
+
+## Post-human mechanical QA rule
+
+After the blind human decision is committed, AI may perform a **narrow mechanical QA pass**.
+
+Its permitted role is to flag things that plausibly look accidental, for example:
+
+```text
+possible typo
+accidental double space
+stray transport character
+unintended duplicate punctuation
+obvious accidental formatting artifact
+```
+
+The AI may ask the human reviewer to check the flagged location. It must not silently alter the text and must not broaden this pass into stylistic editing, grammar correction, tone correction, line-break optimization or a second editorial judgment.
+
+A flag is not proof of an error. Thai chat spelling, deliberate ellipses, repeated punctuation, spacing, fragments and other authored choices may be intentional.
+
+If the human confirms that the issue is accidental, the human supplies or approves the corrected text. The project must preserve:
+
+1. the original frozen raw AI draft;
+2. the first blind human decision and the exact text committed at that moment;
+3. the post-human mechanical flag;
+4. the human-confirmed correction, if any;
+5. hashes/timestamps sufficient to reconstruct the sequence.
+
+Therefore:
+
+> **AI may notice. Human decides. Human corrects. Human remains final.**
+
+Mechanical QA must never be counted as evidence that AI improved the human editorial judgment.
 
 ## What this supersedes
 
 The earlier 900-assisted / 100-blind visibility design is superseded for human-review exposure before the first metric-eligible Batch 2 review.
 
-The already-frozen `B2-BLIND-v1` assignment remains historical provenance for the source-set experiment and must not be mutated. However, reviewer visibility no longer varies by that lane: **all 1,000 rows are human-first blind to machine judgments.**
+The already-frozen `B2-BLIND-v1` assignment remains historical provenance for the source-set experiment and must not be mutated. Reviewer visibility no longer varies by that lane: **all metric-eligible Batch 2 rows are human-first blind to all machine judgment.**
 
 This correction does not change:
 
@@ -36,24 +92,27 @@ This correction does not change:
 - Qwen escalation logic;
 - diagnosis-only restrictions;
 - ACCEPT / EDIT / REWRITE semantics;
-- raw/final hashing and append-only provenance requirements.
+- raw/final provenance requirements;
+- the rule that machine judgments are evidence rather than authority.
 
-## Live implementation
+## Live reviewer behavior
 
-The private Batch 2 reviewer service now returns machine audits as `null` for every unreviewed pilot row, regardless of the historical blind-control flag. Qwen may still be executed before human review so its timestamp and judgment remain genuinely pre-human, but its output is sealed from the browser until the first human decision exists.
+The production Batch 2 reviewer must enforce:
 
-Live reviewer behavior:
+- `/answers-thai-review-batch2.html`;
+- pre-decision label: `Human first`;
+- pre-decision audit area: sealed / hidden;
+- no AI score, verdict, rationale, flags or comments visible before the decision;
+- no `Assisted` or `Blind control` exposure label;
+- after the first human decision: stored ChatGPT/Qwen diagnoses may be revealed for comparison;
+- any later mechanical QA is clearly separated from the machine-audit verdicts and requires explicit human confirmation before changing deployable text.
 
-- `/answers-thai-review-batch2.html`
-- pre-decision label: `Human first`
-- pre-decision audit area: sealed / hidden
-- no `Assisted` or `Blind control` exposure label
-- after first human decision: stored ChatGPT/Qwen diagnoses may be shown for comparison
+The public Voice methodology page describes this as **100% human-first review with post-human mechanical lint only**.
 
-The public Voice methodology page was updated to describe **100% human-first review** rather than a 10% blind-control exposure model.
+## Technical pilot caveat
 
-## Current technical pilot caveat
+B2-0001–B2-0020 remain a **technical, non-metric-eligible pilot** because their frozen raw-draft line breaks were stored as escaped transport text rather than literal LF bytes. B2-0001 also retains its early machine-visibility exception.
 
-The first 20 rows generated on 18 August 2026 remain a **technical, non-metric-eligible pilot** because their frozen draft line breaks were stored as escaped transport text rather than LF bytes. They are useful for reviewer ergonomics and workflow testing, but their ACCEPT / EDIT / REWRITE outcomes must not be included in official Batch 2 edit-rate or disagreement metrics.
+Those 20 have nevertheless completed human review, enrichment, routing validation and canonical Book promotion. They remain useful buyer evidence and live Book content but never enter the clean Batch 2 benchmark denominator.
 
-A clean metric-eligible 20-row pilot should begin only after the line-break write path is corrected and verified.
+The first clean metric-eligible production unit is B2-0021–B2-0040, and the fully blind rule above governs it before any native-human decision.
