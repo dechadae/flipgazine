@@ -1,0 +1,102 @@
+{
+  "project": "The Book of Answers / Batch 2",
+  "date": "2026-08-18",
+  "status": "PRE_PILOT_IMPLEMENTATION_COMPLETE",
+  "supabase_project_id": "sjpvhgxacsiorrtijqua",
+  "protocol_freezes": {
+    "B2-GEN-v1": "800291b0d919b814278670351265de9aee2679f28fa5dd98b18fac5bde350678",
+    "B2-SELF-AUDIT-v1": "039d395ffb033f4e13b5bdd22b4257a8d0da0f98fce44e007a9da72bd354d60a",
+    "B2-BLIND-v1": "907572798a46f8259322bd3c7ca797356898baea581ef61ccded854c896cb2cd",
+    "B2-QWEN-AUDIT-v1": "5fd0e73cb150a0e3557628f286cea04bdccf37fccb912a552fb6ac83ee41f129"
+  },
+  "blind_control": {
+    "source_count": 1000,
+    "blind_count": 100,
+    "seed_version": "B2-BLIND-v1",
+    "seed": "flipgazine-batch2-blind-control-2026-08-18-v1",
+    "algorithm": "sha256(seed + newline + source_id), ascending rank",
+    "input_order_independence_test": "PASS",
+    "exact_100_of_1000_test": "PASS"
+  },
+  "private_tables": [
+    "private.batch2_protocol_freezes",
+    "private.batch2_sources",
+    "private.batch2_source_set_freezes",
+    "private.batch2_raw_drafts",
+    "private.batch2_qwen_usage",
+    "private.batch2_ai_audits",
+    "private.batch2_human_reviews"
+  ],
+  "private_functions": [
+    "private.batch2_record_raw_draft",
+    "private.batch2_record_self_audit",
+    "private.batch2_record_human_review",
+    "private.batch2_review_payload",
+    "private.batch2_qwen_reasons",
+    "private.batch2_qwen_claim",
+    "private.batch2_qwen_finish"
+  ],
+  "immutability": {
+    "protocol_freezes_append_only": true,
+    "frozen_source_set_immutable": true,
+    "raw_drafts_append_only": true,
+    "ai_audits_append_only": true,
+    "human_reviews_append_only": true,
+    "destructive_update_test": "PASS_REJECTED"
+  },
+  "blind_contract_transactional_test": {
+    "source_count": 1000,
+    "blind_count": 100,
+    "tested_row_blind_control": true,
+    "machine_audits_hidden_before_human_review": true,
+    "machine_audits_revealed_after_human_review": true,
+    "qwen_trigger_reasons": ["fluent", "thai_pragmatics_4"],
+    "test_rows_persisted_after_rollback": 0,
+    "status": "PASS"
+  },
+  "qwen_edge_function": {
+    "slug": "batch2-qwen-audit",
+    "deployment_id": "66e84f3f-57db-43e2-9828-e6152755bcac",
+    "version": 1,
+    "status": "ACTIVE",
+    "verify_jwt": true,
+    "deployment_sha256": "32d6944719f84019693baea622e16c5114b7b75fa7531dbb3f9ce9b0a7644257",
+    "provider": "groq",
+    "model": "qwen/qwen3.6-27b",
+    "browser_origin_rejected": true,
+    "loads_frozen_scenario_and_draft_server_side": true,
+    "diagnosis_only": true,
+    "max_request_body_bytes": 1800,
+    "max_completion_tokens": 450,
+    "per_source_attempts_per_day": 4,
+    "minute_call_ceiling": 20,
+    "minute_reserved_token_ceiling": 60000,
+    "day_call_ceiling": 200,
+    "day_reserved_token_ceiling": 650000,
+    "month_call_ceiling": 1500,
+    "month_reserved_token_ceiling": 4500000
+  },
+  "database_access_verification": {
+    "batch2_table_grantees": ["postgres"],
+    "anon_function_execute": false,
+    "authenticated_function_execute": false,
+    "service_role_function_execute": false,
+    "batch2_security_definer_functions": 0,
+    "rls_enabled": true
+  },
+  "pre_pilot_live_row_counts": {
+    "sources": 0,
+    "source_set_freezes": 0,
+    "raw_drafts": 0,
+    "ai_audits": 0,
+    "human_reviews": 0,
+    "qwen_usage": 0
+  },
+  "repo_artifacts": [
+    "answers-private-server/batch2-protocol.mjs",
+    "answers-private-server/batch2-protocol.test.mjs",
+    "answers-private-server/batch2-prepare-source-set.mjs",
+    "supabase/functions/batch2-qwen-audit/index.ts"
+  ],
+  "next_gate": "Freeze the real 1,000-row Batch 2 source set, then run the real 20-row pilot before scale-up."
+}
