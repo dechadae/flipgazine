@@ -1,614 +1,393 @@
 # The Book of Answers — Batch 2 Corpus, Routing & Reachability Implementation Report
 
-**Status:** READY FOR METRIC-ELIGIBLE HUMAN REVIEW  
-**Implemented:** 18 August 2026  
+**Status:** TECHNICAL PILOT FULL CYCLE COMPLETE · CLEAN PRODUCTION UNIT ACTIVE  
+**Updated:** 18 August 2026  
 **Supabase project:** `sjpvhgxacsiorrtijqua`  
-**Governing plan:** `ANSWERS-BATCH2-CORPUS-ROUTING-REACHABILITY-PLAN.md`  
-**Human-review exposure authority:** `ANSWERS-BATCH2-HUMAN-FIRST-REVIEW-CORRECTION.md`  
-**Machine proof:** `../../answers-private-server/batch2-routing-implementation-proof.json`
+**Governing routing plan:** `ANSWERS-BATCH2-CORPUS-ROUTING-REACHABILITY-PLAN.md`  
+**Human-review authority:** `ANSWERS-BATCH2-HUMAN-FIRST-REVIEW-CORRECTION.md`  
+**Buyer extraction authority:** `ANSWERS-BATCH2-BUYER-DATA-EXTRACTION-SPEC.md`  
+**Machine proof:** `../../answers-private-server/batch2-tech-pilot-full-cycle-proof.json`
 
 ---
 
-## 1. Implementation verdict
+## 1. Current implementation verdict
 
-The Batch 2 corpus/routing plan is now implemented far enough for the first clean production review unit to begin.
+The Batch 2 production path is implemented end to end.
 
-Batch 2 does **not** have a parallel runtime. A promoted Batch 2 answer becomes an ordinary canonical `private.answers` row and enters the same Batch 1 routing graph, dictionary, index builder, focus/topic/support/helper pools, universal mixing, recent-answer exclusion and private reveal service.
+Batch 2 does **not** have a separate runtime. Once a reviewed answer is promoted, it becomes an ordinary canonical `private.answers` row and uses exactly the same Book routing graph, dictionary, index builder, semantic pools, universal mixing, recent-answer exclusion and private reveal path as Batch 1.
 
-The production sequence is now:
+The first 20 technical-pilot records have now been taken through the complete post-review deployment cycle and are live in the canonical Book. Their technical provenance remains separate from clean benchmark eligibility.
+
+Current canonical state:
 
 ```text
-frozen Batch 2 scenario
-→ one frozen ChatGPT Thai draft
-→ LF byte validation
+corpus revision                 126
+parent revision                 125
+active answers                  968
+Batch 1 answers                 948
+B2 technical-pilot answers       20
+B2-0001 canonical answer_id     949
+B2-0020 canonical answer_id     968
+active index-unreachable          0
+normalized surface collisions     0
+```
+
+The current clean human-review unit remains **B2-0021–B2-0040**.
+
+---
+
+## 2. Definitive production cycle
+
+This is the governing 20-row rhythm from this checkpoint forward:
+
+```text
+frozen source scenarios
+→ frozen ChatGPT Thai drafts
+→ raw LF integrity gate
 → sealed ChatGPT diagnosis
 → required/selected sealed Qwen diagnosis
 → native-human ACCEPT / EDIT / REWRITE
 → immutable final Thai
 → machine comparison revealed
-→ English adaptation
-→ semantic staging using Batch 1 fields
-→ alias/typo/concept delta
-→ deterministic reachability + regression validation
+→ English adaptation from final Thai
+→ Batch 1-compatible semantic tagging
+→ alias / typo / concept enrichment where justified
+→ realistic reachability probes
+→ deterministic routing + Batch 1 regression validation
 → atomic 20-row corpus + dictionary + index promotion
-→ new canonical corpus revision
+→ verify live revision / mappings / routing / reveal
+→ generate or update the internal buyer-export preview
+→ only then prepare the next 20
 ```
 
-The first clean metric-eligible review unit is **B2-0021 through B2-0040**.
+Short form:
+
+```text
+REVIEW 20
+→ ENGLISH
+→ ENRICH
+→ VALIDATE
+→ PROMOTE
+→ VERIFY
+→ EXPORT PREVIEW
+→ NEXT 20
+```
+
+The buyer-export checkpoint is part of the production cycle, not an optional end-of-project cleanup step. It catches provenance/export defects while the unit is still fresh.
 
 ---
 
-## 2. Batch 1 parity baseline
+## 3. Technical pilot: review evidence vs deployment eligibility
 
-The live canonical baseline used by the implementation is corpus revision **125** with:
+B2-0001–B2-0020 have two separate status dimensions.
 
-```text
-active answers                         948
-universal answers                       75
-answers with focus                     795
-answers with topics                    821
-answers with support                    44
-answers with helpers                   302
-answers with zero semantic ownership     0
-active answers unreachable from index    0
-```
+### Benchmark status
 
-Dictionary baseline:
+They remain:
 
 ```text
-concepts                               268
-focus concepts                         182
-slang concepts                          38
-support concepts                        24
-topic concepts                           9
-bridge concepts                         15
-aliases                               1,139
-typos                                   146
-normalized cross-concept collisions       0
+record_class                    technical_pilot
+buyer_export_included           true
+benchmark_metric_eligible       false
 ```
 
-The implementation preserves the existing router constants and semantics:
+Why they are excluded from the clean benchmark denominator:
+
+1. their original immutable raw draft records stored intended line breaks as literal escaped transport text rather than real LF bytes;
+2. B2-0001 additionally has a machine-judgment visibility exception from before the final human-first UI correction.
+
+These defects are provenance defects. They are preserved and disclosed rather than silently repaired.
+
+### Corpus status
+
+Their **final native-human-reviewed Thai is valid Book content**. Therefore the deployment layer now treats benchmark eligibility and corpus usability independently.
+
+All 20 are now:
 
 ```text
-MIN_POOL             2
-MAX_BROAD_WIDEN     12
-RECENT_LIMIT         6
-two universals added to non-generic routes
-focus-first tier selection
-support enrichment
-same topic/helper fallback behavior
-same private answer reveal path
+human reviewed                  true
+semantic enriched               true
+routing validated               true
+corpus linked                   true
+active in private.answers       true
 ```
 
-No Batch 2-specific route is introduced.
+They are not copied into the official clean `private.batch2_human_reviews` table. The technical review evidence remains in its original technical lane, while `private.batch2_deploy_reviews` provides a private deploy-time compatibility view.
 
 ---
 
-## 3. New private routing/provenance layer
+## 4. Technical-pilot human review result
 
-Five private tables were added:
+Completed native-human decisions:
 
 ```text
-private.batch2_focus_reconciliation
-private.batch2_semantic_staging
-private.batch2_routing_checks
-private.batch2_promotions
-private.batch2_answer_map
+reviewed          20 / 20
+ACCEPT              4
+EDIT                9
+REWRITE             7
 ```
 
-### `batch2_focus_reconciliation`
+This 4/9/7 split is a **technical-pilot observation**, not an official Batch 2 benchmark metric.
 
-Freezes the mapping between the 129 Batch 2 source-set `intended_focus` labels and the canonical routing taxonomy.
+ChatGPT pre-human diagnosis exists for all 20 rows. Qwen diagnosis exists for 18 rows under the frozen escalation rules.
 
-### `batch2_semantic_staging`
+Machine judgments remain evidence, not editorial authority.
 
-Stores deployable metadata derived only after the human Thai decision:
+---
+
+## 5. Deploy-review bridge
+
+A private deployment bridge was added so corpus usability does not require rewriting benchmark provenance.
+
+### `private.batch2_deploy_reviews`
+
+Security-invoker private view that presents a common deployment contract for:
+
+- clean official human reviews from `private.batch2_human_reviews`;
+- technical-pilot final reviews from `public.answers_thai_reviews` round `batch2-tech-pilot-v1`.
+
+It exposes deployment fields such as:
 
 ```text
-final human SHA-256
-English adaptation
+source_id
+decision
+final_thai
+final_sha256
+reviewed_at
+record_class
+benchmark_metric_eligible
+human_first_protocol_compliant
+```
+
+For the technical 20:
+
+```text
+benchmark_metric_eligible = false   for all 20
+human_first_protocol_compliant = false only for B2-0001
+```
+
+The view has no direct `anon`, `authenticated` or `service_role` access.
+
+`private.batch2_stage_semantics`, its trigger helper, and `private.batch2_promote_unit` were updated to use this deployment contract while retaining their private / owner-only execution model.
+
+`private.batch2_promotions` now records:
+
+```text
+promotion_class = clean_metric | technical_pilot
+```
+
+This keeps corpus deployment provenance explicit.
+
+---
+
+## 6. Semantic enrichment of B2-0001–B2-0020
+
+English adaptations were created only **after** the human Thai decisions were complete.
+
+All 20 then received Batch 1-compatible:
+
+```text
 topics[]
 focus[]
 support[]
 helpers[]
 is_universal
-dictionary delta
-reachability probe questions
-semantic SHA-256
-staging / validated / promoted state
+probe_questions[]
 ```
 
-Promoted rows are immutable.
+No technical row was made universal.
 
-### `batch2_routing_checks`
-
-Append-only pre-promotion proof for each 20-row unit. A persisted check contains candidate dictionary/index hashes, the semantic manifest hash, reachability evidence and all zero-failure counters.
-
-### `batch2_promotions`
-
-Append-only record of each successful 20-row atomic promotion, including old/new corpus revision, source IDs, permanent answer IDs and integrity hashes.
-
-### `batch2_answer_map`
-
-Immutable mapping:
+The unit required only three genuinely new focus concepts:
 
 ```text
-B2 source ID → canonical private.answers answer_id → promotion → corpus revision
-```
-
-This makes the research/evaluation record and the deployable Book record permanently traceable without making them the same object.
-
----
-
-## 4. Security model
-
-All five new private tables:
-
-- have RLS enabled as defense in depth;
-- have no direct `SELECT`, `INSERT`, `UPDATE` or `DELETE` privilege for `anon`, `authenticated` or `service_role`;
-- are reached operationally only from narrowly scoped server-side services.
-
-The new/hardened private functions are all **SECURITY INVOKER**:
-
-```text
-private.batch2_record_raw_draft
-private.batch2_record_human_review
-private.batch2_review_payload
-private.batch2_stage_semantics
-private.batch2_promote_unit
-private.batch2_semantic_prepare
-private.batch2_semantic_lock_promoted
-private.batch2_reject_append_only
-```
-
-`anon`, `authenticated` and `service_role` have no direct EXECUTE privilege on any of the above, including trigger-only helpers.
-
-No general-purpose SQL/HTTP executor was introduced.
-
-Supabase security advisors were rerun after DDL. There are **no new Batch 2 SECURITY DEFINER or mutable-search-path findings**. The advisor still reports project-wide pre-existing findings plus informational `private`-table RLS/no-policy notices; those are outside this Batch 2 change and the private tables have direct grants revoked.
-
----
-
-## 5. Raw/final LF integrity gate
-
-The original technical pilot exposed an ingestion bug: intended line breaks were stored as literal backslash-`n` transport text.
-
-The official raw-draft helper is now hardened:
-
-```text
-private.batch2_record_raw_draft(...)
-```
-
-It rejects any raw Thai containing literal `\\n` transport escapes. Real LF bytes are required.
-
-The human-review helper has the same final-copy protection:
-
-```text
-private.batch2_record_human_review(...)
-```
-
-A destructive probe attempted to write a literal escaped line break to B2-0041; the helper rejected it and no B2-0041 raw row persisted.
-
-The clean unit B2-0021–B2-0040 was verified after insertion:
-
-```text
-rows                         20
-literal backslash-n rows      0
-minimum real LF count         3
-maximum real LF count         3
-```
-
-Each current draft is therefore four authored lines separated by three real LF bytes.
-
-The old B2-0001–B2-0020 technical unit remains preserved for workflow evidence but is **non-metric and excluded from corpus promotion**.
-
----
-
-## 6. 129-focus reconciliation
-
-All 129 frozen Batch 2 `intended_focus` labels have been reconciled before scale.
-
-Result:
-
-```text
-reuse existing canonical concept      121
-new focus concept candidate              7
-derive from reviewed scenario            1
-total                                    129
-```
-
-Seven justified new focus candidates:
-
-```text
-bar
-cleaning
 consistency
-errand
-help
 home
 stress
 ```
 
-Important non-duplication decisions include:
+These were added atomically with the unit. Existing concepts were reused everywhere else.
 
-```text
-eat       → existing topic `food`
-repair    → existing support `fix-repair`
-hotel     → existing bridge `hotel` → travel context
-plan-b    → existing support concept
-risk      → existing support concept
-take-action → existing support concept
-wait-decision → existing support concept
-care      → derive from scenario; it is an audit/safety label, not a live focus
-```
-
-This reconciliation is staging authority only. Final answer semantics are still based on the human-approved final Thai and the actual applicability of the answer.
+No normalized alias/typo ownership collision was introduced.
 
 ---
 
-## 7. Human-first production reviewer
+## 7. Routing and reachability validation
 
-New server-side function:
-
-```text
-batch2-production-review-service
-```
-
-Live deployment:
+The first complete validation found:
 
 ```text
-id           40dcfa28-ae5b-4399-9ddc-e1136dd4470b
-version      1
-status       ACTIVE
-verify_jwt   true
-SHA-256      217cbce93a35c5fa1b11dae5368b0b77373f70f3cff2a4eb5db0a3fa04e4c15e
+alias collisions            0
+semantic-zero rows          0
+index-unreachable rows      0
+probe-unreachable rows      0
+Batch 1 regressions         0
 ```
 
-It requires:
+Every one of the 20 original source scenarios reached its corresponding candidate answer through the same routing logic used by the Book.
 
-- Supabase JWT;
-- active `auth.sessions` membership;
-- `public.is_fg_admin()`;
-- Flipgazine production origin for browser access.
-
-Actions:
+Examples include:
 
 ```text
-load_unit
-run_qwen
-save_review
+B2-0001 → answer 949 via relationship / situationship / direct-talk routing
+B2-0019 → answer 967 through the new `home` focus
+B2-0020 → answer 968 through `stress` + work context
 ```
 
-Reviewer exposure is 100% human-first. Before the human decision, the service does not return machine-audit content. The row becomes reviewable only when:
+The current hard CARE interceptor was not weakened to improve reachability.
+
+### Canonical hash bridge discovered during this first full run
+
+The first routing preflight correctly passed all parser and regression tests, but its original Edge implementation calculated SHA-256 over JavaScript `JSON.stringify(...)`, while the database promotion gate hashes PostgreSQL canonical `jsonb::text`.
+
+Those two serializations can represent identical JSON while producing different byte strings and therefore different hashes.
+
+For this technical unit, a second persisted check was generated using database-canonical JSONB hashes before promotion:
 
 ```text
-raw LF gate passes
-ChatGPT pre-human audit exists
-required Qwen pre-human audit exists, when required
-human review does not already exist
+parser / probe check id       1
+canonical hash check id       2
 ```
 
-`save_review` writes the official append-only `private.batch2_human_reviews` record, not the old public technical-review table.
+Check 2 retained check 1's zero-failure routing evidence and recomputed the candidate dictionary, index and semantic manifest hashes in the exact format required by the promotion gate.
+
+The production routing service was then fixed so future clean units use database-canonical JSONB hashes directly.
 
 ---
 
-## 8. Live Thai Audit UI
+## 8. Atomic technical-pilot promotion
 
-Canonical reviewer page:
-
-```text
-/answers-thai-review-batch2.html
-site_files version 7
-```
-
-The previous technical UI was preserved at:
+Promotion proof:
 
 ```text
-/wip/answers-thai-review-batch2-tech-pilot-20260818.html
+promotion id                  1
+promotion class               technical_pilot
+base revision                 125
+new revision                  126
+answer IDs                    949–968
+active count                  948 → 968
+routing check                 2
 ```
 
-The production page now points to `batch2-production-review-service` and starts with B2-0021–B2-0040.
-
-Pre-decision UI shows only:
+Integrity hashes:
 
 ```text
-source ID
-question/scenario
-frozen Thai draft
-HUMAN FIRST
-AI comparison sealed
-ACCEPT / EDIT / REWRITE
+dictionary SHA-256  453996612271cd15bf942ca764d6e63fb32e50a6c3ec884ab477fb4a255f2438
+index SHA-256       d6f8df9cf5658690cb7ab809c5e616344c5c61ff03fadb1996671dda4f9e30b6
+promotion SHA-256   bfe59d7edef89f98b5be576f4350eb0c52c8effbacd43e87d0026b17b73260c0
 ```
 
-`EDIT` and `REWRITE` explicitly enter editable mode; the textarea is read-only before that. `ACCEPT` is one tap and must preserve the raw draft exactly.
+The corpus revision source is:
 
-After the human decision is committed, stored machine diagnoses can be revealed for comparison.
+```text
+batch2-technical-pilot-promotion
+```
+
+The atomic transaction wrote:
+
+- 20 canonical `private.answers` rows;
+- a new routing dictionary and index for revision 126;
+- the new corpus revision;
+- one immutable promotion record;
+- 20 immutable B2 source → canonical answer mappings;
+- promoted status on all 20 semantic rows.
 
 ---
 
-## 9. First clean production unit
+## 9. Post-promotion verification
 
-The first metric-eligible unit is:
-
-```text
-B2-0021 → B2-0040
-```
-
-Current frozen state immediately before human review:
+Verified live after commit:
 
 ```text
-raw drafts                              20
-raw rows with literal transport escapes  0
-ChatGPT pre-human self audits           20
-rows requiring Qwen                     17
-Qwen audits completed at handoff         0
-official human reviews                   0
-semantic staging rows                    0
-routing checks                           0
-promotions                               0
-promoted Batch 2 answers                 0
+corpus revision                         126
+active answers                          968
+max answer_id                           968
+B2 source → answer mappings              20
+semantic rows promoted                   20
+active answers unreachable from index     0
+normalized alias/typo collisions          0
+technical rows in clean human table        0
+technical rows in clean metric denominator 0
+human-first exceptions                    1  (B2-0001 only)
 ```
 
-The page prepares the 17 required Qwen audits in the background. Their results remain sealed. Buttons enable only after the machine-evidence gate for a row is complete.
+The three new concepts each exist once in the live revision-126 dictionary.
 
-The 20 ChatGPT self-audits were deliberately not all marked perfect. The diagnosis layer contains some minor-problem cases, but those judgments are hidden from the human reviewer until after the decision.
+The technical records therefore have a permanent source → review → final Thai → semantics → canonical answer → corpus revision lineage without being misrepresented as clean benchmark observations.
 
 ---
 
-## 10. Semantic staging after each human-reviewed unit
+## 10. Buyer-export checkpoint
 
-A new owner-only helper exists:
-
-```text
-private.batch2_stage_semantics(...)
-```
-
-It can only stage a source after an official human review exists and its `final_sha256` must match the human-review record.
-
-For each reviewed row ChatGPT prepares:
+The first internal export preview is frozen in the private database:
 
 ```text
-English adaptation from final Thai
-existing Batch 1 topics[]
-existing/new-approved focus[]
-existing support[]
-existing helpers[]
-is_universal (normally false)
-dictionary_delta
-probe_questions[]
+snapshot_name      ANSWERS-B2-TECH-PILOT-v1-preview
+schema_version     ANSWERS-B2-BUYER-v1
+records            20
+corpus_revision    126
+snapshot SHA-256   6a6e0ca0d51b3d342d0f4a14521df5466c6f8e0e8b9d3c94fe7bff4c4ee92a2d
 ```
 
-Dictionary delta has exactly three lanes:
+It contains, per record:
 
-```json
-{
-  "concepts": [],
-  "aliases": [],
-  "typos": []
-}
+```text
+source provenance
+raw AI generation + raw hash
+normalized display copy for the technical transport defect
+ChatGPT / Qwen machine judgments
+native-human decision + final Thai + final hash
+human-first compliance flag
+English adaptation
+semantic routing fields
+dictionary delta
+reachability evidence
+canonical answer_id
+corpus revision and promotion hashes
 ```
 
-Aliases and typos modify canonical dictionary concepts, never individual answer rows.
-
-The same Batch 1 array normalizer is reused for answer-level semantics.
+This is an internal QA snapshot, not a public asset and not a buyer delivery yet.
 
 ---
 
-## 11. Routing validation service
+## 11. Routing service current state
 
-New server-side function:
+`batch2-routing-service` is now **version 5 ACTIVE** with Supabase gateway JWT verification enabled.
 
-```text
-batch2-routing-service
-```
-
-Live deployment:
+Current deployment SHA-256:
 
 ```text
-id           443448b4-0ac9-4f58-af1f-0e5756cf68ae
-version      1
-status       ACTIVE
-verify_jwt   true
-SHA-256      9bc96973c4fed8bc5c200a1bf46591ed26f6c1a10a6afe9acf8a385f7ffd5c15
+b12acd588ec37c4d57ce44db5b5e0d299723be171c0a3c618aa9555ac19f0d48
 ```
 
-Actions:
+Version 5 fixes:
 
-```text
-get_reconciliation
-validate_unit
-promote_unit
-```
+- deployment reads through `private.batch2_deploy_reviews`;
+- clean and technical record classes stay explicit;
+- candidate dictionary/index/semantic hashes use PostgreSQL canonical `jsonb::text` SHA-256;
+- persisted routing reports are JSONB objects rather than JSON-string payloads;
+- promotion submits the candidate dictionary through an explicit text→JSONB conversion matching the database gate.
 
-A unit must contain exactly 20 unique contiguous sources.
-
-`validate_unit` builds a candidate dictionary + corpus index without publishing. It preserves all old concept IDs, kinds, aliases and typos, then applies only staged deltas.
-
-It checks:
-
-```text
-normalized alias/typo ownership collisions
-invalid/empty surface forms
-semantic-zero new answers
-index-unreachable active answers
-parser-to-eligible reachability for new answers
-Batch 1 dictionary regressions
-```
-
-Per-answer reachability probes include the exact source where not intercepted by runtime CARE, explicit staged probes, primary focus aliases and support aliases.
-
-The required persisted zero-failure counters are:
-
-```text
-alias_collisions       = 0
-semantic_zero          = 0
-unreachable_index      = 0
-unreachable_probe      = 0
-batch1_regressions     = 0
-```
-
-Only a passing check changes semantic rows from `staged` to `validated`.
+The production reviewer remains separate and continues to enforce the clean human-first review flow for B2-0021 onward.
 
 ---
 
-## 12. Atomic 20-row promotion
+## 12. Current next action
 
-The database now exposes the owner-only SECURITY INVOKER function:
+The technical first-20 cycle is **closed**.
 
-```text
-private.batch2_promote_unit(...)
-```
+Do not re-review or regenerate B2-0001–B2-0020.
 
-It refuses to promote unless:
-
-- exactly 20 contiguous unique sources are supplied;
-- all 20 have official human reviews;
-- all 20 semantic rows are `validated`;
-- final human hashes and semantic hashes match;
-- a persisted passing routing check exists for the exact same current corpus revision and source IDs;
-- all zero-failure counters are zero;
-- candidate dictionary and semantic manifest hashes match the check;
-- all tags are legal under the candidate dictionary and existing allowed topic/helper taxonomy;
-- no duplicate normalized Thai exists;
-- no unrevealed live answer request is in flight.
-
-Inside one transaction it:
+Continue with:
 
 ```text
-assigns 20 permanent canonical answer IDs
-inserts the final Thai + English + semantics into private.answers
-rebuilds the index with private.answer_build_index()
-verifies the rebuilt index hash equals the preflight candidate
-verifies zero active answers are unreachable from the index
-writes new dictionary + index to answer_routing_assets
-creates the next answer_corpus_revisions row
-writes immutable promotion provenance
-writes B2 source → answer_id mappings
-locks the semantic rows as promoted
+B2-0021–B2-0040 native-human review
+→ English adaptation from final Thai
+→ semantic/dictionary enrichment
+→ routing + regression validation
+→ atomic promotion to the next corpus revision
+→ live verification
+→ buyer-export preview update
+→ prepare B2-0041–B2-0060
 ```
 
-Therefore the system cannot enter a state where a Batch 2 answer is live but its required dictionary change is not.
-
----
-
-## 13. Same Batch 1 runtime after promotion
-
-After promotion, the Book does not know or care that a row came from Batch 2.
-
-It uses the same runtime sequence:
-
-```text
-question normalization
-→ alias / typo recognition
-→ focus / slang / support / topic / helper parse
-→ focus-first tier selection
-→ support enrichment
-→ two universal additions on non-generic route
-→ recent-answer exclusion
-→ uniform random eligible pick
-→ private reveal
-```
-
-The promotion bridge deliberately uses the existing `private.answer_build_index()` instead of creating a second index format.
-
-Reachability parity is checked after every 20-row promotion, not only at the end of the 1,000 rows.
-
----
-
-## 14. CARE boundary
-
-`care_case` in the Batch 2 source set remains an **audit flag**, not automatic runtime CARE ownership.
-
-The hard existing CARE interceptor still has precedence. A source caught by that interceptor is recorded as CARE-intercepted during reachability validation; the normal answer corpus is not allowed to bypass CARE simply to satisfy a reachability metric.
-
-`care` is therefore the one `intended_focus` value classified as `derive_from_scenario` instead of a routing concept.
-
----
-
-## 15. Advisor follow-up
-
-After the new tables/functions were created, Supabase performance advisors identified five new Batch 2 foreign keys without covering indexes. The following indexes were added:
-
-```text
-batch2_answer_map_promotion_idx
-batch2_answer_map_revision_idx
-batch2_promotions_base_revision_idx
-batch2_promotions_promoted_by_idx
-batch2_routing_checks_base_revision_idx
-```
-
-Other advisor results are pre-existing project-wide objects or expected informational notices on private tables with RLS enabled and no client policies.
-
----
-
-## 16. Repository implementation artifacts
-
-Committed to `main`:
-
-```text
-supabase/functions/batch2-production-review-service/index.ts
-supabase/functions/batch2-routing-service/router.ts
-supabase/functions/batch2-routing-service/index.ts
-answers-private-server/batch2-routing-implementation-proof.json
-```
-
-Commits:
-
-```text
-7842600b30b5be062da73cdb196fd594099061ea  production review service
-9d83a19d8680c5aca4b9c20faa4942b8fff0a135  routing parity core
-38248dcbe090bb6e56fa5cb988366b69dcc6d66b  routing validation/promotion service
-d6c987edca82e6dfc4abf0101a0ef54f0ddf099a  implementation proof
-```
-
----
-
-## 17. What happens after Decha finishes B2-0021–B2-0040
-
-Do **not** manually copy the answers into the old 948-row corpus editor.
-
-The correct next transaction is:
-
-```text
-20 official human decisions complete
-→ read exact final Thai from private.batch2_human_reviews
-→ create English adaptations
-→ stage Batch 1-compatible topics/focus/support/helpers
-→ propose only useful alias/typo additions
-→ add any approved new focus concept(s) required by this unit
-→ create realistic reachability probes
-→ batch2-routing-service validate_unit
-→ inspect zero-failure report
-→ if passing: promote_unit
-→ canonical corpus revision increments by exactly 1
-→ active answer count increments by exactly 20
-→ verify live route/index/reveal
-→ only then generate the next 20 raw drafts
-```
-
-The production rhythm is therefore:
-
-```text
-review 20
-→ enrich 20
-→ validate 20
-→ promote 20
-→ verify 20
-→ next 20
-```
-
-This prevents 1,000 unchecked drafts from accumulating ahead of the human/routing gate and keeps every published unit reversible and auditable by revision.
-
----
-
-## 18. Current handoff
-
-**Infrastructure:** complete for production review, semantic enrichment, reachability validation and atomic promotion.  
-**Source set:** frozen 1,000.  
-**Canonical live corpus:** revision 125 / 948 active answers.  
-**Technical unit B2-0001–B2-0020:** preserved, non-metric, not promotion eligible.  
-**Clean unit B2-0021–B2-0040:** frozen, LF-correct, ChatGPT-audited, ready for sealed Qwen preparation and native-human review.  
-**Official human decisions:** 0 at this handoff.  
-**Live Batch 2 promotions:** 0 at this handoff.
-
-The next action belongs to the human reviewer: open `/answers-thai-review-batch2.html`, let the sealed evidence finish preparing, and review B2-0021–B2-0040 without seeing the machine judgments first.
+The 20 technical records remain visible in buyer provenance and live in the Book, but they never enter clean Batch 2 benchmark percentages.
