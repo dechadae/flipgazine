@@ -2,108 +2,198 @@
 
 **Purpose:** canonical human-readable documentation for continuing the Answers project across ChatGPT sessions.
 
-This folder keeps the project plans, editorial authority, provenance records, commercial workflow and completed security-migration audit trail together. Executable code and machine proof artifacts remain outside this folder.
+This folder contains current operational authority, editorial methodology, Batch 2 provenance, buyer-export rules, commercialization planning and the completed private-server migration record.
+
+---
 
 ## Read first
 
-The repository-root `AGENTS.md` is the short operational entry point. It contains the current source-of-truth rules and points here for deeper documentation.
-
 For current Answers work, use this order:
 
-1. `ANSWERS-BATCH2-CORPUS-ROUTING-REACHABILITY-IMPLEMENTATION-REPORT.md` — live Batch 2 production infrastructure: LF integrity gate, production reviewer, 129-focus reconciliation, semantic staging, alias/typo enrichment, reachability validation and atomic 20-row corpus promotion.
-2. `ANSWERS-BATCH2-TECH-PILOT-COMPLETION-REPORT.md` — latest completed review checkpoint: B2-0001–B2-0020 are fully human-reviewed (4 ACCEPT / 9 EDIT / 7 REWRITE), included in buyer evidence, but excluded from clean benchmark metrics and corpus promotion.
-3. `ANSWERS-BATCH2-ACTIVE-REVIEW-ORDER-CORRECTION.md` — current operational order: B2-0001–B2-0020 complete; B2-0021–B2-0040 is now the first active clean metric-eligible unit.
-4. `ANSWERS-BATCH2-BUYER-DATA-EXTRACTION-SPEC.md` — **governing buyer export contract**: canonical JSONL/CSV bundle, source-table extraction map, technical-pilot sidecar treatment, machine/human sequence proof, semantic/routing/reachability evidence, privacy redaction, hashes/manifests and clean 1,000-record denominator rules.
-5. `ANSWERS-BATCH2-HUMAN-FIRST-REVIEW-CORRECTION.md` — governing human-review exposure rule: all machine judgments are sealed from the native-human reviewer until the first ACCEPT / EDIT / REWRITE decision is committed.
-6. `ANSWERS-BATCH2-CORPUS-ROUTING-REACHABILITY-PLAN.md` — governing Batch 2 routing/promotion specification: same canonical `private.answers` schema, same focus/topic/support/helper routing, dictionary alias/typo enrichment, per-answer reachability proof, atomic 20-row promotion and Batch 1 regression protection.
-7. `ANSWERS-BATCH2-SELF-AUDIT-IMPLEMENTATION-REPORT.md` — underlying Batch 2 generation/audit infrastructure history. Read together with newer human-first and routing implementation reports where its older pre-pilot checkpoint is superseded.
-8. `ANSWERS-COMMERCIAL-EXECUTION-TIMELINE.md` — dated commercialization schedule and milestones; older Batch 2 checkpoint text should be interpreted through the live checkpoint docs above.
-9. `ANSWERS-COMMERCIAL-BENCHMARK-PLAN.md` — commercial strategy, Batch 2 methodology, positioning, licensing scope and claim boundaries.
-10. `ANSWERS-BATCH2-SELF-AUDIT-PROTOCOL.md` — frozen generation/audit protocol and historical blind-assignment design. Its reviewer-exposure rule is superseded by the human-first correction.
-11. `ANSWERS-VOICE-TONE.md` — canonical Thai/English editorial authority and AI-transfer findings.
-12. `ANSWERS-VOICE-BENCHMARK-PLAN.md` — public Thai-response evaluator design history; older numeric-score material is superseded by the live qualitative Voice evaluator.
-13. `ANSWERS-HUMAN-EVALUATION-SCHEME.md` — approved human-evaluation deliverable and rights/scope model.
-14. `ANSWERS-HUMAN-REVIEW.md` — immutable Batch 1 Thai human-review methodology and provenance record.
-15. `ANSWERS-PRIVATE-SERVER-PHASE-K-MIGRATION-MANIFEST.md` — frozen proof of the completed private-server migration.
+1. `ANSWERS-BATCH2-CORPUS-ROUTING-REACHABILITY-IMPLEMENTATION-REPORT.md` — **current live implementation checkpoint**: definitive production cycle, technical first20 full corpus promotion, revision 126 verification, routing-service v5 and current next action.
+2. `ANSWERS-BATCH2-TECH-PILOT-COMPLETION-REPORT.md` — B2-0001–B2-0020 full-cycle record: 4 ACCEPT / 9 EDIT / 7 REWRITE, non-metric provenance, enrichment, validation, corpus IDs 949–968 and buyer preview.
+3. `ANSWERS-BATCH2-BUYER-DATA-EXTRACTION-SPEC.md` — **governing buyer export contract**: corpus vs benchmark count language, technical-pilot treatment, clean replacement set, JSONL/CSV schema, routing evidence and per-promotion export checkpoint.
+4. `ANSWERS-BATCH2-ACTIVE-REVIEW-ORDER-CORRECTION.md` — historical correction that restored the first20 review before clean production. Its immediate-next-action text is superseded by the current implementation report where necessary.
+5. `ANSWERS-BATCH2-HUMAN-FIRST-REVIEW-CORRECTION.md` — machine judgments are sealed until the native-human ACCEPT / EDIT / REWRITE decision is committed.
+6. `ANSWERS-BATCH2-CORPUS-ROUTING-REACHABILITY-PLAN.md` — governing routing/promotion architecture: same canonical Book corpus, same semantics, deterministic reachability and atomic 20-row promotion.
+7. `ANSWERS-BATCH2-SELF-AUDIT-IMPLEMENTATION-REPORT.md` — generation/audit infrastructure history; use newer implementation reports for current state.
+8. `ANSWERS-BATCH2-SELF-AUDIT-PROTOCOL.md` — frozen generation, ChatGPT self-audit, Qwen escalation and historical blind-assignment protocol. Human visibility is superseded by the human-first correction.
+9. `ANSWERS-COMMERCIAL-EXECUTION-TIMELINE.md` — commercialization schedule.
+10. `ANSWERS-COMMERCIAL-BENCHMARK-PLAN.md` — commercial positioning, licensing and methodology claim boundaries.
+11. `ANSWERS-VOICE-TONE.md` — Thai / English editorial authority.
+12. `ANSWERS-VOICE-BENCHMARK-PLAN.md` — public Voice evaluator design history.
+13. `ANSWERS-HUMAN-EVALUATION-SCHEME.md` — human-evaluation deliverable.
+14. `ANSWERS-HUMAN-REVIEW.md` — immutable Batch 1 provenance.
+15. `ANSWERS-PRIVATE-SERVER-PHASE-K-MIGRATION-MANIFEST.md` — final private-server migration proof.
 
-## Security migration archive
+Repository-root `AGENTS.md` remains the short operational entry point.
 
-The private-server migration is complete as of 17 August 2026. The following files are retained as implementation and diligence evidence, not as pending work:
-
-- `ANSWERS-PRIVATE-SERVER-MIGRATION-PLAN.md` — original security specification.
-- `ANSWERS-PRIVATE-SERVER-PHASE-A-INVENTORY.md`
-- `ANSWERS-PRIVATE-SERVER-PHASE-B-REPORT.md`
-- `ANSWERS-PRIVATE-SERVER-PHASE-C-REPORT.md`
-- `ANSWERS-PRIVATE-SERVER-PHASE-D-PARITY-REPORT.md`
-- `ANSWERS-PRIVATE-SERVER-PHASE-E-REPORT.md`
-- `ANSWERS-PRIVATE-SERVER-PHASE-F-REPORT.md`
-- `ANSWERS-PRIVATE-SERVER-PHASE-G-REPORT.md`
-- `ANSWERS-PRIVATE-SERVER-PHASE-H-REPORT.md`
-- `ANSWERS-PRIVATE-SERVER-PHASE-I-ACCEPTANCE-REPORT.md`
-- `ANSWERS-PRIVATE-SERVER-PHASE-J-CUTOVER-REPORT.md`
-- `ANSWERS-PRIVATE-SERVER-PHASE-K-MIGRATION-MANIFEST.md`
-
-Phase K is the best single document for the final post-cutover state. Phase J records the production cutover itself. Phase D/H/I contain deterministic parity and acceptance evidence.
+---
 
 ## Current authority boundaries
 
-- **Architecture / operational guardrails:** repository-root `AGENTS.md`.
-- **Current Batch 2 production infrastructure:** `ANSWERS-BATCH2-CORPUS-ROUTING-REACHABILITY-IMPLEMENTATION-REPORT.md`.
-- **Latest completed Batch 2 review checkpoint:** `ANSWERS-BATCH2-TECH-PILOT-COMPLETION-REPORT.md`.
-- **Current active review order:** `ANSWERS-BATCH2-ACTIVE-REVIEW-ORDER-CORRECTION.md`.
-- **Buyer data extraction / export schema / denominator rules:** `ANSWERS-BATCH2-BUYER-DATA-EXTRACTION-SPEC.md`.
-- **Human-review exposure rule:** `ANSWERS-BATCH2-HUMAN-FIRST-REVIEW-CORRECTION.md`.
-- **Corpus/routing/reachability specification:** `ANSWERS-BATCH2-CORPUS-ROUTING-REACHABILITY-PLAN.md`.
-- **Generation/audit implementation history:** `ANSWERS-BATCH2-SELF-AUDIT-IMPLEMENTATION-REPORT.md`.
-- **Current schedule:** `ANSWERS-COMMERCIAL-EXECUTION-TIMELINE.md`.
-- **Commercial methodology / claims / licensing:** `ANSWERS-COMMERCIAL-BENCHMARK-PLAN.md`.
-- **Frozen generation/audit protocol and historical blind assignment:** `ANSWERS-BATCH2-SELF-AUDIT-PROTOCOL.md`.
-- **Thai and English editorial decisions:** `ANSWERS-VOICE-TONE.md`.
-- **Public Voice evaluator:** live `/voice.html`; `ANSWERS-VOICE-BENCHMARK-PLAN.md` is design history where older numeric-score text conflicts with the live qualitative evaluator.
-- **Human evaluation deliverable:** `ANSWERS-HUMAN-EVALUATION-SCHEME.md`.
+- **Current production state / cycle order:** `ANSWERS-BATCH2-CORPUS-ROUTING-REACHABILITY-IMPLEMENTATION-REPORT.md`.
+- **First20 technical evidence:** `ANSWERS-BATCH2-TECH-PILOT-COMPLETION-REPORT.md`.
+- **Buyer extraction / counts / schema:** `ANSWERS-BATCH2-BUYER-DATA-EXTRACTION-SPEC.md`.
+- **Human-review visibility:** `ANSWERS-BATCH2-HUMAN-FIRST-REVIEW-CORRECTION.md`.
+- **Routing architecture:** `ANSWERS-BATCH2-CORPUS-ROUTING-REACHABILITY-PLAN.md`.
+- **Frozen generation/audit design:** `ANSWERS-BATCH2-SELF-AUDIT-PROTOCOL.md`.
+- **Commercial methodology:** `ANSWERS-COMMERCIAL-BENCHMARK-PLAN.md`.
+- **Thai / English editorial decisions:** `ANSWERS-VOICE-TONE.md`.
 - **Batch 1 provenance:** `ANSWERS-HUMAN-REVIEW.md`.
-- **Completed migration proof:** `ANSWERS-PRIVATE-SERVER-PHASE-K-MIGRATION-MANIFEST.md`.
+- **Completed security migration:** `ANSWERS-PRIVATE-SERVER-PHASE-K-MIGRATION-MANIFEST.md`.
 
-When documents overlap, use the document that owns the decision. The buyer extraction spec governs what gets delivered and which rows enter buyer-facing denominators; the human-first correction governs reviewer visibility; the routing implementation report governs production promotion/reachability; the technical-pilot completion report governs B2-0001–B2-0020 provenance.
+When older checkpoint wording conflicts with a newer authority, follow the newer document that owns that decision. In particular, older statements that B2-0001–B2-0020 are “not promotion eligible” are superseded: they are now corpus-linked as reviewed technical-pilot content while remaining excluded from clean benchmark metrics.
 
-## Files intentionally kept elsewhere
+---
 
-`../../answers-private-server/` contains executable router/parity code and machine-readable proof artifacts, including `batch2-routing-implementation-proof.json`. It is not documentation and should remain separate.
+## Definitive Batch 2 production rhythm
 
-`../../supabase/functions/` contains deployed/repository-mirrored Edge Function source, including `batch2-qwen-audit`, `batch2-production-review-service`, and `batch2-routing-service`.
+For every clean 20-row unit:
 
-`../../flipgazine-root-3/` contains Cloudflare Pages shell code and shell-specific README/deployment documentation. Those files describe wider Flipgazine infrastructure, not the Answers ChatGPT workflow.
+```text
+frozen scenarios / drafts / sealed audits
+→ native-human REVIEW 20
+→ reveal machine comparison
+→ ENGLISH from final Thai
+→ semantic + dictionary ENRICHMENT
+→ reachability + Batch 1 regression VALIDATION
+→ atomic PROMOTION
+→ live VERIFY
+→ buyer EXPORT PREVIEW
+→ NEXT 20
+```
 
-Historical Supabase `/wip/` and `/private/` corpus artifacts remain evidence/recovery material and are not replaced by this documentation folder.
+Do not generate later units before the preceding unit has passed its full promotion + verification + export checkpoint unless a governing document explicitly changes this cadence.
+
+---
 
 ## Current project checkpoint — 18 August 2026
 
-- Security/private-server migration: **COMPLETE — 17 August 2026**.
-- Canonical corpus owner: private database.
-- Canonical live corpus: **revision 125 / 948 active reviewed Batch 1 answers**.
-- Batch 1 routing parity baseline: **0 semantic-zero answers / 0 index-unreachable active answers / 0 normalized alias-typo cross-concept collisions**.
-- Public Answers controller after cutover: v125 corpus-free client controller.
-- Real Batch 2 original source set: **FROZEN — 1,000 unique scenarios**; historical 100-row blind assignment remains provenance only.
-- Batch 2 human-review exposure for clean production units: **100% HUMAN-FIRST** — ChatGPT/Qwen judgments are generated against frozen drafts, sealed from the reviewer, and revealed only after the first human ACCEPT / EDIT / REWRITE decision.
-- Technical B2-0001–B2-0020: **HUMAN REVIEW COMPLETE — 20/20** with **4 ACCEPT / 9 EDIT / 7 REWRITE**. They are **included in buyer evidence** but remain **NON-METRIC / NOT PROMOTION-ELIGIBLE** because all 20 have the original escaped-line-break transport defect; B2-0001 additionally has a machine-visibility exception before the human-first correction.
-- Buyer export policy: **GOVERNING SPEC COMPLETE** in `ANSWERS-BATCH2-BUYER-DATA-EXTRACTION-SPEC.md`. Canonical buyer output is JSONL plus CSV projections, machine/human sequence proof, semantic/routing/reachability evidence, manifests and SHA-256 file hashes.
-- Clean commercial Batch 2 target: **1,000 metric-eligible records** = B2-0021–B2-1000 (980 original-source clean rows) + a separately frozen 20-row supplemental replacement set under a separate namespace/version. `B2-SOURCESET-v1` is never mutated.
-- Planned combined delivery once complete: **1,948 usable reviewed corpus records** (948 Batch 1 + 1,000 clean Batch 2) **plus 20 reviewed technical-pilot evidence records**, for **1,968 total reviewed records delivered**.
-- Technical-pilot Qwen evidence: **18/20 rows audited**; two rows did not require Qwen under the frozen escalation rules. These observations are descriptive only and must not be used as official buyer metrics.
-- Raw/final LF integrity guard: **IMPLEMENTED AND DESTRUCTIVELY TESTED**; literal `\\n` transport escapes are rejected from the clean metric-eligible path.
-- Intended-focus reconciliation: **COMPLETE — 129/129**; 121 reuse canonical concepts, 7 justified new focus candidates, 1 (`care`) derives semantics from the reviewed scenario.
-- Batch 2 semantic staging + alias/typo delta + reachability proof: **IMPLEMENTED**.
-- Batch 2 atomic 20-row corpus/dictionary/index promotion: **IMPLEMENTED** and gated on zero alias collisions, zero semantic-zero rows, zero index-unreachable rows, zero parser-probe-unreachable rows and zero Batch 1 dictionary regressions.
-- Production reviewer: `batch2-production-review-service` v1 ACTIVE / JWT + active-session + admin guarded.
-- Routing service: `batch2-routing-service` v1 ACTIVE / JWT + active-session + admin guarded.
-- Live Thai Audit Batch 2 page: `/answers-thai-review-batch2.html` **site_files v9**, production human-first path.
-- Current active clean metric-eligible unit: **B2-0021–B2-0040** — 20 frozen raw drafts, 0 literal escape rows, exactly 3 real LF bytes per draft, 20 sealed ChatGPT self-audits, 17 rows requiring sealed Qwen before their human buttons enable.
-- Official Batch 2 human reviews for B2-0021–B2-0040 at this checkpoint: **0**.
-- Semantic staging rows / routing checks / promotions / promoted Batch 2 answers at this checkpoint: **0 / 0 / 0 / 0**.
-- Production rhythm: **review 20 → enrich 20 → validate 20 → promote 20 → verify 20 → internal buyer-export preview → generate next 20**. Do not pre-generate later units before the preceding unit passes its routing/promotion gate.
-- Thai Voice public evaluator remains qualitative and separate from Batch 2 audit machinery.
-- Active commercial evidence work: human/machine disagreement, routing/reachability provenance, buyer-facing methodology, export integrity and the eventual 1,948 usable + 20 technical-evidence delivery.
+### Canonical Book
 
-The next action is native-human review of **B2-0021–B2-0040** in `/answers-thai-review-batch2.html`. After all 20 official decisions are committed, run English adaptation, semantic enrichment, reachability validation, atomic promotion and the first internal `ANSWERS-B2-BUYER-v1` export preview before preparing B2-0041–B2-0060.
+```text
+corpus revision                126
+active canonical answers       968
+Batch 1 reviewed answers       948
+B2 technical-pilot answers      20
+active index-unreachable         0
+surface collisions               0
+```
 
-Do not reopen the completed security migration as a planning dependency unless a verified security regression appears.
+The first20 were atomically added as answer IDs **949–968**.
+
+### B2-0001–B2-0020
+
+```text
+human review          COMPLETE 20/20
+ACCEPT                  4
+EDIT                    9
+REWRITE                 7
+semantic enrichment    COMPLETE
+routing validation     PASS
+corpus promotion       COMPLETE
+buyer preview          COMPLETE
+record_class           technical_pilot
+benchmark eligible     NO
+corpus linked          YES
+```
+
+B2-0001 alone has the historical human-first exposure exception. The original escaped-linebreak raw-draft defect remains preserved for all 20.
+
+Promotion proof:
+
+```text
+base revision       125
+new revision        126
+promotion id        1
+promotion class     technical_pilot
+answer IDs          949–968
+```
+
+Buyer preview:
+
+```text
+ANSWERS-B2-TECH-PILOT-v1-preview
+rows 20 · revision 126
+SHA-256 6a6e0ca0d51b3d342d0f4a14521df5466c6f8e0e8b9d3c94fe7bff4c4ee92a2d
+```
+
+### Current clean unit
+
+**B2-0021–B2-0040** is the active first clean metric-eligible production unit in `/answers-thai-review-batch2.html`.
+
+It was prepared with real LF raw drafts and sealed machine evidence. Its human decisions belong in `private.batch2_human_reviews` and, after all 20 are complete, it follows the full cycle above.
+
+### Benchmark / corpus count rule
+
+Do not confuse the canonical Book count with the clean benchmark denominator.
+
+Planned final structure:
+
+```text
+CANONICAL BOOK
+Batch 1                            948
+Original Batch 2                 1,000
+--------------------------------------
+canonical reviewed corpus        1,948
+
+CLEAN BATCH 2 BENCHMARK
+B2-0021–B2-1000                    980
+B2R clean supplemental              20
+--------------------------------------
+clean benchmark                   1,000
+```
+
+The first20 technical rows are part of the canonical Book but not part of the clean benchmark denominator. The 20 future B2R rows are clean benchmark replacements and must never overwrite B2-0001–B2-0020.
+
+---
+
+## Current infrastructure
+
+- `batch2-production-review-service` — clean human-first reviewer service.
+- `batch2-routing-service` — **v5 ACTIVE, JWT verified**, deterministic validation/promotion service using PostgreSQL-canonical JSONB hashes.
+- `private.batch2_deploy_reviews` — private deployment compatibility view separating record class / benchmark eligibility from corpus usability.
+- `private.batch2_semantic_staging` — English + semantics + dictionary delta + probes.
+- `private.batch2_routing_checks` — append-only validation proof.
+- `private.batch2_promotions` — append-only promotion proof with `promotion_class`.
+- `private.batch2_answer_map` — immutable B2 source → canonical answer mapping.
+- `private.batch2_buyer_export_snapshots` — private export-QA snapshots.
+
+Machine proof for the completed first20 cycle:
+
+```text
+../../answers-private-server/batch2-tech-pilot-full-cycle-proof.json
+```
+
+---
+
+## Security migration archive
+
+The private-server migration was completed on 17 August 2026. Keep the phase reports as diligence evidence; do not reopen the migration as a planning dependency unless a verified regression appears.
+
+The final authority is:
+
+```text
+ANSWERS-PRIVATE-SERVER-PHASE-K-MIGRATION-MANIFEST.md
+```
+
+Executable router/parity code and machine proof stay in `../../answers-private-server/`. Deployed Edge Function mirrors stay in `../../supabase/functions/`. Wider Flipgazine shell documentation stays outside this workflow folder.
+
+---
+
+## Immediate next action
+
+Continue native-human review of **B2-0021–B2-0040**.
+
+When the twentieth clean decision is committed, do **not** manually copy rows into the corpus. Continue through:
+
+```text
+English
+→ semantics / aliases / typos / concepts
+→ deterministic validation
+→ atomic promotion
+→ live verification
+→ buyer export preview
+→ next 20
+```
