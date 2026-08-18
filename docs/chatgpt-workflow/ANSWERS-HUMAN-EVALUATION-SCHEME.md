@@ -147,7 +147,25 @@ Do not publish this value on the Voice page. The public experience remains non-c
 
 ---
 
-## 7. Why the completed task is a dense data asset
+## 7. Human Eval is separate from corpus acquisition
+
+**Human Eval is a separately quoted and commissioned per-task deliverable.** It is not automatically included in the acquisition, license, or exclusive acquisition of a corpus.
+
+In particular, the planned **1,000-record Batch 2 does not include 1,000 complete Human Eval records**, even if a buyer acquires that Batch 2 corpus exclusively.
+
+The standard Batch 2 review remains the lighter corpus workflow defined in the commercial plan: source scenario → model draft → native-editor ACCEPT / EDIT / REWRITE decision → final approved answer → provenance and lightweight reason tags.
+
+The reviewer may choose to apply the full Human Eval scheme to **selected Batch 2 records** that are especially interesting, representative, difficult, or useful for demonstration. Those deeper records should be treated as discretionary enrichment or examples. Their inclusion does **not** create a commitment to provide the same treatment for the remaining Batch 2 records.
+
+If a buyer wants full Human Eval treatment across any additional number of records, that work is separately scoped and quoted **per task** under this scheme.
+
+This boundary should remain explicit in buyer conversations:
+
+> **Corpus acquisition and Human Eval are separate deliverables. Exclusive acquisition of Batch 2 does not include full Human Eval across all 1,000 records. Selected enriched records may be included at the reviewer’s discretion.**
+
+---
+
+## 8. Why the completed task is a dense data asset
 
 A simple before/after edit pair shows only that one output changed into another.
 
@@ -180,7 +198,7 @@ The value is in the density and specificity of the finished human judgment, not 
 
 ---
 
-## 8. Rights model for buyer-supplied tasks
+## 9. Rights model for buyer-supplied tasks
 
 For the standard external workflow, the buyer supplies the prompt/scenario and model response and is responsible for having the rights and permissions required to supply and use that source material.
 
@@ -201,7 +219,7 @@ This keeps the transaction simple without promising rights that neither party ca
 
 ---
 
-## 9. Existing Book corpus is a separate rights case
+## 10. Existing Book corpus is a separate rights case
 
 The existing Book corpus must not automatically be treated as identical to a buyer-supplied human-evaluation task.
 
@@ -226,7 +244,7 @@ The new human-authored overlay can have clearer authorship/provenance than the h
 
 ---
 
-## 10. Public/private boundary
+## 11. Public/private boundary
 
 The public automated benchmark remains:
 
@@ -248,7 +266,7 @@ Ask Decha
 
 ---
 
-## 11. Core principle
+## 12. Core principle
 
 One accepted human task should leave the buyer with a complete, high-density record of **what the user asked, whether the prompt itself was adequate, what the model did, how a native editor judged the response, where any failure came from, why each judgment was made, and at least two credible human alternatives**.
 
