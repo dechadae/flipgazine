@@ -1,7 +1,7 @@
 # The Book of Answers — Batch 2 Human-First Review Correction
 
 **Effective:** 18 August 2026  
-**Updated:** 18 August 2026  
+**Updated:** 19 August 2026  
 **Status:** GOVERNING — applies to every metric-eligible Batch 2 human review
 
 ## Decision
@@ -143,6 +143,36 @@ For `KEEP`, the deployable Thai remains the exact first blind human final.
 For `CORRECT`, the first blind final and its hash remain immutable evidence, while the separately human-confirmed corrected Thai receives its own hash and becomes the deployable text used by English/semantic staging and corpus promotion.
 
 No mechanical-QA row exists unless there is something to ask the human about. A clean final with no plausible mechanical issue proceeds directly to English adaptation.
+
+## Pre-human leak replacement rule
+
+If any active production row's machine evidence is accidentally exposed to the native-human reviewer **before the first human decision**, that active row must not proceed to review.
+
+The default response is automatic replacement, not benchmark exclusion of the still-active row:
+
+```text
+pre-human machine leak detected
+→ stop that row before human review
+→ retire the exposed source/draft/audit version from active production
+→ preserve the retired version only as private append-only provenance/tombstone evidence
+→ create a genuinely new source scenario for that active ordinal/ID
+→ freeze the replacement source before generation
+→ generate one new frozen raw Thai draft
+→ run fresh sealed ChatGPT diagnosis
+→ run any required/selected fresh sealed Qwen diagnosis
+→ verify that the replacement content and machine evidence have not been exposed
+→ return the replacement row to the ordinary human-first review lane
+```
+
+No approval prompt is required from the human reviewer for this preparation-stage repair. The replacement is operational cleanup whose purpose is to restore the intended blind protocol before the human has judged the row.
+
+The retired exposed version must never re-enter active production, canonical promotion, or clean benchmark exports. Its existence remains reconstructible through private provenance so the project does not falsify history.
+
+A replacement row may remain metric-eligible if it is genuinely new, frozen before generation, receives fresh sealed machine evidence, and completes the rest of the human-first protocol without another exposure.
+
+If exposure happens **after** a human decision has already been committed, do not replace the row merely to improve benchmark appearance; preserve the actual sequence and classify it according to the governing provenance rules.
+
+The applied `B2-SOURCESET-v1.1` replacement of B2-0048 and B2-0059 is the reference implementation of this rule.
 
 ## Technical pilot caveat
 
