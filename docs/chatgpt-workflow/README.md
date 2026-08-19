@@ -12,20 +12,21 @@ For current Answers work, use this order:
 
 1. `ANSWERS-BATCH2-CORPUS-ROUTING-REACHABILITY-IMPLEMENTATION-REPORT.md` — **current corpus-production architecture**: definitive production cycle, technical first20 promotion, revision 126 verification and routing-service v5.
 2. `ANSWERS-THAI-CONVERSATION-JUDGE-ARCHITECTURE.md` — **current machine-evaluation architecture**: shared TCJ core, General Thai + Answers Voice profiles, CARE override, server-side calibration/provenance and Batch 2 integration.
-3. `ANSWERS-BATCH2-TECH-PILOT-COMPLETION-REPORT.md` — B2-0001–B2-0020 full-cycle record: 4 ACCEPT / 9 EDIT / 7 REWRITE, non-metric provenance, enrichment, validation, corpus IDs 949–968 and buyer preview.
-4. `ANSWERS-BATCH2-BUYER-DATA-EXTRACTION-SPEC.md` — **governing buyer export contract**: corpus vs benchmark count language, technical-pilot treatment, clean replacement set, JSONL/CSV schema, routing evidence and per-promotion export checkpoint.
-5. `ANSWERS-BATCH2-ACTIVE-REVIEW-ORDER-CORRECTION.md` — historical correction that restored the first20 review before clean production. Its immediate-next-action text is superseded by newer implementation/checkpoint documents.
-6. `ANSWERS-BATCH2-HUMAN-FIRST-REVIEW-CORRECTION.md` — machine judgments are sealed until the native-human ACCEPT / EDIT / REWRITE decision is committed.
-7. `ANSWERS-BATCH2-CORPUS-ROUTING-REACHABILITY-PLAN.md` — governing routing/promotion architecture: same canonical Book corpus, same semantics, deterministic reachability and atomic 20-row promotion.
-8. `ANSWERS-BATCH2-SELF-AUDIT-IMPLEMENTATION-REPORT.md` — generation/audit infrastructure history; use newer implementation reports for current state.
-9. `ANSWERS-BATCH2-SELF-AUDIT-PROTOCOL.md` — frozen generation and ChatGPT self-audit protocol plus historical Qwen-v1 design. Human visibility is superseded by the human-first correction; new Qwen runs use the TCJ architecture document above.
-10. `ANSWERS-COMMERCIAL-EXECUTION-TIMELINE.md` — commercialization schedule.
-11. `ANSWERS-COMMERCIAL-BENCHMARK-PLAN.md` — commercial positioning, licensing and methodology claim boundaries.
-12. `ANSWERS-VOICE-TONE.md` — Thai / English editorial authority.
-13. `ANSWERS-VOICE-BENCHMARK-PLAN.md` — public Voice evaluator design history.
-14. `ANSWERS-HUMAN-EVALUATION-SCHEME.md` — human-evaluation deliverable.
-15. `ANSWERS-HUMAN-REVIEW.md` — immutable Batch 1 provenance.
-16. `ANSWERS-PRIVATE-SERVER-PHASE-K-MIGRATION-MANIFEST.md` — final private-server migration proof.
+3. `ANSWERS-TCJ-LIVE-DEPLOYMENT-20260819.md` — **final live TCJ deployment checkpoint**: runtime/proxy versions, internal-boundary hardening, Voice UI cutover and smoke verification. This supersedes only the live version snapshot in the architecture document.
+4. `ANSWERS-BATCH2-TECH-PILOT-COMPLETION-REPORT.md` — B2-0001–B2-0020 full-cycle record: 4 ACCEPT / 9 EDIT / 7 REWRITE, non-metric provenance, enrichment, validation, corpus IDs 949–968 and buyer preview.
+5. `ANSWERS-BATCH2-BUYER-DATA-EXTRACTION-SPEC.md` — **governing buyer export contract**: corpus vs benchmark count language, technical-pilot treatment, clean replacement set, JSONL/CSV schema, routing evidence and per-promotion export checkpoint.
+6. `ANSWERS-BATCH2-ACTIVE-REVIEW-ORDER-CORRECTION.md` — historical correction that restored the first20 review before clean production. Its immediate-next-action text is superseded by newer implementation/checkpoint documents.
+7. `ANSWERS-BATCH2-HUMAN-FIRST-REVIEW-CORRECTION.md` — machine judgments are sealed until the native-human ACCEPT / EDIT / REWRITE decision is committed.
+8. `ANSWERS-BATCH2-CORPUS-ROUTING-REACHABILITY-PLAN.md` — governing routing/promotion architecture: same canonical Book corpus, same semantics, deterministic reachability and atomic 20-row promotion.
+9. `ANSWERS-BATCH2-SELF-AUDIT-IMPLEMENTATION-REPORT.md` — generation/audit infrastructure history; use newer implementation reports for current state.
+10. `ANSWERS-BATCH2-SELF-AUDIT-PROTOCOL.md` — frozen generation and ChatGPT self-audit protocol plus historical Qwen-v1 design. Human visibility is superseded by the human-first correction; new Qwen runs use the TCJ architecture document above.
+11. `ANSWERS-COMMERCIAL-EXECUTION-TIMELINE.md` — commercialization schedule.
+12. `ANSWERS-COMMERCIAL-BENCHMARK-PLAN.md` — commercial positioning, licensing and methodology claim boundaries.
+13. `ANSWERS-VOICE-TONE.md` — Thai / English editorial authority.
+14. `ANSWERS-VOICE-BENCHMARK-PLAN.md` — public Voice evaluator design history.
+15. `ANSWERS-HUMAN-EVALUATION-SCHEME.md` — human-evaluation deliverable.
+16. `ANSWERS-HUMAN-REVIEW.md` — immutable Batch 1 provenance.
+17. `ANSWERS-PRIVATE-SERVER-PHASE-K-MIGRATION-MANIFEST.md` — final private-server migration proof.
 
 Repository-root `AGENTS.md` remains the short operational entry point.
 
@@ -35,6 +36,7 @@ Repository-root `AGENTS.md` remains the short operational entry point.
 
 - **Current production state / cycle order:** `ANSWERS-BATCH2-CORPUS-ROUTING-REACHABILITY-IMPLEMENTATION-REPORT.md`.
 - **Machine-evaluation architecture / TCJ:** `ANSWERS-THAI-CONVERSATION-JUDGE-ARCHITECTURE.md`.
+- **Live TCJ component versions / deployment verification:** `ANSWERS-TCJ-LIVE-DEPLOYMENT-20260819.md`.
 - **First20 technical evidence:** `ANSWERS-BATCH2-TECH-PILOT-COMPLETION-REPORT.md`.
 - **Buyer extraction / counts / schema:** `ANSWERS-BATCH2-BUYER-DATA-EXTRACTION-SPEC.md`.
 - **Human-review visibility:** `ANSWERS-BATCH2-HUMAN-FIRST-REVIEW-CORRECTION.md`.
@@ -178,14 +180,16 @@ The first20 technical rows are part of the canonical Book but not part of the cl
 ### Thai Conversation Judge
 
 ```text
-tcj-engine                v1 ACTIVE · canonical semantic/calibration runtime
+tcj-engine                v2 ACTIVE · canonical semantic/calibration runtime
 voice-eval                v10 ACTIVE · thin public compatibility proxy
-batch2-qwen-audit         v2 ACTIVE · authenticated internal compatibility proxy
+batch2-qwen-audit         v3 ACTIVE · JWT-verified internal compatibility proxy
 TCJ core                  TCJ-CORE-v1
 General profile           TCJ-GENERAL-v1
 Answers profile           TCJ-ANSWERS-BFF-v2
 Guard set                 TCJ-GUARDS-v1
 ```
+
+The v2/v3 runtime hardening adds a private server-to-server credential to the Batch 2 path in addition to the active-session/admin checks. The credential is sourced from the Edge runtime environment and is never sent to browsers or committed to the repository.
 
 Private append-only TCJ evidence tables:
 
