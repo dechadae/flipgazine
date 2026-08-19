@@ -1,15 +1,15 @@
 # The Book of Answers — Batch 2 Buyer Data Extraction & Export Specification
 
-**Status:** GOVERNING BUYER EXPORT SPECIFICATION — v2  
-**Updated:** 18 August 2026  
-**Scope:** Buyer-facing extraction of generation, machine-audit, native-human review, semantic-routing, reachability and corpus-provenance evidence.  
-**Related:** `ANSWERS-BATCH2-CORPUS-ROUTING-REACHABILITY-IMPLEMENTATION-REPORT.md`, `ANSWERS-BATCH2-TECH-PILOT-COMPLETION-REPORT.md`, `ANSWERS-BATCH2-HUMAN-FIRST-REVIEW-CORRECTION.md`, `ANSWERS-COMMERCIAL-BENCHMARK-PLAN.md`.
+**Status:** GOVERNING BUYER EXPORT SPECIFICATION — v3  
+**Updated:** 19 August 2026  
+**Scope:** Buyer-facing extraction of generation, machine-audit, native-human review, semantic-routing, reachability, benchmark eligibility and corpus-provenance evidence.  
+**Related:** `ANSWERS-BATCH2-CORPUS-ROUTING-REACHABILITY-IMPLEMENTATION-REPORT.md`, `ANSWERS-BATCH2-TECH-PILOT-COMPLETION-REPORT.md`, `ANSWERS-BATCH2-HUMAN-FIRST-REVIEW-CORRECTION.md`, `ANSWERS-COMMERCIAL-EXECUTION-TIMELINE.md`.
 
 ---
 
 ## 1. Governing principle
 
-Buyer exports preserve the complete evidence chain rather than flattening the project into a simple question/answer spreadsheet.
+Buyer exports preserve the complete evidence chain rather than flattening the project into a question/answer spreadsheet.
 
 Canonical lineage:
 
@@ -22,158 +22,169 @@ frozen source scenario
 → final Thai
 → English adaptation
 → semantic routing tags
-→ alias / typo / concept delta
+→ dictionary delta where justified
 → deterministic reachability evidence
-→ corpus promotion provenance where applicable
+→ corpus promotion provenance
+→ buyer-export checkpoint
 ```
 
 A buyer must be able to distinguish:
 
-1. what the generating model produced;
-2. what machine judges concluded before the human decision;
+1. generating-model output;
+2. machine judgments made before human review;
 3. what the native-human reviewer decided;
-4. what the final deployable answer became;
-5. whether it is part of the clean benchmark denominator;
-6. whether it is linked to the live canonical Book corpus;
-7. whether realistic user language can reach it through the routing system.
+4. final deployable Thai and English;
+5. whether machine judgments were actually hidden before the human decision;
+6. whether the row is eligible for strict benchmark metrics;
+7. whether it is linked to the canonical Book corpus;
+8. whether it is reachable under the production router.
 
-**Benchmark eligibility and corpus usability are separate fields.** A row may be useful and live in the Book while still being excluded from benchmark statistics because of a provenance defect.
+**Benchmark eligibility and corpus usability are separate fields.** A reviewed row may be valid Book content while excluded from strict benchmark percentages because of provenance or visibility defects.
+
+Never repair provenance cosmetically to recover eligibility.
 
 ---
 
-## 2. Record classes
+## 2. Record classes and eligibility
 
-### 2.1 `technical_pilot` — B2-0001 through B2-0020
+### 2.1 Technical pilot — B2-0001 through B2-0020
 
-These 20 records are genuine reviewed language data and are included in buyer delivery.
-
-Current state:
+These 20 records remain genuine reviewed language data and canonical Book content.
 
 ```text
-human_reviewed                 true
+record_class                   technical_pilot
 buyer_export_included          true
 corpus_promotion_eligible      true
 corpus_linked                  true
 benchmark_metric_eligible      false
-record_class                   technical_pilot
 ```
 
-They are live in the canonical Book as answer IDs **949–968** at corpus revision **126**.
+They are excluded from strict benchmark metrics because their immutable raw drafts preserve escaped-linebreak transport text rather than literal LF bytes. B2-0001 additionally preserves an early machine-visibility exception.
 
-They remain excluded from the clean benchmark denominator because:
+The historical review UI normalized the escaped transport markers into real visual line breaks before human review, so the editorial decisions were not made against visibly garbled Thai. The raw provenance defect nevertheless remains disclosed.
 
-- the original immutable raw-draft records stored intended line breaks as escaped transport text instead of literal LF bytes;
-- B2-0001 additionally had machine judgments exposed before its human decision during early reviewer development.
-
-The defect is retained in provenance. The raw artifact is never rewritten to pretend the transport issue did not occur.
-
-Technical-pilot review result:
+Technical-pilot result:
 
 ```text
 rows reviewed      20
 ACCEPT               4
 EDIT                 9
 REWRITE              7
-ChatGPT audits       20
-Qwen audits          18
 ```
 
-These figures may be presented as **technical-pilot observations only**. They must not be added to official clean Batch 2 edit-rate or human/machine-disagreement percentages.
+These are technical-pilot observations only.
 
-### 2.2 `clean_metric`
+### 2.2 Ordinary clean-production rows
 
-Clean production rows must satisfy all governing integrity conditions, including:
+A strict-clean row must satisfy:
 
 ```text
 literal-LF-correct frozen raw draft
 required machine judgments completed before human decision
 machine judgments hidden until human decision
-official append-only human review
+append-only native-human review
 final Thai hash integrity
-post-human semantic enrichment
+post-human English/semantic enrichment
 passing routing/reachability regression check
+accurate row-level eligibility export
 ```
 
-These rows can be both:
+When all conditions hold:
 
 ```text
-benchmark_metric_eligible = true
-corpus_linked = true after promotion
+record_class                     clean_metric
+buyer_export_included            true
+benchmark_metric_eligible        true
+human_first_protocol_compliant   true
+corpus_linked                    true after promotion
 ```
 
-B2-0021–B2-1000 supply **980** clean original-source records.
+### 2.3 Protocol-exception rows
 
-### 2.3 Clean benchmark replacement set
+A row produced in the clean production lane may lose strict benchmark eligibility if a machine judgment, verdict, score, flag or materially equivalent audit conclusion becomes visible before the native-human decision.
 
-To retain a clean 1,000-record benchmark denominator without rewriting B2-0001–B2-0020, create a separately frozen supplemental set of 20 replacement scenarios.
-
-Recommended namespace:
+Current recorded pre-human visibility exceptions:
 
 ```text
-B2R-0001 → B2R-0020
+B2-0048
+B2-0059
 ```
 
-These must have their own source-set version and immutable provenance.
-
-The clean benchmark is therefore:
+For these rows:
 
 ```text
-B2-0021–B2-1000         980 clean original-source records
-B2R-0001–B2R-0020        20 clean supplemental records
-------------------------------------------------------
-clean Batch 2 benchmark 1,000 records
+record_class                     clean_metric production lane
+buyer_export_included            true
+benchmark_metric_eligible        false
+human_first_protocol_compliant   false
+corpus_promotion_eligible        true after normal human/product QA
 ```
 
-The B2R records are benchmark replacements, not replacements for the live technical-pilot Book answers. They must never overwrite B2-0001–B2-0020.
+The exception is stored in `private.batch2_protocol_exceptions` and surfaced through `private.batch2_deploy_reviews` after human review.
+
+Do not delete, regenerate, relabel or hide a row to make it strict-clean again.
 
 ---
 
-## 3. Count language for buyers
+## 3. Count language
 
-The project has three different counts and they must not be collapsed.
-
-### Canonical Book corpus target
-
-When all original B2-0001–B2-1000 answers are promoted:
+### 3.1 Canonical Book target — unchanged
 
 ```text
-Batch 1 canonical reviewed answers        948
-Original Batch 2 canonical answers      1,000
-----------------------------------------------
-canonical reviewed Book corpus          1,948
+Batch 1 canonical reviewed answers          948
+Original Batch 2 B2-0001–B2-1000          1,000
+------------------------------------------------
+canonical reviewed Book corpus             1,948
 ```
 
-The original Batch 2 count includes the 20 technical-pilot answers because they are valid reviewed Book content.
+Technical/protocol exclusions do not automatically invalidate final human-reviewed Book content.
 
-### Clean Batch 2 benchmark target
+### 3.2 Strict-clean benchmark target
+
+The original plan expected:
 
 ```text
-clean original B2 rows                    980
-clean B2R supplemental rows                20
-----------------------------------------------
-clean benchmark denominator             1,000
+B2-0021–B2-1000                              980
+supplemental replacements                     20
+------------------------------------------------
+strict clean benchmark                     1,000
 ```
 
-### Unique reviewed evidence if B2R is delivered too
-
-If the supplemental B2R records are also included in the buyer evidence package:
+After the current two pre-human visibility exceptions, if no further exclusions occur:
 
 ```text
-canonical Book corpus records           1,948
-additional clean benchmark-only B2R        20
-----------------------------------------------
-unique reviewed records available       1,968
+original B2-0021–B2-1000 rows               980
+less current visibility exceptions            2
+------------------------------------------------
+strict-clean original rows                   978
+
+supplemental clean records needed             22
+------------------------------------------------
+strict clean target                         1,000
 ```
 
-Do not call all 1,968 “corpus rows” unless B2R is later deliberately promoted too.
+The supplemental source set must be frozen before generation and must never overwrite excluded original records.
 
-Do not call the 20 technical rows “extra records” on top of the 1,948 canonical corpus; they are already part of the original 1,000 Batch 2 Book rows and are surfaced separately only as a provenance/evidence view.
+If the project chooses not to create the additional replacement evidence, report the actual strict denominator instead of calling it 1,000.
+
+### 3.3 Unique reviewed evidence
+
+If 22 benchmark-only supplemental records are ultimately delivered:
+
+```text
+canonical Book corpus                      1,948
+additional supplemental benchmark records     22
+------------------------------------------------
+unique reviewed evidence                   1,970
+```
+
+Do not use 1,970 as a buyer claim until the supplemental records actually exist and are reviewed.
 
 ---
 
 ## 4. Canonical buyer bundle
 
-Recommended delivery layout:
+Recommended eventual structure:
 
 ```text
 answers-buyer-bundle/
@@ -188,8 +199,8 @@ answers-buyer-bundle/
 │   └── answers_canonical.csv
 │
 ├── benchmark/
-│   ├── batch2_clean_benchmark.jsonl
-│   ├── batch2_clean_benchmark.csv
+│   ├── batch2_strict_clean.jsonl
+│   ├── batch2_strict_clean.csv
 │   └── benchmark_summary.json
 │
 ├── evidence/
@@ -204,63 +215,46 @@ answers-buyer-bundle/
 │   ├── corpus_manifest.json
 │   └── export_manifest.json
 │
-└── technical_pilot/
-    ├── B2-0001-B2-0020.jsonl
-    └── TECHNICAL-PILOT-NOTE.md
+├── technical_pilot/
+│   ├── B2-0001-B2-0020.jsonl
+│   └── TECHNICAL-PILOT-NOTE.md
+│
+└── protocol_exceptions/
+    ├── protocol_exception_rows.jsonl
+    └── PROTOCOL-EXCEPTIONS-NOTE.md
 ```
 
-JSONL is the canonical row-oriented buyer format. CSVs are convenience projections.
+JSONL remains the canonical row-oriented buyer format. CSVs are convenience projections.
 
-A technical-pilot row may appear both in `corpus/` and in `technical_pilot/`; that is two views of the same canonical record, not two separate records.
+A row may appear in both canonical corpus and an exception appendix. Those are multiple evidence views of one record, not duplicate corpus records.
 
 ---
 
-## 5. Server-side source-of-truth extraction
+## 5. Server-side source of truth
 
-Buyer extraction is performed from private canonical data, never from browser state or manually copied review screens.
+Buyer extraction is performed from private canonical data, never browser state or manually copied review screens.
 
 Primary sources:
 
 ```text
 private.batch2_sources
-  scenario, ordinal, domain, intended focus, CARE flag, source-set provenance
-
 private.batch2_raw_drafts
-  frozen raw Thai, model/provider/snapshot, generation timestamp, raw hash
-
 private.batch2_ai_audits
-  ChatGPT and Qwen diagnosis evidence
-
 private.batch2_human_reviews
-  clean metric-eligible native-human decisions
-
-public.answers_thai_reviews
-  original B2-0001–B2-0020 technical decisions only
-
+private.batch2_posthuman_mechanical_qa
+private.batch2_protocol_exceptions
 private.batch2_deploy_reviews
-  private deployment compatibility view across clean and technical reviewed rows
-
 private.batch2_semantic_staging
-  English, topics/focus/support/helpers, dictionary delta, probes, semantic hash
-
 private.batch2_routing_checks
-  deterministic pre-promotion routing and regression evidence
-
 private.batch2_promotions
-  atomic promotion provenance and promotion class
-
 private.batch2_answer_map
-  B2 source ID → canonical answer ID → corpus revision
-
 private.answer_corpus_revisions
 private.answer_routing_assets
-  canonical corpus and routing revision evidence
-
 private.batch2_buyer_export_snapshots
-  immutable/internal export-QA snapshots
+public.answers_thai_reviews        technical pilot only
 ```
 
-Internal secrets, service-role keys, JWTs, private admin URLs and user-account identifiers are never included in buyer exports.
+Never export service credentials, private database URLs, JWTs, session IDs, unrestricted infrastructure configuration or Supabase auth UUIDs.
 
 ---
 
@@ -271,8 +265,8 @@ Top-level structure:
 ```json
 {
   "schema_version": "ANSWERS-B2-BUYER-v1",
-  "record_id": "B2-0001",
-  "record_class": "technical_pilot",
+  "record_id": "B2-0021",
+  "record_class": "clean_metric",
   "eligibility": {},
   "source": {},
   "generation": {},
@@ -286,7 +280,7 @@ Top-level structure:
 
 ### `eligibility`
 
-Required fields:
+Required:
 
 ```text
 buyer_export_included
@@ -298,17 +292,27 @@ human_first_protocol_compliant
 raw_transport_integrity
 ```
 
-For current B2-0001–B2-0020:
+Example strict-clean values:
 
 ```text
-buyer_export_included       true
-benchmark_metric_eligible   false
-corpus_promotion_eligible   true
-corpus_linked               true
-raw_transport_integrity     escaped_linebreak_transport
+buyer_export_included          true
+benchmark_metric_eligible      true
+corpus_promotion_eligible      true
+corpus_linked                  true after promotion
+exclusion_reason               null
+human_first_protocol_compliant true
+raw_transport_integrity        literal_lf_clean
 ```
 
-B2-0001 has `human_first_protocol_compliant=false`; B2-0002–B2-0020 are true.
+Example visibility-exception values:
+
+```text
+buyer_export_included          true
+benchmark_metric_eligible      false
+corpus_promotion_eligible      true
+human_first_protocol_compliant false
+exclusion_reason               pre_human_machine_visibility
+```
 
 ### `source`
 
@@ -324,7 +328,7 @@ historical_blind_assignment
 scenario_sha256
 ```
 
-Historical blind assignment is provenance only and must not be interpreted as current reviewer visibility.
+Historical blind assignment is provenance only and is not current reviewer visibility.
 
 ### `generation`
 
@@ -338,17 +342,9 @@ raw_thai
 raw_sha256
 ```
 
-For technical-pilot rows, retain the actual escaped-linebreak raw value and optionally include:
-
-```text
-normalized_display_thai
-```
-
-The normalized display field is convenience text only and never replaces the immutable raw artifact or hash.
+Technical-pilot rows retain the actual escaped transport artifact. A convenience normalized display may be added but never replaces raw data/hash.
 
 ### `machine_judgments[]`
-
-One object per audit:
 
 ```text
 judge
@@ -371,20 +367,20 @@ confidence
 created_at
 ```
 
-Machine diagnosis is evidence, not ground truth.
+Machine judgments are evidence, not ground truth.
 
 ### `human_review`
 
 ```text
-decision         ACCEPT | EDIT | REWRITE
+decision       ACCEPT | EDIT | REWRITE
 final_thai
 final_sha256
 reviewed_at
-reviewer_class   native_thai_human
-reviewer_id      buyer-safe pseudonymous identifier
+reviewer_class native_thai_human
+reviewer_id    buyer-safe pseudonymous identifier
 ```
 
-Never export Supabase auth UUIDs.
+Use `native_reviewer_01` or an equivalent buyer-safe identifier; never export an auth UUID.
 
 ### `sequence_proof`
 
@@ -397,49 +393,40 @@ human_reviewed_at
 seconds_between_last_machine_audit_and_human_review
 ```
 
-Timestamp order alone does not prove blindness. Visibility compliance comes from the recorded review protocol state.
+Timestamp order alone does not prove blindness. Visibility compliance comes from the recorded review protocol and exception state.
 
 ### `deployment`
 
 After promotion:
 
-```json
-{
-  "english": "...",
-  "semantics": {
-    "topics": [],
-    "focus": [],
-    "support": [],
-    "helpers": [],
-    "is_universal": false
-  },
-  "dictionary_changes": {},
-  "reachability": {
-    "index_reachable": true,
-    "parser_reachable": true,
-    "source_scenario_reaches_answer": true,
-    "probe_count": 0,
-    "probe_failures": 0,
-    "care_intercepted": false
-  },
-  "publication": {
-    "canonical_answer_id": 949,
-    "corpus_revision": 126,
-    "promotion_class": "technical_pilot",
-    "dictionary_sha256": "...",
-    "routing_index_sha256": "...",
-    "promotion_sha256": "..."
-  }
-}
+```text
+english
+semantics.topics[]
+semantics.focus[]
+semantics.support[]
+semantics.helpers[]
+semantics.is_universal
+dictionary_changes
+reachability.index_reachable
+reachability.parser_reachable
+reachability.source_scenario_reaches_answer
+reachability.probe_count
+reachability.probe_failures
+publication.canonical_answer_id
+publication.corpus_revision
+publication.promotion_class
+publication.dictionary_sha256
+publication.routing_index_sha256
+publication.promotion_sha256
 ```
 
-For a clean row before promotion, `deployment.publication` remains null/pending even if the human review is complete.
+Reachability means target membership in the eligible pool under the production router, not guaranteed random selection.
 
 ---
 
 ## 7. CSV projections
 
-At minimum provide:
+At minimum:
 
 ```text
 batch2_records.csv
@@ -449,41 +436,44 @@ human_reviews.csv
 routing_semantics.csv
 dictionary_changes.csv
 reachability_probes.csv
+protocol_exceptions.csv
 ```
 
-Arrays are encoded as stable JSON arrays in CSV cells rather than ad-hoc comma-joined strings.
+Arrays are encoded as stable JSON arrays in CSV cells.
 
-Every flat record view includes both:
+Every flat record view must include:
 
 ```text
 benchmark_metric_eligible
+human_first_protocol_compliant
 corpus_linked
 ```
 
-so a buyer cannot accidentally infer one from the other.
+so downstream users cannot infer one from another.
 
 ---
 
 ## 8. Official aggregate metrics
 
-All official Batch 2 percentages use only:
+All official strict-clean percentages use only:
 
 ```text
 benchmark_metric_eligible = true
+and human_first_protocol_compliant = true
 ```
 
-The clean report includes:
+Report:
 
-### Native-human decision distribution
+### Native-human decisions
 
 ```text
-eligible records
+eligible record count
 ACCEPT count / rate
 EDIT count / rate
 REWRITE count / rate
 ```
 
-### Machine audit distributions
+### Machine audits
 
 For ChatGPT and Qwen separately:
 
@@ -496,83 +486,86 @@ not_acceptable
 mean / median audit_index where useful
 ```
 
-Qwen denominators are always explicit because Qwen is selected under a frozen escalation/calibration rule rather than necessarily applied to every row.
+Qwen denominators remain explicit.
 
 ### Human ↔ machine matrices
 
-For each machine judge independently:
+For each judge independently:
 
 ```text
-machine fluent       × human ACCEPT / EDIT / REWRITE
-machine minor        × human ACCEPT / EDIT / REWRITE
-machine major        × human ACCEPT / EDIT / REWRITE
+machine fluent × human ACCEPT / EDIT / REWRITE
+machine minor × human ACCEPT / EDIT / REWRITE
+machine major × human ACCEPT / EDIT / REWRITE
 machine unacceptable × human ACCEPT / EDIT / REWRITE
 ```
 
-Do not merge ChatGPT and Qwen into a synthetic judge unless a separately versioned analysis explicitly defines that transformation.
+Do not merge judges into a synthetic score unless a separately versioned analysis defines that transformation.
 
-Technical-pilot observations appear in a separately labeled table and never modify these denominators.
+Technical-pilot and protocol-exception rows appear in separately labeled appendices and never modify strict-clean percentages.
 
 ---
 
 ## 9. Routing / reachability evidence
 
-A buyer-facing routing summary includes:
+Buyer-facing routing summary includes:
 
 ```text
 canonical answers linked
 index-reachable answers
-parser-probe reachable answers
+parser/probe reachable answers
 source-scenario reachability
 semantic-zero count
 alias/typo collision count
 Batch 1 regression count
-new concepts / aliases / typos by corpus revision
+new concepts / aliases / typos by revision
 ```
 
-Row-level probe exports preserve the actual query, parsed semantic lanes, selected route tier and whether the target answer was present in the eligible pool.
+Row-level probes preserve query and evidence sufficient to establish target eligibility under the production router.
 
-“Reachable” means eligible-pool membership under the production router; it does not claim that random answer selection must choose that row on every invocation.
+Do not claim that routing deterministically selects the target answer; the public Book intentionally randomizes within eligible pools.
 
 ---
 
-## 10. Internal export-preview checkpoint
+## 10. Internal buyer-export checkpoint
 
 After every successful 20-row promotion:
 
 ```text
 VERIFY LIVE
-→ generate/update private buyer-export snapshot
-→ verify snapshot row count + hashes
+→ generate private buyer-export snapshot
+→ verify snapshot row count + SHA-256
 → only then prepare the next 20
 ```
 
-The first completed preview is:
+Current checkpoints:
 
 ```text
-snapshot_name      ANSWERS-B2-TECH-PILOT-v1-preview
-schema_version     ANSWERS-B2-BUYER-v1
-record_class       technical_pilot
-row_count          20
-corpus_revision    126
-snapshot SHA-256   6a6e0ca0d51b3d342d0f4a14521df5466c6f8e0e8b9d3c94fe7bff4c4ee92a2d
+1. ANSWERS-B2-TECH-PILOT-v1-preview
+   record_class        technical_pilot
+   rows                20
+   revision            126
+   SHA-256             6a6e0ca0d51b3d342d0f4a14521df5466c6f8e0e8b9d3c94fe7bff4c4ee92a2d
+
+2. ANSWERS-B2-CLEAN-0021-0040-v1-preview
+   record_class        clean_metric
+   rows                20
+   revision            127
+   SHA-256             dc5bef48ccc93032eacbbb69d58b300ea9664654d5b7d15cf3a0970ab190f8df
 ```
 
-It is stored privately in `private.batch2_buyer_export_snapshots` and is an internal QA artifact, not a public file.
+The second snapshot contains 9 ACCEPT / 8 EDIT / 3 REWRITE, 20 ChatGPT audits, 17 Qwen audits, zero dictionary delta and zero routing/regression failures.
 
-The same schema is used for clean units so export defects are discovered during production rather than at final buyer delivery.
+Snapshots are internal QA artifacts, not public downloads.
 
 ---
 
 ## 11. Hash and integrity rules
 
-Exports record the hash algorithm explicitly.
-
-Do not relabel stored MD5 values as SHA-256.
-
-For Batch 2 promotion proof, candidate dictionary/index/semantic hashes use PostgreSQL canonical JSONB text SHA-256 so the validator and atomic promotion gate compare the same byte representation.
-
-Buyer bundles include a top-level `SHA256SUMS` for delivered files in addition to row-level provenance hashes.
+- use SHA-256 for buyer-integrity hashes;
+- never relabel MD5 as SHA-256;
+- promotion candidate dictionary/index/semantic hashes use PostgreSQL canonical `jsonb::text` SHA-256;
+- buyer bundles include top-level `SHA256SUMS` in addition to row-level hashes;
+- immutable source/draft/audit/human provenance is never rewritten merely to simplify a buyer narrative.
 
 ---
 
@@ -588,39 +581,46 @@ Never export:
 - internal session IDs;
 - unrestricted infrastructure configuration.
 
-Use a buyer-safe reviewer identifier such as:
-
-```text
-native_reviewer_01
-```
-
-with reviewer qualification described in the methodology document.
+Use buyer-safe reviewer identifiers and describe qualifications in methodology.
 
 ---
 
 ## 13. Current extraction checkpoint
 
-As of 18 August 2026:
+As of 19 August 2026:
 
 ```text
-canonical corpus revision                126
-canonical active answers                 968
-technical-pilot corpus-linked rows        20
-technical rows in clean benchmark          0
-first20 canonical answer IDs         949–968
-technical export preview rows             20
-next clean review unit             B2-0021–B2-0040
+canonical corpus revision                    127
+canonical active answers                     988
+technical-pilot corpus-linked rows            20
+strict-clean promoted B2 rows                 20
+clean promoted answer IDs                969–988
+buyer-export snapshots                         2
+next original unit                    B2-0041–0060
+current recorded visibility exceptions          2
 ```
 
-The governing cycle is:
+The next unit's machine judgments remain sealed for all rows except the two already recorded visibility exceptions. Those exceptions must remain explicit in all future buyer extraction.
+
+---
+
+## 14. Release rule
+
+No buyer bundle is released merely because a file can be generated.
+
+Before delivery verify:
 
 ```text
-REVIEW 20
-→ ENGLISH
-→ ENRICH
-→ VALIDATE
-→ PROMOTE
-→ VERIFY
-→ EXPORT PREVIEW
-→ NEXT 20
+record counts
+eligibility counts
+source/draft/final hashes
+sequence proof
+exception flags
+routing proof
+corpus mapping
+snapshot/file SHA-256
+license scope
+security redaction
 ```
+
+If counts or protocol claims disagree with the live private source of truth, the export fails closed until corrected.
