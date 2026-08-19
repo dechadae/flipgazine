@@ -10,21 +10,22 @@ This folder contains current operational authority, editorial methodology, Batch
 
 For current Answers work, use this order:
 
-1. `ANSWERS-BATCH2-CORPUS-ROUTING-REACHABILITY-IMPLEMENTATION-REPORT.md` — **current live implementation checkpoint**: definitive production cycle, technical first20 full corpus promotion, revision 126 verification, routing-service v5 and current next action.
-2. `ANSWERS-BATCH2-TECH-PILOT-COMPLETION-REPORT.md` — B2-0001–B2-0020 full-cycle record: 4 ACCEPT / 9 EDIT / 7 REWRITE, non-metric provenance, enrichment, validation, corpus IDs 949–968 and buyer preview.
-3. `ANSWERS-BATCH2-BUYER-DATA-EXTRACTION-SPEC.md` — **governing buyer export contract**: corpus vs benchmark count language, technical-pilot treatment, clean replacement set, JSONL/CSV schema, routing evidence and per-promotion export checkpoint.
-4. `ANSWERS-BATCH2-ACTIVE-REVIEW-ORDER-CORRECTION.md` — historical correction that restored the first20 review before clean production. Its immediate-next-action text is superseded by the current implementation report where necessary.
-5. `ANSWERS-BATCH2-HUMAN-FIRST-REVIEW-CORRECTION.md` — machine judgments are sealed until the native-human ACCEPT / EDIT / REWRITE decision is committed.
-6. `ANSWERS-BATCH2-CORPUS-ROUTING-REACHABILITY-PLAN.md` — governing routing/promotion architecture: same canonical Book corpus, same semantics, deterministic reachability and atomic 20-row promotion.
-7. `ANSWERS-BATCH2-SELF-AUDIT-IMPLEMENTATION-REPORT.md` — generation/audit infrastructure history; use newer implementation reports for current state.
-8. `ANSWERS-BATCH2-SELF-AUDIT-PROTOCOL.md` — frozen generation, ChatGPT self-audit, Qwen escalation and historical blind-assignment protocol. Human visibility is superseded by the human-first correction.
-9. `ANSWERS-COMMERCIAL-EXECUTION-TIMELINE.md` — commercialization schedule.
-10. `ANSWERS-COMMERCIAL-BENCHMARK-PLAN.md` — commercial positioning, licensing and methodology claim boundaries.
-11. `ANSWERS-VOICE-TONE.md` — Thai / English editorial authority.
-12. `ANSWERS-VOICE-BENCHMARK-PLAN.md` — public Voice evaluator design history.
-13. `ANSWERS-HUMAN-EVALUATION-SCHEME.md` — human-evaluation deliverable.
-14. `ANSWERS-HUMAN-REVIEW.md` — immutable Batch 1 provenance.
-15. `ANSWERS-PRIVATE-SERVER-PHASE-K-MIGRATION-MANIFEST.md` — final private-server migration proof.
+1. `ANSWERS-BATCH2-CORPUS-ROUTING-REACHABILITY-IMPLEMENTATION-REPORT.md` — **current corpus-production architecture**: definitive production cycle, technical first20 promotion, revision 126 verification and routing-service v5.
+2. `ANSWERS-THAI-CONVERSATION-JUDGE-ARCHITECTURE.md` — **current machine-evaluation architecture**: shared TCJ core, General Thai + Answers Voice profiles, CARE override, server-side calibration/provenance and Batch 2 integration.
+3. `ANSWERS-BATCH2-TECH-PILOT-COMPLETION-REPORT.md` — B2-0001–B2-0020 full-cycle record: 4 ACCEPT / 9 EDIT / 7 REWRITE, non-metric provenance, enrichment, validation, corpus IDs 949–968 and buyer preview.
+4. `ANSWERS-BATCH2-BUYER-DATA-EXTRACTION-SPEC.md` — **governing buyer export contract**: corpus vs benchmark count language, technical-pilot treatment, clean replacement set, JSONL/CSV schema, routing evidence and per-promotion export checkpoint.
+5. `ANSWERS-BATCH2-ACTIVE-REVIEW-ORDER-CORRECTION.md` — historical correction that restored the first20 review before clean production. Its immediate-next-action text is superseded by newer implementation/checkpoint documents.
+6. `ANSWERS-BATCH2-HUMAN-FIRST-REVIEW-CORRECTION.md` — machine judgments are sealed until the native-human ACCEPT / EDIT / REWRITE decision is committed.
+7. `ANSWERS-BATCH2-CORPUS-ROUTING-REACHABILITY-PLAN.md` — governing routing/promotion architecture: same canonical Book corpus, same semantics, deterministic reachability and atomic 20-row promotion.
+8. `ANSWERS-BATCH2-SELF-AUDIT-IMPLEMENTATION-REPORT.md` — generation/audit infrastructure history; use newer implementation reports for current state.
+9. `ANSWERS-BATCH2-SELF-AUDIT-PROTOCOL.md` — frozen generation and ChatGPT self-audit protocol plus historical Qwen-v1 design. Human visibility is superseded by the human-first correction; new Qwen runs use the TCJ architecture document above.
+10. `ANSWERS-COMMERCIAL-EXECUTION-TIMELINE.md` — commercialization schedule.
+11. `ANSWERS-COMMERCIAL-BENCHMARK-PLAN.md` — commercial positioning, licensing and methodology claim boundaries.
+12. `ANSWERS-VOICE-TONE.md` — Thai / English editorial authority.
+13. `ANSWERS-VOICE-BENCHMARK-PLAN.md` — public Voice evaluator design history.
+14. `ANSWERS-HUMAN-EVALUATION-SCHEME.md` — human-evaluation deliverable.
+15. `ANSWERS-HUMAN-REVIEW.md` — immutable Batch 1 provenance.
+16. `ANSWERS-PRIVATE-SERVER-PHASE-K-MIGRATION-MANIFEST.md` — final private-server migration proof.
 
 Repository-root `AGENTS.md` remains the short operational entry point.
 
@@ -33,17 +34,21 @@ Repository-root `AGENTS.md` remains the short operational entry point.
 ## Current authority boundaries
 
 - **Current production state / cycle order:** `ANSWERS-BATCH2-CORPUS-ROUTING-REACHABILITY-IMPLEMENTATION-REPORT.md`.
+- **Machine-evaluation architecture / TCJ:** `ANSWERS-THAI-CONVERSATION-JUDGE-ARCHITECTURE.md`.
 - **First20 technical evidence:** `ANSWERS-BATCH2-TECH-PILOT-COMPLETION-REPORT.md`.
 - **Buyer extraction / counts / schema:** `ANSWERS-BATCH2-BUYER-DATA-EXTRACTION-SPEC.md`.
 - **Human-review visibility:** `ANSWERS-BATCH2-HUMAN-FIRST-REVIEW-CORRECTION.md`.
 - **Routing architecture:** `ANSWERS-BATCH2-CORPUS-ROUTING-REACHABILITY-PLAN.md`.
-- **Frozen generation/audit design:** `ANSWERS-BATCH2-SELF-AUDIT-PROTOCOL.md`.
+- **Frozen generation / ChatGPT self-audit design:** `ANSWERS-BATCH2-SELF-AUDIT-PROTOCOL.md`.
 - **Commercial methodology:** `ANSWERS-COMMERCIAL-BENCHMARK-PLAN.md`.
 - **Thai / English editorial decisions:** `ANSWERS-VOICE-TONE.md`.
 - **Batch 1 provenance:** `ANSWERS-HUMAN-REVIEW.md`.
 - **Completed security migration:** `ANSWERS-PRIVATE-SERVER-PHASE-K-MIGRATION-MANIFEST.md`.
 
-When older checkpoint wording conflicts with a newer authority, follow the newer document that owns that decision. In particular, older statements that B2-0001–B2-0020 are “not promotion eligible” are superseded: they are now corpus-linked as reviewed technical-pilot content while remaining excluded from clean benchmark metrics.
+When older checkpoint wording conflicts with a newer authority, follow the newer document that owns that decision. In particular:
+
+- older statements that B2-0001–B2-0020 are “not promotion eligible” are superseded: they are corpus-linked reviewed technical-pilot content while remaining excluded from clean benchmark metrics;
+- `B2-QWEN-AUDIT-v1` remains immutable historical evidence, while new selected Qwen audits are governed by `TCJ-ANSWERS-BFF-v2` through the shared TCJ runtime.
 
 ---
 
@@ -68,7 +73,7 @@ Do not generate later units before the preceding unit has passed its full promot
 
 ---
 
-## Current project checkpoint — 18 August 2026
+## Current project checkpoint — 19 August 2026
 
 ### Canonical Book
 
@@ -119,11 +124,19 @@ rows 20 · revision 126
 SHA-256 6a6e0ca0d51b3d342d0f4a14521df5466c6f8e0e8b9d3c94fe7bff4c4ee92a2d
 ```
 
-### Current clean unit
+### First clean metric unit · B2-0021–B2-0040
 
-**B2-0021–B2-0040** is the active first clean metric-eligible production unit in `/answers-thai-review-batch2.html`.
+The blind native-human decision pass is now **complete 20/20**:
 
-It was prepared with real LF raw drafts and sealed machine evidence. Its human decisions belong in `private.batch2_human_reviews` and, after all 20 are complete, it follows the full cycle above.
+```text
+ACCEPT      9
+EDIT        8
+REWRITE     3
+```
+
+These decisions were committed without machine scores/comments being visible before the human decision. The unit has therefore completed the human-review stage but has **not** thereby completed the full production cycle. It must still pass English adaptation, semantic/routing enrichment, deterministic validation, atomic promotion, live verification and buyer-export preview before B2-0041–B2-0060 becomes the active production unit.
+
+The already-frozen B2-0021–B2-0040 decisions are also the first intended calibration comparison set for `answers-bff-v2`. Any TCJ rerun must be stored separately as `calibration_rerun`; it must never overwrite the original Qwen-v1 judgment or human decision.
 
 ### Benchmark / corpus count rule
 
@@ -151,6 +164,8 @@ The first20 technical rows are part of the canonical Book but not part of the cl
 
 ## Current infrastructure
 
+### Batch 2 / corpus
+
 - `batch2-production-review-service` — clean human-first reviewer service.
 - `batch2-routing-service` — **v5 ACTIVE, JWT verified**, deterministic validation/promotion service using PostgreSQL-canonical JSONB hashes.
 - `private.batch2_deploy_reviews` — private deployment compatibility view separating record class / benchmark eligibility from corpus usability.
@@ -160,11 +175,36 @@ The first20 technical rows are part of the canonical Book but not part of the cl
 - `private.batch2_answer_map` — immutable B2 source → canonical answer mapping.
 - `private.batch2_buyer_export_snapshots` — private export-QA snapshots.
 
-Machine proof for the completed first20 cycle:
+### Thai Conversation Judge
+
+```text
+tcj-engine                v1 ACTIVE · canonical semantic/calibration runtime
+voice-eval                v10 ACTIVE · thin public compatibility proxy
+batch2-qwen-audit         v2 ACTIVE · authenticated internal compatibility proxy
+TCJ core                  TCJ-CORE-v1
+General profile           TCJ-GENERAL-v1
+Answers profile           TCJ-ANSWERS-BFF-v2
+Guard set                 TCJ-GUARDS-v1
+```
+
+Private append-only TCJ evidence tables:
+
+```text
+private.tcj_guard_definitions
+private.tcj_evaluation_runs
+private.tcj_guard_applications
+private.batch2_tcj_links
+```
+
+The public Voice benchmark does not persist submitted question/response content into those research tables.
+
+Machine proof for the completed first20 corpus cycle:
 
 ```text
 ../../answers-private-server/batch2-tech-pilot-full-cycle-proof.json
 ```
+
+Deployed Edge Function mirrors are under `../../supabase/functions/`, including the new `tcj-engine/` source and schema.
 
 ---
 
@@ -184,16 +224,16 @@ Executable router/parity code and machine proof stay in `../../answers-private-s
 
 ## Immediate next action
 
-Continue native-human review of **B2-0021–B2-0040**.
-
-When the twentieth clean decision is committed, do **not** manually copy rows into the corpus. Continue through:
+Complete the post-review production cycle for **B2-0021–B2-0040**:
 
 ```text
-English
+reveal / comparison as needed
+→ English from final Thai
 → semantics / aliases / typos / concepts
 → deterministic validation
 → atomic promotion
 → live verification
 → buyer export preview
-→ next 20
 ```
+
+The TCJ calibration rerun for the already-frozen first clean 20 is a separate research action. It may be run without changing their human decisions or production text, and its results must be stored as new `calibration_rerun` evidence rather than replacing historical audits.
