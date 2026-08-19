@@ -2,6 +2,7 @@
 
 **Status:** APPROVED METHOD · NOT YET LIVE  
 **Approved:** 20 August 2026  
+**Updated:** 20 August 2026 · blind two-stage judge-admission protocol approved  
 **Project:** Flipgazine / The Book of Answers / Thai Conversation Judge  
 **Parent architecture:** `ANSWERS-THAI-CONVERSATION-JUDGE-ARCHITECTURE.md`  
 **Commercial-use boundary:** `ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md`
@@ -19,9 +20,9 @@ The purpose is to create a calibrated panel in which:
 ```text
 native-human evidence
         ↓
-judge qualification
+blind judge admission
         ↓
-independent model diagnoses
+qualified independent model diagnoses
         ↓
 per-judge calibration
         ↓
@@ -41,6 +42,13 @@ The governing principle is:
 This extends, rather than replaces, the existing TCJ rule:
 
 > **Models provide stochastic semantic interpretation. The server owns deterministic methodology. Native-human judgment remains the calibration authority.**
+
+The approved admission method now tests two distinct abilities:
+
+1. **Can the candidate model produce Thai that survives blind native-human review?**
+2. **Can the candidate model correctly recognize strong and weak Thai when acting as a TCJ judge?**
+
+A candidate should not receive production judging authority merely because it performs well on only one of these abilities.
 
 ---
 
@@ -66,13 +74,224 @@ Therefore TCJ uses **qualified, calibrated consensus**, not raw majority voting.
 
 ---
 
-## 3. Judge Admission / Competence Gate
+## 3. Judge Admission is a blind two-stage protocol
 
-Every candidate model must pass a Thai-competence qualification stage before it may contribute to a production TCJ Panel conclusion.
+Every candidate model must pass a versioned admission process before it may contribute to a production TCJ Panel conclusion.
 
-The initial admission set is the existing **36-case native-human calibration suite** used to ground the current Voice evaluator selection. Additional frozen calibration cases may be added later under a versioned protocol, but a new model does not gain production authority merely by being newer, larger or from a different provider.
+The approved admission design deliberately separates:
 
-Each candidate judge is run against the same frozen scenarios, responses, TCJ profile definitions and deterministic scoring rules.
+```text
+STAGE A
+blind Thai production competence
+
+from
+
+STAGE B
+TCJ judging competence
+```
+
+This separation matters because a model can write plausible Thai yet be a weak evaluator, or evaluate some kinds of Thai reasonably well despite having weaknesses in its own generation style.
+
+Neither provider reputation, model size, price nor general benchmark rank substitutes for this admission evidence.
+
+The full admission flow is:
+
+```text
+candidate models selected privately
+        ↓
+freeze same 10 Thai scenarios for every candidate
+        ↓
+all candidates generate responses independently
+        ↓
+strip provider/model identity
+        ↓
+assign opaque response IDs + globally randomize
+        ↓
+BLIND NATIVE-HUMAN REVIEW
+ACCEPT / EDIT / REWRITE
+        ↓
+human decisions frozen
+        ↓
+reconstruct anonymous candidate-level production evidence
+        ↓
+36-case TCJ judging test
+        ↓
+compute anonymous judging-competence evidence
+        ↓
+anonymous candidate dossiers
+      ↙         ↘
+ChatGPT review   Grok review
+      ↘         ↙
+analyses frozen independently
+        ↓
+ONLY THEN reveal model identities
+        ↓
+qualified / partially_qualified /
+research_only / rejected
+        ↓
+select TCJ Panel
+```
+
+The identity reveal is therefore a methodological event, not an informal convenience.
+
+---
+
+## 4. Stage A — Blind Native-Thai Production Competence Screen
+
+### 4.1 Same scenarios for every candidate
+
+The first screen uses the **same 10 frozen scenarios for every candidate model**.
+
+Different models must not receive different questions because paired scenarios make model-to-model comparison more meaningful and reduce scenario difficulty as a confound.
+
+For an initial six-model test:
+
+```text
+10 scenarios
+× 6 candidate models
+= 60 blind Thai responses
+```
+
+Five or six candidates is a practical initial target, not a permanent protocol requirement. The exact candidate set and admission protocol version must be frozen before results are reviewed.
+
+### 4.2 Scenario coverage
+
+The 10-scenario screen should deliberately span materially different Thai-language surfaces rather than ten near-duplicate casual-chat prompts.
+
+Coverage should include, where practical:
+
+```text
+close-friend pragmatics
+workplace hierarchy / role distance
+particles, omission and implication
+Thai-English lexical borrowing
+humor / deadpan / mock-politeness
+service or institutional language
+decision / advice stance
+metaphor / figurative interpretation
+social register / relationship fit
+composition / landing / information amount
+```
+
+The 10 cases are a competence screen, not a claim of complete Thai-language coverage.
+
+### 4.3 Generation conditions
+
+Each candidate receives the same frozen scenario text and the same task definition.
+
+Generation settings should be made as comparable as technically practical while preserving provider compatibility. Record privately:
+
+```text
+provider
+model
+model version/snapshot where available
+temperature / sampling settings
+system/task instruction version
+timestamp
+latency / usage where available
+raw response
+response hash
+```
+
+Provider/model identity is provenance and must be preserved privately even though it is hidden from blind reviewers.
+
+### 4.4 Identity stripping and randomization
+
+Before native-human review, remove:
+
+```text
+provider name
+model name
+model family
+API/provider metadata
+candidate grouping
+original generation order
+```
+
+Each response receives an opaque review ID such as:
+
+```text
+X-037
+X-012
+X-055
+```
+
+All responses are **globally randomized**, not shown in blocks by candidate. The reviewer must not be able to infer that ten consecutive responses came from the same model.
+
+The sealed identity map must be stored separately from the review surface.
+
+### 4.5 Native-human review
+
+The native reviewer sees only:
+
+```text
+scenario
+candidate Thai response
+```
+
+No model label, machine score, prior benchmark reputation or other candidate hint is shown.
+
+The first-pass review uses the established editorial decision vocabulary:
+
+```text
+ACCEPT
+EDIT
+REWRITE
+```
+
+Reason tags may be added where useful, including:
+
+```text
+translation-shaped
+unnatural lexical choice
+over-explained
+pronoun/subject issue
+particle/stance issue
+register mismatch
+semantic drift
+code-mixing issue
+humor/timing issue
+generic/cliche
+metaphor issue
+line-composition issue
+too formal
+too verbose
+other
+```
+
+The human decision must be committed before any candidate identity or aggregate candidate performance is revealed.
+
+### 4.6 Stage A evidence
+
+After all native decisions are frozen, reconstruct results by anonymous candidate ID.
+
+Useful evidence includes:
+
+```text
+ACCEPT rate
+EDIT rate
+REWRITE rate
+failure-tag distribution
+semantic failures
+Thai-pragmatic failures
+register failures
+lexical/cultural failures
+code-mixing failures
+composition failures
+scenario-specific failure clusters
+```
+
+Ten responses per model are sufficient for an initial screen and qualitative failure-pattern inspection. They are **not** sufficient by themselves to declare a model a qualified TCJ judge.
+
+---
+
+## 5. Stage B — TCJ Judging Competence Test
+
+Candidates that remain under consideration after Stage A are then tested on the ability TCJ actually needs from a judge.
+
+The initial judging set is the existing **36-case native-human calibration suite** used to ground the current Voice evaluator selection.
+
+Each candidate judge receives the same frozen scenarios, candidate responses, TCJ profile definitions and deterministic output contract.
 
 Admission measures should include, where the underlying human evidence supports them:
 
@@ -92,11 +311,13 @@ repeat-run stability
 structured-output reliability
 ```
 
-Qualification is empirical. Provider reputation or model size is not a substitute for measured Thai performance.
+Stage B must not be replaced by Stage A. Good Thai generation is evidence of language competence, not proof of evaluator competence.
+
+Likewise, a strong Stage B score does not erase serious Stage A evidence that a candidate repeatedly produces Thai a native reviewer considers materially unnatural. The two evidence classes should be considered together.
 
 ---
 
-## 4. Per-dimension competence
+## 6. Per-dimension competence
 
 A judge does not have to be equally competent on every TCJ dimension.
 
@@ -126,13 +347,115 @@ A judge that falls below the admission floor for a dimension contributes **zero 
 
 ---
 
-## 5. Candidate judge states
+## 7. Anonymous candidate dossiers
 
-Each evaluated model/version must have an explicit state:
+After Stage A and Stage B are complete, construct one **anonymous evidence dossier** per candidate.
+
+The dossier may contain:
+
+```text
+opaque candidate ID
+blind production ACCEPT / EDIT / REWRITE counts
+production failure-pattern summary
+representative anonymized production failures
+36-case judging metrics
+per-dimension judging error
+false-fluent / false-major behavior
+semantic-drift behavior
+repeat-run stability
+structured-output reliability
+uncertainty / caveats
+```
+
+The dossier must not contain:
+
+```text
+provider name
+model name
+model family
+pricing tier
+brand reputation
+public leaderboard position
+```
+
+The purpose is to force admission analysis to respond to observed Thai evidence rather than model prestige.
+
+---
+
+## 8. Independent ChatGPT and Grok meta-review
+
+Before candidate identities are revealed, the anonymous dossiers are independently reviewed by **ChatGPT** and **Grok**.
+
+Each reviewer should answer, at minimum:
+
+```text
+Which three candidates would you admit to the initial TCJ Panel?
+Which candidates would you reject or keep research-only?
+Which dimensions would you trust each candidate on?
+What systematic failure pattern is most concerning for each candidate?
+What uncertainty remains?
+```
+
+The two AI meta-reviews must be performed independently. Neither should receive the other review before its own conclusion is frozen.
+
+### 8.1 No 2-of-3 governance vote
+
+The admission decision is **not**:
+
+```text
+native human vote
++ ChatGPT vote
++ Grok vote
+→ 2 of 3 wins
+```
+
+ChatGPT and Grok provide independent methodological analyses of the evidence. They do not outvote the native-human evidence.
+
+If both AI meta-reviewers prefer a model whose blind Thai production repeatedly failed native review, that discrepancy is itself a research finding that must be investigated rather than resolved by majority vote.
+
+### 8.2 Protecting reviewer blindness
+
+An AI system that has already been given the candidate identity map during orchestration must **not** be treated as a genuinely blind meta-reviewer merely because labels are later renamed.
+
+Where practical, use:
+
+```text
+separate fresh model context / session
++ anonymous dossiers only
++ no identity map in context
+```
+
+for the ChatGPT and Grok meta-review stage.
+
+The same principle applies to any future third-party meta-reviewer.
+
+---
+
+## 9. Identity reveal and admission decision
+
+Model identities are revealed only after all of the following are frozen:
+
+```text
+native-human Stage A decisions
+Stage A candidate-level evidence
+Stage B judging metrics
+ChatGPT anonymous recommendation
+Grok anonymous recommendation
+```
+
+Only then disclose:
+
+```text
+anonymous candidate ID → provider / model / version
+```
+
+The reveal allows the project to verify provider-specific operational and commercial considerations **after the competence evidence has been judged without brand influence**.
+
+The final candidate state is then assigned:
 
 ### `qualified`
 
-The model has demonstrated sufficient Thai performance under the frozen admission protocol and may contribute to production consensus for its qualified dimensions.
+The model has demonstrated sufficient Thai performance under the active two-stage admission protocol and may contribute to production consensus for its qualified dimensions.
 
 ### `partially_qualified`
 
@@ -150,7 +473,7 @@ A model's state is versioned. A provider/model upgrade does not inherit qualific
 
 ---
 
-## 6. Production panel size
+## 10. Production panel size
 
 The approved initial target is **three qualified judges** in TCJ Panel mode.
 
@@ -166,9 +489,11 @@ TCJ may test more than three candidate models during admission. Only the qualifi
 
 Five-judge production is not rejected permanently, but it is not justified until evidence shows that the additional judges materially improve reliability or disagreement detection.
 
+If only two candidates genuinely qualify, TCJ should use two qualified judges with explicit uncertainty handling rather than admit a weak third model just to create an odd-number panel.
+
 ---
 
-## 7. Parallel independent evaluation
+## 11. Parallel independent evaluation
 
 For each TCJ Panel request:
 
@@ -196,7 +521,7 @@ The panel is therefore **parallel and independent**, not a debate, chain-of-thou
 
 ---
 
-## 8. Raw and calibrated evidence remain separate per judge
+## 12. Raw and calibrated evidence remain separate per judge
 
 The existing TCJ dual-state rule now applies independently to every panel member.
 
@@ -226,7 +551,7 @@ No panel aggregation may overwrite or replace the underlying per-judge evidence.
 
 ---
 
-## 9. Consensus is dimension-level, not verdict-level
+## 13. Consensus is dimension-level, not verdict-level
 
 TCJ aggregates the six calibrated dimension judgments before computing the overall score/verdict.
 
@@ -246,14 +571,14 @@ No weighting coefficient may be chosen merely to make TCJ agree with a desired o
 
 ---
 
-## 10. Qualification precedes aggregation
+## 14. Qualification precedes aggregation
 
 The correct order is:
 
 ```text
 candidate judges
       ↓
-HUMAN-GROUNDED QUALIFICATION
+BLIND HUMAN-GROUNDED QUALIFICATION
       ↓
 qualified dimensions only
       ↓
@@ -288,7 +613,7 @@ Production consensus uses A and B. Judge C's failure remains preserved as cross-
 
 ---
 
-## 11. Judge disagreement is first-class evidence
+## 15. Judge disagreement is first-class evidence
 
 TCJ Panel introduces explicit **Judge Agreement / Disagreement** evidence.
 
@@ -327,7 +652,7 @@ Exact public wording and thresholds must be frozen before launch and must not be
 
 ---
 
-## 12. Disagreement can defeat false certainty
+## 16. Disagreement can defeat false certainty
 
 A multi-judge panel is not useful if it always forces a confident result.
 
@@ -355,7 +680,7 @@ The exact escalation thresholds require calibration against native-human evidenc
 
 ---
 
-## 13. Native-human authority remains above panel consensus
+## 17. Native-human authority remains above panel consensus
 
 TCJ Panel does not convert model agreement into human ground truth.
 
@@ -381,7 +706,7 @@ Such cases should be preserved for:
 
 ---
 
-## 14. Standard mode and Panel mode remain distinct
+## 18. Standard mode and Panel mode remain distinct
 
 The approved architecture keeps two operational modes.
 
@@ -423,54 +748,71 @@ Panel mode does not automatically replace Standard mode.
 
 ---
 
-## 15. Initial implementation sequence
+## 19. Approved implementation sequence
 
-The approved implementation order is:
+The approved implementation order is now:
 
 ```text
 1. freeze Judge Admission protocol version
-2. run candidate models on existing 36-case native-human calibration suite
-3. compute per-model + per-dimension competence evidence
-4. native-human review of observed failure patterns
-5. assign qualified / partial / research-only / rejected states
-6. select initial three-judge production panel
-7. implement parallel panel invocation
-8. preserve per-judge raw + calibrated evidence
-9. implement experimental dimension consensus
-10. implement judge-agreement metrics
-11. calibrate escalation thresholds against frozen evidence
-12. run shadow comparison against current TCJ Standard
-13. only after measured acceptance, expose TCJ Panel as production capability
+2. privately select candidate models and record provider/model provenance
+3. freeze the same 10 Thai production scenarios for all candidates
+4. generate candidate responses under comparable recorded conditions
+5. strip identity, assign opaque IDs and globally randomize all responses
+6. native-human blind ACCEPT / EDIT / REWRITE review
+7. freeze all Stage A human decisions before any identity reveal
+8. reconstruct anonymous candidate-level production evidence
+9. run surviving candidates on the existing 36-case TCJ judging suite
+10. compute per-model + per-dimension judging competence evidence
+11. build anonymous candidate dossiers
+12. run independent blind ChatGPT meta-review
+13. run independent blind Grok meta-review
+14. freeze both AI recommendations
+15. reveal provider/model identities
+16. verify provider-specific operational/commercial constraints
+17. assign qualified / partially_qualified / research_only / rejected states
+18. select initial production panel from the qualified evidence
+19. implement parallel panel invocation
+20. preserve per-judge raw + calibrated evidence
+21. implement experimental dimension consensus
+22. implement judge-agreement metrics
+23. calibrate escalation thresholds against frozen evidence
+24. run shadow comparison against current TCJ Standard
+25. only after measured acceptance, expose TCJ Panel as production capability
 ```
 
 No current production endpoint changes merely because this method is approved.
 
 ---
 
-## 16. Admission protocol must not be circular
+## 20. Admission protocol must not be circular
 
-The competence gate exists to determine whether a model can judge Thai under TCJ. It must not be tuned merely to admit a desired set of branded models.
+The competence gate exists to determine whether a model can usefully judge Thai under TCJ. It must not be tuned merely to admit a desired set of branded models.
 
 Rules:
 
+- freeze the 10 Stage A scenarios before candidate responses are reviewed;
+- use the same Stage A scenarios for every candidate;
 - freeze admission metrics before comparing candidate results;
 - preserve failed models and failed dimensions as evidence;
 - do not remove difficult cases merely because several models fail them;
 - do not change human labels because a model majority disagrees;
-- version any later expansion/revision of the calibration set;
-- distinguish genuine model improvement from benchmark overfitting.
+- do not reveal model identities before the human and AI meta-reviews are frozen;
+- version any later expansion/revision of either admission set;
+- distinguish genuine model improvement from benchmark overfitting;
+- do not promote a candidate solely because ChatGPT and Grok agree on it;
+- do not demote native-human evidence merely because model metrics look strong.
 
 The research question is:
 
-> **Which models provide useful independent Thai judgment under this methodology, and where do they fail?**
+> **Which models can both demonstrate credible Thai competence and provide useful independent Thai judgment under this methodology, and where do they fail?**
 
 not:
 
-> **How can we assemble three models that agree with each other?**
+> **How can we assemble three famous models that agree with each other?**
 
 ---
 
-## 17. Provider/model diversity
+## 21. Provider/model diversity
 
 Provider diversity is desirable because shared model-family failure modes can create false agreement.
 
@@ -486,13 +828,17 @@ A third model can remain `research_only` until it demonstrates sufficient compet
 
 Provider/model/version changes must trigger requalification.
 
+The blind protocol is intended to prevent provider reputation from influencing admission; it does not erase provider provenance after reveal.
+
 ---
 
-## 18. Commercial and provenance boundary
+## 22. Commercial and provenance boundary
 
 Multi-judge execution creates additional provenance dependencies.
 
-Before a new provider/model is used in a commercial TCJ Panel, verify the applicable provider terms for the intended evaluation, output retention and commercial licensing context.
+Before a candidate provider/model is used in a commercial TCJ Panel, verify the applicable provider terms for the intended evaluation, output retention and commercial licensing context.
+
+Provider terms may also need to be checked before running admission tests where the planned storage/use of model output is material. Blindness concerns the reviewer, not the project's responsibility to know which service it is invoking.
 
 Panel outputs must preserve provider/model provenance rather than being collapsed into an anonymous TCJ score.
 
@@ -510,9 +856,28 @@ Any Model-Development Use remains a separately reviewed licensing/provenance que
 
 ---
 
-## 19. Research asset created by the panel
+## 23. Research assets created by admission and panel operation
 
-TCJ Panel creates a new private evidence layer:
+The blind admission protocol creates a private evidence layer distinct from normal TCJ Panel runs:
+
+> **Blind Judge Admission Evidence**
+
+This may contain:
+
+```text
+same 10 frozen scenarios
+→ anonymous candidate generations
+→ native-human ACCEPT / EDIT / REWRITE
+→ failure tags
+→ sealed identity map
+→ candidate-level production profile
+→ 36-case judging profile
+→ anonymous ChatGPT recommendation
+→ anonymous Grok recommendation
+→ final identity reveal + admission state
+```
+
+TCJ Panel operation then creates a second private evidence layer:
 
 > **Cross-Judge Calibration & Disagreement Evidence**
 
@@ -528,10 +893,12 @@ same scenario / candidate
 → native-human reference where available
 ```
 
-This should be treated as a strategic private research asset.
+These should be treated as strategic private research assets.
 
-It can reveal systematic evaluator behavior such as:
+Together they can reveal systematic evaluator behavior such as:
 
+- strong general reasoning but weak Thai production;
+- good Thai generation but poor evaluator calibration;
 - over-penalizing Thai-English borrowing;
 - missing semantic drift;
 - over-reading formality from particles;
@@ -540,11 +907,11 @@ It can reveal systematic evaluator behavior such as:
 - weakness in role/register inference;
 - model-family correlated failure.
 
-Full raw panel evidence is not automatically public or included in a standard buyer package.
+Full raw admission or panel evidence is not automatically public or included in a standard buyer package.
 
 ---
 
-## 20. Future language extension
+## 24. Future language extension
 
 The panel mechanism may later support languages other than Thai, but judge admission is **language-profile specific**.
 
@@ -554,54 +921,82 @@ Each language requires:
 
 ```text
 native-language methodological authority
+language-specific blind production screen
 language-specific frozen calibration evidence
 language-specific judge admission
 language-specific disagreement calibration
 ```
 
-The Thai rubric must not simply be translated and treated as a valid calibration framework for another language.
+The Thai rubric or Thai admission scenarios must not simply be translated and treated as a valid calibration framework for another language.
 
 ---
 
-## 21. Engineering invariants for TCJ Panel
+## 25. Engineering invariants for TCJ Panel
 
 1. **No raw majority vote.** Consensus follows competence qualification.
 2. **Thai competence outranks diversity.** Weak judges do not gain authority through panel membership.
-3. **Qualification is versioned.** New model versions must requalify.
-4. **Dimension competence matters.** A model may be useful for one dimension and excluded from another.
-5. **Judges are independent.** They do not see each other's outputs before diagnosis.
-6. **Raw stays raw.** Preserve raw and calibrated state separately for each judge.
-7. **Disagreement is evidence.** Never erase it just to produce a cleaner score.
-8. **Low agreement may escalate.** TCJ is allowed to say automated judgment is uncertain.
-9. **Server owns aggregation.** Models do not negotiate or author the authoritative consensus.
-10. **Native-human authority remains separate.** Panel consensus does not overwrite blind human judgment.
-11. **Measure before promotion.** Panel mode must pass shadow evaluation before becoming production authority.
-12. **Commercial rights remain scoped.** Panel access does not imply model-development rights.
+3. **Admission is blind before identity reveal.** Brand/model reputation must not contaminate the native review or anonymous meta-review.
+4. **Generation competence and judging competence are different gates.** Neither substitutes for the other.
+5. **Same Stage A scenarios for every candidate.** Candidate comparisons must be paired against the same frozen prompts.
+6. **Global randomization.** Native review must not expose candidate grouping or generation order.
+7. **Human decisions freeze first.** No identity reveal before Stage A review is committed.
+8. **ChatGPT and Grok are independent meta-reviewers, not votes.** Their recommendations do not outvote native evidence.
+9. **Qualification is versioned.** New model versions must requalify.
+10. **Dimension competence matters.** A model may be useful for one dimension and excluded from another.
+11. **Judges are independent in production.** They do not see each other's outputs before diagnosis.
+12. **Raw stays raw.** Preserve raw and calibrated state separately for each judge.
+13. **Disagreement is evidence.** Never erase it just to produce a cleaner score.
+14. **Low agreement may escalate.** TCJ is allowed to say automated judgment is uncertain.
+15. **Server owns aggregation.** Models do not negotiate or author the authoritative consensus.
+16. **Native-human authority remains separate.** Panel consensus does not overwrite blind human judgment.
+17. **Measure before promotion.** Panel mode must pass shadow evaluation before becoming production authority.
+18. **Commercial rights remain scoped.** Panel access does not imply model-development rights.
 
 ---
 
-## 22. Short mental model
+## 26. Short mental model
 
 ```text
-NATIVE-HUMAN CALIBRATION
-          ↓
-   JUDGE ADMISSION
-          ↓
- QUALIFIED AI JUDGES
-    ↓      ↓      ↓
-  raw    raw     raw
-    ↓      ↓      ↓
- calibrate independently
-    ↓      ↓      ↓
+CANDIDATE MODELS
+      ↓
+SAME 10 FROZEN THAI SCENARIOS
+      ↓
+ANONYMOUS RANDOMIZED RESPONSES
+      ↓
+BLIND NATIVE-HUMAN REVIEW
+      ↓
+production competence evidence
+      ↓
+36-CASE TCJ JUDGING TEST
+      ↓
+judging competence evidence
+      ↓
+ANONYMOUS DOSSIERS
+   ↙             ↘
+ChatGPT          Grok
+blind review     blind review
+   ↘             ↙
+recommendations frozen
+      ↓
+IDENTITY REVEAL
+      ↓
+JUDGE ADMISSION
+      ↓
+QUALIFIED AI JUDGES
+  ↓       ↓       ↓
+ raw     raw      raw
+  ↓       ↓       ↓
+calibrate independently
+  ↓       ↓       ↓
 dimension-level consensus
-          +
-   disagreement evidence
-          ↓
+        +
+ disagreement evidence
+        ↓
 deterministic TCJ result
-          ↓
-  human escalation if needed
+        ↓
+human escalation if needed
 ```
 
 The approved principle is:
 
-> **TCJ Panel is not three AIs voting. It is a native-human-grounded system deciding which AI judges are competent, combining only qualified evidence, and preserving disagreement instead of hiding it.**
+> **TCJ Panel is not three AIs voting. It is a blind, native-human-grounded admission system that first tests whether candidate models can produce credible Thai, then tests whether they can judge Thai, compares anonymous evidence through independent meta-review, reveals model identities only after conclusions are frozen, and combines only qualified evidence while preserving disagreement.**
