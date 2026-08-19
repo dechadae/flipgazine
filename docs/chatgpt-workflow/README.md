@@ -13,20 +13,21 @@ For current Answers work, use this order:
 1. `ANSWERS-BATCH2-CORPUS-ROUTING-REACHABILITY-IMPLEMENTATION-REPORT.md` — **current corpus-production architecture**: definitive production cycle, technical first20 promotion, revision 126 verification and routing-service v5.
 2. `ANSWERS-THAI-CONVERSATION-JUDGE-ARCHITECTURE.md` — **current machine-evaluation architecture**: shared TCJ core, General Thai + Answers Voice profiles, CARE override, server-side calibration/provenance and Batch 2 integration.
 3. `ANSWERS-TCJ-LIVE-DEPLOYMENT-20260819.md` — **final live TCJ deployment checkpoint**: runtime/proxy versions, internal-boundary hardening, Voice UI cutover and smoke verification. This supersedes only the live version snapshot in the architecture document.
-4. `ANSWERS-BATCH2-TECH-PILOT-COMPLETION-REPORT.md` — B2-0001–B2-0020 full-cycle record: 4 ACCEPT / 9 EDIT / 7 REWRITE, non-metric provenance, enrichment, validation, corpus IDs 949–968 and buyer preview.
-5. `ANSWERS-BATCH2-BUYER-DATA-EXTRACTION-SPEC.md` — **governing buyer export contract**: corpus vs benchmark count language, technical-pilot treatment, clean replacement set, JSONL/CSV schema, routing evidence and per-promotion export checkpoint.
-6. `ANSWERS-BATCH2-ACTIVE-REVIEW-ORDER-CORRECTION.md` — historical correction that restored the first20 review before clean production. Its immediate-next-action text is superseded by newer implementation/checkpoint documents.
-7. `ANSWERS-BATCH2-HUMAN-FIRST-REVIEW-CORRECTION.md` — machine judgments are sealed until the native-human ACCEPT / EDIT / REWRITE decision is committed.
-8. `ANSWERS-BATCH2-CORPUS-ROUTING-REACHABILITY-PLAN.md` — governing routing/promotion architecture: same canonical Book corpus, same semantics, deterministic reachability and atomic 20-row promotion.
-9. `ANSWERS-BATCH2-SELF-AUDIT-IMPLEMENTATION-REPORT.md` — generation/audit infrastructure history; use newer implementation reports for current state.
-10. `ANSWERS-BATCH2-SELF-AUDIT-PROTOCOL.md` — frozen generation and ChatGPT self-audit protocol plus historical Qwen-v1 design. Human visibility is superseded by the human-first correction; new Qwen runs use the TCJ architecture document above.
-11. `ANSWERS-COMMERCIAL-EXECUTION-TIMELINE.md` — commercialization schedule.
-12. `ANSWERS-COMMERCIAL-BENCHMARK-PLAN.md` — commercial positioning, licensing and methodology claim boundaries.
-13. `ANSWERS-VOICE-TONE.md` — Thai / English editorial authority.
-14. `ANSWERS-VOICE-BENCHMARK-PLAN.md` — public Voice evaluator design history.
-15. `ANSWERS-HUMAN-EVALUATION-SCHEME.md` — human-evaluation deliverable.
-16. `ANSWERS-HUMAN-REVIEW.md` — immutable Batch 1 provenance.
-17. `ANSWERS-PRIVATE-SERVER-PHASE-K-MIGRATION-MANIFEST.md` — final private-server migration proof.
+4. `ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md` — **governing TCJ commercial-use boundary**: benchmark/evaluation rights vs model-development use, mixed-provenance classes, buyer diligence, default licensing scope and provider-terms review controls.
+5. `ANSWERS-BATCH2-TECH-PILOT-COMPLETION-REPORT.md` — B2-0001–B2-0020 full-cycle record: 4 ACCEPT / 9 EDIT / 7 REWRITE, non-metric provenance, enrichment, validation, corpus IDs 949–968 and buyer preview.
+6. `ANSWERS-BATCH2-BUYER-DATA-EXTRACTION-SPEC.md` — **governing buyer export contract**: corpus vs benchmark count language, technical-pilot treatment, clean replacement set, JSONL/CSV schema, routing evidence and per-promotion export checkpoint.
+7. `ANSWERS-BATCH2-ACTIVE-REVIEW-ORDER-CORRECTION.md` — historical correction that restored the first20 review before clean production. Its immediate-next-action text is superseded by newer implementation/checkpoint documents.
+8. `ANSWERS-BATCH2-HUMAN-FIRST-REVIEW-CORRECTION.md` — machine judgments are sealed until the native-human ACCEPT / EDIT / REWRITE decision is committed.
+9. `ANSWERS-BATCH2-CORPUS-ROUTING-REACHABILITY-PLAN.md` — governing routing/promotion architecture: same canonical Book corpus, same semantics, deterministic reachability and atomic 20-row promotion.
+10. `ANSWERS-BATCH2-SELF-AUDIT-IMPLEMENTATION-REPORT.md` — generation/audit infrastructure history; use newer implementation reports for current state.
+11. `ANSWERS-BATCH2-SELF-AUDIT-PROTOCOL.md` — frozen generation and ChatGPT self-audit protocol plus historical Qwen-v1 design. Human visibility is superseded by the human-first correction; new Qwen runs use the TCJ architecture document above.
+12. `ANSWERS-COMMERCIAL-EXECUTION-TIMELINE.md` — commercialization schedule.
+13. `ANSWERS-COMMERCIAL-BENCHMARK-PLAN.md` — commercial positioning, licensing and methodology claim boundaries.
+14. `ANSWERS-VOICE-TONE.md` — Thai / English editorial authority.
+15. `ANSWERS-VOICE-BENCHMARK-PLAN.md` — public Voice evaluator design history.
+16. `ANSWERS-HUMAN-EVALUATION-SCHEME.md` — human-evaluation deliverable.
+17. `ANSWERS-HUMAN-REVIEW.md` — immutable Batch 1 provenance.
+18. `ANSWERS-PRIVATE-SERVER-PHASE-K-MIGRATION-MANIFEST.md` — final private-server migration proof.
 
 Repository-root `AGENTS.md` remains the short operational entry point.
 
@@ -37,6 +38,7 @@ Repository-root `AGENTS.md` remains the short operational entry point.
 - **Current production state / cycle order:** `ANSWERS-BATCH2-CORPUS-ROUTING-REACHABILITY-IMPLEMENTATION-REPORT.md`.
 - **Machine-evaluation architecture / TCJ:** `ANSWERS-THAI-CONVERSATION-JUDGE-ARCHITECTURE.md`.
 - **Live TCJ component versions / deployment verification:** `ANSWERS-TCJ-LIVE-DEPLOYMENT-20260819.md`.
+- **TCJ commercial-use / benchmark-vs-model-development / provenance boundary:** `ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md`.
 - **First20 technical evidence:** `ANSWERS-BATCH2-TECH-PILOT-COMPLETION-REPORT.md`.
 - **Buyer extraction / counts / schema:** `ANSWERS-BATCH2-BUYER-DATA-EXTRACTION-SPEC.md`.
 - **Human-review visibility:** `ANSWERS-BATCH2-HUMAN-FIRST-REVIEW-CORRECTION.md`.
@@ -50,7 +52,8 @@ Repository-root `AGENTS.md` remains the short operational entry point.
 When older checkpoint wording conflicts with a newer authority, follow the newer document that owns that decision. In particular:
 
 - older statements that B2-0001–B2-0020 are “not promotion eligible” are superseded: they are corpus-linked reviewed technical-pilot content while remaining excluded from clean benchmark metrics;
-- `B2-QWEN-AUDIT-v1` remains immutable historical evidence, while new selected Qwen audits are governed by `TCJ-ANSWERS-BFF-v2` through the shared TCJ runtime.
+- `B2-QWEN-AUDIT-v1` remains immutable historical evidence, while new selected Qwen audits are governed by `TCJ-ANSWERS-BFF-v2` through the shared TCJ runtime;
+- TCJ source/API/private-deployment access does **not** imply model-development rights. The default commercial path is Benchmark Use only unless a separately reviewed written agreement expressly grants broader rights.
 
 ---
 
@@ -75,7 +78,7 @@ Do not generate later units before the preceding unit has passed its full promot
 
 ---
 
-## Current project checkpoint — 19 August 2026
+## Current project checkpoint — 20 August 2026
 
 ### Canonical Book
 
@@ -209,6 +212,38 @@ Machine proof for the completed first20 corpus cycle:
 ```
 
 Deployed Edge Function mirrors are under `../../supabase/functions/`, including the new `tcj-engine/` source and schema.
+
+---
+
+## TCJ commercial-use boundary
+
+Default licensing is now explicitly split from model-development rights.
+
+```text
+TCJ Benchmark License
+✓ independent evaluation / comparison
+✓ Thai QA / regression testing
+✓ safety / linguistic research
+✓ model-card or internal reporting
+✓ finalized release gating
+✓ scoped application-layer QA
+
+not granted by default
+✗ SFT / fine-tuning supervision
+✗ preference / RLHF / DPO / RLAIF labels
+✗ reward-model or distillation targets
+✗ synthetic-training-data filtering
+✗ checkpoint optimization
+✗ other model-development feedback loops
+```
+
+The detailed definitions, mixed-provenance matrix, frontier-lab examples, buyer diligence question, deal-record requirements and terms-change control live in:
+
+```text
+ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md
+```
+
+That document is the current authority whenever a buyer asks whether TCJ can be used to benchmark a model versus train, fine-tune, optimize or otherwise develop one.
 
 ---
 
