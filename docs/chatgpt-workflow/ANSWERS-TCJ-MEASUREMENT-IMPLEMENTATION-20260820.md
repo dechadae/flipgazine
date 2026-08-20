@@ -411,3 +411,164 @@ Dates never override the acceptance gates.
 ## 15. Governing rule
 
 > **Do not promote complexity merely because it can be implemented. Every TCJ layer must correspond to a measurable failure mode, and every production claim must be backed by evidence that was not used to manufacture the claimed result.**
+
+---
+
+## 16. Live advancement checkpoint · 20 August 2026 · Stage A frozen / Stage B ready
+
+This section supersedes the earlier current-state snapshot in Sections 7–13 where the later live state differs.
+
+### 16.1 Admission campaign provenance
+
+The first two fresh admission attempts remain preserved as aborted provenance:
+
+```text
+TCJ-JUDGE-ADMISSION-2026Q3-v1     aborted before human review
+TCJ-JUDGE-ADMISSION-2026Q3-v1.1   aborted before human review
+```
+
+They were not deleted or repurposed.
+
+The clean campaign is:
+
+```text
+TCJ-JUDGE-ADMISSION-2026Q3-v1.2
+protocol TCJ-JUDGE-ADMISSION-v1.2
+profile  answers-bff-v2
+```
+
+It generated 30 / 30 valid Stage A responses for three sealed candidates across the same ten frozen scenarios and globally randomized them into one 1–30 blind review order.
+
+### 16.2 Stage A human review is complete and frozen
+
+Live native-human evidence passed the freeze gate:
+
+```text
+active reviews                 30 / 30
+blind reviews                  30 / 30
+frozen reviews                 30 / 30
+human-final Thai present       30 / 30
+human-final SHA-256 valid      30 / 30
+ACCEPT                          9
+EDIT                            7
+REWRITE                        14
+voided invalid historical row   1  (preserved provenance)
+```
+
+All ACCEPT rows use the candidate text as `human_final_text`. All active EDIT/REWRITE rows contain changed human-final Thai. The earlier one-tap EDIT produced before human-final capture was corrected remains voided/versioned with its reason and does not count toward active review evidence.
+
+Migration:
+
+```text
+20260820130350_tcj_admission_stage_a_freeze_stage_b_foundation
+```
+
+The migration re-ran the full 30-review integrity gate atomically before allowing the transition. It then set:
+
+```text
+campaign status           human_review_frozen
+human_review_frozen_at    set
+identity_revealed_at      null
+```
+
+Candidate identities remain sealed.
+
+### 16.3 Anonymous Stage A summaries
+
+The same migration created:
+
+```text
+private.tcj_admission_stage_a_summaries
+```
+
+There are exactly three frozen internal summary rows, one per sealed candidate. Each summary preserves counts and an evidence-manifest SHA-256 over the frozen Stage A evidence. These summaries are private/server-only; candidate-level performance is not returned to the browser before the approved reveal point.
+
+### 16.4 Stage B persistence foundation
+
+The Stage A freeze migration also created server-only persistence for judging-competence evidence:
+
+```text
+private.tcj_admission_stage_b_judgments
+private.tcj_admission_stage_b_failures
+private.tcj_admission_stage_b_summaries
+```
+
+All four new Stage A/Stage B tables have RLS enabled and no direct `anon` or `authenticated` SELECT privilege.
+
+Performance follow-up migration:
+
+```text
+20260820131458_tcj_admission_stage_b_fk_indexes
+```
+
+adds the covering foreign-key indexes identified by the Supabase performance advisor for these new paths. Existing unrelated project advisor findings were intentionally left untouched.
+
+### 16.5 Stage B runner
+
+Live Edge Function:
+
+```text
+tcj-admission-stage-b v1
+verify_jwt = true
+```
+
+Repository mirror:
+
+```text
+supabase/functions/tcj-admission-stage-b/index.ts
+```
+
+The runner is purpose-specific and server authoritative. It:
+
+- requires the authenticated Flipgazine admin session and production origin;
+- requires Stage A to be frozen and identity to remain unrevealed;
+- uses only `TCJ-LEGACY-CALIBRATION-36-v1` with its permanent `legacy_exposed` / Calibration classification;
+- treats the 36 cases as preliminary Stage B judging-competence evidence only;
+- runs each sealed candidate independently on the same 36 cases;
+- therefore expects 108 candidate × case judgments;
+- uses one frozen structured judging contract;
+- preserves raw structured output, normalized diagnosis, hashes, settings, usage and latency;
+- retries only bounded transport failures;
+- blocks on generation-contract failure rather than resampling until favorable;
+- returns aggregate progress only to the browser;
+- does not return candidate model, provider, family, grouping or candidate-level performance before reveal.
+
+When all 108 valid judgments exist, the runner freezes three private Stage B summaries with per-dimension agreement/error evidence and preliminary failure metrics, then sets the campaign state to `stage_b_frozen` without revealing identity.
+
+### 16.6 Expert-operable control surface
+
+Live pages/controllers:
+
+```text
+/tcj-admission-review.html          v2
+/fg-page-tcj-admission-review-v2.js
+
+/tcj-stage-b.html                   v1
+/fg-page-tcj-stage-b-v1.js
+```
+
+The Stage A page is now read-only after freeze and links into the approved next methodological action. The Stage B page shows only aggregate progress and the evidence-boundary warning; it does not receive sealed candidate metadata.
+
+Because `tcj-admission-stage-b` requires the operator's live authenticated browser session, server maintenance tooling does not bypass that boundary. The domain expert initiates the approved Stage B run from `/tcj-stage-b.html`; the backend, not the browser, selects and persists each eligible sealed judgment.
+
+### 16.7 Exact checkpoint after implementation
+
+```text
+TCJ Standard baseline                         LIVE / unchanged
+current admission campaign                    v1.2
+Stage A generation                            30 / 30 complete
+Stage A human evidence                        30 / 30 frozen + integrity verified
+Stage A anonymous internal summaries           3 / 3 frozen
+candidate identities                          SEALED
+Stage B runner/control surface                LIVE / ready
+Stage B judgments                               0 / 108 at implementation handoff
+Stage B summary                               NOT YET FROZEN
+robustness battery                            NOT RUN
+anonymous Judge Passport dossiers             NOT BUILT
+blind ChatGPT + Grok meta-review              NOT RUN
+identity reveal                               NOT PERMITTED YET
+Panel production                              NOT LIVE
+Assurance production                          NOT LIVE
+```
+
+The next valid action is to run Stage B through the authenticated control plane. After Stage B freezes successfully, verify its evidence and then implement/run the approved robustness battery before anonymous Judge Passport meta-review.
