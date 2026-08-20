@@ -2,7 +2,7 @@
 
 **Status:** APPROVED METHOD · PARTIAL FOUNDATION IMPLEMENTED · PANEL/ASSURANCE NOT YET LIVE  
 **Approved:** 20 August 2026  
-**Updated:** 20 August 2026 · evidence-bank weaknesses patched, implementation baseline recorded, realistic completion timeline added  
+**Updated:** 20 August 2026 · expert-operable control plane added; evidence-bank weaknesses and realistic completion plan retained  
 **Project:** Flipgazine / The Book of Answers / Thai Conversation Judge  
 **Parent live architecture:** `ANSWERS-THAI-CONVERSATION-JUDGE-ARCHITECTURE.md`  
 **Commercial-use boundary:** `ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md`
@@ -25,7 +25,13 @@ The governing principle is:
 
 > **TCJ must continuously evaluate the evaluators.**
 
-Judge qualification, native-human evidence, disagreement, uncertainty, hidden challenge material, benchmark integrity and longitudinal judge behavior are therefore first-class components.
+Judge qualification, native-human evidence, disagreement, uncertainty, hidden challenge material, benchmark integrity and longitudinal judge behavior are first-class components.
+
+A second product principle is equally important:
+
+> **TCJ must be expert-operable by design.**
+
+The measurement system should be operable directly by a domain expert who may not write SQL, scripts or application code. The frontend is therefore not a cosmetic dashboard. It is a **methodology-aware control plane** that turns approved research procedures into constrained, auditable actions while the server remains the methodological authority.
 
 This document does **not** change the current live TCJ Standard endpoint merely because the method is approved. The live parent architecture remains authoritative for deployed Standard behavior until a versioned promotion is explicitly accepted.
 
@@ -42,6 +48,28 @@ TCJ's differentiated purpose is narrower:
 > **Measure socially natural Thai behavior for a specific relationship, role, channel, communicative task and house profile — while also measuring how trustworthy the evaluator is.**
 
 Long-term defensibility should come primarily from accumulated human-grounded evidence and measurement history, not from a secret prompt, a score formula or a dashboard.
+
+The operator experience is strategically important because the domain expert should not need to translate every linguistic or methodological decision into an engineering ticket before the evidence loop can continue.
+
+The desired loop is:
+
+```text
+native-language insight
+        ↓
+purpose-built control
+        ↓
+server-enforced experiment
+        ↓
+frozen evidence
+        ↓
+comparison / diagnosis
+        ↓
+methodology decision
+        ↓
+next controlled experiment
+```
+
+This shortens the time between expert judgment and measurable system improvement without weakening validity.
 
 ---
 
@@ -83,26 +111,423 @@ A second governing rule is:
 
 > **Judge diversity is useful only after judge competence is established. Thai competence outranks provider diversity.**
 
+A third governing rule is:
+
+> **The frontend may make rigorous methodology easy to operate, but it must never become the methodological authority.**
+
 ---
 
-## 4. Three different kinds of authority must remain separate
+## 4. Expert-operable by design — the methodology-aware control plane
 
-### 4.1 `answers-bff`
+### 4.1 Product principle
+
+TCJ should be usable as a serious measurement instrument by a native-language expert, editor, evaluator or research lead who does not need to write code.
+
+This does **not** mean moving logic into the browser.
+
+It means the interface exposes the approved workflow in human terms while the backend enforces the rules.
+
+```text
+DOMAIN EXPERT
+sees:
+scenario
+candidate
+review choices
+progress
+allowed next action
+methodological status
+
+        ↓
+
+CONTROL PLANE
+translates:
+Generate sealed pool
+Run remaining
+Blind review
+Accept / Edit / Rewrite
+Freeze
+Escalate
+Run Panel
+Run Assurance
+
+        ↓
+
+SERVER AUTHORITY
+enforces:
+identity blindness
+evidence-bank separation
+versioning
+immutability
+hashes
+qualification state
+retry policy
+thresholds
+provenance
+access control
+```
+
+The interface should make the **correct research procedure the easiest available procedure**.
+
+### 4.2 Why this matters
+
+Most evaluation infrastructure sits at one of two extremes:
+
+```text
+developer infrastructure
+API / SQL / notebooks / CLI / JSON
+```
+
+or:
+
+```text
+generic annotation software
+easy to use
+but methodologically shallow
+```
+
+TCJ should occupy the middle:
+
+> **A rigorous measurement backend with a domain-expert operating surface.**
+
+This matters because Thai pragmatic expertise is scarce. The person with the language judgment should be able to operate the evaluation loop directly rather than hand methodology to a coder who may not understand the linguistic distinction being measured.
+
+### 4.3 Operator / server responsibility boundary
+
+The human operator may:
+
+- choose an approved workflow;
+- provide or review natural-language evidence;
+- make blind A/E/R judgments;
+- edit or rewrite Thai where the protocol requires it;
+- approve a freeze point when the protocol allows;
+- inspect post-freeze evidence;
+- initiate an approved shadow or Assurance run;
+- inspect uncertainty, disagreement and known limitations.
+
+The human operator must **not** manually control:
+
+- candidate identity exposure before reveal;
+- evidence-bank eligibility;
+- whether an exposed case still counts as holdout;
+- scoring formulas;
+- hidden judge weights;
+- whether a failed generation is silently retried until favorable;
+- whether an invalid result is overwritten;
+- whether a model bypasses admission;
+- whether a review can be edited after freeze without versioned invalidation;
+- whether a public/browser client can read private evidence directly.
+
+Those remain server-owned.
+
+### 4.4 The control plane is a state machine, not a collection of pages
+
+Every workflow should have a versioned server state.
+
+Example Judge Admission:
+
+```text
+draft
+  ↓
+candidate_set_frozen
+  ↓
+stage_a_generation
+  ↓
+pool_complete
+  ↓
+globally_randomized
+  ↓
+blind_human_review
+  ↓
+human_review_frozen
+  ↓
+stage_b
+  ↓
+meta_review_frozen
+  ↓
+identity_reveal
+  ↓
+passport_assigned
+```
+
+The browser renders the current state and valid next actions. It does not invent state transitions locally.
+
+A button is therefore an **intent request**, not an authority grant.
+
+### 4.5 Progressive disclosure protects methodology
+
+The UI should reveal only what is valid at the current methodological stage.
+
+Before blind review freeze:
+
+```text
+show:
+scenario
+candidate response
+opaque response ID
+allowed review controls
+
+hide:
+model
+provider
+family
+candidate grouping
+machine score
+other judge output
+aggregate candidate performance
+```
+
+After the defined reveal point, additional evidence may become visible.
+
+The browser should never receive hidden metadata merely to hide it with CSS.
+
+### 4.6 No-code does not mean low-rigor
+
+The operator should not need to know:
+
+```text
+SQL table names
+JWT structure
+Edge Function names
+database constraints
+hash implementation
+provider payload schema
+retry backoff
+RLS policy syntax
+```
+
+but the system must still perform all of those correctly.
+
+The frontend should use language such as:
+
+```text
+Generate sealed pool
+30 / 30 generated
+Globally randomized
+Open blind review
+Decision frozen
+Human final Thai saved
+Stage B ready
+Panel requires human review
+```
+
+rather than exposing infrastructure terminology unless diagnostics are intentionally opened.
+
+### 4.7 Human review interaction contract
+
+For Stage A and similar review workflows:
+
+```text
+ACCEPT
+→ one-step save
+→ human_final_text = candidate response
+→ hash and freeze
+
+EDIT
+→ open candidate text in editable Thai field
+→ human edits
+→ explicit Save Edit
+→ human_final_text + hash + decision freeze
+
+REWRITE
+→ open blank or explicitly reset editor
+→ human rewrites
+→ explicit Save Rewrite
+→ human_final_text + hash + decision freeze
+```
+
+A/E/R without the human-final Thai is incomplete evidence.
+
+If a UI defect freezes an EDIT/REWRITE without final text, that review must be **voided/versioned as invalid provenance**, not silently deleted or treated as valid.
+
+### 4.8 Error handling is part of methodology
+
+The UI must distinguish:
+
+```text
+transport retry
+provider outage / 429 / 5xx
+
+generation-contract failure
+empty final answer
+length exhaustion
+invalid schema
+unsupported model adapter
+
+methodology block
+campaign not frozen
+review not open
+holdout exposure
+qualification failure
+
+unexpected infrastructure error
+```
+
+Only genuinely retryable transport failures may be labeled safe to retry.
+
+A generation-contract failure must not be repeatedly sampled until a favorable response appears.
+
+The UI should say **Blocked** when the protocol is blocked, not generic “Paused.”
+
+### 4.9 Resumable workflows without evidence corruption
+
+Long operations should run in small idempotent steps.
+
+Example:
+
+```text
+Run remaining 30
+→ server executes one eligible cell
+→ persists provenance
+→ returns aggregate progress
+→ browser requests next eligible cell
+```
+
+A network interruption must not:
+
+- duplicate evidence;
+- regenerate completed cells;
+- alter randomized order;
+- reset frozen decisions;
+- expose candidate identities.
+
+The workflow resumes from authoritative server state.
+
+### 4.10 Mobile-first domain-expert operation
+
+TCJ's expert-operable layer should remain usable on a phone because linguistic review does not inherently require a workstation.
+
+Requirements:
+
+- large readable Thai;
+- one current judgment at a time;
+- no horizontal data grids for primary review;
+- safe tap targets;
+- explicit save for destructive/final actions;
+- no accidental native tap overlays that obscure state;
+- clear reviewed/remaining count;
+- keyboard-friendly Thai editing;
+- preserved line breaks;
+- low visual noise during blind review.
+
+Desktop may expose richer research summaries, but the core human judgment path should remain mobile-capable.
+
+### 4.11 Control-plane surfaces
+
+Approved / intended surfaces:
+
+```text
+TCJ Research
+/tcj-research.html
+- research experiments
+- calibration reruns
+- Stage A generation status
+- safe transition to blind review
+
+TCJ Blind Admission Review
+/tcj-admission-review.html
+- opaque randomized responses
+- A/E/R
+- human-final Thai
+- reason tags / notes
+- frozen review progress
+
+Future: Judge Passport
+- anonymous before reveal where required
+- per-dimension competence
+- failure fingerprints
+- requalification status
+
+Future: Panel Operations
+- run qualified panel
+- individual evidence preserved
+- disagreement / uncertainty
+- escalation status
+
+Future: Human Escalation Review
+- blind-first cases
+- random audit cases
+- post-freeze Panel reveal
+- human↔model delta capture
+
+Future: Assurance
+- pack selection subject to permission
+- frozen manifest
+- run progress
+- human audit sample
+- report generation
+```
+
+These are not generic CMS pages. Each is a constrained operational surface for one methodological role.
+
+### 4.12 Server-side requirements for every control-plane action
+
+Every consequential action should:
+
+1. authenticate the operator;
+2. authorize the operator for the specific workflow;
+3. verify current server state;
+4. verify the requested transition is allowed;
+5. perform the smallest valid mutation;
+6. persist provenance;
+7. return only the minimum data needed by the UI;
+8. remain safe under retry;
+9. never weaken evidence blindness;
+10. log enough information to reconstruct what happened.
+
+### 4.13 Versioning
+
+The following should be versioned independently where relevant:
+
+```text
+methodology
+profile
+judge adapter
+campaign
+scenario set
+prompt/instruction
+Edge Function
+page/controller
+database migration
+report schema
+```
+
+A frontend change that affects what the human can see or how a human decision is recorded is a **methodologically relevant change**, not merely cosmetic.
+
+### 4.14 Acceptance criteria for expert-operable design
+
+This principle is considered implemented only if:
+
+- a non-coder domain expert can complete the approved workflow without SQL/CLI/manual API calls;
+- browser-visible controls cannot bypass server protocol;
+- the operator can always tell what state the workflow is in;
+- the operator can tell whether a failure is retryable or blocked;
+- blind workflows do not deliver hidden identity metadata to the browser;
+- frozen human decisions are immutable except through explicit versioned invalidation;
+- EDIT/REWRITE preserve human-final Thai;
+- every run can be reconstructed from backend provenance;
+- page refresh or connection loss cannot corrupt evidence;
+- control-plane convenience does not change evidence eligibility.
+
+---
+
+## 5. Three different kinds of authority must remain separate
+
+### 5.1 `answers-bff`
 
 The Answers profile measures an intentionally authored house/editorial voice.
 
 ```text
-Decha / designated native editorial owner
+designated native editorial owner
         = final editorial authority
 ```
 
 Independent native reviewers may still be useful for research and external validation, but this profile does not attempt to estimate an average Thai speaker.
 
-### 4.2 `general-v1` live limitation
+### 5.2 `general-v1` live limitation
 
 The current live General Thai profile is a practical evaluator. Its current human evidence must **not** be described as universal or population-level Thai ground truth.
 
-### 4.3 Future `general-v2`
+### 5.3 Future `general-v2`
 
 A broader contemporary-Thai claim requires multiple independent native-Thai judgments.
 
@@ -128,7 +553,7 @@ contextual explanation where available
 
 ---
 
-## 5. Human review must be blind before model evidence is shown
+## 6. Human review must be blind before model evidence is shown
 
 Any case intended to become calibration, qualification or Assurance evidence must receive its initial human judgment without machine diagnosis exposure.
 
@@ -155,9 +580,9 @@ The human decision freezes first. Machine evidence may be revealed only afterwar
 
 ---
 
-## 6. Human evidence is partitioned into three banks
+## 7. Human evidence is partitioned into three banks
 
-### 6.1 Calibration Bank
+### 7.1 Calibration Bank
 
 Cases that may influence:
 
@@ -171,11 +596,11 @@ judge adapters
 
 Once a case influences methodology, it belongs here permanently for validity accounting.
 
-### 6.2 Judge Qualification Bank
+### 7.2 Judge Qualification Bank
 
 Fresh frozen cases used to determine whether candidate judges deserve production authority. Qualification evidence must remain separate from ordinary calibration development.
 
-### 6.3 Assurance Holdout
+### 7.3 Assurance Holdout
 
 Private cases reserved for independent validation. Assurance items must not be used to:
 
@@ -192,7 +617,7 @@ If an Assurance case is exposed during methodology development, it is reclassifi
 
 > **A case used to improve TCJ cannot also count as independent evidence that the improvement works.**
 
-### 6.4 PATCHED WEAKNESS — the existing 36-case bank has a permanent evidence classification
+### 7.4 Historical 36-case bank has a permanent evidence classification
 
 The historical 36-case bank has already been used to compare candidate evaluators and influence TCJ methodology.
 
@@ -204,15 +629,9 @@ Calibration Bank
 preliminary Stage B screening evidence
 ```
 
-It is **not eligible** to serve as:
+It is **not eligible** to serve as clean final Judge Qualification proof, Assurance Holdout, or independent proof that a later TCJ change generalizes.
 
-```text
-clean final Judge Qualification proof
-Assurance Holdout
-independent proof that a later TCJ change generalizes
-```
-
-All historical Judge Passports derived from this bank must carry:
+Historical Judge Passports derived from this bank must remain marked:
 
 ```text
 qualification_state = historical_preliminary
@@ -221,11 +640,9 @@ assurance_eligible = false
 final_qualification_sufficient = false
 ```
 
-This restriction is structural, not merely wording in a report.
-
 ---
 
-## 7. Judge Admission remains a blind two-stage protocol
+## 8. Judge Admission remains a blind two-stage protocol
 
 Every candidate model must pass a versioned admission process before influencing production TCJ Panel conclusions.
 
@@ -254,7 +671,7 @@ opaque IDs + global randomization
         ↓
 BLIND NATIVE-HUMAN REVIEW
         ↓
-human decisions frozen
+human decisions + human-final Thai frozen
         ↓
 anonymous production evidence
         ↓
@@ -278,15 +695,9 @@ Identity reveal is a methodological event, not a convenience.
 
 ---
 
-## 8. Stage A — blind Native-Thai production competence
+## 9. Stage A — blind Native-Thai production competence
 
 The initial screen uses the same **10 frozen scenarios per candidate model**.
-
-For six candidates:
-
-```text
-10 scenarios × 6 models = 60 blind responses
-```
 
 Coverage should include, where practical:
 
@@ -309,7 +720,7 @@ Generation provenance records provider/model/version, sampling settings, task in
 
 Before human review remove provider/model/family metadata, candidate grouping and generation order. Assign opaque IDs and globally randomize all responses.
 
-Human decision vocabulary remains:
+Human decision vocabulary:
 
 ```text
 ACCEPT
@@ -317,11 +728,21 @@ EDIT
 REWRITE
 ```
 
+For all three states, TCJ must preserve the human-final Thai:
+
+```text
+ACCEPT   → candidate text
+EDIT     → edited human-final text
+REWRITE  → rewritten human-final text
+```
+
 Optional reason tags include translation shape, lexical choice, over-explanation, pronoun/subject issue, particle/stance issue, register mismatch, semantic drift, code mixing, humor/timing, generic/cliché, metaphor, composition, excessive formality/verbosity and other.
+
+A review missing required human-final text is invalid evidence.
 
 ---
 
-## 9. Stage B — TCJ judging competence
+## 10. Stage B — TCJ judging competence
 
 The existing 36-case native-human calibration suite remains useful as the first judging-competence screen.
 
@@ -347,7 +768,7 @@ structured-output reliability
 
 No arbitrary rule such as “100 cases = qualified” is permitted. Qualification depends on whether evidence is sufficiently strong for the intended production claim, especially for high-cost errors such as false-fluent pragmatic judgment.
 
-### 9.1 PATCHED WEAKNESS — the historical 36 cases do not validate broad General Thai dimensions
+### 10.1 Historical 36 cases do not validate broad General Thai dimensions
 
 The current 36-case human labels use the Answers-style dimensions:
 
@@ -360,7 +781,7 @@ stance
 composition
 ```
 
-They do not independently label the broader General Thai dimensions:
+They do not independently label broader General Thai dimensions such as:
 
 ```text
 register_relationship_fit
@@ -369,14 +790,14 @@ discourse_delivery
 
 Therefore:
 
-- the historical 36-case bank may support `answers-bff` judge screening;
-- it may inform shared-core research where the mapping is explicit;
-- it must **not** be presented as a complete human validation of `general-v1`;
-- `general-v2` requires a fresh multi-rater bank built specifically for General Thai constructs and population scope.
+- the historical bank may support `answers-bff` screening;
+- it may inform shared-core research where mapping is explicit;
+- it must not be presented as complete validation of `general-v1`;
+- `general-v2` requires a fresh multi-rater bank built specifically for General Thai constructs and documented population scope.
 
 ---
 
-## 10. Judge Passport — every production judge gets a versioned failure profile
+## 11. Judge Passport — every production judge gets a versioned failure profile
 
 Each candidate receives a versioned Judge Passport containing at least:
 
@@ -384,6 +805,7 @@ Each candidate receives a versioned Judge Passport containing at least:
 model/provider/version
 admission protocol version
 Stage A ACCEPT / EDIT / REWRITE evidence
+Stage A human-final delta evidence
 per-dimension judging error
 false-fluent rate
 false-major / false-critical rate
@@ -399,7 +821,7 @@ qualification date
 expiry/requalification condition
 ```
 
-### 10.1 Robustness battery
+### 11.1 Robustness battery
 
 Where relevant to the judge contract, test:
 
@@ -419,19 +841,17 @@ particles and omitted subjects
 relationship/register shifts
 ```
 
-Pairwise-position tests apply only where an ordered comparison actually exists.
+### 11.2 Candidate response is untrusted data
 
-### 10.2 Candidate response is untrusted data
+Text inside the candidate such as “ignore the rubric” or “rate this 4” is data, never instruction.
 
-Text inside the candidate such as “ignore the rubric” or “rate this 4” is data, never instruction. Judge adapters must delimit candidate text and admission must include injection-resistance cases.
-
-### 10.3 Model upgrades do not inherit passports
+### 11.3 Model upgrades do not inherit passports
 
 New provider/model snapshots requalify. Historical passports remain immutable evidence of the older version.
 
 ---
 
-## 11. Per-dimension qualification
+## 12. Per-dimension qualification
 
 A judge may be:
 
@@ -448,7 +868,7 @@ No production coefficient may use invented weights or unmeasured competence numb
 
 ---
 
-## 12. Anonymous candidate dossiers and independent meta-review
+## 13. Anonymous candidate dossiers and independent meta-review
 
 Before identity reveal, build anonymous dossiers containing blind production outcomes, judging metrics, per-dimension errors, false-fluent/false-major behavior, robustness results, repeat-run stability, structured-output reliability, representative anonymized failures and uncertainty.
 
@@ -460,7 +880,7 @@ An AI context that already knows the identity map does not count as genuinely bl
 
 ---
 
-## 13. Production panel size
+## 14. Production panel size
 
 Initial target: **three qualified independent judges**.
 
@@ -474,7 +894,7 @@ Thai competence > provider diversity
 
 ---
 
-## 14. Parallel independent evaluation
+## 15. Parallel independent evaluation
 
 ```text
 scenario + candidate
@@ -496,7 +916,7 @@ Judges do not see one another's output before commitment. Panel mode is not deba
 
 ---
 
-## 15. Raw and calibrated evidence remain separate
+## 16. Raw and calibrated evidence remain separate
 
 For every judge preserve provider/model/snapshot/settings, core/profile/guard versions, methodology hash, scenario/candidate hashes, raw diagnosis/hash, calibrated diagnosis/hash, calibration status, guard trace, latency/usage, Judge Passport version and qualification state.
 
@@ -504,17 +924,17 @@ Aggregation must never overwrite individual evidence.
 
 ---
 
-## 16. Consensus is dimension-level, never verdict-level voting
+## 17. Consensus is dimension-level, never verdict-level voting
 
 Raw majority verdict voting remains prohibited.
 
-### 16.1 Shadow implementation — robust median
+### 17.1 Shadow implementation — robust median
 
 Median may be used in the first shadow implementation because it is simple, auditable and robust to one extreme value.
 
 > **Median consensus is transitional experimental machinery, not the intended final premium measurement method.**
 
-### 16.2 Target implementation — human-calibrated reliability model
+### 17.2 Target implementation — human-calibrated reliability model
 
 When enough fresh frozen human evidence exists, estimate each judge's behavior per dimension and derive a distribution over the human-grounded state rather than treating each judge as an equally trustworthy integer.
 
@@ -527,13 +947,13 @@ assumptions are documented
 shadow results improve unseen-human prediction versus the simpler baseline
 ```
 
-### 16.3 Correlated judge errors
+### 17.3 Correlated judge errors
 
 Three APIs are not automatically three independent measurements. Residual errors against blind human evidence must be measured before any correlation correction is introduced. No invented correlation penalties are permitted.
 
 ---
 
-## 17. Disagreement and uncertainty are first-class outputs
+## 18. Disagreement and uncertainty are first-class outputs
 
 Per dimension preserve:
 
@@ -560,7 +980,7 @@ Escalation thresholds require blind-human calibration before production use.
 
 ---
 
-## 18. Human escalation is normal operation
+## 19. Human escalation is normal operation
 
 Human review may be triggered by material disagreement, high uncertainty, critical/safety-sensitive failure, novel context, new failure cluster, important guard activation, unexpected Passport violation, model drift or contrast-bank inconsistency.
 
@@ -584,10 +1004,10 @@ Multiple native reviewers may legitimately disagree; ambiguity is preserved rath
 
 ---
 
-## 19. Native-human authority does not mean one universal Thai truth
+## 20. Native-human authority does not mean one universal Thai truth
 
 ```text
-Answers editorial owner judgment
+Answers editorial-owner judgment
         = house-style/corpus authority
 
 General Thai multiple native judgments
@@ -598,9 +1018,9 @@ Neither should be described as metaphysical ground truth.
 
 ---
 
-## 20. Thai Pragmatic Contrast Bank
+## 21. Thai Pragmatic Contrast Bank
 
-Build private human-designed minimal or near-minimal pairs where one socially causal variable changes, for example:
+Build private human-designed minimal or near-minimal pairs where one socially causal variable changes:
 
 ```text
 best friend ↔ boss
@@ -623,7 +1043,7 @@ The strongest cases remain private.
 
 ---
 
-## 21. Contamination resistance — use genuinely new hidden material
+## 22. Contamination resistance — use genuinely new hidden material
 
 Assurance prioritizes:
 
@@ -641,7 +1061,7 @@ Assurance packs may be draft, frozen, active, limited-life, retired or compromis
 
 ---
 
-## 22. Benchmark QA attacks TCJ itself
+## 23. Benchmark QA attacks TCJ itself
 
 Every evidence item should maintain item-health evidence including human agreement/ambiguity, judge disagreement, observed difficulty, discrimination, known shortcuts, formatting sensitivity, exposure state, review history and retirement reason.
 
@@ -651,7 +1071,7 @@ Broken, ambiguous or compromised items are versioned/retired, not silently rewri
 
 ---
 
-## 23. Product modes
+## 24. Product modes
 
 ### TCJ Standard
 
@@ -691,7 +1111,7 @@ High-stakes comparison, procurement/release readiness and serious commercial evi
 
 ---
 
-## 24. Do not reduce serious results to one 0–100 score
+## 25. Do not reduce serious results to one 0–100 score
 
 Panel/Assurance reports should be capable of including:
 
@@ -716,7 +1136,7 @@ A score on a fixed pack is not proof of performance across all possible Thai con
 
 ---
 
-## 25. Strategic private assets / copy resistance
+## 26. Strategic private assets / copy resistance
 
 Hard-to-copy assets include:
 
@@ -734,9 +1154,13 @@ buyer/domain-specific calibration
 
 The moat is **evidence accumulation + protocol discipline + native-language expertise**, not obscurity of code.
 
+The expert-operable control plane strengthens this moat operationally because it lets the domain expert generate high-quality evidence faster and more consistently. The screens themselves are copyable; the accumulated frozen evidence and the server-enforced history behind them are not.
+
+> **The frontend is an accelerator of the moat, not the moat by itself.**
+
 ---
 
-## 26. Research assets must not collapse into training rights
+## 27. Research assets must not collapse into training rights
 
 ```text
 Benchmark Use
@@ -748,7 +1172,7 @@ TCJ scores, diagnoses, flags, disagreement evidence, human audits and Assurance 
 
 ---
 
-## 27. Explicitly rejected for now
+## 28. Explicitly rejected for now
 
 Not approved merely because they sound advanced:
 
@@ -760,115 +1184,243 @@ Not approved merely because they sound advanced:
 - paraphrasing as contamination solution;
 - immediate IRT/complex latent-trait machinery;
 - a TCJ-trained reward model before evidence justifies it;
-- universal Thai truth claims.
+- universal Thai truth claims;
+- moving authoritative methodology into client-side JavaScript;
+- exposing hidden metadata to the browser and relying on CSS to hide it;
+- generic admin CRUD that allows operators to bypass evidence-state rules;
+- retry-until-success behavior for non-transport model failures.
 
 ---
 
-## 28. Implementation baseline — 20 August 2026
+## 29. Expert-operable implementation architecture
 
-### 28.1 Already live before vNext foundation
+### 29.1 Control-plane backend pattern
+
+Use one server-mediated action contract per methodological workflow.
+
+```text
+browser
+  ↓ authenticated intent
+workflow Edge Function / service
+  ↓
+auth + authorization
+  ↓
+state validation
+  ↓
+methodology validation
+  ↓
+small atomic mutation / run step
+  ↓
+append provenance
+  ↓
+minimal response
+```
+
+Do not give the browser general database access to private TCJ research tables.
+
+### 29.2 Data model pattern
+
+Each workflow should separate:
+
+```text
+definition
+state
+evidence
+provenance
+human judgment
+derived result
+```
+
+Example Judge Admission:
+
+```text
+tcj_admission_campaigns
+tcj_admission_campaign_candidates
+tcj_admission_scenarios
+tcj_admission_generations
+tcj_admission_generation_failures
+tcj_admission_human_reviews
+```
+
+This lets the UI remain simple while the backend remains reconstructable.
+
+### 29.3 Command semantics
+
+Prefer explicit commands:
+
+```text
+status
+run_next
+next_review
+save_review
+freeze
+review_summary
+```
+
+over generic client-side CRUD.
+
+The command validates protocol state before mutation.
+
+### 29.4 Aggregate progress only where blindness requires it
+
+During sealed generation, the browser may receive:
+
+```text
+generated = 17
+pending = 13
+state = ready
+```
+
+but not:
+
+```text
+Candidate A = 10/10
+Candidate B = 7/10
+Candidate C = 0/10
+```
+
+if that distribution could reveal candidate identity or bias the reviewer.
+
+### 29.5 Human-edit storage
+
+Stage A human review storage must include:
+
+```text
+decision
+human_final_text
+human_final_sha256
+reason_tags
+review_note
+blind_review
+frozen_at
+voided_at
+void_reason
+```
+
+`ACCEPT` stores the original candidate as human-final text.
+
+`EDIT` / `REWRITE` require changed human-final text.
+
+A voided row stays in history but does not count as active review evidence.
+
+### 29.6 Retry provenance
+
+Generation should preserve:
+
+```text
+failure_class
+attempt_count
+last_http_status
+error_code
+first_failed_at
+last_failed_at
+next_retry_at
+resolved_at
+error_meta
+```
+
+Retryable transport failure and protocol-invalid generation failure are different states.
+
+### 29.7 Frontend/controller separation
+
+The visual page may be versioned separately from its controller.
+
+This enables:
+
+- backup before surgical fixes;
+- isolated page logic;
+- centralized shell stability;
+- independent audit of review behavior;
+- rollback without touching the methodology tables.
+
+Central shell/auth code should not be changed merely to fix one TCJ workflow.
+
+### 29.8 Future operator surfaces
+
+Build in this order:
+
+1. Research control plane.
+2. Blind Admission Review.
+3. Judge Passport inspector.
+4. Panel shadow control.
+5. Human escalation review.
+6. Contrast-bank authoring/validation.
+7. Assurance run control.
+8. Assurance report viewer/export.
+
+Do **not** build generic CRUD for all tables first.
+
+### 29.9 Domain-expert workflow design rule
+
+For every future page ask:
+
+> **What methodological decision is the expert making here?**
+
+If the answer is unclear, the page probably should not exist.
+
+The interface should be organized around decisions, not database entities.
+
+---
+
+## 30. Implementation baseline — 20 August 2026
+
+Already live or implemented in the vNext foundation:
 
 ```text
 TCJ Standard canonical core/profile architecture
-Qwen semantic judge through Groq
 raw vs calibrated diagnosis separation
 versioned deterministic guards
 deterministic score/verdict
 methodology hashes
-private tcj_evaluation_runs / guard applications / Batch2 links
-public Voice privacy boundary
-secure internal Batch2 route
-36 human-labelled historical calibration cases
-historical calibration runs for three candidate models
+private TCJ research tables
+evidence-bank separation
+historical preliminary Judge Passports
+Judge Admission campaign structures
+sealed candidate generation
+global randomization
+blind review service
+blind review mobile UI
+human A/E/R review
+human-final Thai + hash
+review invalidation/void provenance
+research control page
+server-side retry/failure provenance
 ```
 
-### 28.2 Implemented on 20 August 2026 as the first vNext foundation
-
-Two migrations are now live:
+Current expert-operable proof points include:
 
 ```text
-20260819225121  tcj_measurement_foundation_vnext
-20260819225157  tcj_measurement_backfill_legacy36
+/tcj-research.html
+- operator can run approved research jobs without SQL/API work
+- aggregate progress only where blindness requires it
+
+/tcj-admission-review.html
+- operator reviews one randomized Thai response at a time
+- model identity remains server-hidden
+- A/E/R maps to frozen backend evidence
+- EDIT/REWRITE capture human-final Thai
 ```
 
-New private measurement structures now exist for:
-
-```text
-evidence sets/items
-judge candidates/passports/dimension metrics
-admission campaigns/candidates/scenarios/generations/human reviews
-panel runs/members/consensus
-human review queue/judgments
-contrast families/items/human validation
-Assurance packs/items/exposure ledger
-item-health records
-```
-
-Security boundary:
-
-```text
-RLS enabled on all new private TCJ tables
-anon direct SELECT = false
-authenticated direct SELECT = false
-```
-
-Backfill completed:
-
-```text
-3 evidence sets
-  TCJ-LEGACY-CALIBRATION-36-v1
-  TCJ-JUDGE-QUALIFICATION-v1
-  TCJ-ASSURANCE-HOLDOUT-v1
-
-36 legacy evidence items classified methodology_exposed
-3 historical judge candidates
-3 historical preliminary Judge Passports
-18 per-dimension historical metrics
-1 draft admission campaign: TCJ-JUDGE-ADMISSION-2026Q3-v1
-```
-
-The existing 36 cases are now structurally marked as ineligible for clean Assurance/final-qualification claims.
-
-### 28.3 Not implemented yet
-
-```text
-fresh Stage A scenarios/candidate generations
-blind Stage A review UI/service
-robustness battery execution
-fresh Qualification Bank content
-blind ChatGPT/Grok dossier review workflow
-formal qualified Judge Passports
-parallel Panel runtime
-shadow median consensus runtime
-disagreement-to-human queue automation
-random high-confidence audit sampling
-Contrast Bank content
-probabilistic reliability model
-correlated-error treatment
-fresh Assurance pack content
-General-v2 multi-rater corpus
-external native validation
-production Panel/Assurance promotion
-```
+This proves the control-plane concept on a real TCJ workflow before Panel/Assurance exists.
 
 ---
 
-## 29. Completion plan and realistic timeline
+## 31. Completion plan and realistic timeline
 
 ### Timeline principle
 
 Engineering is not the critical path. **Fresh hidden human evidence and external native review are the critical path.**
 
-A realistic estimate from the 20 August 2026 baseline is:
+Realistic planning window from the 20 August 2026 baseline:
 
 ```text
-core engineering foundation     ~4–7 focused working days
-first qualified Panel evidence  ~5–10 calendar days
-Assurance-quality hidden bank   ~2–3 weeks
-General-v2 / external validation ~3–6 weeks depending reviewer availability
+control-plane + core engineering foundation  ~4–7 focused working days
+first qualified Panel evidence               ~5–10 calendar days
+Assurance-quality hidden bank                ~2–3 weeks
+General-v2 / external validation             ~3–6 weeks depending reviewer availability
 ```
 
-Earliest credible full-architecture completion target, if reviewer access is smooth:
+Earliest credible full-architecture completion target:
 
 > **mid-to-late September 2026**
 
@@ -876,141 +1428,110 @@ Conservative completion window:
 
 > **late September to early October 2026**
 
-These are planning windows, not promises. Acceptance gates outrank dates.
+Acceptance gates outrank dates.
 
-### Phase 0 — Freeze Standard baseline · 20 Aug
+### Phase 0 — Freeze Standard baseline
 
-Record live engine/function versions, methodology hashes and schema checkpoint. No Panel work changes Standard behavior.
+Record live engine/function versions, methodology hashes and schema checkpoint. Panel work must not change Standard behavior.
 
-**Exit:** reproducible live baseline.
+### Phase 1 — Research persistence
 
-### Phase 1 — Prove TCJ research persistence · 20–21 Aug
+Run frozen human-reviewed material through the canonical TCJ research path and verify raw diagnosis, calibrated diagnosis, guards and human comparison persist correctly.
 
-Run the already-approved `B2-0021–0040` `answers-bff-v2` calibration rerun through the canonical TCJ path and compare raw model diagnosis, calibrated diagnosis, guards and frozen human decisions.
+### Phase 2 — Measurement foundation
 
-**Constraint:** must use the existing authenticated/internal route; do not create a weaker bypass merely to automate the rerun.
+Evidence-bank, Passport, admission, Panel, human-loop, contrast, Assurance and item-health schema.
 
-**Exit:** research-storage path proven end to end.
+**Status:** implemented.
 
-### Phase 2 — Measurement foundation · 20 Aug · IMPLEMENTED
+### Phase 3 — Expert-operable admission control plane
 
-Create evidence-bank, Passport, admission, Panel, human-loop, contrast, Assurance and item-health schema; backfill the legacy 36 cases and historical judge metrics.
+Authenticated server-mediated generation + globally randomized blind review UI + human-final text capture + immutable freeze/void semantics.
 
-**Exit:** completed and verified.
+**Status:** materially implemented; Stage A review in progress.
 
-### Phase 3 — Admission backend + blind review UI · 20–21 Aug
+### Phase 4 — Complete Stage A human evidence
 
-Implement an authenticated admin-only admission service and a dedicated review page that never returns candidate identity/model information during Stage A.
+Finish blind A/E/R review for the current frozen candidate pool.
 
-**Exit:** reviewer can process globally randomized opaque responses without identity leakage.
+**Exit:** all active Stage A human reviews frozen with valid human-final Thai.
 
-### Phase 4 — Freeze candidate set + Stage A material · 21 Aug
+### Phase 5 — Stage B + robustness
 
-Privately select candidate models, freeze comparable generation conditions, author/freeze 10 Stage A scenarios, generate responses, strip identity and globally randomize.
+Run surviving candidates on the legacy 36-case preliminary screen plus robustness battery.
 
-**Human workload:** approximately 50–60 blind responses for a 5–6 model campaign; expected concentrated native review approximately 2–4 focused hours, but quality outranks speed.
+### Phase 6 — Blind meta-review + identity reveal
 
-**Exit:** Stage A human decisions frozen.
+Independent anonymous ChatGPT and Grok dossier reviews; freeze before identity reveal.
 
-### Phase 5 — Stage B + robustness · 21–22 Aug
+### Phase 7 — Judge Passport control plane
 
-Run surviving candidates on the legacy 36-case preliminary screen plus the robustness battery. Compute dimension error, false-fluent behavior, stability, structured-output reliability and injection/perturbation failures.
+Build expert-readable Passport view showing competence, uncertainty, known failures, qualification state and requalification conditions.
 
-**Exit:** anonymous preliminary dossiers frozen.
+### Phase 8 — `tcj-panel-shadow`
 
-### Phase 6 — Blind meta-review + identity reveal · 22–23 Aug
+Build server-side parallel execution plus an operator control surface. Preserve individual runs and use median only as shadow consensus.
 
-Run independent anonymous ChatGPT and Grok dossier reviews, freeze both, then reveal identities and verify provider/version/commercial constraints.
+### Phase 9 — Human escalation control plane
 
-**Current operational dependency:** if no direct Grok/xAI integration is available, use a fresh independent Grok session/API externally and import the frozen result. Do not substitute a non-blind orchestrator and call it blind.
+Build blind-first escalation and random high-confidence audit workflow.
 
-**Exit:** first formal qualification states assigned by dimension.
+### Phase 10 — Fresh hidden Judge Qualification Bank
 
-### Phase 7 — `tcj-panel-shadow` · 23–24 Aug
+Create genuinely new human-first hidden qualification evidence.
 
-Build parallel internal-only Panel execution around qualified judges. Preserve per-judge raw/calibrated runs. Use robust median as shadow consensus only.
+### Phase 11 — Thai Pragmatic Contrast Bank
 
-**Exit:** first Panel result can be reproduced from member runs.
+Build and blind-validate social-causal contrast families, with a constrained author/validate workflow rather than raw table editing.
 
-### Phase 8 — Human escalation loop · 24–26 Aug
+### Phase 12 — Panel validity study
 
-Connect material disagreement, uncertainty, new failure clusters and a small random high-confidence sample to blind human review.
+Compare Standard vs shadow Panel vs blind humans on unseen evidence.
 
-**Exit:** human↔Panel delta begins accumulating without machine anchoring.
+### Phase 13 — Empirical reliability model
 
-### Phase 9 — Fresh hidden Judge Qualification Bank · 24 Aug–2 Sep
+Fit only after enough fresh human evidence exists; compare against median on untouched cases.
 
-Create genuinely new, human-first hidden qualification cases. Do not use them to tune prompts/guards before measurement.
+### Phase 14 — Correlated-error study
 
-Coverage emphasizes false-fluent risk, Thai pragmatics, semantic drift, register and composition.
+Measure residual judge-error correlation before dependence treatment.
 
-No fixed case count automatically means “qualified”; continue until confidence is sufficient for the intended claim.
+### Phase 15 — Uncertainty/escalation thresholds
 
-**Exit:** formal Judge Passports are supported by unseen evidence rather than the exposed 36 alone.
+Calibrate thresholds on frozen human evidence.
 
-### Phase 10 — Thai Pragmatic Contrast Bank · 25 Aug–3 Sep
+### Phase 16 — First Assurance Holdout + item QA
 
-Build and blind-validate social-causal contrast families. Keep strongest items private.
+Author, validate, freeze, hash and exposure-track a genuinely new private pack.
 
-**Exit:** directional pragmatic sensitivity can be measured.
+### Phase 17 — Assurance control plane
 
-### Phase 11 — Panel validity study · 27 Aug–4 Sep
+Build guided run flow:
 
-Compare Standard vs shadow Panel vs blind humans on unseen evidence. Measure where Panel helps, where it does not, and where judges share blind spots.
+```text
+select approved pack
+→ validate model/settings
+→ run qualified Panel
+→ perform required blind human audit
+→ freeze
+→ generate reproducible report
+```
 
-**Exit:** Gate C evidence available.
+### Phase 18 — General-v2 multi-rater program
 
-### Phase 12 — Empirical reliability model · 1–6 Sep
+Recruit independent native reviewers and build broader General Thai evidence.
 
-Fit per-judge/per-dimension confusion or reliability distributions only after enough fresh human evidence exists. Compare against median on untouched cases.
+### Phase 19 — External native-methodology validation
 
-**Exit:** probabilistic consensus adopted only if it improves unseen-human prediction; otherwise median remains.
+Independent reviewers challenge case validity, labels, register/dialect assumptions and disagreement handling.
 
-### Phase 13 — Correlated-error study · 2–7 Sep
+### Phase 20 — Commercial/operational hardening
 
-Measure residual judge-error correlation on shared human-labelled items. Add dependence treatment only if evidence justifies it.
+Freeze provider/version provenance, budgets, report schema, buyer-facing claim boundaries, pack exposure and requalification triggers.
 
-**Exit:** correlation mechanism empirically adopted or explicitly rejected.
+### Phase 21 — Production promotion
 
-### Phase 14 — Uncertainty/escalation thresholds · 4–8 Sep
-
-Calibrate when disagreement, low confidence or model-drift signals predict human mismatch. Do not choose thresholds cosmetically.
-
-**Exit:** Gate D passes.
-
-### Phase 15 — First Assurance Holdout + item QA · 3–9 Sep
-
-Author genuinely new private Assurance items, obtain blind native validation, freeze the pack, create item-health records and manifest hash, and retire ambiguous/broken items rather than editing history.
-
-**Exit:** Gate E candidate pack exists.
-
-### Phase 16 — TCJ Assurance shadow · 8–12 Sep
-
-Run hidden pack + qualified Panel + uncertainty + mandatory blind human audit sample + reproducible report, still private.
-
-**Exit:** end-to-end Assurance report reproduces from immutable evidence.
-
-### Phase 17 — General-v2 multi-rater program · 24 Aug–12 Sep in parallel
-
-Recruit at least two independent native reviewers, with a third for disagreement/control cases. Build fresh General-Thai labels for `register_relationship_fit`, `discourse_delivery` and the other general dimensions under a documented population/scope.
-
-**Exit:** General-v2 no longer rests mainly on one editorial authority or Answers-style labels.
-
-### Phase 18 — External native-methodology validation · 7–18 Sep
-
-Ask independent Thai reviewers to challenge case validity, labels, register/dialect assumptions and disagreement handling without being shown desired conclusions first.
-
-**Exit:** external concerns are either resolved by evidence or cause a versioned methodology revision.
-
-### Phase 19 — Commercial/operational hardening · 10–18 Sep
-
-Freeze provider/version provenance, report schema, rate/budget controls, buyer-facing claim boundaries, pack exposure handling and requalification triggers.
-
-**Exit:** no commercial claim exceeds measured evidence.
-
-### Phase 20 — Production promotion · target 14–30 Sep, conservative early Oct
-
-Promote only after Gates A–F pass:
+Promote only after Gates A–G pass:
 
 ```text
 TCJ Standard   LIVE baseline
@@ -1018,39 +1539,53 @@ TCJ Panel      LIVE higher-confidence mode
 TCJ Assurance  LIVE high-assurance mode
 ```
 
-If a gate fails, the relevant mode stays shadow regardless of calendar date.
-
 ---
 
-## 30. Acceptance gates
+## 32. Acceptance gates
 
 ### Gate A — human evidence integrity
 
-Pass only if human review is blind, machine reveal follows freeze, evidence banks are separated and ambiguous human cases remain visible.
+Human review is blind, machine reveal follows freeze, evidence banks are separated, ambiguity remains visible, and EDIT/REWRITE preserve human-final Thai.
 
 ### Gate B — judge qualification
 
-Pass only if production + judging competence are measured, per-dimension state exists, robustness failures are recorded, model versions are pinned, and final authority is not based solely on the exposed 36 cases.
+Production and judging competence are measured, per-dimension state exists, robustness failures are recorded, versions are pinned, and final authority is not based solely on the exposed 36.
 
 ### Gate C — Panel validity
 
-Pass only if Panel performance against unseen blind-human evidence is measured and disagreement is not hidden behind arithmetic.
+Panel performance against unseen blind-human evidence is measured and disagreement is not hidden behind arithmetic.
 
 ### Gate D — uncertainty validity
 
-Pass only if escalation/uncertainty behavior is calibrated on frozen evidence rather than cosmetic thresholds.
+Escalation/uncertainty behavior is calibrated on frozen evidence rather than cosmetic thresholds.
 
 ### Gate E — Assurance integrity
 
-Pass only if hidden packs have independent human validation, exposure tracking, pack freeze and item-health review.
+Hidden packs have independent human validation, exposure tracking, pack freeze and item-health review.
 
 ### Gate F — General Thai claim expansion
 
-A broader `general-v2` claim requires multi-rater native evidence built specifically for General Thai constructs and a documented reviewer population/scope.
+A broader `general-v2` claim requires multi-rater native evidence built specifically for General Thai constructs and documented population/scope.
+
+### Gate G — expert-operable control plane integrity
+
+Pass only if:
+
+```text
+domain expert can execute approved workflow without code
+browser cannot bypass server methodology
+blind metadata is not delivered to the client
+state transitions are server-validated
+frozen human evidence is immutable/versioned
+EDIT/REWRITE preserve human-final text
+retryability is correctly classified
+refresh/network interruption cannot corrupt evidence
+every consequential action is reconstructable
+```
 
 ---
 
-## 31. Engineering invariants
+## 33. Engineering invariants
 
 1. No raw majority vote.
 2. Thai competence outranks provider diversity.
@@ -1059,50 +1594,59 @@ A broader `general-v2` claim requires multi-rater native evidence built specific
 5. Same Stage A scenarios for every candidate.
 6. Global randomization hides candidate grouping.
 7. Human labels freeze before machine/meta-review influence.
-8. ChatGPT/Grok meta-review is analysis, not voting authority.
-9. Judge qualification is model-version-specific.
-10. Per-dimension competence controls production authority.
-11. Candidate response is untrusted data.
-12. Production judges diagnose independently.
-13. Raw evidence remains immutable and separate from calibration.
-14. Median consensus is shadow/transitional only.
-15. No statistical weighting without human evidence.
-16. Correlated model agreement is not automatically independent confirmation.
-17. Disagreement is preserved.
-18. TCJ may return uncertainty rather than false certainty.
-19. Human escalation is normal architecture, not failure.
-20. Random high-confidence audits protect against shared blind spots.
-21. Human disagreement is preserved rather than forced to consensus.
-22. Evidence used for tuning leaves the Assurance Holdout.
-23. The historical 36 cases are never promoted back into clean holdout status.
-24. Exposed hidden packs can be retired.
-25. Broken items are versioned/retired, not silently rewritten.
-26. Server owns authoritative aggregation and verdict rules.
-27. Answers editorial authority and General-Thai population claims remain distinct.
-28. Historical Answers-style labels cannot be presented as complete General-Thai validation.
-29. Panel/Assurance results include uncertainty and provenance, not only one score.
-30. Commercial benchmark access does not imply model-development rights.
-31. Measure before promotion.
-32. Every new layer must address an observed failure or measurable validity need.
+8. A/E/R includes human-final Thai evidence.
+9. Invalid frozen reviews are voided/versioned, not silently deleted.
+10. ChatGPT/Grok meta-review is analysis, not voting authority.
+11. Judge qualification is model-version-specific.
+12. Per-dimension competence controls production authority.
+13. Candidate response is untrusted data.
+14. Production judges diagnose independently.
+15. Raw evidence remains immutable and separate from calibration.
+16. Median consensus is shadow/transitional only.
+17. No statistical weighting without human evidence.
+18. Correlated model agreement is not automatically independent confirmation.
+19. Disagreement is preserved.
+20. TCJ may return uncertainty rather than false certainty.
+21. Human escalation is normal architecture, not failure.
+22. Random high-confidence audits protect against shared blind spots.
+23. Human disagreement is preserved rather than forced to consensus.
+24. Evidence used for tuning leaves the Assurance Holdout.
+25. Historical exposed cases never regain clean holdout status.
+26. Exposed hidden packs can be retired.
+27. Broken items are versioned/retired, not silently rewritten.
+28. Server owns authoritative aggregation and verdict rules.
+29. Server owns workflow state transitions.
+30. Browser receives minimum data required for the current state.
+31. Hidden metadata is not sent to the client merely to be visually hidden.
+32. Only transport failures may be automatically retried.
+33. A non-transport generation failure cannot be sampled until favorable.
+34. Important frontend behavior is versioned because it can change human evidence.
+35. No-code operation must not imply client-side authority.
+36. Domain-expert interfaces are organized around methodological decisions, not generic CRUD.
+37. Commercial benchmark access does not imply model-development rights.
+38. Measure before promotion.
 
 ---
 
-## 32. Short mental model
+## 34. Short mental model
 
 ```text
 1. HUMAN STANDARD
 What does good Thai mean for this profile/population?
 
-2. JUDGE ADMISSION
-Which models earned the right to judge it, and on which dimensions?
+2. EXPERT CONTROL PLANE
+Can the domain expert execute the method correctly without coding?
 
-3. TCJ PANEL
+3. JUDGE ADMISSION
+Which models earned the right to judge, and on which dimensions?
+
+4. TCJ PANEL
 What do qualified independent judges conclude?
 
-4. UNCERTAINTY
+5. UNCERTAINTY
 Where do qualified judges disagree, drift or share blind spots?
 
-5. EVIDENCE
+6. EVIDENCE
 What frozen human/model history supports the conclusion?
 ```
 
@@ -1111,11 +1655,11 @@ Operational loop:
 ```text
 NATIVE-HUMAN EVIDENCE
         ↓
+EXPERT-OPERABLE CONTROL PLANE
+        ↓
 JUDGE ADMISSION + PASSPORTS
         ↓
 QUALIFIED PANEL
-        ↓
-DIMENSION EVIDENCE
         ↓
 CONSENSUS + UNCERTAINTY
         ↓
@@ -1128,9 +1672,9 @@ FUTURE CALIBRATION / REQUALIFICATION
 
 ---
 
-## 33. Defensibility principle
+## 35. Defensibility principle
 
-A competitor can copy dimension names, JSON schema, score formulas, public prompt language and three-provider API calls.
+A competitor can copy dimension names, JSON schema, score formulas, public prompt language, three-provider API calls and screenshots.
 
 The hard-to-copy layer is:
 
@@ -1146,60 +1690,32 @@ raw → calibrated → Panel → human delta history
 buyer/domain-specific calibration evidence
 ```
 
-> **Time and disciplined evidence accumulation are part of TCJ's defensibility.**
+The expert-operable control plane matters because it makes that evidence flywheel faster, more reliable and less dependent on engineering translation.
+
+> **The moat is the measurement system and accumulated evidence. The control plane lets the people with the expertise operate that moat directly.**
 
 ---
 
-## 34. Research basis for this revision
+## 36. Research basis
 
 The architecture is informed by current evaluation methodology reviewed on 20 August 2026, including work on benchmarking evaluators, blinded expert grading, mixed human/model evaluation, uncertainty/statistical validity, LLM-judge bias and instability, human anchoring from model suggestions, and benchmark contamination.
 
-The detailed source list remains:
+Key sources previously reviewed include:
 
-- OpenAI — PaperBench  
-  <https://openai.com/index/paperbench/>
-- OpenAI — GDPval  
-  <https://openai.com/index/gdpval/>
-- OpenAI — A shared playbook for trustworthy third-party evaluations  
-  <https://openai.com/index/trustworthy-third-party-evaluations-foundations/>
-- Anthropic — Demystifying evals for AI agents  
-  <https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents>
-- NIST AI 800-3 — Expanding the AI Evaluation Toolbox with Statistical Models  
-  <https://www.nist.gov/publications/expanding-ai-evaluation-toolbox-statistical-models>
-- Shi et al. — Judging the Judges: position bias in LLM-as-a-Judge  
-  <https://aclanthology.org/2025.ijcnlp-long.18/>
-- Haldar & Hockenmaier — Rating Roulette: self-inconsistency in LLM-as-a-Judge  
-  <https://aclanthology.org/2025.findings-emnlp.1361/>
-- Schroeder, Roy & Kabbara — Just Put a Human in the Loop?  
-  <https://aclanthology.org/2025.findings-acl.1323/>
-- Sun et al. — The Emperor's New Clothes in Benchmarking?  
-  <https://proceedings.mlr.press/v267/sun25t.html>
+- OpenAI — PaperBench
+- OpenAI — GDPval
+- OpenAI — A shared playbook for trustworthy third-party evaluations
+- Anthropic — Demystifying evals for AI agents
+- NIST AI 800-3 — Expanding the AI Evaluation Toolbox with Statistical Models
+- Shi et al. — Judging the Judges
+- Haldar & Hockenmaier — Rating Roulette
+- Schroeder, Roy & Kabbara — Just Put a Human in the Loop?
+- Sun et al. — The Emperor's New Clothes in Benchmarking?
 
 These sources inform design choices; they do not make TCJ equivalent to any one laboratory's evaluation system.
 
 ---
 
-## 35. Execution checkpoint · 20 August 2026
+## 37. Final governing statement
 
-At this checkpoint:
-
-```text
-architecture weakness: exposed 36-case bank         PATCHED
-architecture weakness: General evidence mismatch    PATCHED
-realistic timeline                                  RECORDED
-measurement schema                                  LIVE
-legacy evidence classification                      LIVE
-historical preliminary Judge Passports              LIVE
-draft Judge Admission campaign                      LIVE
-Stage A content/review                               NEXT
-Panel runtime                                        NOT LIVE
-Assurance                                            NOT LIVE
-```
-
-The next implementation step is **Phase 3: admission backend + blind review UI**, while Phase 1's B2 calibration rerun should be executed through the existing authenticated route as soon as the invocation path is available without weakening security.
-
----
-
-## 36. Final governing statement
-
-> **TCJ Panel is not three AIs voting. It is a native-human-grounded measurement system that qualifies judges before trusting them, records where each judge fails, keeps calibration and holdout evidence separate, combines only qualified dimension evidence, preserves uncertainty and disagreement, returns difficult or randomly audited cases to blind humans, and compounds that human–model delta into a private evidence base that makes future TCJ judgments more defensible and harder to reproduce.**
+> **TCJ Panel is not three AIs voting. It is a native-human-grounded measurement system that qualifies judges before trusting them, records where each judge fails, keeps calibration and holdout evidence separate, combines only qualified dimension evidence, preserves uncertainty and disagreement, returns difficult or randomly audited cases to blind humans, and compounds that human–model delta into a private evidence base. Its expert-operable control plane lets domain experts run that rigorous methodology without writing code, while the server—not the interface—continues to own methodological authority, state, provenance and validity.**
