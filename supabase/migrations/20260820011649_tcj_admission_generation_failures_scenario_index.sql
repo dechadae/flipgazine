@@ -1,0 +1,2 @@
+create index if not exists tcj_admission_generation_failures_scenario_idx
+on private.tcj_admission_generation_failures(scenario_id);
