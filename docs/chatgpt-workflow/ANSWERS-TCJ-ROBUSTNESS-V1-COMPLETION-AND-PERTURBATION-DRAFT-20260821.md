@@ -276,6 +276,7 @@ Production migrations:
 ```text
 20260820191901_tcj_admission_robustness_perturbation_review_foundation
 20260820192432_tcj_admission_robustness_perturbation_manifest_canonicalization
+20260820192618_tcj_admission_robustness_perturbation_reviewer_fk_indexes
 ```
 
 Repository mirrors:
@@ -283,10 +284,13 @@ Repository mirrors:
 ```text
 supabase/migrations/20260820191901_tcj_admission_robustness_perturbation_review_foundation.sql
 supabase/migrations/20260820192432_tcj_admission_robustness_perturbation_manifest_canonicalization.sql
+supabase/migrations/20260820192618_tcj_admission_robustness_perturbation_reviewer_fk_indexes.sql
 supabase/functions/tcj-admission-perturbation-review/index.ts
 supabase/site-files/tcj-robustness-perturbation-review.html
 supabase/site-files/fg-page-tcj-robustness-perturbation-review-v1.js
 ```
+
+The new reviewer foreign keys are indexed. The private review table intentionally has RLS enabled with no direct client policy because review access is mediated by the authenticated admin Edge Function.
 
 ---
 
