@@ -1,5 +1,7 @@
 # The Book of Answers — Private Server Migration Phase F Report
 
+> **Archive note:** Historical Phase F evidence. Later phases completed UI integration and production cutover; do not use its pending-state labels as current.
+
 **Status:** PHASE F COMPLETE — CLOUDFLARE BOUNDARY + ABUSE CONTROLS PASS  
 **Date:** 17 August 2026  
 **Supabase project:** `sjpvhgxacsiorrtijqua`  

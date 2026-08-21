@@ -1,5 +1,7 @@
 # The Book of Answers — Private Server Migration Phase E Report
 
+> **Archive note:** Historical Phase E evidence. Later phases completed the Cloudflare boundary and public cutover; do not use the pending-state labels as current.
+
 **Status:** PHASE E COMPLETE — PRIVATE HTTP E2E PASS  
 **Date:** 17 August 2026  
 **Supabase project:** `sjpvhgxacsiorrtijqua`  

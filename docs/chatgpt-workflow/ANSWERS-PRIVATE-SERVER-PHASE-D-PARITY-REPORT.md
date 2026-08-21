@@ -1,5 +1,7 @@
 # The Book of Answers — Private Server Migration Phase D Parity Report
 
+> **Archive note:** Historical Phase D parity evidence. Preserve the proof chain; current post-cutover regression authority is the GitHub parity workflow and Phase K manifest.
+
 **Status:** PHASE D COMPLETE — HARD GATE PASS  
 **Date:** 17 August 2026  
 **Supabase project:** `sjpvhgxacsiorrtijqua`  

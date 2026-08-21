@@ -1,5 +1,7 @@
 # The Book of Answers — Batch 2 Self-Audit Implementation Report
 
+> **Historical implementation checkpoint.** The infrastructure and security evidence remain useful, but zero-row state and source-set next steps are superseded by later production records. New selected machine audits use the shared TCJ architecture.
+
 **Status:** PRE-PILOT IMPLEMENTATION COMPLETE  
 **Implemented:** 18 August 2026  
 **Supabase project:** `sjpvhgxacsiorrtijqua`  

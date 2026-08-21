@@ -1,5 +1,7 @@
 # TCJ Judge Admission — Stage B v1.1 Validity Remediation
 
+> **Historical remediation checkpoint.** The validity contract remains authoritative provenance, but the instruction to start Stage B is complete and superseded by the frozen-input robustness completion record dated 21 August 2026.
+
 **Status:** LIVE · READY TO RUN · IDENTITIES SEALED  
 **Date:** 20 August 2026  
 **Campaign:** `TCJ-JUDGE-ADMISSION-2026Q3-v1.2`  

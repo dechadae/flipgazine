@@ -1,5 +1,7 @@
 # TCJ Measurement System — Implementation Checkpoint · 20 August 2026
 
+> **Historical implementation checkpoint.** Stage A and the measurement foundation remain authoritative evidence. Stage B execution and the immediate-next-action text in this document are superseded by the Stage B v1.1 remediation/CARE records and `ANSWERS-TCJ-ROBUSTNESS-V1-COMPLETION-AND-PERTURBATION-DRAFT-20260821.md`.
+
 **Status:** PARTIAL FOUNDATION COMPLETE · STANDARD UNCHANGED · PANEL/ASSURANCE NOT LIVE  
 **Architecture authority:** `ANSWERS-TCJ-MULTI-JUDGE-CONSENSUS-ARCHITECTURE.md`  
 **Live Standard authority:** `ANSWERS-THAI-CONVERSATION-JUDGE-ARCHITECTURE.md` + `ANSWERS-TCJ-LIVE-DEPLOYMENT-20260819.md`

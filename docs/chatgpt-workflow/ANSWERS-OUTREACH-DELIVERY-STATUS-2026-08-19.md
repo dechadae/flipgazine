@@ -1,5 +1,7 @@
 # The Book of Answers — Outreach Delivery Status
 
+> **Historical delivery checkpoint, not a current contact directory.** Preserve the sent/bounced record and duplicate-send prohibitions. Before any new send, independently verify the present recipient or official contact route and refresh project counts from the current README/commercial timeline.
+
 **Status:** CURRENT DELIVERY STATUS — SUPERSEDES RECIPIENT DELIVERY ROUTING IN `ANSWERS-OUTREACH-FIRST-CONTACT-STRATEGY.md` WHERE THEY CONFLICT  
 **Date:** 19 August 2026  
 **Project:** Flipgazine / The Book of Answers

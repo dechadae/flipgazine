@@ -1,5 +1,7 @@
 # The Book of Answers — Private Server Migration Phase C Report
 
+> **Archive note:** Historical Phase C evidence. The migration is complete; later phases supersede its no-deployment/no-cutover state.
+
 **Status:** PHASE C COMPLETE  
 **Date:** 17 August 2026  
 **Supabase project:** `sjpvhgxacsiorrtijqua`  

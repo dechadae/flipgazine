@@ -1,5 +1,7 @@
 # The Book of Answers — Private Server Migration Phase A Inventory
 
+> **Archive note:** Historical Phase A evidence. The migration is complete; do not treat its operational freeze or next-phase language as current.
+
 **Status:** PHASE A BASELINE RECORDED  
 **Date:** 17 August 2026  
 **Supabase project:** `sjpvhgxacsiorrtijqua`  

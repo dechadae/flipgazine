@@ -1,5 +1,7 @@
 # The Book of Answers — Outreach Engagement Tracking
 
+> **Operational interpretation rule:** telemetry proves events, not recipient identity or buyer intent. Verify the live endpoint and retention configuration before relying on this historical deployment description for a new campaign.
+
 **Status:** ACTIVE INTERNAL OPERATIONS SPEC  
 **Created:** 19 August 2026  
 **Project:** Flipgazine / The Book of Answers

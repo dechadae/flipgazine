@@ -1,5 +1,7 @@
 # The Book of Answers — First-Contact Outreach Strategy
 
+> **Historical first-wave copy and strategy.** Preserve already-sent wording as delivery provenance. Before any new contact or follow-up, use the current corpus state (revision 127 / 988 active canonical answers), the reconciled 1,948 canonical / 1,000 clean-benchmark target model, and the latest verified delivery/contact route. Do not silently rewrite this record as though newer numbers were present in messages already sent.
+
 **Status:** CURRENT OUTREACH AUTHORITY  
 **Created:** 19 August 2026  
 **Verified:** 19 August 2026  

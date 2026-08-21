@@ -1,10 +1,12 @@
 # The Book of Answers — Batch 2 Self-Audit & Blind-Control Protocol
 
-**Status:** APPROVED PLANNING PROTOCOL — NOT YET IMPLEMENTED  
+**Status:** FROZEN HISTORICAL PROTOCOL — IMPLEMENTED, THEN PARTLY SUPERSEDED
 **Created:** 18 August 2026  
 **Project:** Flipgazine / The Book of Answers  
 **Batch:** Batch 2 — 1,000 new records  
 **Drafting model:** ChatGPT / OpenAI  
+
+Implementation is recorded in `ANSWERS-BATCH2-SELF-AUDIT-IMPLEMENTATION-REPORT.md`. The 900-assisted/100-blind reviewer-visibility design and Qwen-v1 operational path are superseded by the human-first correction and shared TCJ architecture. Preserve the one-draft, freeze-before-audit, immutability and claims-discipline rules.
 **Human editorial authority:** Decha  
 **External machine judge:** `qwen/qwen3.6-27b` via server-side Groq inference  
 **Editorial authority:** `ANSWERS-VOICE-TONE.md`  

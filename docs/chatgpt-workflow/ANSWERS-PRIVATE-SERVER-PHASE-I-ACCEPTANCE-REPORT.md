@@ -1,5 +1,7 @@
 # The Book of Answers — Private Server Migration Phase I Acceptance Report
 
+> **Archive note:** Historical pre-cutover acceptance evidence. Phase J performed cutover and Phase K froze the final manifest.
+
 **Status:** PHASE I COMPLETE — FULL ACCEPTANCE PASS  
 **Date:** 17 August 2026  
 **Authoritative repo:** `dechadae/flipgazine` / `main`  

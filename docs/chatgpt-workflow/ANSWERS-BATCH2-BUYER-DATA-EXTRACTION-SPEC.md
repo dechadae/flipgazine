@@ -103,14 +103,9 @@ corpus_linked                    true after promotion
 
 A row produced in the clean production lane may lose strict benchmark eligibility if a machine judgment, verdict, score, flag or materially equivalent audit conclusion becomes visible before the native-human decision.
 
-Current recorded pre-human visibility exceptions:
+There are currently **zero active protocol-exception rows**. The originally exposed B2-0048 and B2-0059 versions were retired before human review and replaced under the applied `B2-SOURCESET-v1.1` patch. Their tombstones remain append-only provenance, while the active replacement rows are fresh human-first rows.
 
-```text
-B2-0048
-B2-0059
-```
-
-For these rows:
+If an exposure occurs after a human decision, or if an exposed version cannot be retired under the governing pre-human replacement rule, preserve it as an exception:
 
 ```text
 record_class                     clean_metric production lane
@@ -120,9 +115,7 @@ human_first_protocol_compliant   false
 corpus_promotion_eligible        true after normal human/product QA
 ```
 
-The exception is stored in `private.batch2_protocol_exceptions` and surfaced through `private.batch2_deploy_reviews` after human review.
-
-Do not delete, regenerate, relabel or hide a row to make it strict-clean again.
+Do not delete, regenerate, relabel or hide a completed or post-decision row to improve benchmark appearance. Pre-human replacement is allowed only through the frozen replacement/tombstone procedure defined by `ANSWERS-BATCH2-HUMAN-FIRST-REVIEW-CORRECTION.md` and evidenced by `ANSWERS-BATCH2-SOURCESET-V1-1-REPLACEMENT-PATCH.md`.
 
 ---
 
@@ -150,35 +143,35 @@ supplemental replacements                     20
 strict clean benchmark                     1,000
 ```
 
-After the current two pre-human visibility exceptions, if no further exclusions occur:
+After the verified B2-0048/B2-0059 replacements, if no future exclusions occur:
 
 ```text
 original B2-0021–B2-1000 rows               980
-less current visibility exceptions            2
+less current visibility exceptions            0
 ------------------------------------------------
-strict-clean original rows                   978
+strict-clean original rows                   980
 
-supplemental clean records needed             22
+supplemental clean records needed             20
 ------------------------------------------------
 strict clean target                         1,000
 ```
 
 The supplemental source set must be frozen before generation and must never overwrite excluded original records.
 
-If the project chooses not to create the additional replacement evidence, report the actual strict denominator instead of calling it 1,000.
+If future exceptions occur without valid pre-human replacements, increase supplemental clean evidence or report the actual strict denominator instead of calling it 1,000.
 
 ### 3.3 Unique reviewed evidence
 
-If 22 benchmark-only supplemental records are ultimately delivered:
+If 20 benchmark-only supplemental records are ultimately delivered:
 
 ```text
 canonical Book corpus                      1,948
-additional supplemental benchmark records     22
+additional supplemental benchmark records     20
 ------------------------------------------------
-unique reviewed evidence                   1,970
+unique reviewed evidence                   1,968
 ```
 
-Do not use 1,970 as a buyer claim until the supplemental records actually exist and are reviewed.
+Do not use 1,968 as a buyer claim until the supplemental records actually exist and are reviewed.
 
 ---
 
@@ -597,10 +590,10 @@ strict-clean promoted B2 rows                 20
 clean promoted answer IDs                969–988
 buyer-export snapshots                         2
 next original unit                    B2-0041–0060
-current recorded visibility exceptions          2
+current active visibility exceptions             0
 ```
 
-The next unit's machine judgments remain sealed for all rows except the two already recorded visibility exceptions. Those exceptions must remain explicit in all future buyer extraction.
+The next unit's machine judgments remain sealed for all active rows. The retired B2-0048/B2-0059 versions remain explicit tombstone provenance but must not appear as active rows, active exceptions or clean benchmark observations.
 
 ---
 

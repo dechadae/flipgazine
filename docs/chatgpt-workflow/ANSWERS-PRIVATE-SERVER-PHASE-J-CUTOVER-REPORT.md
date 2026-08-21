@@ -1,5 +1,7 @@
 # The Book of Answers — Private Server Migration Phase J Cutover Report
 
+> **Archive note:** Historical cutover evidence. Revision 124 / 948 describes the cutover snapshot, not the current corpus count.
+
 **Status:** PHASE J COMPLETE — PRODUCTION CUTOVER PASS  
 **Date:** 17 August 2026  
 **Authoritative repo:** `dechadae/flipgazine` / `main`  

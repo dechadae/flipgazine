@@ -1,5 +1,7 @@
 # The Book of Answers — Phase K Post-Cutover Migration Manifest
 
+> **Archive note:** Final migration authority. Revision 124 / 948 values are the 17 August migration proof snapshot; later Batch 2 promotions legitimately advanced the corpus to revision 127 / 988.
+
 **Status:** PHASE K COMPLETE — MIGRATION COMPLETE  
 **Generated:** 17 August 2026, 20:01:55 Bangkok time  
 **Cutover:** 17 August 2026, 19:36:42 Bangkok time  

@@ -1,5 +1,7 @@
 # TCJ Answers Calibration Shadow v3 — 20 August 2026
 
+> **Completed calibration checkpoint.** Preserve the failure analysis and stop-overfitting decision. The next clean experiment has since advanced into Judge Admission; use the measurement, Stage B and 21 August robustness records for current state.
+
 **Status:** COMPLETE · VALIDITY GATE FAILED · INCUMBENT PROMPT TUNING STOPPED  
 **Architecture authority:** `ANSWERS-TCJ-MULTI-JUDGE-CONSENSUS-ARCHITECTURE.md`  
 **Baseline report:** `ANSWERS-TCJ-CALIBRATION-RERUN-20260820.md`  

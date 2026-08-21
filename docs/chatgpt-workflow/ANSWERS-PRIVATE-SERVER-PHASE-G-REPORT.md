@@ -1,5 +1,7 @@
 # The Book of Answers — Private Server Migration Phase G Report
 
+> **Archive note:** Historical Phase G evidence. Production cutover later completed in Phase J; do not use the no-cutover statement as current.
+
 **Status:** PHASE G COMPLETE — SECURE LAB + REGIONAL UX PASS  
 **Date:** 17 August 2026  
 **Supabase project:** `sjpvhgxacsiorrtijqua` (`ap-southeast-1`)  

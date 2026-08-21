@@ -55,6 +55,9 @@ TCJ Stage A admission campaign corrected/restarted under reasoning-safe generati
 TCJ Stage A human-final EDIT/REWRITE capture fixed
 TCJ Stage A freeze achieved for the current admission campaign
 TCJ Stage B foundation + sealed admission runner implemented
+TCJ Stage B v1.1 completed under corrected validity + CARE contract
+TCJ frozen-input Robustness v1 completed and independently verified
+TCJ 33-case constructed perturbation pack drafted for native review
 TCJ commercial benchmark-vs-model-development boundary documented
 ```
 
@@ -73,7 +76,7 @@ The primary schedule risk for the 1,000-row clean benchmark remains native-human
 
 # 2. Planned vs actual reconciliation
 
-| Workstream | Actual state at 20 Aug 20:08 ICT | Timeline action |
+| Workstream | Actual state at 21 Aug 2026 | Timeline action |
 |---|---|---|
 | Private-server security | Complete 17 Aug | DONE |
 | Voice benchmark + 36-case calibration | Complete 18 Aug | DONE |
@@ -90,7 +93,9 @@ The primary schedule risk for the 1,000-row clean benchmark remains native-human
 | TCJ multi-judge architecture | approved methodology | DONE DESIGN |
 | TCJ expert control plane | implementation spec + live proof-of-concept surfaces | ACTIVE IMPLEMENTATION |
 | TCJ Judge Admission Stage A | current campaign frozen after corrected generation/review workflow | DONE FOR CURRENT CAMPAIGN |
-| TCJ Judge Admission Stage B | sealed runner implemented; completion/admission decision not yet claimed | ACTIVE |
+| TCJ Judge Admission Stage B | v1.1 completed; no admission decision yet | DONE FOR CURRENT CAMPAIGN |
+| TCJ Robustness v1 | 198 cells complete; 197 valid + 1 terminal contract event | DONE · PRELIMINARY EVIDENCE |
+| TCJ perturbation pack | 33 constructed cases; native review 0/33 | ACTIVE / NEXT VALID ACTION |
 | B2R supplemental clean set | exactly 20 still required | KEEP |
 | Final clean analysis/package | follows clean 1,000 freeze | DEPENDENT |
 
@@ -206,7 +211,9 @@ live TCJ Standard path                existing production authority
 multi-judge Panel architecture        approved methodology, not yet production replacement
 expert-operable control plane         implementation underway / proof-of-concept live
 Judge Admission Stage A               frozen for current campaign
-Judge Admission Stage B               sealed runner implemented
+Judge Admission Stage B               v1.1 completed
+frozen-input Robustness v1             198 cells complete
+constructed perturbation pack          draft · native review 0/33
 identity reveal / passports           only after protocol permits
 ```
 
@@ -244,6 +251,7 @@ Commercially, the default TCJ license remains **Benchmark Use**, not unrestricte
 | **19 Aug** | ✅ Clean B2-0021–0040 full cycle; revision 127 / 988; buyer snapshot 2 |
 | **19 Aug** | ✅ B2-0041–0060 generated/self-audited + source-set replacement integrity repair |
 | **20 Aug** | ✅ TCJ multi-judge/control-plane architecture materially implemented; Stage A frozen; Stage B runner implemented |
+| **21 Aug** | ✅ Stage B v1.1 + frozen-input Robustness v1 complete; 33-case perturbation pack awaiting native review |
 | **20 Aug onward** | Complete B2-0041–0060, then remaining original B2 in verified 20-row cycles |
 | **By 1 Sep working target** | Freeze separate B2R-0001–B2R-0020 before generation |
 | **After clean 1,000 freeze** | Package-integrity verification + cross-batch/human↔machine analysis |
@@ -277,10 +285,14 @@ B2-0041–0060 required sealed Qwen evidence
 ## TCJ parallel critical path
 
 ```text
-Stage A frozen evidence
-→ complete/freeze Stage B measurements
-→ perform protocol-required meta-review
-→ reveal candidate identities only when permitted
+Stage A + Stage B frozen evidence
+→ frozen-input Robustness v1 complete
+→ native-review 33 constructed perturbations
+→ freeze/verify perturbation pack
+→ run/verify 99 perturbation cells
+→ build anonymous dossiers
+→ independent blind ChatGPT + Grok meta-review
+→ reveal identities only after both meta-reviews freeze
 → assign evidence-backed judge passports/admission decisions
 → validate qualified consensus behavior
 → only then consider Panel as a production option
@@ -360,6 +372,8 @@ A failed technical gate does not advance to the next unit.
 - [x] TCJ expert-operable control-plane implementation established
 - [x] TCJ current admission Stage A frozen
 - [x] TCJ sealed Stage B admission runner implemented
+- [x] TCJ Stage B v1.1 completed
+- [x] TCJ frozen-input Robustness v1 completed
 - [x] TCJ benchmark-vs-model-development commercial boundary documented
 
 ## Remaining production
@@ -373,8 +387,9 @@ A failed technical gate does not advance to the next unit.
 
 ## Remaining TCJ
 
-- [ ] complete/freeze Stage B measurement evidence
-- [ ] complete required meta-review
+- [ ] native-review 33/33 constructed perturbations
+- [ ] freeze/verify the perturbation pack and run/verify 99 cells
+- [ ] build anonymous dossiers and complete both blind meta-reviews
 - [ ] reveal identities only at protocol-approved point
 - [ ] assign judge passports/admission decisions
 - [ ] validate qualified multi-judge consensus before any production cutover
@@ -404,11 +419,11 @@ Corpus:
 TCJ:
 
 ```text
-1. run/complete Stage B under the sealed admission protocol
-2. freeze measurement evidence
-3. preserve candidate blindness until the approved reveal point
-4. perform required meta-review
-5. assign admission/passport status from evidence, not model reputation
+1. native-review all 33 constructed perturbations
+2. freeze and independently verify the perturbation pack
+3. run and verify the 99-cell perturbation stratum
+4. preserve candidate blindness while building identical anonymous dossiers
+5. freeze independent ChatGPT + Grok meta-reviews before identity reveal
 ```
 
 Commercially:

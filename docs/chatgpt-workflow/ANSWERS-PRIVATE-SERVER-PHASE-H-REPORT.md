@@ -1,5 +1,7 @@
 # The Book of Answers — Private Server Migration Phase H Report
 
+> **Archive note:** Historical Phase H evidence. Production cutover later completed in Phase J; preserve this only as DB-native Admin proof.
+
 **Status:** PHASE H COMPLETE — DB-NATIVE ADMIN PASS  
 **Date:** 17 August 2026  
 **Supabase project:** `sjpvhgxacsiorrtijqua` (`ap-southeast-1`)  

@@ -1,5 +1,7 @@
 # TCJ Answers Calibration Rerun — 20 August 2026
 
+> **Completed calibration evidence.** This record supersedes earlier statements that no TCJ calibration rerun or research links existed. Its v3-shadow next gate is historical; later Judge Admission and robustness records govern current execution.
+
 **Status:** BASELINE COMPLETE · VALIDITY GATE FAILED · SHADOW RECALIBRATION PREPARED  
 **Architecture authority:** `ANSWERS-TCJ-MULTI-JUDGE-CONSENSUS-ARCHITECTURE.md`  
 **Implementation checkpoint:** `ANSWERS-TCJ-MEASUREMENT-IMPLEMENTATION-20260820.md`  

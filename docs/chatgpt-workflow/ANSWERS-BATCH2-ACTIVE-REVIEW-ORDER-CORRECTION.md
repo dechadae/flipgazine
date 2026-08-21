@@ -1,5 +1,7 @@
 # The Book of Answers — Batch 2 Active Review Order Correction
 
+> **Historical correction.** Its ordering decision remains provenance, but B2-0021–B2-0040 has since completed the full cycle and B2-0041–B2-0060 is active. Do not execute this document's old current-review or next-unit instructions.
+
 **Status:** COMPLETED CORRECTION / CURRENT ORDER ADVANCED  
 **Date:** 18 August 2026
 

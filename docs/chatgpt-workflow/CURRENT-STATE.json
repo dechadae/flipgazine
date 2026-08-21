@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-08-21",
+  "scope": "repository_documentation_checkpoint",
+  "live_state_independently_reverified": false,
+  "canonical_book": {
+    "corpus_revision": 127,
+    "active_answers": 988,
+    "batch1_answers": 948,
+    "technical_batch2_answers": 20,
+    "clean_batch2_answers": 20,
+    "active_index_unreachable": 0
+  },
+  "batch2": {
+    "active_unit": "B2-0041-B2-0060",
+    "active_rows": 20,
+    "sealed_chatgpt_audits": 20,
+    "required_qwen_tcj_complete": false,
+    "human_reviews_complete": false,
+    "active_protocol_exceptions": 0,
+    "supplemental_clean_target": 20,
+    "clean_benchmark_target": 1000,
+    "unique_reviewed_evidence_target": 1968,
+    "next_action": "Complete sealed Qwen/TCJ evidence for B2-0041-B2-0060 before native-human review."
+  },
+  "tcj": {
+    "standard_live": true,
+    "panel_production_live": false,
+    "calibration_rerun_rows": 20,
+    "judge_admission_stage_a_frozen": true,
+    "judge_admission_stage_b_v1_1_complete": true,
+    "frozen_input_robustness_cells": 198,
+    "perturbation_cases": 33,
+    "perturbation_native_reviews_complete": 0,
+    "next_action": "Native-review all 33 constructed perturbations before pack freeze or 99-cell model execution."
+  },
+  "security": {
+    "private_server_migration_complete": true,
+    "migration_final_authority": "ANSWERS-PRIVATE-SERVER-PHASE-K-MIGRATION-MANIFEST.md",
+    "open_remediation": "Replace service-role-key reuse in x-tcj-internal-key with a dedicated independently rotatable TCJ internal secret."
+  },
+  "authorities": {
+    "human_first": "ANSWERS-BATCH2-HUMAN-FIRST-REVIEW-CORRECTION.md",
+    "source_replacement": "ANSWERS-BATCH2-SOURCESET-V1-1-REPLACEMENT-PATCH.md",
+    "buyer_export": "ANSWERS-BATCH2-BUYER-DATA-EXTRACTION-SPEC.md",
+    "commercial_timeline": "ANSWERS-COMMERCIAL-EXECUTION-TIMELINE.md",
+    "tcj_method": "ANSWERS-TCJ-MULTI-JUDGE-CONSENSUS-ARCHITECTURE.md",
+    "tcj_execution": "ANSWERS-TCJ-ROBUSTNESS-V1-COMPLETION-AND-PERTURBATION-DRAFT-20260821.md",
+    "tcj_commercial_boundary": "ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md"
+  }
+}

@@ -1,13 +1,13 @@
 # The Book of Answers — Private Server Migration Plan
 
-**Status:** READY TO BUILD  
+**Status:** HISTORICAL PLAN — COMPLETED 17 AUGUST 2026
 **Created:** 17 August 2026  
 **Project:** Flipgazine / The Book of Answers  
 **Supabase:** `sjpvhgxacsiorrtijqua`  
 **Primary production reference:** `/fg-page-answers.js` **v124** · MD5 `c8a382f0562737422e891e3300bb08f6`  
 **Canonical bilingual copy freeze:** v122 · MD5 `d12ef72740edd955ddc11aedfe232c2c`
 
-> **Read this file first in the next chat before changing Answers architecture.**
+> **Historical architecture plan.** The migration is complete. Use `ANSWERS-PRIVATE-SERVER-PHASE-K-MIGRATION-MANIFEST.md` as the final migration authority; do not execute this plan's phase or next-chat instructions again.
 >
 > This migration is a **security/source-of-truth migration, not a routing redesign**. The Focus → pool → probability → uniform random answer mechanics of live v124 must remain intact. The public Book must feel and answer the same; the difference is that the 948-row corpus and routing assets no longer ship to the browser.
 

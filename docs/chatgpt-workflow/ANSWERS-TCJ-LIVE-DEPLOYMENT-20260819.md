@@ -1,5 +1,7 @@
 # Thai Conversation Judge — Live Deployment Record · 19 August 2026
 
+> **Historical deployment checkpoint.** Component versions and smoke evidence in this record remain deployment provenance. Its empty-research-table statement and rerun next step are superseded by `ANSWERS-TCJ-CALIBRATION-RERUN-20260820.md`, `ANSWERS-TCJ-MEASUREMENT-IMPLEMENTATION-20260820.md` and the 21 August robustness checkpoint. Do not use this document to determine the current research action.
+
 **Status:** COMPLETE  
 **Architecture authority:** `ANSWERS-THAI-CONVERSATION-JUDGE-ARCHITECTURE.md`  
 **This document supersedes only the live component-version snapshot in Section 17 of that architecture document.** The methodology versions remain `TCJ-CORE-v1`, `TCJ-GENERAL-v1`, `TCJ-ANSWERS-BFF-v2` and `TCJ-GUARDS-v1`.
@@ -28,6 +30,8 @@ Internal Batch 2 evaluation now requires **both**:
 
 1. the existing authenticated admin JWT/session checks; and
 2. a server-to-server `x-tcj-internal-key` equal to the Edge runtime's `SUPABASE_SERVICE_ROLE_KEY` environment value.
+
+This describes the deployed 19 August boundary, not the preferred long-term credential design. Reusing a high-privilege service-role credential as an application authentication token increases blast radius. Replace it in a separately verified security change with a dedicated, independently rotatable TCJ internal secret; do not claim that remediation is complete until the deployed caller and receiver have both rotated and direct-access regression checks pass.
 
 The key is added only by the authenticated `batch2-qwen-audit` proxy. It is never sent to the browser and is not stored in repository code.
 

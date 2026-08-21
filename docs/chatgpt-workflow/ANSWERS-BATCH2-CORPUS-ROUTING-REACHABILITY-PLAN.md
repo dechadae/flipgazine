@@ -1,5 +1,7 @@
 # The Book of Answers — Batch 2 Corpus, Routing & Reachability Plan
 
+> **Governing architecture; historical baseline numbers.** Preserve the routing, reachability and atomic-promotion rules. Its revision 125 / 948 baseline and staged next actions are historical; use README and the commercial timeline for current counts and active-unit state.
+
 **Status:** GOVERNING IMPLEMENTATION PLAN  
 **Created:** 18 August 2026  
 **Scope:** Batch 2 promotion into the live private Answers corpus while preserving Batch 1 routing behavior and reachability guarantees.  

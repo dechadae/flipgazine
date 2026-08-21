@@ -1,5 +1,7 @@
 # The Book of Answers — Batch 2 Corpus, Routing & Reachability Implementation Report
 
+> **Architecture authority with historical checkpoint data.** The routing/promotion implementation remains governing, but revision 126 / 968 and its old next-action section are superseded by the README and commercial execution timeline (revision 127 / 988; B2-0041–B2-0060 active).
+
 **Status:** TECHNICAL PILOT FULL CYCLE COMPLETE · CLEAN PRODUCTION UNIT ACTIVE  
 **Updated:** 18 August 2026  
 **Supabase project:** `sjpvhgxacsiorrtijqua`  

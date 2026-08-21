@@ -1,5 +1,7 @@
 # TCJ Stage B v1.1 — CARE-Mode Parity Patch
 
+> **Historical applied patch.** Preserve this as Stage B methodology provenance. Stage B and frozen-input Robustness v1 have since completed; use the 21 August robustness-completion record for current execution state.
+
 **Status:** LIVE · PRE-RUN VALIDITY PATCH · NO v1.1 EVIDENCE GENERATED BEFORE PATCH  
 **Date:** 20 August 2026
 

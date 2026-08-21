@@ -1,5 +1,7 @@
 # TCJ Judge Admission — Stage B Freeze + Frozen-Input Robustness v1
 
+> **Historical pre-run checkpoint.** The frozen pack and policy remain provenance. Execution is complete and its pending-cell/next-action text is superseded by `ANSWERS-TCJ-ROBUSTNESS-V1-COMPLETION-AND-PERTURBATION-DRAFT-20260821.md`.
+
 **Status:** LIVE · ROBUSTNESS v1 FROZEN / READY · IDENTITIES SEALED  
 **Date:** 20 August 2026  
 **Campaign:** `TCJ-JUDGE-ADMISSION-2026Q3-v1.2`  
