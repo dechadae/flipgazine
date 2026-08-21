@@ -1,8 +1,8 @@
 # The Book of Answers — Commercial Execution Timeline
 
-**Status:** ACTIVE MASTER EXECUTION PLAN — OUTREACH ACTIVE · FIRST CLEAN UNIT PROMOTED · SECOND CLEAN UNIT READY FOR HUMAN REVIEW · TCJ JUDGE-ADMISSION STAGE A FROZEN / STAGE B RUNNER IMPLEMENTED  
+**Status:** ACTIVE MASTER EXECUTION PLAN — OUTREACH ACTIVE · FIRST CLEAN UNIT PROMOTED · SECOND CLEAN UNIT READY FOR HUMAN REVIEW · TCJ PERTURBATION REVIEW VALIDITY-GATED 17/33  
 **Created:** 17 August 2026  
-**Reconciled:** 20 August 2026 · 20:08 ICT  
+**Reconciled:** 21 August 2026 · 20:07 ICT  
 **Project:** Flipgazine / The Book of Answers  
 **Repository:** `dechadae/flipgazine`  
 **Supabase:** `sjpvhgxacsiorrtijqua`
@@ -17,6 +17,7 @@
 - TCJ multi-judge / admission architecture: `ANSWERS-TCJ-MULTI-JUDGE-CONSENSUS-ARCHITECTURE.md`
 - TCJ expert-operable control plane: `ANSWERS-TCJ-EXPERT-OPERABLE-CONTROL-PLANE-IMPLEMENTATION.md`
 - TCJ measurement implementation: `ANSWERS-TCJ-MEASUREMENT-IMPLEMENTATION-20260820.md`
+- TCJ perturbation validity authority: `ANSWERS-TCJ-PERTURBATION-SURVIVAL-AUDIT-20260821.md`
 - TCJ commercial-use boundary: `ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md`
 - Source replacement record: `ANSWERS-BATCH2-SOURCESET-V1-1-REPLACEMENT-PATCH.md`
 - Technical pilot record: `ANSWERS-BATCH2-TECH-PILOT-COMPLETION-REPORT.md`
@@ -29,7 +30,7 @@ When checkpoint wording conflicts, use the newest document that owns that decisi
 
 Commercial outreach remains live. Clean Batch 2 production remains the corpus critical path. In parallel, TCJ has materially advanced from a single production judge toward an expert-operable, evidence-preserving judge-admission and multi-judge research system.
 
-Completed through 20 August:
+Completed through 21 August:
 
 ```text
 private-server security migration
@@ -58,6 +59,8 @@ TCJ Stage B foundation + sealed admission runner implemented
 TCJ Stage B v1.1 completed under corrected validity + CARE contract
 TCJ frozen-input Robustness v1 completed and independently verified
 TCJ 33-case constructed perturbation pack drafted for native review
+TCJ perturbation survival audit completed; seven defects repaired/redesigned
+TCJ server-authoritative perturbation survival gate deployed
 TCJ commercial benchmark-vs-model-development boundary documented
 ```
 
@@ -95,9 +98,12 @@ The primary schedule risk for the 1,000-row clean benchmark remains native-human
 | TCJ Judge Admission Stage A | current campaign frozen after corrected generation/review workflow | DONE FOR CURRENT CAMPAIGN |
 | TCJ Judge Admission Stage B | v1.1 completed; no admission decision yet | DONE FOR CURRENT CAMPAIGN |
 | TCJ Robustness v1 | 198 cells complete; 197 valid + 1 terminal contract event | DONE · PRELIMINARY EVIDENCE |
-| TCJ perturbation pack | 33 constructed cases; native review 0/33 | ACTIVE / NEXT VALID ACTION |
+| TCJ perturbation validity audit | full 33-case structural audit; seven cases repaired/redesigned; survival gate deployed | DONE / GOVERNING GATE |
+| TCJ perturbation pack | live draft; 17/33 approved, 16 pending/reopened; 33/33 survival pass; 0 executions | ACTIVE / NEXT VALID ACTION |
 | B2R supplemental clean set | exactly 20 still required | KEEP |
 | Final clean analysis/package | follows clean 1,000 freeze | DEPENDENT |
+
+Live Supabase verification at this reconciliation confirms corpus revision **127**, **988** active answers, **40** Batch 2 mappings, and perturbation pack state **draft** with **17/33 approved**, **16 pending**, **33/33 survival pass**, **0 survival fail**, no manifest and no freeze.
 
 No evidence supports advancing the canonical corpus beyond revision 127 / 988 in this reconciliation.
 
@@ -213,11 +219,15 @@ expert-operable control plane         implementation underway / proof-of-concept
 Judge Admission Stage A               frozen for current campaign
 Judge Admission Stage B               v1.1 completed
 frozen-input Robustness v1             198 cells complete
-constructed perturbation pack          draft · native review 0/33
-identity reveal / passports           only after protocol permits
+constructed perturbation pack          draft · native review 17/33 · 16 pending
+perturbation survival gate             live · 33/33 pass · freeze enforced server-side
+perturbation judge executions          0 until valid 33/33 freeze
+identity reveal / passports            only after protocol permits
 ```
 
 The control plane must remain server-authoritative. Browser surfaces may request methodology-aware commands but must never create methodological state or receive sealed identities/machine evidence before the approved reveal point.
+
+The perturbation validity rule is now explicit: a constructed case may not be approved unless its declared perturbation survives native editing without confounding its family contract. Runtime-only families must preserve frozen scenario/candidate content exactly where specified; prompt-injection cases must retain the complete baseline candidate plus the adversarial suffix; and freeze is blocked unless **33/33 are approved, 33/33 pass survival, 0 are rejected and identities remain sealed**.
 
 TCJ judge admission must preserve:
 
@@ -251,7 +261,8 @@ Commercially, the default TCJ license remains **Benchmark Use**, not unrestricte
 | **19 Aug** | ✅ Clean B2-0021–0040 full cycle; revision 127 / 988; buyer snapshot 2 |
 | **19 Aug** | ✅ B2-0041–0060 generated/self-audited + source-set replacement integrity repair |
 | **20 Aug** | ✅ TCJ multi-judge/control-plane architecture materially implemented; Stage A frozen; Stage B runner implemented |
-| **21 Aug** | ✅ Stage B v1.1 + frozen-input Robustness v1 complete; 33-case perturbation pack awaiting native review |
+| **21 Aug** | ✅ Stage B v1.1 + frozen-input Robustness v1 complete |
+| **21 Aug** | ✅ Full perturbation survival audit + server-authoritative validity gate; review resumes from corrected state at 17/33 approved |
 | **20 Aug onward** | Complete B2-0041–0060, then remaining original B2 in verified 20-row cycles |
 | **By 1 Sep working target** | Freeze separate B2R-0001–B2R-0020 before generation |
 | **After clean 1,000 freeze** | Package-integrity verification + cross-batch/human↔machine analysis |
@@ -287,8 +298,9 @@ B2-0041–0060 required sealed Qwen evidence
 ```text
 Stage A + Stage B frozen evidence
 → frozen-input Robustness v1 complete
-→ native-review 33 constructed perturbations
-→ freeze/verify perturbation pack
+→ resume validity-gated native review from 17/33
+→ approve all remaining 16 while survival remains 33/33 pass
+→ freeze/independently verify perturbation pack
 → run/verify 99 perturbation cells
 → build anonymous dossiers
 → independent blind ChatGPT + Grok meta-review
@@ -374,6 +386,8 @@ A failed technical gate does not advance to the next unit.
 - [x] TCJ sealed Stage B admission runner implemented
 - [x] TCJ Stage B v1.1 completed
 - [x] TCJ frozen-input Robustness v1 completed
+- [x] TCJ full 33-case perturbation survival audit completed
+- [x] TCJ server-authoritative perturbation survival gate deployed
 - [x] TCJ benchmark-vs-model-development commercial boundary documented
 
 ## Remaining production
@@ -387,7 +401,7 @@ A failed technical gate does not advance to the next unit.
 
 ## Remaining TCJ
 
-- [ ] native-review 33/33 constructed perturbations
+- [ ] native-review remaining 16 constructed perturbations to reach valid 33/33 approval
 - [ ] freeze/verify the perturbation pack and run/verify 99 cells
 - [ ] build anonymous dossiers and complete both blind meta-reviews
 - [ ] reveal identities only at protocol-approved point
@@ -419,11 +433,12 @@ Corpus:
 TCJ:
 
 ```text
-1. native-review all 33 constructed perturbations
-2. freeze and independently verify the perturbation pack
-3. run and verify the 99-cell perturbation stratum
-4. preserve candidate blindness while building identical anonymous dossiers
-5. freeze independent ChatGPT + Grok meta-reviews before identity reveal
+1. resume native review from corrected 17/33 state
+2. complete the remaining 16 cases while the server survival gate stays 33/33 pass
+3. freeze and independently verify the perturbation pack only after valid 33/33 approval
+4. run and verify the 99-cell perturbation stratum
+5. preserve candidate blindness while building identical anonymous dossiers
+6. freeze independent ChatGPT + Grok meta-reviews before identity reveal
 ```
 
 Commercially:
