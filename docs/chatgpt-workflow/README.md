@@ -8,7 +8,7 @@ This folder contains current operational authority, editorial methodology, Batch
 
 `DOCUMENT-AUTHORITY-MAP.md` classifies every document as current authority, completed evidence or historical record. Consult it before acting on any document-level “next step.”
 
-**Final-product deployment authority:** `ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md` now governs TCJ Gateway packaging, managed/VPC/on-prem deployment, local-runtime independence, Voice Profile classification and opt-in customer improvement. Read it together with the commercial-use/provenance policy before defining buyer deployment rights.
+**Final-product deployment authority:** `ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md` governs TCJ Gateway packaging, managed/VPC/on-prem deployment, local-runtime independence, Voice Profile classification and opt-in customer improvement. `ANSWERS-TCJ-VOICE-PROFILE-LICENSING-EXTENSION-20260822.md` adds the governing commercial clarification that Voice Profile classification follows technical substance rather than labels and formalizes the recurring Voice Profile Improvement Service. Read both together with the commercial-use/provenance policy before defining buyer deployment or improvement rights.
 
 ---
 
@@ -24,21 +24,22 @@ For current Answers work, use this order:
 6. `ANSWERS-TCJ-LIVE-DEPLOYMENT-20260819.md` — historical live TCJ Standard deployment checkpoint. Its empty-research-table statement is superseded by the calibration-rerun and measurement records.
 7. `ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md` — **governing TCJ commercial-use boundary**: benchmark/evaluation rights vs model-development use, mixed-provenance classes, buyer diligence, default licensing scope and provider-terms review controls.
 8. `ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md` — **governing final-product deployment policy**: TCJ Gateway, friction-free installation, managed/VPC/on-prem modes, TCJ Core and Voice Profile as non-model layers, local judge runtime, buyer-model final-writer pattern, opt-in customer data improvement and provenance firewall.
-9. `ANSWERS-BATCH2-TECH-PILOT-COMPLETION-REPORT.md` — B2-0001–B2-0020 full-cycle record: 4 ACCEPT / 9 EDIT / 7 REWRITE, non-metric provenance, enrichment, validation, corpus IDs 949–968 and buyer preview.
-10. `ANSWERS-BATCH2-BUYER-DATA-EXTRACTION-SPEC.md` — **governing buyer export contract** after reconciliation with source-set patch v1.1: corpus vs benchmark count language, technical-pilot treatment, clean replacement set, JSONL/CSV schema, routing evidence and per-promotion export checkpoint.
-11. `ANSWERS-BATCH2-ACTIVE-REVIEW-ORDER-CORRECTION.md` — historical correction that restored the first20 review before clean production. Its immediate-next-action text is superseded by newer implementation/checkpoint documents.
-12. `ANSWERS-BATCH2-HUMAN-FIRST-REVIEW-CORRECTION.md` — machine judgments are sealed until the native-human ACCEPT / EDIT / REWRITE decision is committed.
-13. `ANSWERS-BATCH2-SOURCESET-V1-1-REPLACEMENT-PATCH.md` — applied B2-0048/B2-0059 replacement authority; the retired exposed versions are tombstones, not active protocol exceptions.
-14. `ANSWERS-BATCH2-CORPUS-ROUTING-REACHABILITY-PLAN.md` — governing routing/promotion architecture: same canonical Book corpus, same semantics, deterministic reachability and atomic 20-row promotion.
-15. `ANSWERS-BATCH2-SELF-AUDIT-IMPLEMENTATION-REPORT.md` — generation/audit infrastructure history; use newer implementation reports for current state.
-16. `ANSWERS-BATCH2-SELF-AUDIT-PROTOCOL.md` — frozen generation and ChatGPT self-audit protocol plus historical Qwen-v1 design. Human visibility is superseded by the human-first correction; new Qwen runs use the TCJ architecture document above.
-17. `ANSWERS-COMMERCIAL-EXECUTION-TIMELINE.md` — commercialization schedule and newer production checkpoint.
-18. `ANSWERS-COMMERCIAL-BENCHMARK-PLAN.md` — commercial positioning, licensing and methodology claim boundaries.
-19. `ANSWERS-VOICE-TONE.md` — Thai / English editorial authority.
-20. `ANSWERS-VOICE-BENCHMARK-PLAN.md` — public Voice evaluator design history.
-21. `ANSWERS-HUMAN-EVALUATION-SCHEME.md` — human-evaluation deliverable.
-22. `ANSWERS-HUMAN-REVIEW.md` — immutable Batch 1 provenance.
-23. `ANSWERS-PRIVATE-SERVER-PHASE-K-MIGRATION-MANIFEST.md` — final private-server migration proof.
+9. `ANSWERS-TCJ-VOICE-PROFILE-LICENSING-EXTENSION-20260822.md` — **governing Voice Profile commercial extension**: substance-over-label classification, portable Voice Profile licensing, buyer-specific improvement rights, recurring Voice Profile Improvement Service and anti-loophole guardrails.
+10. `ANSWERS-BATCH2-TECH-PILOT-COMPLETION-REPORT.md` — B2-0001–B2-0020 full-cycle record: 4 ACCEPT / 9 EDIT / 7 REWRITE, non-metric provenance, enrichment, validation, corpus IDs 949–968 and buyer preview.
+11. `ANSWERS-BATCH2-BUYER-DATA-EXTRACTION-SPEC.md` — **governing buyer export contract** after reconciliation with source-set patch v1.1: corpus vs benchmark count language, technical-pilot treatment, clean replacement set, JSONL/CSV schema, routing evidence and per-promotion export checkpoint.
+12. `ANSWERS-BATCH2-ACTIVE-REVIEW-ORDER-CORRECTION.md` — historical correction that restored the first20 review before clean production. Its immediate-next-action text is superseded by newer implementation/checkpoint documents.
+13. `ANSWERS-BATCH2-HUMAN-FIRST-REVIEW-CORRECTION.md` — machine judgments are sealed until the native-human ACCEPT / EDIT / REWRITE decision is committed.
+14. `ANSWERS-BATCH2-SOURCESET-V1-1-REPLACEMENT-PATCH.md` — applied B2-0048/B2-0059 replacement authority; the retired exposed versions are tombstones, not active protocol exceptions.
+15. `ANSWERS-BATCH2-CORPUS-ROUTING-REACHABILITY-PLAN.md` — governing routing/promotion architecture: same canonical Book corpus, same semantics, deterministic reachability and atomic 20-row promotion.
+16. `ANSWERS-BATCH2-SELF-AUDIT-IMPLEMENTATION-REPORT.md` — generation/audit infrastructure history; use newer implementation reports for current state.
+17. `ANSWERS-BATCH2-SELF-AUDIT-PROTOCOL.md` — frozen generation and ChatGPT self-audit protocol plus historical Qwen-v1 design. Human visibility is superseded by the human-first correction; new Qwen runs use the TCJ architecture document above.
+18. `ANSWERS-COMMERCIAL-EXECUTION-TIMELINE.md` — commercialization schedule and newer production checkpoint.
+19. `ANSWERS-COMMERCIAL-BENCHMARK-PLAN.md` — commercial positioning, licensing and methodology claim boundaries.
+20. `ANSWERS-VOICE-TONE.md` — Thai / English editorial authority.
+21. `ANSWERS-VOICE-BENCHMARK-PLAN.md` — public Voice evaluator design history.
+22. `ANSWERS-HUMAN-EVALUATION-SCHEME.md` — human-evaluation deliverable.
+23. `ANSWERS-HUMAN-REVIEW.md` — immutable Batch 1 provenance.
+24. `ANSWERS-PRIVATE-SERVER-PHASE-K-MIGRATION-MANIFEST.md` — final private-server migration proof.
 
 Repository-root `AGENTS.md` remains the short operational entry point.
 
@@ -53,6 +54,7 @@ Repository-root `AGENTS.md` remains the short operational entry point.
 - **Live TCJ component versions / deployment verification:** `ANSWERS-TCJ-LIVE-DEPLOYMENT-20260819.md`.
 - **TCJ commercial-use / benchmark-vs-model-development / provenance boundary:** `ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md`.
 - **TCJ final product / plug-and-play deployment / Voice Profile improvement:** `ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md`.
+- **Voice Profile classification / portable licensing / recurring improvement service:** `ANSWERS-TCJ-VOICE-PROFILE-LICENSING-EXTENSION-20260822.md`.
 - **First20 technical evidence:** `ANSWERS-BATCH2-TECH-PILOT-COMPLETION-REPORT.md`.
 - **Buyer extraction / counts / schema:** `ANSWERS-BATCH2-BUYER-DATA-EXTRACTION-SPEC.md`.
 - **Human-review visibility:** `ANSWERS-BATCH2-HUMAN-FIRST-REVIEW-CORRECTION.md`.
@@ -73,7 +75,9 @@ When older checkpoint wording conflicts with a newer authority, follow the newer
 - TCJ Panel is approved as a future methodology but has not replaced the live single-judge TCJ Standard path;
 - TCJ source/API/private-deployment access does **not** imply model-development rights. The default commercial path remains rights-scoped; final plug-and-play runtime deployment and Voice Profile improvement are governed by the 22 August product policy;
 - TCJ Core and a TCJ Voice Profile are treated as non-model software/configuration layers for final-product architecture. Any neural adapter/classifier/reward-model or other learned parameter artifact must be classified separately as a model;
-- with explicit buyer opt-in and rights/provenance review, eligible production evidence may improve non-model TCJ/Voice Profile configuration. That does not automatically grant permission to use the same evidence for training/distilling a competing AI model.
+- Voice Profile classification follows **technical substance over labels**. Renaming a learned neural artifact “Voice Profile” does not make it non-model, while improving genuine rules/configuration does not automatically become model development;
+- with explicit buyer opt-in and rights/provenance review, eligible production evidence may improve non-model TCJ/Voice Profile configuration. That does not automatically grant permission to use the same evidence for training/distilling a competing AI model;
+- the ongoing customer-specific profile lifecycle may be commercialized as a separate recurring **TCJ Voice Profile Improvement Service**, distinct from runtime, base profile and cross-customer improvement rights.
 
 ---
 
@@ -262,7 +266,7 @@ Private deployment and later Qualification work introduced stronger server-owned
 
 ## TCJ commercial-use boundary
 
-Default licensing remains explicitly split from model-development rights. The commercial-use/provenance policy governs provider-output restrictions; the plug-and-play product policy governs final runtime packaging and customer-specific Voice Profile improvement.
+Default licensing remains explicitly split from model-development rights. The commercial-use/provenance policy governs provider-output restrictions; the plug-and-play product policy governs final runtime packaging and customer-specific Voice Profile improvement; the Voice Profile licensing extension governs technical classification and recurring commercial packaging.
 
 ```text
 TCJ evaluation/runtime license can include
@@ -275,6 +279,7 @@ TCJ evaluation/runtime license can include
 ✓ runtime quality gate / rewrite orchestration
 ✓ buyer-model final rewrite at inference time
 ✓ opt-in non-model TCJ / Voice Profile improvement, subject to provenance and rights
+✓ separately licensed recurring Voice Profile Improvement Service
 
 not granted automatically
 ✗ SFT / fine-tuning supervision from restricted provider output
@@ -290,6 +295,7 @@ Detailed authorities:
 ```text
 ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md
 ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md
+ANSWERS-TCJ-VOICE-PROFILE-LICENSING-EXTENSION-20260822.md
 ```
 
 The key product distinction is:
@@ -335,7 +341,10 @@ Product requirements include:
 - Helm/Kubernetes packaging for enterprise deployments;
 - OpenAI-compatible integration where claimed;
 - customer-specific Voice Profiles as versioned non-model configuration;
+- classification by technical substance, never by product label alone;
 - opt-in provenance-controlled customer improvement;
+- portable Voice Profile licensing across compatible buyer models;
+- optional recurring TCJ Voice Profile Improvement Service;
 - automatic observe → propose → validate → promote loop, never silent self-modification;
 - fresh-environment first evaluated response target under 30 minutes, with under 10 minutes as the compatible-default stretch target;
 - reproducibility from a fresh operator/account using only the packaged TCJ materials.
@@ -358,6 +367,7 @@ The commercial product shape built on top of that migration is now governed by:
 
 ```text
 ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md
+ANSWERS-TCJ-VOICE-PROFILE-LICENSING-EXTENSION-20260822.md
 ```
 
 Executable router/parity code and machine proof stay in `../../answers-private-server/`. Deployed Edge Function mirrors stay in `../../supabase/functions/`. Wider Flipgazine shell documentation stays outside this workflow folder.
@@ -376,6 +386,7 @@ finish Qualification / Panel / Assurance architecture
 → implement plug-and-play Gateway packaging
 → prove local/private deployment
 → prove Voice Profile import/export and opt-in improvement loop
+→ package Customer Voice Profile license + recurring Voice Profile Improvement Service
 → run fresh-environment deployment acceptance
 → buyer-ready licensing / diligence package
 ```
