@@ -208,9 +208,126 @@ Continue without native-human intervention for now:
 
 1. implement/replay `TCJ-ANSWERS-BFF-v3-research` against exposed v1.1 as development evidence;
 2. compare v2 → v3 by dimension, extreme reversals, false-fluent tail risk, and regression cases;
-3. iterate only through new research-profile versions; never mutate v1.1 evidence;
-4. when research convergence is good enough, freeze the next judge contract;
+3. iterate only through new research-profile/evaluator versions; never mutate v1.1 evidence;
+4. when research convergence is good enough, freeze the next evaluator contract;
 5. construct a fresh hidden bank;
 6. stop for native-human blind review only then.
 
 OpenAI and xAI integration remains explicitly gated until final TCJ release freeze.
+
+## 10. Raw-model ceiling hypothesis and v3 ablation
+
+The first Qualification result suggested an important possibility: a general-purpose model may be unable to pass the Answers/BFF standard as a naked single-pass judge even when its average error is relatively low.
+
+For Qwen 3.6 27B on the full historical v1.1 run, BFF Voice MAE was `0.4583`, already inside the qualified MAE ceiling of `0.50`, and all 8 BFF primary-target cases were within one point. The reason it failed was not average BFF scoring; it produced 6 extreme BFF reversals and failed other global/dimension gates.
+
+That means the hard problem is the tail: occasional catastrophic native-pragmatic misreads.
+
+A v3 prompt-only ablation was therefore launched against the exposed v1.1 development bank. It adds a stricter silent decision procedure and the ten remediation rules without changing human gold or historical thresholds.
+
+Early partial evidence showed **regression**, not improvement. On the first 10 completed cells available at the checkpoint:
+
+```text
+BFF Voice MAE             v2 0.30  → v3 0.90
+BFF extreme reversals     v2 0     → v3 3
+Intent MAE                v2 0.50  → v3 0.90
+Thai pragmatics MAE       v2 0.80  → v3 1.20
+```
+
+This is an ablation result, not a new authority result. The full v3 replay is allowed to complete as exposed research evidence.
+
+The main interpretation is that **more rubric text is not the solution**. The model can over-apply a rule such as “mock-formality may be intentional,” accepting bad formal Thai as comedy while still rejecting a human-approved deadpan formal construction. The missing capability is contrastive native discrimination, not awareness that the phenomenon exists.
+
+## 11. Contrastive Voice Profile anchor layer
+
+The existing native Thai review corpus provides a stronger non-model signal than another prose prompt.
+
+Canonical source audit:
+
+```text
+968 total Thai human-review records
+968 distinct answer IDs
+566 approved unchanged
+402 human-edited before→after pairs
+0 duplicate review rounds
+```
+
+A versioned contrastive anchor pool is now stored in `private.tcj_voice_profile_anchor_pairs`.
+
+Each anchor preserves:
+
+- pre-review text;
+- native-human reviewed final text;
+- exact hashes;
+- review/source provenance;
+- available Answers routing tags;
+- deterministic retrieval features only;
+- `voice_profile_eligible = true`;
+- `non_model_tcj_learning_eligible = true`;
+- `model_training_eligible = false` by default;
+- `cross_customer_learning_eligible = false` by default.
+
+The retrieval features are **not quality labels**. They only help TCJ find relevant native evidence.
+
+Frozen research anchor set:
+
+```text
+ANSWERS-BFF-VOICE-ANCHORS-v1
+anchors: 968
+status: research_frozen
+manifest SHA-256:
+260bdf1c00f7c4ac8560b29ef2f4895438fb5a368a644f9658a3c335f584a92a
+```
+
+The pool contains 325 native-human-approved code-switch examples. Mock-formal constructions are rare under the current lexical detector, which reinforces that such devices should be treated as high-uncertainty and contrastively evaluated rather than broadly permitted by one textual rule.
+
+## 12. Qualification unit: evaluator configuration, not naked model
+
+The next TCJ architecture formally separates **base model identity** from **evaluator authority**.
+
+Future Qualification may issue authority only to an immutable evaluator configuration containing, at minimum:
+
+```text
+base judge model
++ provider/model adapter
++ TCJ Core version
++ canonical Voice Profile version
++ contrastive anchor-set manifest
++ deterministic guard policy
++ challenge policy
++ disagreement/resolver policy
++ exact configuration SHA
+```
+
+The historical v1.1 Passports remain bound to their historical model candidates and are not rewritten.
+
+For future Passport versions, `tcj_judge_passports.evaluator_configuration_id` can bind authority to the exact configuration that actually passed.
+
+Current research configuration:
+
+```text
+TCJ-EVAL-ANSWERS-BFF-v4-research
+status: research_draft
+base model: qwen/qwen3.6-27b
+base prompt/profile: TCJ-ANSWERS-BFF-v2@TCJ-CORE-v1
+anchor set: ANSWERS-BFF-VOICE-ANCHORS-v1
+configuration SHA-256:
+581873845b0656294874b37913d02a920a3628127f8f9b2a68671ac48807ac32
+```
+
+Planned v4 evaluator behavior:
+
+```text
+input
+→ standard dimension diagnosis
+→ detect high-risk BFF failure family
+→ retrieve a small contrastive native anchor set
+→ challenge only risky high/low decisions
+→ resolve each dimension independently
+→ disagreement >1 cannot silently become confidence
+→ tie-break or UNCERTAIN / escalation
+```
+
+This does **not** make the test easier. The same frozen thresholds remain the research comparison. It changes the object being tested from “can one raw LLM infer every native BFF distinction from prose instructions?” to “can this exact TCJ evaluator configuration reproduce native-human judgments reliably?”
+
+`TCJ-EVAL-ANSWERS-BFF-v4-research` has zero production authority. It must eventually face a fresh hidden Qualification bank under a frozen configuration hash, followed by Panel/Assurance/reproducibility gates, before it can receive production authority.
