@@ -100,11 +100,34 @@
       "historical_thresholds_unchanged": true,
       "v1_1_may_not_be_reused_as_hidden_authority_evidence": true
     },
+    "commercial_product_architecture": {
+      "freeze_status": "frozen",
+      "freeze_date": "2026-08-22",
+      "freeze_document": "ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-FREEZE-20260822.md",
+      "freeze_document_blob_sha": "0c04d90bfe3136bf743b8f49dc07a21497497710",
+      "freeze_scope": "topology_trust_boundaries_component_roles_judge_runtime_abstraction_evidence_exposure_revision_loop_and_deployment_shape",
+      "production_authority": false,
+      "implementation_qualification_assurance_release_pending": true,
+      "frozen_runtime_path": "buyer_writer_to_tcj_gateway_to_voice_profile_to_private_evidence_engine_to_derived_non_reconstructive_signals_to_byoj_selected_judge_to_tcj_guards_to_risk_triggered_challenge_to_independent_six_dimension_resolver_to_accept_revise_escalate_to_targeted_writer_revision_to_tcj_recheck_to_final_output",
+      "frozen_components": [
+        "tcj_gateway",
+        "voice_profile",
+        "private_tcj_evidence_engine",
+        "derived_non_reconstructive_evidence_signals",
+        "byoj_selected_judge_runtime",
+        "tcj_deterministic_guards",
+        "risk_triggered_challenge",
+        "independent_six_dimension_resolver",
+        "accept_revise_escalate_policy",
+        "buyer_writer_revision_loop"
+      ],
+      "reopen_rule": "only_explicit_superseding_architecture_decision"
+    },
     "current_architecture_stage": 8,
     "current_stage_key": "panel",
     "current_stage_state": "research_remediation_no_qualified_evaluator",
-    "product_direction": "private_evidence_byoj_gateway",
-    "final_runtime_path": "buyer_writer_candidate_to_tcj_gateway_to_voice_profile_to_private_evidence_engine_to_derived_non_reconstructive_signals_to_selected_judge_runtime_to_tcj_resolver_to_revision_instruction_to_buyer_writer",
+    "product_direction": "frozen_private_evidence_byoj_gateway_architecture",
+    "final_runtime_path": "buyer_writer_candidate_to_tcj_gateway_to_voice_profile_to_private_evidence_engine_to_derived_non_reconstructive_signals_to_selected_judge_runtime_to_tcj_guards_challenge_resolver_to_revision_instruction_to_buyer_writer_to_tcj_recheck",
     "buyer_writer_role": "generation_and_inference_time_revision",
     "buyer_writer_raw_internal_evidence_access": false,
     "buyer_raw_internal_corpus_access": false,
@@ -139,8 +162,11 @@
     "voice_profile_role": "defines_target_quality_and_retrieval_policy_without_exposing_raw_evidence",
     "air_gapped_default_profile_policy": "signed_compiled_non_reconstructive_evidence_artifact_no_raw_internal_rows",
     "external_ai_required": false,
-    "external_api_integration_gate": "after_fresh_qualification_panel_assurance_reproducibility_and_final_freeze",
-    "post_freeze_reference_byok_adapters_planned": ["openai", "xai"],
+    "external_api_integration_gate": "after_fresh_qualification_panel_assurance_reproducibility_and_final_release_freeze",
+    "post_freeze_reference_byok_adapters_planned": [
+      "openai",
+      "xai"
+    ],
     "tcj_core_class": "non_model_software_methodology",
     "voice_profile_class": "non_model_versioned_configuration",
     "voice_profile_classification_rule": "technical_substance_over_label",
@@ -148,7 +174,7 @@
     "voice_profile_improvement_service": "recurring_license_extension",
     "buyer_data_improvement": "opt_in_provenance_controlled",
     "cross_customer_improvement": "separate_explicit_opt_in_required",
-    "next_action": "Treat the completed v3 replay as a negative prompt-only ablation. Implement TCJ-EVAL-ANSWERS-BFF-v4-research around the Voice Profile, Private Evidence Engine, derived non-reconstructive contrastive signals, risk-triggered challenge and independent dimension resolution, while keeping the semantic judge behind a BYOJ abstraction. The commercial judge may later be a qualified Local Judge or supported BYOK Judge; neither receives raw internal corpus evidence. Do not change native-human gold or frozen thresholds. After research convergence, freeze the evaluator configuration, create a fresh hidden Qualification bank, and stop for native-human blind review. OpenAI/xAI BYOK adapters remain gated until final TCJ release freeze."
+    "next_action": "Implement and qualify TCJ-EVAL-ANSWERS-BFF-v4-research inside the frozen final commercial architecture: Voice Profile -> Private Evidence Engine -> derived non-reconstructive signals -> BYOJ semantic judge -> TCJ guards -> risk-triggered challenge -> independent six-dimension resolver. Do not redesign the frozen trust boundary to accommodate a model/provider. Do not change native-human gold or frozen thresholds. After research convergence, freeze the exact evaluator configuration, create a fresh hidden Qualification bank, and stop for native-human blind review."
   },
   "security": {
     "private_server_migration_complete": true,
@@ -162,6 +188,7 @@
     "commercial_timeline": "ANSWERS-COMMERCIAL-EXECUTION-TIMELINE.md",
     "tcj_method": "ANSWERS-TCJ-MULTI-JUDGE-CONSENSUS-ARCHITECTURE.md",
     "tcj_execution": "ANSWERS-TCJ-V3-ABLATION-COMPLETION-AND-PRIVATE-EVIDENCE-V4-DIRECTION-20260822.md",
+    "tcj_final_product_architecture": "ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-FREEZE-20260822.md",
     "tcj_qualification_completion": "ANSWERS-TCJ-QUALIFICATION-V11-COMPLETION-AND-RESEARCH-GATE-20260822.md",
     "tcj_commercial_boundary": "ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md",
     "tcj_product_deployment": "ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md",
