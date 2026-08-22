@@ -66,32 +66,38 @@ The missing signal is **contrastive native evidence plus a controlled decision a
 The governing product path is now:
 
 ```text
-buyer AI candidate
+buyer writer candidate
         ↓
 TCJ Gateway
         ↓
+selected Voice Profile
+        ↓
 PRIVATE TCJ Evidence Engine
         ↓
-PRIVATE TCJ local semantic evaluator
+derived, non-reconstructive evidence signals
         ↓
-TCJ guards + independent-dimension resolver
+SELECTED TCJ JUDGE RUNTIME
+Local Judge OR BYOK Judge
+        ↓
+TCJ guards + challenge + independent-dimension resolver
         ↓
 final diagnosis / ACCEPT / REVISE / ESCALATE
         ↓
-buyer AI receives only revision guidance / final decision
+buyer writer receives only revision guidance / final decision
 ```
 
-The buyer AI is writer/reviser only.
+The buyer writer is generation/revision compute. A buyer may separately supply the semantic judge through BYOJ, but that judge also does not receive the proprietary raw corpus.
 
 Internal Batch 1, Batch 2, future batches, native-human review rows, Qualification cases and proprietary anchors remain inside the TCJ evidence boundary and are non-deliverable by default.
 
 Runtime evidence exposure is governed by:
 
-`ANSWERS-TCJ-PRIVATE-EVIDENCE-ENGINE-AND-BUYER-ISOLATION-POLICY-20260822.md`
+- `ANSWERS-TCJ-PRIVATE-EVIDENCE-ENGINE-AND-BUYER-ISOLATION-POLICY-20260822.md`
+- `ANSWERS-TCJ-BYOJ-JUDGE-RUNTIME-AND-API-KEY-POLICY-20260822.md`
 
 ## 5. Private Evidence Engine
 
-The current 968-anchor human review layer becomes an input to a private evidence service rather than a corpus exposed to the buyer model.
+The current 968-anchor human review layer becomes an input to a private evidence service rather than a corpus exposed to the buyer writer or selected judge runtime.
 
 Current research evidence:
 
@@ -120,7 +126,7 @@ confidence
 challenge_dimensions
 ```
 
-Raw internal records are not a buyer-facing runtime surface.
+Raw internal records are not a buyer-facing runtime surface and are not a default judge-runtime input.
 
 ## 6. v4 evaluator configuration
 
@@ -132,7 +138,9 @@ It should evolve into an immutable configuration containing at minimum:
 TCJ Core
 canonical Voice Profile
 Private Evidence Engine version / evidence manifest
-private local judge model snapshot
+derived-signal contract
+judge runtime type: research | local | byok
+judge provider/model/snapshot
 model adapter
 risk detector policy
 challenge policy
@@ -144,16 +152,19 @@ exact configuration hash
 
 Production Qualification will eventually apply to this **full evaluator configuration**, not to a naked LLM name.
 
+The semantic judge is therefore an interchangeable authority-bearing component behind the BYOJ abstraction.
+
 ## 7. v4 research algorithm
 
 The next development loop is:
 
 ```text
 candidate
+→ bind canonical Voice Profile
 → deterministic/risk-family detection
 → private evidence retrieval
 → contrastive derived signals
-→ standard private local diagnosis
+→ selected research judge diagnosis
 → challenge only risky high/low decisions
 → independently resolve each dimension
 → disagreement > 1 becomes explicit uncertainty, challenge or escalation
@@ -179,24 +190,37 @@ For private deployment:
 buyer-owned evidence
 → buyer-private Evidence Engine
 → buyer-specific Voice Profile intelligence
-→ private TCJ evaluator
-→ final TCJ diagnosis
-→ buyer AI revision instruction
+→ derived signals
+→ selected Local Judge or BYOK Judge
+→ TCJ final diagnosis
+→ buyer writer revision instruction
 ```
 
-The buyer's raw data does not need to be sent to OpenAI, xAI or another external AI platform.
+The buyer's raw data does not need to be sent to OpenAI, xAI or another external AI platform. If a buyer chooses a BYOK Judge, the default interface sends only the current candidate, selected Voice Profile contract and derived/non-reconstructive evidence signals required for the current judgment.
 
 Cross-customer reuse remains separately opt-in.
 
 ## 9. Provider-output boundary
 
-Internal provider-derived evidence can remain useful for runtime retrieval, non-model Voice Profile development, failure analysis, benchmarking and regression without becoming training data for the private local judge.
+Internal provider-derived evidence can remain useful for runtime retrieval, non-model Voice Profile development, failure analysis, benchmarking and regression without becoming training data for the selected judge.
 
-If a future local judge is trained/fine-tuned, only evidence with an explicit model-training eligibility basis may enter its training corpus.
+If a future Local Judge is trained/fine-tuned, only evidence with an explicit model-training eligibility basis may enter its training corpus.
 
-The private-runtime architecture does not use the label `Voice Profile` to bypass model-development restrictions. Technical substance controls classification.
+The private-runtime architecture does not use the label `Voice Profile` or `BYOJ` to bypass model-development restrictions. Technical substance controls classification.
 
-## 10. External API release gate
+Runtime use of the current candidate + Voice Profile + derived signals is distinct from accumulating those outputs as model-training supervision.
+
+## 10. Judge-runtime terminology and external API release gate
+
+Governing terminology:
+
+```text
+BYOJ         Bring Your Own Judge — umbrella
+Local Judge  self-hosted/private judge endpoint; no external provider required
+BYOK Judge   supported external provider using buyer-supplied credential
+```
+
+A cloud OpenAI/xAI judge is not called `Local Judge` merely because TCJ runs locally.
 
 OpenAI and xAI paid API adapters remain disconnected during this research phase.
 
@@ -212,21 +236,48 @@ v4 evaluator research convergence
 → final TCJ architecture/runtime freeze
 ```
 
-External APIs are then replaceable runtime integrations. They do not redefine the canonical Voice Profile or receive proprietary TCJ development corpora by default.
+After that gate, the latest approved OpenAI Sol-class model may be used as a recommended/reference BYOK judge candidate, with the exact API model/version resolved and frozen at integration/Qualification time. OpenAI is not mandatory; a qualified Local Judge or another supported BYOK Judge may replace it.
+
+Under the default enterprise BYOK model, the buyer pays the external model provider directly for API usage while TCJ license/Voice Profile/service fees remain separate.
+
+External APIs do not redefine the canonical Voice Profile and do not receive proprietary TCJ development corpora.
 
 ## 11. Immediate automatic next action
 
 Continue autonomously:
 
-1. implement the Private Evidence Engine retrieval/derived-signal layer;
-2. define deterministic risk-family detection for the eight known failure clusters;
-3. implement private local evaluator calls and independent dimension resolution;
-4. implement risk-triggered challenge rather than universal extra prompting;
-5. replay v4 on exposed v1.1 development evidence;
-6. compare with historical Qwen v2 and negative-ablation v3;
-7. iterate only while preserving immutable history;
-8. when obvious research defects have converged, freeze the complete evaluator configuration;
-9. construct a fresh hidden Qualification bank;
-10. stop for native-human blind review/freeze.
+1. implement canonical Voice Profile binding before private evidence interpretation;
+2. implement the Private Evidence Engine retrieval/derived-signal layer;
+3. define deterministic risk-family detection for the eight known failure clusters;
+4. abstract semantic judging behind a BYOJ-compatible judge interface;
+5. implement the selected research judge adapter without granting it raw-corpus access;
+6. implement independent dimension resolution;
+7. implement risk-triggered challenge rather than universal extra prompting;
+8. replay v4 on exposed v1.1 development evidence;
+9. compare with historical Qwen v2 and negative-ablation v3;
+10. iterate only while preserving immutable history;
+11. when obvious research defects have converged, freeze the complete evaluator configuration;
+12. construct a fresh hidden Qualification bank;
+13. stop for native-human blind review/freeze.
 
 No human judgment is required before that fresh hidden bank is ready.
+
+## 12. Commercial runtime consequence
+
+The final commercial judge is not fixed to one vendor.
+
+A qualified deployment may use:
+
+```text
+A. Local Judge
+   buyer/self-hosted model through a supported private endpoint
+
+B. BYOK Judge
+   supported provider model through buyer-owned API credentials
+```
+
+Both operate behind the same TCJ evaluator contract and both receive only the current candidate, Voice Profile contract and derived/non-reconstructive evidence signals by default.
+
+The approved product statement is:
+
+> **Bring your writer. Bring your judge or your API key. TCJ keeps the proprietary Thai evidence private and qualifies the complete evaluator configuration before granting production authority.**
