@@ -8,6 +8,8 @@ This folder contains current operational authority, editorial methodology, Batch
 
 `DOCUMENT-AUTHORITY-MAP.md` classifies every document as current authority, completed evidence or historical record. Consult it before acting on any document-level “next step.”
 
+**Final-product deployment authority:** `ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md` now governs TCJ Gateway packaging, managed/VPC/on-prem deployment, local-runtime independence, Voice Profile classification and opt-in customer improvement. Read it together with the commercial-use/provenance policy before defining buyer deployment rights.
+
 ---
 
 ## Read first
@@ -21,21 +23,22 @@ For current Answers work, use this order:
 5. `ANSWERS-TCJ-MEASUREMENT-IMPLEMENTATION-20260820.md` — measurement persistence, Stage A freeze and Stage B control-plane foundation. Use the newer Stage B and robustness records for later execution state.
 6. `ANSWERS-TCJ-LIVE-DEPLOYMENT-20260819.md` — historical live TCJ Standard deployment checkpoint. Its empty-research-table statement is superseded by the calibration-rerun and measurement records.
 7. `ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md` — **governing TCJ commercial-use boundary**: benchmark/evaluation rights vs model-development use, mixed-provenance classes, buyer diligence, default licensing scope and provider-terms review controls.
-8. `ANSWERS-BATCH2-TECH-PILOT-COMPLETION-REPORT.md` — B2-0001–B2-0020 full-cycle record: 4 ACCEPT / 9 EDIT / 7 REWRITE, non-metric provenance, enrichment, validation, corpus IDs 949–968 and buyer preview.
-9. `ANSWERS-BATCH2-BUYER-DATA-EXTRACTION-SPEC.md` — **governing buyer export contract** after reconciliation with source-set patch v1.1: corpus vs benchmark count language, technical-pilot treatment, clean replacement set, JSONL/CSV schema, routing evidence and per-promotion export checkpoint.
-10. `ANSWERS-BATCH2-ACTIVE-REVIEW-ORDER-CORRECTION.md` — historical correction that restored the first20 review before clean production. Its immediate-next-action text is superseded by newer implementation/checkpoint documents.
-11. `ANSWERS-BATCH2-HUMAN-FIRST-REVIEW-CORRECTION.md` — machine judgments are sealed until the native-human ACCEPT / EDIT / REWRITE decision is committed.
-12. `ANSWERS-BATCH2-SOURCESET-V1-1-REPLACEMENT-PATCH.md` — applied B2-0048/B2-0059 replacement authority; the retired exposed versions are tombstones, not active protocol exceptions.
-13. `ANSWERS-BATCH2-CORPUS-ROUTING-REACHABILITY-PLAN.md` — governing routing/promotion architecture: same canonical Book corpus, same semantics, deterministic reachability and atomic 20-row promotion.
-14. `ANSWERS-BATCH2-SELF-AUDIT-IMPLEMENTATION-REPORT.md` — generation/audit infrastructure history; use newer implementation reports for current state.
-15. `ANSWERS-BATCH2-SELF-AUDIT-PROTOCOL.md` — frozen generation and ChatGPT self-audit protocol plus historical Qwen-v1 design. Human visibility is superseded by the human-first correction; new Qwen runs use the TCJ architecture document above.
-16. `ANSWERS-COMMERCIAL-EXECUTION-TIMELINE.md` — commercialization schedule and newer production checkpoint.
-17. `ANSWERS-COMMERCIAL-BENCHMARK-PLAN.md` — commercial positioning, licensing and methodology claim boundaries.
-18. `ANSWERS-VOICE-TONE.md` — Thai / English editorial authority.
-19. `ANSWERS-VOICE-BENCHMARK-PLAN.md` — public Voice evaluator design history.
-20. `ANSWERS-HUMAN-EVALUATION-SCHEME.md` — human-evaluation deliverable.
-21. `ANSWERS-HUMAN-REVIEW.md` — immutable Batch 1 provenance.
-22. `ANSWERS-PRIVATE-SERVER-PHASE-K-MIGRATION-MANIFEST.md` — final private-server migration proof.
+8. `ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md` — **governing final-product deployment policy**: TCJ Gateway, friction-free installation, managed/VPC/on-prem modes, TCJ Core and Voice Profile as non-model layers, local judge runtime, buyer-model final-writer pattern, opt-in customer data improvement and provenance firewall.
+9. `ANSWERS-BATCH2-TECH-PILOT-COMPLETION-REPORT.md` — B2-0001–B2-0020 full-cycle record: 4 ACCEPT / 9 EDIT / 7 REWRITE, non-metric provenance, enrichment, validation, corpus IDs 949–968 and buyer preview.
+10. `ANSWERS-BATCH2-BUYER-DATA-EXTRACTION-SPEC.md` — **governing buyer export contract** after reconciliation with source-set patch v1.1: corpus vs benchmark count language, technical-pilot treatment, clean replacement set, JSONL/CSV schema, routing evidence and per-promotion export checkpoint.
+11. `ANSWERS-BATCH2-ACTIVE-REVIEW-ORDER-CORRECTION.md` — historical correction that restored the first20 review before clean production. Its immediate-next-action text is superseded by newer implementation/checkpoint documents.
+12. `ANSWERS-BATCH2-HUMAN-FIRST-REVIEW-CORRECTION.md` — machine judgments are sealed until the native-human ACCEPT / EDIT / REWRITE decision is committed.
+13. `ANSWERS-BATCH2-SOURCESET-V1-1-REPLACEMENT-PATCH.md` — applied B2-0048/B2-0059 replacement authority; the retired exposed versions are tombstones, not active protocol exceptions.
+14. `ANSWERS-BATCH2-CORPUS-ROUTING-REACHABILITY-PLAN.md` — governing routing/promotion architecture: same canonical Book corpus, same semantics, deterministic reachability and atomic 20-row promotion.
+15. `ANSWERS-BATCH2-SELF-AUDIT-IMPLEMENTATION-REPORT.md` — generation/audit infrastructure history; use newer implementation reports for current state.
+16. `ANSWERS-BATCH2-SELF-AUDIT-PROTOCOL.md` — frozen generation and ChatGPT self-audit protocol plus historical Qwen-v1 design. Human visibility is superseded by the human-first correction; new Qwen runs use the TCJ architecture document above.
+17. `ANSWERS-COMMERCIAL-EXECUTION-TIMELINE.md` — commercialization schedule and newer production checkpoint.
+18. `ANSWERS-COMMERCIAL-BENCHMARK-PLAN.md` — commercial positioning, licensing and methodology claim boundaries.
+19. `ANSWERS-VOICE-TONE.md` — Thai / English editorial authority.
+20. `ANSWERS-VOICE-BENCHMARK-PLAN.md` — public Voice evaluator design history.
+21. `ANSWERS-HUMAN-EVALUATION-SCHEME.md` — human-evaluation deliverable.
+22. `ANSWERS-HUMAN-REVIEW.md` — immutable Batch 1 provenance.
+23. `ANSWERS-PRIVATE-SERVER-PHASE-K-MIGRATION-MANIFEST.md` — final private-server migration proof.
 
 Repository-root `AGENTS.md` remains the short operational entry point.
 
@@ -46,9 +49,10 @@ Repository-root `AGENTS.md` remains the short operational entry point.
 - **Current production state / cycle order:** `ANSWERS-COMMERCIAL-EXECUTION-TIMELINE.md` for the newest checkpoint, together with `ANSWERS-BATCH2-CORPUS-ROUTING-REACHABILITY-IMPLEMENTATION-REPORT.md` for the production architecture.
 - **Machine-evaluation architecture / live TCJ:** `ANSWERS-THAI-CONVERSATION-JUDGE-ARCHITECTURE.md`.
 - **Approved TCJ multi-judge / Panel method:** `ANSWERS-TCJ-MULTI-JUDGE-CONSENSUS-ARCHITECTURE.md` — approved methodology only; not a live deployment claim.
-- **Latest TCJ research execution state / valid next action:** `ANSWERS-TCJ-ROBUSTNESS-V1-COMPLETION-AND-PERTURBATION-DRAFT-20260821.md`.
+- **Latest TCJ research execution state / valid next action:** `ANSWERS-TCJ-ROBUSTNESS-V1-COMPLETION-AND-PERTURBATION-DRAFT-20260821.md` where not superseded by newer Qualification checkpoints.
 - **Live TCJ component versions / deployment verification:** `ANSWERS-TCJ-LIVE-DEPLOYMENT-20260819.md`.
 - **TCJ commercial-use / benchmark-vs-model-development / provenance boundary:** `ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md`.
+- **TCJ final product / plug-and-play deployment / Voice Profile improvement:** `ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md`.
 - **First20 technical evidence:** `ANSWERS-BATCH2-TECH-PILOT-COMPLETION-REPORT.md`.
 - **Buyer extraction / counts / schema:** `ANSWERS-BATCH2-BUYER-DATA-EXTRACTION-SPEC.md`.
 - **Human-review visibility:** `ANSWERS-BATCH2-HUMAN-FIRST-REVIEW-CORRECTION.md`.
@@ -67,7 +71,9 @@ When older checkpoint wording conflicts with a newer authority, follow the newer
 - TCJ calibration-rerun evidence has been stored for all 20 B2-0021–B2-0040 rows; older statements that the TCJ research tables are empty are historical only;
 - `B2-QWEN-AUDIT-v1` remains immutable historical evidence, while new selected Qwen audits are governed by `TCJ-ANSWERS-BFF-v2` through the shared TCJ runtime;
 - TCJ Panel is approved as a future methodology but has not replaced the live single-judge TCJ Standard path;
-- TCJ source/API/private-deployment access does **not** imply model-development rights. The default commercial path is Benchmark Use only unless a separately reviewed written agreement expressly grants broader rights.
+- TCJ source/API/private-deployment access does **not** imply model-development rights. The default commercial path remains rights-scoped; final plug-and-play runtime deployment and Voice Profile improvement are governed by the 22 August product policy;
+- TCJ Core and a TCJ Voice Profile are treated as non-model software/configuration layers for final-product architecture. Any neural adapter/classifier/reward-model or other learned parameter artifact must be classified separately as a model;
+- with explicit buyer opt-in and rights/provenance review, eligible production evidence may improve non-model TCJ/Voice Profile configuration. That does not automatically grant permission to use the same evidence for training/distilling a competing AI model.
 
 ---
 
@@ -92,7 +98,9 @@ Do not generate later units before the preceding unit has passed its full promot
 
 ---
 
-## Current project checkpoint — 21 August 2026
+## Current project checkpoint — repository documentation snapshot
+
+The detailed Batch 2 counts below remain the 21 August repository-documentation snapshot unless a newer applied checkpoint explicitly supersedes them. `CURRENT-STATE.json` is not a substitute for querying canonical live state before consequential operations.
 
 ### Canonical Book
 
@@ -182,7 +190,7 @@ The frozen B2-0021–B2-0040 human decisions remain the intended first compariso
 
 ### Current clean unit · B2-0041–B2-0060
 
-Verified current state:
+Repository snapshot:
 
 ```text
 active rows                       20 / 20
@@ -194,7 +202,7 @@ human reviews                      0 / 20
 active protocol exceptions             0
 ```
 
-This is the active production unit. Human review remains gated behind the required sealed machine evidence for each row.
+Reverify canonical live state before acting on this snapshot.
 
 ### Benchmark / corpus count rule
 
@@ -235,75 +243,104 @@ The first20 technical rows are part of the canonical Book but not part of the cl
 
 ### Thai Conversation Judge
 
+The current research/runtime component versions must be read from the latest applied TCJ checkpoints and canonical deployment state before a consequential run. Historical component versions below are retained as provenance, not a substitute for live verification.
+
 ```text
-tcj-engine                v2 ACTIVE · canonical semantic/calibration runtime
-voice-eval                v10 ACTIVE · thin public compatibility proxy
-batch2-qwen-audit         v3 ACTIVE · JWT-verified internal compatibility proxy
+tcj-engine                historical v2 checkpoint
+voice-eval                historical v10 checkpoint
+batch2-qwen-audit         historical v3 checkpoint
 TCJ core                  TCJ-CORE-v1
 General profile           TCJ-GENERAL-v1
 Answers profile           TCJ-ANSWERS-BFF-v2
 Guard set                 TCJ-GUARDS-v1
-TCJ Panel                 APPROVED METHOD · NOT YET LIVE
+TCJ Panel                 APPROVED METHOD · QUALIFICATION TRACK IN PROGRESS
 ```
 
-The v2/v3 runtime hardening adds a private server-to-server credential to the Batch 2 path in addition to the active-session/admin checks. The credential is sourced from the Edge runtime environment and is never sent to browsers or committed to the repository.
-
-Private append-only TCJ evidence tables:
-
-```text
-private.tcj_guard_definitions
-private.tcj_evaluation_runs
-private.tcj_guard_applications
-private.batch2_tcj_links
-```
-
-The B2-0021–B2-0040 `calibration_rerun` is stored as 20 TCJ runs and 20 Batch 2 links. It remains separate from the original Qwen-v1 evidence and native-human decisions. Public Voice submissions are not persisted into these research tables.
-
-Judge Admission has progressed beyond protocol freeze: Stage A is frozen, Stage B v1.1 has completed, and frozen-input Robustness v1 has completed with 198 cells. The constructed 33-case perturbation pack remains draft and must receive native review before freeze or model execution.
-
-The approved TCJ Panel method adds a future competence-gated multi-judge layer but does not alter the currently deployed endpoints or tables merely by being documented.
-
-Machine proof for the completed first20 corpus cycle:
-
-```text
-../../answers-private-server/batch2-tech-pilot-full-cycle-proof.json
-```
-
-Deployed Edge Function mirrors are under `../../supabase/functions/`, including the `tcj-engine/` source and schema.
+Private deployment and later Qualification work introduced stronger server-owned execution/provenance controls beyond this older infrastructure snapshot. Follow newer TCJ Qualification checkpoint documents for the live evidence path.
 
 ---
 
 ## TCJ commercial-use boundary
 
-Default licensing is explicitly split from model-development rights.
+Default licensing remains explicitly split from model-development rights. The commercial-use/provenance policy governs provider-output restrictions; the plug-and-play product policy governs final runtime packaging and customer-specific Voice Profile improvement.
 
 ```text
-TCJ Benchmark License
+TCJ evaluation/runtime license can include
 ✓ independent evaluation / comparison
 ✓ Thai QA / regression testing
 ✓ safety / linguistic research
 ✓ model-card or internal reporting
 ✓ finalized release gating
 ✓ scoped application-layer QA
+✓ runtime quality gate / rewrite orchestration
+✓ buyer-model final rewrite at inference time
+✓ opt-in non-model TCJ / Voice Profile improvement, subject to provenance and rights
 
-not granted by default
-✗ SFT / fine-tuning supervision
-✗ preference / RLHF / DPO / RLAIF labels
-✗ reward-model or distillation targets
-✗ synthetic-training-data filtering
-✗ checkpoint optimization
-✗ other model-development feedback loops
+not granted automatically
+✗ SFT / fine-tuning supervision from restricted provider output
+✗ preference / RLHF / DPO / RLAIF labels where rights do not permit
+✗ reward-model or distillation targets where rights do not permit
+✗ synthetic-training-data filtering for competing-model development where rights do not permit
+✗ checkpoint optimization using restricted output
+✗ other model-development feedback loops beyond the licensed rights
 ```
 
-The detailed definitions, mixed-provenance matrix, frontier-lab examples, buyer diligence question, deal-record requirements and terms-change control live in:
+Detailed authorities:
 
 ```text
 ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md
+ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md
 ```
 
-That document is the current authority whenever a buyer asks whether TCJ can be used to benchmark a model versus train, fine-tune, optimize or otherwise develop one.
+The key product distinction is:
 
-For TCJ Panel specifically, each additional judge/provider adds its own provenance and provider-terms diligence requirement before its outputs are used in a commercial panel.
+```text
+TCJ Core            = non-model software / methodology
+TCJ Voice Profile   = non-model versioned configuration
+Judge models        = separately sourced runtime model components
+```
+
+Eligible buyer/OpenAI/third-party production evidence may be treated differently for **non-model TCJ/profile improvement** versus **AI-model development**. Provenance and actual technical use govern; an opt-in does not erase upstream provider restrictions.
+
+---
+
+## Final TCJ product direction — 22 August 2026
+
+The commercial target is a friction-free TCJ Gateway:
+
+```text
+buyer application
+→ buyer model
+→ TCJ Gateway
+→ ACCEPT / REVISE / ESCALATE
+→ optional buyer-model final inference rewrite
+→ customer
+```
+
+Deployment target:
+
+```text
+managed TCJ
+customer VPC
+fully private / on-prem TCJ Local
+```
+
+Product requirements include:
+
+- no browser/manual Run dependency;
+- no manual database setup;
+- no customer training corpus required for first use;
+- qualified local judge runtime so external AI is optional rather than mandatory;
+- signed Docker/Compose packaging for smaller deployments;
+- Helm/Kubernetes packaging for enterprise deployments;
+- OpenAI-compatible integration where claimed;
+- customer-specific Voice Profiles as versioned non-model configuration;
+- opt-in provenance-controlled customer improvement;
+- automatic observe → propose → validate → promote loop, never silent self-modification;
+- fresh-environment first evaluated response target under 30 minutes, with under 10 minutes as the compatible-default stretch target;
+- reproducibility from a fresh operator/account using only the packaged TCJ materials.
+
+Do not market the installation-time targets as achieved until a preserved acceptance test demonstrates them.
 
 ---
 
@@ -311,10 +348,16 @@ For TCJ Panel specifically, each additional judge/provider adds its own provenan
 
 The private-server migration was completed on 17 August 2026. Keep the phase reports as diligence evidence; do not reopen the migration as a planning dependency unless a verified regression appears.
 
-The final authority is:
+The final migration authority is:
 
 ```text
 ANSWERS-PRIVATE-SERVER-PHASE-K-MIGRATION-MANIFEST.md
+```
+
+The commercial product shape built on top of that migration is now governed by:
+
+```text
+ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md
 ```
 
 Executable router/parity code and machine proof stay in `../../answers-private-server/`. Deployed Edge Function mirrors stay in `../../supabase/functions/`. Wider Flipgazine shell documentation stays outside this workflow folder.
@@ -323,34 +366,16 @@ Executable router/parity code and machine proof stay in `../../answers-private-s
 
 ## Immediate next action
 
-### Batch 2 production
+Do not use this README's older Batch 2 or TCJ execution snapshots as the execution authority without canonical verification. For TCJ, continue the latest verified Qualification/Panel architecture track and automate deterministic work wherever possible. Stop for the native human owner only when the methodology requires human judgment or an explicit non-predetermined policy decision.
 
-Continue **B2-0041–B2-0060** through the normal human-first cycle:
-
-```text
-required Qwen / TCJ evidence sealed
-→ native-human REVIEW 20
-→ reveal machine comparison
-→ English from final Thai
-→ semantic / alias / typo / concept enrichment
-→ deterministic validation
-→ atomic promotion
-→ live verification
-→ buyer export preview
-```
-
-### TCJ Panel research
-
-The Panel method remains a separate research track. The current valid sequence is:
+For final-product work after architecture validation:
 
 ```text
-native review 33 / 33 constructed perturbations
-→ freeze and independently verify the perturbation pack
-→ run and verify 99 perturbation judge cells
-→ build identical anonymous candidate dossiers
-→ independent blind ChatGPT + Grok meta-review
-→ freeze both meta-reviews
-→ perform the approved identity reveal
+finish Qualification / Panel / Assurance architecture
+→ freeze reproducible TCJ package
+→ implement plug-and-play Gateway packaging
+→ prove local/private deployment
+→ prove Voice Profile import/export and opt-in improvement loop
+→ run fresh-environment deployment acceptance
+→ buyer-ready licensing / diligence package
 ```
-
-Do not modify the live TCJ Standard path merely because Panel architecture has been approved.
