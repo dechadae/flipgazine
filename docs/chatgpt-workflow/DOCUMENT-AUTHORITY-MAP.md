@@ -21,11 +21,12 @@
 - `ANSWERS-TCJ-MULTI-JUDGE-CONSENSUS-ARCHITECTURE.md` — approved Panel methodology; production Panel remains gated by Qualification.
 - `ANSWERS-TCJ-EXPERT-OPERABLE-CONTROL-PLANE-IMPLEMENTATION.md` — control-plane implementation contract.
 - `ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md` — current commercial-use and provenance policy.
-- `ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md` — governing final-product deployment, local-runtime, Voice Profile, opt-in improvement and provenance-firewall policy.
+- `ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-FREEZE-20260822.md` — **frozen final commercial product architecture authority**: fixes the component order, trust boundaries, Voice Profile position, Private Evidence Engine role, derived-signal boundary, BYOJ abstraction, writer/judge roles, one-revision default, independent six-dimension resolution, risk-triggered challenge, full-evaluator Qualification unit and managed/VPC/on-prem product shapes. This freezes architecture only; production authority remains pending Qualification/Assurance/security/reproducibility/release gates.
+- `ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md` — governing deployment, packaging, Voice Profile, opt-in improvement and provenance-firewall policy within the frozen architecture.
 - `ANSWERS-TCJ-PRIVATE-EVIDENCE-ENGINE-AND-BUYER-ISOLATION-POLICY-20260822.md` — governing final-runtime evidence boundary: internal TCJ batches/evidence are non-deliverable; raw proprietary evidence remains inside the Private Evidence Engine; buyer writer models do not receive the internal corpus.
-- `ANSWERS-TCJ-BYOJ-JUDGE-RUNTIME-AND-API-KEY-POLICY-20260822.md` — **governing judge-runtime terminology and integration policy**: BYOJ is the umbrella; Local Judge means a self-hosted/private judge endpoint; BYOK Judge means a supported external provider using the buyer's credential; neither receives raw proprietary TCJ rows; connected is not qualified; OpenAI Sol may be a reference BYOK candidate but is not mandatory.
+- `ANSWERS-TCJ-BYOJ-JUDGE-RUNTIME-AND-API-KEY-POLICY-20260822.md` — governing judge-runtime terminology and integration policy: BYOJ is the umbrella; Local Judge means a self-hosted/private judge endpoint; BYOK Judge means a supported external provider using the buyer's credential; neither receives raw proprietary TCJ rows; connected is not qualified; OpenAI Sol may be a reference BYOK candidate but is not mandatory.
 - `ANSWERS-TCJ-VOICE-PROFILE-LICENSING-EXTENSION-20260822.md` — governing commercial clarification that Voice Profile classification follows technical substance, not labels; formalizes portable Voice Profile licensing and the recurring Voice Profile Improvement Service.
-- `ANSWERS-TCJ-V3-ABLATION-COMPLETION-AND-PRIVATE-EVIDENCE-V4-DIRECTION-20260822.md` — **current TCJ execution authority**: the v3 prompt-only replay completed 48/48 as a negative ablation; the next research target is the full Voice Profile + Private Evidence Engine + derived-signal + selected-judge evaluator configuration; OpenAI/xAI adapters remain gated until fresh Qualification, Panel, Assurance, reproducibility and final freeze pass.
+- `ANSWERS-TCJ-V3-ABLATION-COMPLETION-AND-PRIVATE-EVIDENCE-V4-DIRECTION-20260822.md` — **current TCJ execution authority**: the v3 prompt-only replay completed 48/48 as a negative ablation; implement and qualify v4 inside the frozen final architecture; exposed v1.1 remains DEV evidence only.
 - `ANSWERS-PRIVATE-SERVER-PHASE-K-MIGRATION-MANIFEST.md` — final private-server migration authority; counts are the migration snapshot.
 
 ## Completed evidence with continuing operational value
@@ -55,7 +56,7 @@
 - `ANSWERS-VOICE-BENCHMARK-PLAN.md` — public Voice design history; implementation/acceptance records govern deployed state.
 - `ANSWERS-OUTREACH-FIRST-CONTACT-STRATEGY.md` — historical sent-copy strategy; refresh counts/routes before new outreach.
 - `ANSWERS-OUTREACH-DELIVERY-STATUS-2026-08-19.md` — historical delivery outcome, not a current contact directory.
-- `ANSWERS-PRIVATE-SERVER-MIGRATION-PLAN.md` — completed historical plan; do not rerun. Final commercial deployment shape is governed by the plug-and-play deployment policy plus the newer private-evidence and BYOJ runtime policies.
+- `ANSWERS-PRIVATE-SERVER-MIGRATION-PLAN.md` — completed historical plan; do not rerun. Final commercial deployment shape is governed by the frozen final architecture plus the plug-and-play/private-evidence/BYOJ policies.
 - `ANSWERS-PRIVATE-SERVER-PHASE-A-INVENTORY.md` — historical migration evidence.
 - `ANSWERS-PRIVATE-SERVER-PHASE-B-REPORT.md` — historical migration evidence.
 - `ANSWERS-PRIVATE-SERVER-PHASE-C-REPORT.md` — historical migration evidence.
@@ -74,8 +75,11 @@ When two documents conflict:
 1. follow the document that owns the decision domain;
 2. within that domain, follow the newer applied/verified checkpoint;
 3. preserve older evidence without executing its stale next action;
-4. for final runtime evidence exposure, the private-evidence/buyer-isolation policy supersedes older wording that could imply raw proprietary evidence is sent to buyer-connected models;
-5. for semantic-judge terminology and placement, the BYOJ judge-runtime policy supersedes older wording that implies the judge must always be TCJ-owned/local or that an external API judge should be called local;
-6. `Local Judge` means self-hosted/private inference, `BYOK Judge` means supported external provider with buyer-owned credentials, and `BYOJ` is the umbrella for both;
-7. neither Local nor BYOK judge receives raw proprietary TCJ rows in the commercial default architecture;
-8. update `README.md`, `CURRENT-STATE.json` and this map in the same documentation change.
+4. for final commercial product topology, component placement and trust boundaries, the **final commercial product architecture freeze** is controlling and may be reopened only by an explicit superseding architecture decision;
+5. the architecture freeze does not grant production authority; Qualification, Panel, Assurance, security, reproducibility and release gates remain mandatory;
+6. for runtime evidence exposure details, the private-evidence/buyer-isolation policy applies inside the frozen topology;
+7. for semantic-judge terminology and integration, the BYOJ judge-runtime policy applies inside the frozen topology;
+8. `Local Judge` means self-hosted/private inference, `BYOK Judge` means supported external provider with buyer-owned credentials, and `BYOJ` is the umbrella for both;
+9. neither Local nor BYOK judge receives raw proprietary TCJ rows in the commercial default architecture;
+10. frozen native-human gold and historical thresholds are never changed to accommodate the frozen architecture or a failing model;
+11. update `README.md`, `CURRENT-STATE.json` and this map in the same documentation change.
