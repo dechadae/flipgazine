@@ -24,12 +24,13 @@
 - `ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md` — governing final-product deployment, local-runtime, Voice Profile, opt-in improvement and provenance-firewall policy.
 - `ANSWERS-TCJ-PRIVATE-EVIDENCE-ENGINE-AND-BUYER-ISOLATION-POLICY-20260822.md` — **governing final-runtime evidence boundary**: internal TCJ batches/evidence are non-deliverable; the Private Evidence Engine and private TCJ local evaluator remain inside the TCJ trust boundary; buyer-connected AI is writer/reviser only and receives final decisions/revision guidance, never raw proprietary corpus evidence.
 - `ANSWERS-TCJ-VOICE-PROFILE-LICENSING-EXTENSION-20260822.md` — governing commercial clarification that Voice Profile classification follows technical substance, not labels; formalizes portable Voice Profile licensing and the recurring Voice Profile Improvement Service.
-- `ANSWERS-TCJ-QUALIFICATION-V11-RESEARCH-REMEDIATION-AND-EXTERNAL-API-GATE-20260822.md` — **current TCJ execution authority**: v1.1 remains valid failed-judge evidence; frozen native-human ratings are authoritative; prompt-only v3 is development/ablation evidence; the next research unit is the full private-evidence evaluator configuration; OpenAI/xAI adapters are gated until fresh Qualification, Panel, Assurance, reproducibility and final freeze pass.
+- `ANSWERS-TCJ-V3-ABLATION-COMPLETION-AND-PRIVATE-EVIDENCE-V4-DIRECTION-20260822.md` — **current TCJ execution authority**: the v3 prompt-only replay completed 48/48 as a negative ablation; the next research target is the full Private Evidence Engine + private local evaluator configuration; OpenAI/xAI adapters remain gated until fresh Qualification, Panel, Assurance, reproducibility and final freeze pass.
 - `ANSWERS-PRIVATE-SERVER-PHASE-K-MIGRATION-MANIFEST.md` — final private-server migration authority; counts are the migration snapshot.
 
 ## Completed evidence with continuing operational value
 
-- `ANSWERS-TCJ-QUALIFICATION-V11-COMPLETION-AND-RESEARCH-GATE-20260822.md` — verified v1.1 completion evidence, frozen metrics/hashes/Passports and original research gate. Its next-action text is superseded by the newer research-remediation authority.
+- `ANSWERS-TCJ-QUALIFICATION-V11-RESEARCH-REMEDIATION-AND-EXTERNAL-API-GATE-20260822.md` — prior remediation checkpoint. Its partial-v3 status and immediate next-action text are superseded by the completed-v3/private-evidence v4 execution authority.
+- `ANSWERS-TCJ-QUALIFICATION-V11-COMPLETION-AND-RESEARCH-GATE-20260822.md` — verified v1.1 completion evidence, frozen metrics/hashes/Passports and original research gate. Its next-action text is superseded by the newer research authorities.
 - `ANSWERS-BATCH2-CORPUS-ROUTING-REACHABILITY-IMPLEMENTATION-REPORT.md` — implemented routing/promotion evidence; checkpoint counts superseded.
 - `ANSWERS-BATCH2-TECH-PILOT-COMPLETION-REPORT.md` — immutable technical-pilot completion evidence.
 - `ANSWERS-TCJ-CALIBRATION-RERUN-20260820.md` — completed stored calibration-rerun evidence.
