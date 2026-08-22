@@ -76,15 +76,16 @@ Detailed Answers documentation is indexed at:
 Use these ownership boundaries:
 
 1. `docs/chatgpt-workflow/ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-FREEZE-20260822.md` — frozen final commercial TCJ topology/trust-boundary authority. Architecture is frozen; production authority is not.
-2. `docs/chatgpt-workflow/ANSWERS-TCJ-V3-ABLATION-COMPLETION-AND-PRIVATE-EVIDENCE-V4-DIRECTION-20260822.md` — current TCJ execution authority inside the frozen architecture.
-3. `docs/chatgpt-workflow/ANSWERS-TCJ-PRIVATE-EVIDENCE-ENGINE-AND-BUYER-ISOLATION-POLICY-20260822.md` — proprietary evidence boundary.
-4. `docs/chatgpt-workflow/ANSWERS-TCJ-BYOJ-JUDGE-RUNTIME-AND-API-KEY-POLICY-20260822.md` — BYOJ / Local Judge / BYOK Judge runtime authority.
-5. `docs/chatgpt-workflow/ANSWERS-COMMERCIAL-EXECUTION-TIMELINE.md` — current dated work and milestones.
-6. `docs/chatgpt-workflow/ANSWERS-COMMERCIAL-BENCHMARK-PLAN.md` — commercial methodology, positioning, licensing and claim limits.
-7. `docs/chatgpt-workflow/ANSWERS-VOICE-TONE.md` — canonical Thai/English editorial authority.
-8. `docs/chatgpt-workflow/ANSWERS-HUMAN-REVIEW.md` — immutable Batch 1 review/provenance record.
-9. `docs/chatgpt-workflow/ANSWERS-PRIVATE-SERVER-PHASE-K-MIGRATION-MANIFEST.md` — final migration proof/current security checkpoint.
-10. `docs/chatgpt-workflow/ANSWERS-PRIVATE-SERVER-MIGRATION-PLAN.md` plus Phase A–K reports — historical implementation/audit trail.
+2. `docs/chatgpt-workflow/ANSWERS-TCJ-SOL-PRIVATE-EVIDENCE-TOOL-AND-COMMERCIAL-LICENSING-CLARIFICATION-20260822.md` — governing clarification for judge-initiated private evidence analysis, Sol/BYOK runtime and commercial licensing. A judge may call a narrow TCJ tool but never receives direct/raw vault access.
+3. `docs/chatgpt-workflow/ANSWERS-TCJ-V3-ABLATION-COMPLETION-AND-PRIVATE-EVIDENCE-V4-DIRECTION-20260822.md` — current TCJ execution authority inside the frozen architecture.
+4. `docs/chatgpt-workflow/ANSWERS-TCJ-PRIVATE-EVIDENCE-ENGINE-AND-BUYER-ISOLATION-POLICY-20260822.md` — proprietary evidence boundary.
+5. `docs/chatgpt-workflow/ANSWERS-TCJ-BYOJ-JUDGE-RUNTIME-AND-API-KEY-POLICY-20260822.md` — BYOJ / Local Judge / BYOK Judge runtime authority.
+6. `docs/chatgpt-workflow/ANSWERS-COMMERCIAL-EXECUTION-TIMELINE.md` — current dated work and milestones.
+7. `docs/chatgpt-workflow/ANSWERS-COMMERCIAL-BENCHMARK-PLAN.md` — commercial methodology, positioning, licensing and claim limits.
+8. `docs/chatgpt-workflow/ANSWERS-VOICE-TONE.md` — canonical Thai/English editorial authority.
+9. `docs/chatgpt-workflow/ANSWERS-HUMAN-REVIEW.md` — immutable Batch 1 review/provenance record.
+10. `docs/chatgpt-workflow/ANSWERS-PRIVATE-SERVER-PHASE-K-MIGRATION-MANIFEST.md` — final migration proof/current security checkpoint.
+11. `docs/chatgpt-workflow/ANSWERS-PRIVATE-SERVER-MIGRATION-PLAN.md` plus Phase A–K reports — historical implementation/audit trail.
 
 Editorial precedence:
 
@@ -92,7 +93,7 @@ Editorial precedence:
 
 Architecture precedence:
 
-> **current live state → frozen final commercial TCJ architecture → current operational authority → frozen historical evidence**
+> **current live state → frozen final commercial TCJ architecture + governing clarification → current operational authority → frozen historical evidence**
 
 The frozen commercial architecture may be reopened only by an explicit superseding architecture decision. Do not redesign its trust boundaries merely because one model/provider cannot satisfy them.
 
@@ -355,17 +356,43 @@ BUYER WRITER
 → FINAL OUTPUT
 ```
 
+The approved interactive evidence invocation for Sol or another BYOJ judge is:
+
+```text
+candidate
+→ Voice Profile
+→ SELECTED JUDGE
+   ↕
+   TCJ PRIVATE EVIDENCE TOOL
+   ↓
+   PRIVATE TCJ EVIDENCE ENGINE / DATA VAULT
+   ↓
+   derived non-reconstructive signals only
+   ↑
+→ SELECTED JUDGE
+→ TCJ Guards / Challenge / Resolver
+```
+
 Hard rules:
 
 - Voice Profile defines target quality; it does not expose the corpus.
 - Private Evidence Engine is the only normal runtime component allowed to inspect raw proprietary TCJ evidence.
+- The Private Evidence Tool must be a narrow allowlisted capability, preferably using an opaque evaluation ID. It must not expose SQL, generic search, service-role credentials, raw rows, nearest examples, raw anchors or reconstructive vectors.
+- Prompt-injection resistance comes from the absence of exfiltration capabilities, not merely from prompt instructions.
 - Local/BYOK judges receive the current candidate, Voice Profile contract and derived/non-reconstructive TCJ signals, not raw Batch rows/anchors.
+- Evidence Tool schema/version, allowed analysis families, signal contract and call budget are authority-bearing evaluator components and must be frozen/qualified with the evaluator.
 - Buyer writer receives only final decision/revision guidance.
 - Default real-time `max_revision_cycles = 1`.
 - Qualification authority attaches to the complete frozen evaluator configuration, not a naked model.
 - OpenAI/Sol may be a reference/recommended BYOK judge but is not mandatory.
+- For BYOK, buyer supplies/controls the provider account/API key and pays provider usage directly by default. TCJ does not sell/transfer the API key; TCJ license/Voice Profile/evidence-tool/support fees are separate.
+- Current OpenAI business/API data and ZDR statements are a dated checkpoint, not a legal warranty; recheck terms and endpoint eligibility before material commercial launch.
 - Architecture freeze does not mean production authority. Fresh Qualification, Panel/reliability validation, Assurance, security, tenant/evidence-isolation tests, reproducibility and release acceptance remain mandatory.
 
 Primary authority:
 
 `docs/chatgpt-workflow/ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-FREEZE-20260822.md`
+
+Governing clarification:
+
+`docs/chatgpt-workflow/ANSWERS-TCJ-SOL-PRIVATE-EVIDENCE-TOOL-AND-COMMERCIAL-LICENSING-CLARIFICATION-20260822.md`
