@@ -8,9 +8,11 @@ This folder contains current operational authority, editorial methodology, Batch
 
 `DOCUMENT-AUTHORITY-MAP.md` classifies every document as current authority, completed evidence or historical record. Consult it before acting on any document-level “next step.”
 
-**Current TCJ execution authority:** `ANSWERS-TCJ-V3-ABLATION-COMPLETION-AND-PRIVATE-EVIDENCE-V4-DIRECTION-20260822.md`. The v3 prompt-only replay completed 48/48 as a negative ablation. The next evaluator is a full TCJ configuration built around the Voice Profile, private evidence retrieval, derived non-reconstructive signals, a selected semantic judge runtime, risk-triggered challenge and independent dimension resolution.
+**Frozen final commercial TCJ architecture:** `ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-FREEZE-20260822.md`. This is the controlling product-topology authority. It freezes the final component order, trust boundaries, Voice Profile position, Private Evidence Engine, derived-signal boundary, BYOJ judge abstraction, writer/judge roles, one-revision default, risk-triggered challenge, independent six-dimension resolver, full-evaluator Qualification unit and deployment shapes. It does **not** mean TCJ is production-ready; implementation, Qualification, Panel, Assurance, security, reproducibility and commercial-release gates remain pending.
 
-**Final-product deployment authority:** `ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md` governs TCJ Gateway packaging, managed/VPC/on-prem deployment, Voice Profile classification and opt-in customer improvement. `ANSWERS-TCJ-PRIVATE-EVIDENCE-ENGINE-AND-BUYER-ISOLATION-POLICY-20260822.md` governs proprietary corpus isolation. `ANSWERS-TCJ-BYOJ-JUDGE-RUNTIME-AND-API-KEY-POLICY-20260822.md` governs semantic judge terminology and integration: BYOJ is the umbrella, Local Judge is self-hosted/private inference, and BYOK Judge is a supported external provider using buyer-owned credentials. `ANSWERS-TCJ-VOICE-PROFILE-LICENSING-EXTENSION-20260822.md` formalizes technical-substance-over-label classification and the recurring Voice Profile Improvement Service.
+**Current TCJ execution authority:** `ANSWERS-TCJ-V3-ABLATION-COMPLETION-AND-PRIVATE-EVIDENCE-V4-DIRECTION-20260822.md`. The v3 prompt-only replay completed 48/48 as a negative ablation. The next evaluator must be implemented and tested **inside the frozen final architecture**, using the Voice Profile, private evidence retrieval, derived non-reconstructive signals, a selected semantic judge runtime, risk-triggered challenge and independent dimension resolution.
+
+**Supporting final-product authorities:** `ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md` governs deployment/packaging and Voice Profile improvement; `ANSWERS-TCJ-PRIVATE-EVIDENCE-ENGINE-AND-BUYER-ISOLATION-POLICY-20260822.md` governs proprietary corpus isolation; `ANSWERS-TCJ-BYOJ-JUDGE-RUNTIME-AND-API-KEY-POLICY-20260822.md` governs Local Judge/BYOK Judge/BYOJ terminology and integration; `ANSWERS-TCJ-VOICE-PROFILE-LICENSING-EXTENSION-20260822.md` governs portable Voice Profile licensing and improvement service.
 
 ---
 
@@ -18,32 +20,33 @@ This folder contains current operational authority, editorial methodology, Batch
 
 For current Answers work, use this order:
 
-1. `ANSWERS-BATCH2-CORPUS-ROUTING-REACHABILITY-IMPLEMENTATION-REPORT.md` — corpus-production architecture. Reverify current live Batch 2 counts before acting on older snapshots.
-2. `ANSWERS-THAI-CONVERSATION-JUDGE-ARCHITECTURE.md` — TCJ core/profile architecture.
-3. `ANSWERS-TCJ-MULTI-JUDGE-CONSENSUS-ARCHITECTURE.md` — approved Panel methodology. Panel assembly remains competence-gated and cannot proceed without qualified dimensions.
-4. `ANSWERS-TCJ-V3-ABLATION-COMPLETION-AND-PRIVATE-EVIDENCE-V4-DIRECTION-20260822.md` — **latest TCJ execution checkpoint and valid next action**: v3 prompt tightening is a completed negative ablation; implement and test the Voice Profile + Private Evidence Engine + derived-signal evaluator configuration on exposed v1.1 DEV evidence, then freeze and face a fresh hidden Qualification bank.
-5. `ANSWERS-TCJ-PRIVATE-EVIDENCE-ENGINE-AND-BUYER-ISOLATION-POLICY-20260822.md` — **final runtime evidence boundary**: internal batches/evidence remain inside TCJ; raw proprietary evidence is not a buyer-facing/runtime corpus surface.
-6. `ANSWERS-TCJ-BYOJ-JUDGE-RUNTIME-AND-API-KEY-POLICY-20260822.md` — **judge runtime authority**: Local Judge vs BYOK Judge vs BYOJ umbrella; raw TCJ evidence remains inaccessible to either; connected is not qualified; OpenAI Sol may be a reference BYOK judge but is not mandatory.
-7. `ANSWERS-TCJ-QUALIFICATION-V11-RESEARCH-REMEDIATION-AND-EXTERNAL-API-GATE-20260822.md` — prior remediation checkpoint; its partial-v3 status is superseded by item 4.
+1. `ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-FREEZE-20260822.md` — **frozen final commercial product topology**. Future product implementation must converge toward this architecture unless an explicit superseding architecture decision reopens it.
+2. `ANSWERS-TCJ-V3-ABLATION-COMPLETION-AND-PRIVATE-EVIDENCE-V4-DIRECTION-20260822.md` — **latest TCJ execution checkpoint and valid next action**: v3 prompt tightening is a completed negative ablation; implement and test v4 inside the frozen architecture on exposed v1.1 DEV evidence, then freeze the exact evaluator and face a fresh hidden Qualification bank.
+3. `ANSWERS-TCJ-PRIVATE-EVIDENCE-ENGINE-AND-BUYER-ISOLATION-POLICY-20260822.md` — runtime evidence boundary: internal batches/evidence remain inside TCJ; raw proprietary evidence is not a buyer-facing/runtime corpus surface.
+4. `ANSWERS-TCJ-BYOJ-JUDGE-RUNTIME-AND-API-KEY-POLICY-20260822.md` — judge-runtime authority: Local Judge vs BYOK Judge vs BYOJ umbrella; raw TCJ evidence remains inaccessible to either; connected is not qualified; OpenAI Sol may be a reference BYOK judge but is not mandatory.
+5. `ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md` — deployment, setup, improvement and productization policy inside the frozen topology.
+6. `ANSWERS-THAI-CONVERSATION-JUDGE-ARCHITECTURE.md` — TCJ core/profile architecture history/current method details where not superseded by the final freeze.
+7. `ANSWERS-TCJ-MULTI-JUDGE-CONSENSUS-ARCHITECTURE.md` — approved Panel methodology. Panel assembly remains competence-gated and cannot proceed without qualified dimensions.
 8. `ANSWERS-TCJ-QUALIFICATION-V11-COMPLETION-AND-RESEARCH-GATE-20260822.md` — verified v1.1 completion evidence and frozen metrics/hashes/Passports.
-9. `ANSWERS-TCJ-ROBUSTNESS-V1-COMPLETION-AND-PERTURBATION-DRAFT-20260821.md` — completed robustness/perturbation checkpoint.
-10. `ANSWERS-TCJ-MEASUREMENT-IMPLEMENTATION-20260820.md` — measurement persistence and earlier qualification/control-plane foundation.
-11. `ANSWERS-TCJ-LIVE-DEPLOYMENT-20260819.md` — historical TCJ Standard deployment provenance.
-12. `ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md` — governing commercial-use / model-development / provenance boundary.
-13. `ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md` — governing final-product deployment policy.
-14. `ANSWERS-TCJ-VOICE-PROFILE-LICENSING-EXTENSION-20260822.md` — governing portable Voice Profile / recurring improvement commercial extension.
-15. `ANSWERS-BATCH2-TECH-PILOT-COMPLETION-REPORT.md` — B2-0001–B2-0020 technical-pilot record.
-16. `ANSWERS-BATCH2-BUYER-DATA-EXTRACTION-SPEC.md` — governing buyer export contract.
-17. `ANSWERS-BATCH2-HUMAN-FIRST-REVIEW-CORRECTION.md` — human-first review visibility authority.
-18. `ANSWERS-BATCH2-SOURCESET-V1-1-REPLACEMENT-PATCH.md` — applied clean source replacements.
-19. `ANSWERS-BATCH2-CORPUS-ROUTING-REACHABILITY-PLAN.md` — routing/promotion architecture.
-20. `ANSWERS-BATCH2-SELF-AUDIT-PROTOCOL.md` — frozen generation/audit history; newer TCJ controls supersede its old Qwen execution path.
-21. `ANSWERS-COMMERCIAL-EXECUTION-TIMELINE.md` — commercialization schedule.
-22. `ANSWERS-COMMERCIAL-BENCHMARK-PLAN.md` — commercial positioning and claim boundaries.
-23. `ANSWERS-VOICE-TONE.md` — Thai/English editorial authority.
-24. `ANSWERS-HUMAN-EVALUATION-SCHEME.md` — human-evaluation deliverable.
-25. `ANSWERS-HUMAN-REVIEW.md` — immutable Batch 1 provenance.
-26. `ANSWERS-PRIVATE-SERVER-PHASE-K-MIGRATION-MANIFEST.md` — final completed private-server migration proof.
+9. `ANSWERS-TCJ-QUALIFICATION-V11-RESEARCH-REMEDIATION-AND-EXTERNAL-API-GATE-20260822.md` — prior remediation checkpoint; partial-v3 next-action wording is superseded.
+10. `ANSWERS-TCJ-ROBUSTNESS-V1-COMPLETION-AND-PERTURBATION-DRAFT-20260821.md` — completed robustness/perturbation checkpoint.
+11. `ANSWERS-TCJ-MEASUREMENT-IMPLEMENTATION-20260820.md` — measurement persistence and earlier qualification/control-plane foundation.
+12. `ANSWERS-TCJ-LIVE-DEPLOYMENT-20260819.md` — historical TCJ Standard deployment provenance.
+13. `ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md` — governing commercial-use / model-development / provenance boundary.
+14. `ANSWERS-TCJ-VOICE-PROFILE-LICENSING-EXTENSION-20260822.md` — portable Voice Profile / recurring improvement commercial extension.
+15. `ANSWERS-BATCH2-CORPUS-ROUTING-REACHABILITY-IMPLEMENTATION-REPORT.md` — corpus-production architecture. Reverify current live Batch 2 counts before acting on older snapshots.
+16. `ANSWERS-BATCH2-TECH-PILOT-COMPLETION-REPORT.md` — B2-0001–B2-0020 technical-pilot record.
+17. `ANSWERS-BATCH2-BUYER-DATA-EXTRACTION-SPEC.md` — governing buyer export contract.
+18. `ANSWERS-BATCH2-HUMAN-FIRST-REVIEW-CORRECTION.md` — human-first review visibility authority.
+19. `ANSWERS-BATCH2-SOURCESET-V1-1-REPLACEMENT-PATCH.md` — applied clean source replacements.
+20. `ANSWERS-BATCH2-CORPUS-ROUTING-REACHABILITY-PLAN.md` — routing/promotion architecture.
+21. `ANSWERS-BATCH2-SELF-AUDIT-PROTOCOL.md` — frozen generation/audit history; newer TCJ controls supersede its old Qwen execution path.
+22. `ANSWERS-COMMERCIAL-EXECUTION-TIMELINE.md` — commercialization schedule.
+23. `ANSWERS-COMMERCIAL-BENCHMARK-PLAN.md` — commercial positioning and claim boundaries.
+24. `ANSWERS-VOICE-TONE.md` — Thai/English editorial authority.
+25. `ANSWERS-HUMAN-EVALUATION-SCHEME.md` — human-evaluation deliverable.
+26. `ANSWERS-HUMAN-REVIEW.md` — immutable Batch 1 provenance.
+27. `ANSWERS-PRIVATE-SERVER-PHASE-K-MIGRATION-MANIFEST.md` — final completed private-server migration proof.
 
 Repository-root `AGENTS.md` remains the short operational entry point.
 
@@ -51,44 +54,45 @@ Repository-root `AGENTS.md` remains the short operational entry point.
 
 ## Current authority boundaries
 
+- **Frozen final commercial product topology:** `ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-FREEZE-20260822.md`.
 - **Latest TCJ research execution state / valid next action:** `ANSWERS-TCJ-V3-ABLATION-COMPLETION-AND-PRIVATE-EVIDENCE-V4-DIRECTION-20260822.md`.
 - **Final runtime corpus/evidence boundary:** `ANSWERS-TCJ-PRIVATE-EVIDENCE-ENGINE-AND-BUYER-ISOLATION-POLICY-20260822.md`.
 - **Judge runtime / BYOJ / BYOK terminology:** `ANSWERS-TCJ-BYOJ-JUDGE-RUNTIME-AND-API-KEY-POLICY-20260822.md`.
 - **Frozen v1.1 completion evidence:** `ANSWERS-TCJ-QUALIFICATION-V11-COMPLETION-AND-RESEARCH-GATE-20260822.md`.
-- **Machine-evaluation architecture:** `ANSWERS-THAI-CONVERSATION-JUDGE-ARCHITECTURE.md`.
-- **Panel methodology:** `ANSWERS-TCJ-MULTI-JUDGE-CONSENSUS-ARCHITECTURE.md`; method approved, production Panel unavailable until Qualification produces eligible dimensions.
+- **Panel methodology:** `ANSWERS-TCJ-MULTI-JUDGE-CONSENSUS-ARCHITECTURE.md`.
 - **TCJ commercial-use / provenance:** `ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md`.
-- **TCJ final product / plug-and-play deployment:** `ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md`.
-- **Voice Profile classification / licensing / improvement service:** `ANSWERS-TCJ-VOICE-PROFILE-LICENSING-EXTENSION-20260822.md`.
+- **TCJ plug-and-play deployment:** `ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md`.
+- **Voice Profile classification / licensing / improvement:** `ANSWERS-TCJ-VOICE-PROFILE-LICENSING-EXTENSION-20260822.md`.
 - **Current production cycle:** `ANSWERS-COMMERCIAL-EXECUTION-TIMELINE.md` together with the Batch 2 routing implementation report; reverify live counts before acting.
 - **Buyer extraction:** `ANSWERS-BATCH2-BUYER-DATA-EXTRACTION-SPEC.md`.
 - **Human-review visibility:** `ANSWERS-BATCH2-HUMAN-FIRST-REVIEW-CORRECTION.md`.
 - **Thai / English editorial decisions:** `ANSWERS-VOICE-TONE.md`.
 - **Completed private-server security migration:** `ANSWERS-PRIVATE-SERVER-PHASE-K-MIGRATION-MANIFEST.md`.
 
-When older wording conflicts with a newer authority, follow the newer document that owns that decision. In particular:
+When older wording conflicts with a newer authority:
 
-- Preliminary Admission/Robustness evidence does **not** establish production judge authority.
+- The final architecture freeze controls product topology, trust boundaries, component placement and buyer/judge/writer roles.
+- The architecture freeze is **not** production authority. Qualification, Panel, Assurance, security, reproducibility and release acceptance remain mandatory.
+- Preliminary Admission/Robustness evidence does not establish production judge authority.
 - Hidden Qualification v1.1 is complete, verified and now exposed development/research evidence.
-- The frozen native-human ratings are the authoritative comparison gold. Case-design labels such as `constructed_likely_problematic` are hypotheses only and must never override the blind human rating.
-- The mistakenly created post-run human-gold compromise interpretation is superseded append-only; it does not invalidate v1.1.
-- All three v1.1 Qualification-era Passports are `research_only`; no candidate passed or partially passed any of the six dimensions.
-- Do **not** loosen the preregistered thresholds because the candidate set failed.
-- The completed `TCJ-ANSWERS-BFF-v3-research` replay is a **negative prompt-only ablation**, not a production candidate.
-- Exposed v1.1 may be used to develop v4, but it may not then be reused as the independent hidden authority bank for v4.
+- Frozen native-human ratings are authoritative gold. Case-design labels are hypotheses only.
+- The mistaken post-run human-gold compromise interpretation remains superseded append-only.
+- All three v1.1 Qualification-era Passports remain `research_only`; no candidate passed or partially passed any dimension.
+- Do not loosen preregistered thresholds because the candidate set failed.
+- The completed `TCJ-ANSWERS-BFF-v3-research` replay is a negative prompt-only ablation.
+- Exposed v1.1 may be used to develop v4, but may not be reused as hidden authority evidence for v4.
 - Future authority belongs to the complete evaluator configuration, not a naked model name.
-- The buyer's writer model is generation/revision compute. It does not receive Batch 1, Batch 2, later internal batches, proprietary anchors, Qualification cases or raw internal retrieval results.
-- **BYOJ** is the umbrella judge capability. **Local Judge** means a self-hosted/private model endpoint. **BYOK Judge** means a supported external provider model using the buyer's own API credential. An OpenAI/xAI cloud model is not called local merely because TCJ invokes it from a local server.
-- Neither Local nor BYOK Judge receives raw proprietary TCJ rows in the commercial default architecture; judges receive the current candidate, selected Voice Profile contract and derived/non-reconstructive TCJ evidence signals.
-- Connected does not equal qualified. Production authority belongs to the exact frozen evaluator configuration including the judge runtime/model/version/adapter.
-- OpenAI Sol may be a recommended/reference BYOK judge after the external-API release gate, but OpenAI is not mandatory for TCJ. A qualified Local Judge or another supported BYOK Judge may replace it.
-- Under BYOK, the buyer pays the external AI provider's API usage directly by default; TCJ licensing/Voice Profile/service fees remain separate.
+- The buyer writer is generation/revision compute and never receives proprietary TCJ evidence.
+- **BYOJ** is the umbrella. **Local Judge** means self-hosted/private inference. **BYOK Judge** means supported external provider using buyer-controlled credentials.
+- Neither Local nor BYOK Judge receives raw proprietary TCJ rows in the commercial default architecture; judges receive only the current candidate, selected Voice Profile contract and derived/non-reconstructive TCJ evidence signals.
+- Connected does not equal qualified.
+- OpenAI/Sol may be a recommended/reference BYOK judge, but OpenAI is not mandatory for the commercial architecture.
+- Under BYOK, the buyer pays external provider usage directly by default; TCJ licensing/Voice Profile/service fees remain separate.
 - Internal proprietary batches are non-deliverable R&D assets by default.
-- The Private Evidence Engine alone may use raw internal evidence in the normal commercial architecture; its downstream judge interface is derived/non-reconstructive evidence signals.
-- For fully air-gapped default-profile deployment, ship a signed compiled/distilled non-reconstructive evidence artifact rather than the raw internal corpus.
-- TCJ Core and TCJ Voice Profiles are non-model software/configuration layers; learned neural artifacts must be classified separately by technical substance.
-- With explicit buyer opt-in and rights/provenance review, eligible buyer evidence may improve the buyer's own private Voice Profile/evidence layer without automatically becoming cross-customer data or external-model training data.
-- OpenAI and xAI production adapters remain intentionally disconnected during research remediation. Connect them only after fresh Qualification, qualified Panel, independent Assurance, reproducibility acceptance, and final TCJ architecture/runtime freeze all pass.
+- The Private Evidence Engine alone may inspect raw internal evidence in the normal commercial architecture.
+- Fully air-gapped default profiles use a signed compiled/distilled non-reconstructive evidence artifact, not the raw internal corpus.
+- TCJ Core and Voice Profiles remain non-model software/configuration layers unless their technical substance changes.
+- Eligible buyer evidence may improve that buyer's private profile/evidence layer only under explicit rights/opt-in controls.
 
 ---
 
@@ -123,15 +127,13 @@ Run manifest:
 98f905fb2ccf5d8175eb9c0bb8ad77d3ffb8138170df9ed159d4ff6ebb4ab2c1
 ```
 
-Final Qualification Passport states:
+Historical candidate states:
 
 ```text
 qwen/qwen3.6-27b       research_only · 0 qualified dimensions
 openai/gpt-oss-120b    research_only · 0 qualified dimensions
 openai/gpt-oss-20b     research_only · 0 qualified dimensions
 ```
-
-Qwen was materially closer than the GPT-OSS candidates but still failed the preregistered tail-risk/extreme-reversal and global authority gates.
 
 ---
 
@@ -159,7 +161,39 @@ This closes the “just add more rubric text” direction. The problem is contra
 
 ---
 
-## Current TCJ architecture state
+## Frozen final TCJ product architecture
+
+```text
+buyer writer model
+→ TCJ Gateway
+→ selected Voice Profile
+→ PRIVATE TCJ Evidence Engine
+→ derived non-reconstructive evidence signals
+→ selected TCJ Judge Runtime
+     ├─ Local Judge: buyer/TCJ self-hosted private endpoint
+     └─ BYOK Judge: supported external provider using buyer-owned API key
+→ TCJ deterministic guards
+→ risk-triggered challenge
+→ independent six-dimension resolver
+→ ACCEPT / REVISE / ESCALATE
+→ targeted writer revision if required
+→ TCJ recheck
+→ final output
+```
+
+Frozen real-time default:
+
+```text
+max_revision_cycles = 1
+```
+
+Preferred commercial statement:
+
+> **Bring your writer. Bring your judge or your API key. TCJ keeps the proprietary Thai evidence private and qualifies the complete evaluator configuration before granting production authority.**
+
+---
+
+## Current TCJ state
 
 ```text
 TCJ core                         TCJ-CORE-v1
@@ -170,69 +204,25 @@ Next evaluator                   TCJ-EVAL-ANSWERS-BFF-v4-research
 Qualification v1.1               complete / integrity PASS / candidates failed
 Qualification production auth    none established
 TCJ Panel                         approved methodology · no eligible production members yet
-Voice Profile runtime position    before Private Evidence Engine
+Final commercial architecture     FROZEN
+Voice Profile runtime position    after Gateway / before Evidence Engine
 Private Evidence Engine           raw evidence private; emits derived signals
 Judge runtime abstraction         BYOJ
 Local Judge                       self-hosted/private endpoint
 BYOK Judge                        supported external provider + buyer credential
-OpenAI Sol                        future reference BYOK candidate, not mandatory
+OpenAI/Sol                        future reference/recommended BYOK candidate; not mandatory
 Buyer writer role                 writer/reviser
 Research remediation              active / v1.1 used as DEV evidence
 Assurance                         separate / untouched for production validation
-Final architecture freeze         pending
-OpenAI BYOK adapter               gated until final freeze
-xAI BYOK adapter                  gated until final freeze
+Exact evaluator freeze            pending
+Commercial release authority      pending
 ```
-
----
-
-## Final TCJ product direction
-
-Commercial target:
-
-```text
-buyer application
-→ buyer writer model produces candidate
-→ TCJ Gateway
-→ selected Voice Profile
-→ PRIVATE TCJ Evidence Engine
-→ derived non-reconstructive evidence signals
-→ selected TCJ Judge Runtime
-     ├─ Local Judge: buyer/self-hosted/private endpoint
-     └─ BYOK Judge: supported external provider using buyer-owned API key
-→ TCJ guards + challenge + independent-dimension resolver
-→ ACCEPT / REVISE / ESCALATE
-→ buyer writer receives only final decision / targeted revision instruction
-→ writer rewrites at current inference if required
-→ TCJ rechecks
-→ customer
-```
-
-The buyer and all connected runtime models remain unable to retrieve the proprietary internal development corpus through TCJ's commercial interface.
-
-TCJ's private R&D moat may continuously grow through Batch 1, Batch 2, Batch 3, Batch 4 and later evidence while the buyer integration remains stable.
-
-For buyer-specific profiles, buyer-owned evidence can remain inside the buyer's own private/VPC/on-prem Evidence Engine and improve only that buyer's profile unless separate cross-customer permission exists.
-
-Deployment/judge choices remain:
-
-```text
-managed TCJ + supported BYOK Judge
-customer VPC + Local Judge or BYOK Judge
-fully private/on-prem TCJ + Local Judge
-```
-
-For fully air-gapped default profiles, use a signed compiled/distilled evidence artifact that does not contain recoverable raw proprietary rows.
-
-Preferred commercial vocabulary:
-
-> **Bring your writer. Bring your judge or your API key. TCJ keeps the proprietary Thai evidence private and qualifies the complete evaluator configuration before granting production authority.**
 
 ---
 
 ## Immediate next action
 
-Do **not** proceed to production Panel assembly or Assurance using the current research-only Passports.
+Do **not** redesign the frozen topology to accommodate a model/provider and do not proceed to production Panel/Assurance with the current research-only Passports.
 
 Continue autonomously:
 
@@ -241,13 +231,13 @@ implement Voice Profile runtime binding
 → implement Private Evidence Engine retrieval + derived signals
 → implement eight known risk-family detectors
 → abstract semantic judge behind BYOJ interface
-→ implement selected research judge adapter
+→ implement selected research/reference judge adapter
 → risk-triggered challenge
 → independent six-dimension resolver
 → replay TCJ-EVAL-ANSWERS-BFF-v4-research on exposed v1.1 DEV evidence
 → compare against historical v2 and negative-ablation v3
 → iterate without changing human gold or frozen thresholds
-→ freeze full evaluator configuration when research defects converge
+→ freeze the exact evaluator configuration when research defects converge
 → construct fresh hidden Qualification bank
 → stop for native-human blind review/freeze
 ```
@@ -255,16 +245,14 @@ implement Voice Profile runtime binding
 After fresh Qualification passes:
 
 ```text
-qualified Panel
+authority-bearing evaluator Passport
+→ qualified Panel / final reliability architecture
 → independent Assurance
+→ no-evidence-leakage + tenant-isolation tests
+→ security/secrets acceptance
 → reproducibility / fresh-install acceptance
-→ final architecture/runtime freeze
-→ connect OpenAI reference BYOK adapter
-→ connect xAI BYOK adapter
-→ model compatibility probes
-→ qualify supported Local/BYOK configurations as required
-→ plug-and-play Gateway packaging
-→ local/private deployment acceptance
-→ Voice Profile import/export + improvement proof
+→ cost/latency/revision-success measurement
+→ adapter/package acceptance
+→ final commercial release freeze
 → buyer-ready licensing / diligence package
 ```
