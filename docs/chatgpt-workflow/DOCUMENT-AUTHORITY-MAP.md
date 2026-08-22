@@ -22,8 +22,9 @@
 - `ANSWERS-TCJ-EXPERT-OPERABLE-CONTROL-PLANE-IMPLEMENTATION.md` — control-plane implementation contract.
 - `ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md` — current commercial-use and provenance policy.
 - `ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md` — governing final-product deployment, local-runtime, Voice Profile, opt-in improvement and provenance-firewall policy.
+- `ANSWERS-TCJ-PRIVATE-EVIDENCE-ENGINE-AND-BUYER-ISOLATION-POLICY-20260822.md` — **governing final-runtime evidence boundary**: internal TCJ batches/evidence are non-deliverable; the Private Evidence Engine and private TCJ local evaluator remain inside the TCJ trust boundary; buyer-connected AI is writer/reviser only and receives final decisions/revision guidance, never raw proprietary corpus evidence.
 - `ANSWERS-TCJ-VOICE-PROFILE-LICENSING-EXTENSION-20260822.md` — governing commercial clarification that Voice Profile classification follows technical substance, not labels; formalizes portable Voice Profile licensing and the recurring Voice Profile Improvement Service.
-- `ANSWERS-TCJ-QUALIFICATION-V11-RESEARCH-REMEDIATION-AND-EXTERNAL-API-GATE-20260822.md` — **current TCJ execution authority**: v1.1 remains valid failed-judge evidence; frozen native-human ratings are authoritative; `TCJ-ANSWERS-BFF-v3-research` and the eight failure clusters govern research remediation; OpenAI/xAI adapters are gated until fresh Qualification, Panel, Assurance, reproducibility and final freeze pass.
+- `ANSWERS-TCJ-QUALIFICATION-V11-RESEARCH-REMEDIATION-AND-EXTERNAL-API-GATE-20260822.md` — **current TCJ execution authority**: v1.1 remains valid failed-judge evidence; frozen native-human ratings are authoritative; prompt-only v3 is development/ablation evidence; the next research unit is the full private-evidence evaluator configuration; OpenAI/xAI adapters are gated until fresh Qualification, Panel, Assurance, reproducibility and final freeze pass.
 - `ANSWERS-PRIVATE-SERVER-PHASE-K-MIGRATION-MANIFEST.md` — final private-server migration authority; counts are the migration snapshot.
 
 ## Completed evidence with continuing operational value
@@ -52,7 +53,7 @@
 - `ANSWERS-VOICE-BENCHMARK-PLAN.md` — public Voice design history; implementation/acceptance records govern deployed state.
 - `ANSWERS-OUTREACH-FIRST-CONTACT-STRATEGY.md` — historical sent-copy strategy; refresh counts/routes before new outreach.
 - `ANSWERS-OUTREACH-DELIVERY-STATUS-2026-08-19.md` — historical delivery outcome, not a current contact directory.
-- `ANSWERS-PRIVATE-SERVER-MIGRATION-PLAN.md` — completed historical plan; do not rerun. Final commercial deployment shape is governed by the plug-and-play deployment policy.
+- `ANSWERS-PRIVATE-SERVER-MIGRATION-PLAN.md` — completed historical plan; do not rerun. Final commercial deployment shape is governed by the plug-and-play deployment policy plus the newer private-evidence runtime policy.
 - `ANSWERS-PRIVATE-SERVER-PHASE-A-INVENTORY.md` — historical migration evidence.
 - `ANSWERS-PRIVATE-SERVER-PHASE-B-REPORT.md` — historical migration evidence.
 - `ANSWERS-PRIVATE-SERVER-PHASE-C-REPORT.md` — historical migration evidence.
@@ -71,4 +72,5 @@ When two documents conflict:
 1. follow the document that owns the decision domain;
 2. within that domain, follow the newer applied/verified checkpoint;
 3. preserve older evidence without executing its stale next action;
-4. update `README.md`, `CURRENT-STATE.json` and this map in the same documentation change.
+4. for final runtime evidence exposure, the private-evidence/buyer-isolation policy supersedes older wording that could imply raw proprietary evidence is sent to buyer-connected models;
+5. update `README.md`, `CURRENT-STATE.json` and this map in the same documentation change.
