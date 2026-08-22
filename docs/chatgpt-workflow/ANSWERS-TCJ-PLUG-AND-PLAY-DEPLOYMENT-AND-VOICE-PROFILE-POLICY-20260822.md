@@ -590,4 +590,209 @@ PROFILE SELF-MODIFICATION  prohibited without versioned validation/promotion
 DEPLOYMENT TARGET          <30 min fresh environment; <10 min stretch for compatible defaults
 ```
 
+---
+
+## 23. Universal model connectivity contract
+
+The buyer-facing promise is **model-agnostic connectivity**, not a claim that every possible model exposes the same API or has the same rewrite capability.
+
+### Judge-only compatibility floor
+
+Any buyer model that can produce a textual response in a supported character encoding can participate in Judge Only / Quality Gate operation once its response is handed to TCJ. The source model identity is not required for TCJ to judge the candidate response.
+
+### Rewrite compatibility
+
+Buyer-Model Rewrite requires the connected model to demonstrate sufficient instruction-following and response-format reliability during onboarding. A model that can generate Thai text but cannot reliably follow targeted revision instructions remains compatible with Judge Only / Quality Gate and may use a separately configured TCJ Writer if the buyer permits it.
+
+### Model Adapter Layer
+
+TCJ must include a thin, versioned **Model Adapter Layer** for provider/model-family transport and prompt-format normalization. Adapters may handle matters such as:
+
+- endpoint/request schema;
+- authentication transport;
+- system/user message mapping;
+- ChatML or provider-specific role formatting;
+- XML/tag wrapping where required;
+- structured-output syntax;
+- streaming normalization;
+- context/token parameter mapping;
+- provider-specific error normalization.
+
+The adapter **must not change the semantic Voice Profile contract** merely to make one model look better. The canonical Voice Profile has its own version/hash. Adapter configuration is separately versioned and auditable.
+
+Required invariant:
+
+```text
+canonical Voice Profile semantics
+        ↓
+model-family adapter formatting
+        ↓
+provider/model request
+
+adapter may change transport/format
+adapter may NOT redefine the profile's intended voice or scoring rubric
+```
+
+Any adapter revision that could affect semantic behavior must pass an adapter-equivalence regression suite before promotion.
+
+---
+
+## 24. Latency budget and revision-loop cap
+
+Real-time TCJ must never create an unbounded generation/revision loop.
+
+Production default:
+
+```text
+max_revision_cycles = 1
+```
+
+After one failed buyer-model revision, the configured policy must deterministically choose one of:
+
+```text
+A. TCJ Local Writer fallback, if enabled and qualified
+B. ESCALATE / UNCERTAIN
+C. return the best safe candidate with an explicit degraded-mode marker, only if buyer policy permits
+```
+
+A buyer may configure a different revision budget for offline/batch workflows, but every deployment must have an explicit finite cap and total latency/time budget.
+
+Judge Only is the lowest-complexity mode, but it is **not zero-compute**: TCJ still incurs deterministic and/or judge-model evaluation compute. Buyer-facing latency/cost claims must measure actual TCJ overhead rather than describe Judge Only as free.
+
+---
+
+## 25. Private VPC, on-premises and air-gapped operation
+
+Private deployment must not depend on continuous access to a TCJ central control plane.
+
+Three update modes are supported:
+
+```text
+connected managed/VPC     signed profile/passport updates may sync automatically
+restricted VPC            buyer-controlled scheduled pull or approved relay
+fully air-gapped           signed offline bundle imported manually or through buyer-controlled artifact transfer
+```
+
+A fully private TCJ installation must be able to continue judging with its currently installed qualified assets when outbound internet access is unavailable.
+
+Signed update bundles should contain only the assets required for the licensed runtime, for example:
+
+- TCJ Core version metadata;
+- Voice Profile version/hash;
+- Judge Passport/qualification metadata needed by runtime policy;
+- deterministic guard/config versions;
+- migration/compatibility manifest;
+- signature/checksum;
+- rollback metadata.
+
+Customer chat logs must not be sent to a central service merely because profile/passport synchronization exists. Telemetry, evidence upload and improvement-data contribution are separately configurable/consented behaviors.
+
+---
+
+## 26. Automated model onboarding probe
+
+A newly connected buyer model should pass an automated pre-flight before TCJ enables rewrite-dependent modes.
+
+Probe dimensions should include, where applicable:
+
+```text
+endpoint/authentication health
+latency and timeout behavior
+context-window / request-size limits
+UTF-8 / Thai text integrity
+Thai generation capability
+system-instruction adherence
+structured-output / JSON reliability
+revision-instruction following
+streaming behavior
+error/retry semantics
+```
+
+The probe should recommend:
+
+- compatible TCJ operating modes;
+- adapter version;
+- safe timeout/retry settings;
+- whether Buyer-Model Rewrite is supported;
+- whether TCJ Writer fallback is recommended;
+- whether structured-output mode is safe.
+
+The probe **must not select the customer's Voice Profile based on model family**. Voice Profile selection represents the buyer's intended brand/domain behavior. Model capability determines execution mode and adapter behavior, not the target voice.
+
+Automatic Mode 3 fallback is permitted only when enabled by buyer policy. Otherwise a failed rewrite probe or failed revision produces ESCALATE / UNCERTAIN rather than silently changing the writer model.
+
+---
+
+## 27. Portable Voice Profile acceptance test
+
+The portability test must distinguish **evaluator invariance** from **model-quality discrimination**.
+
+A requirement such as "TCJ scores across different source models must vary by no more than ±3.5%" is invalid: different models may produce genuinely different-quality Thai, and a useful judge should detect those differences.
+
+TCJ 1.0 portability acceptance should therefore use separate gates.
+
+### Gate A — Profile immutability across models
+
+Connect multiple materially different buyer models using the **exact same canonical Voice Profile version/hash**. No model-specific edits to the Voice Profile itself are allowed.
+
+Model-specific transport/prompt formatting is allowed only in the separately versioned Adapter Layer.
+
+### Gate B — Source-identity invariance
+
+Take identical frozen candidate responses and submit them to TCJ while varying only source-model/provider metadata or adapter path. Source identity must not materially change the TCJ judgment unless source identity is explicitly part of a documented policy dimension.
+
+This verifies that TCJ judges the response/profile relationship rather than favoring a model vendor.
+
+### Gate C — Human-grounded discrimination
+
+Generate responses to the same frozen scenarios from several different buyer-model classes, for example:
+
+```text
+frontier cloud API model
+open-weight/vLLM model
+regional Thai-focused model
+smaller fully local model
+```
+
+TCJ is **expected** to give different outcomes when output quality differs. Validity is measured against frozen native-human gold / approved human review using the applicable TCJ qualification metrics, not by forcing cross-model scores to converge.
+
+Report at minimum:
+
+- ACCEPT / REVISE / ESCALATE distribution by model;
+- native-human agreement;
+- per-dimension error/within-one behavior where applicable;
+- false-fluent tail risk;
+- extreme reversals;
+- disagreement/escalation rate;
+- latency/cost overhead;
+- revision success rate by execution mode.
+
+### Gate D — Rewrite-mode routing
+
+For each connected model verify that onboarding selects only supported modes:
+
+```text
+strong instruction follower   Judge + Quality Gate + Buyer-Model Rewrite
+weak instruction follower     Judge + Quality Gate; TCJ Writer optional
+text-only legacy endpoint     Judge / Quality Gate if response can be captured
+```
+
+A weak model must not be forced through repeated rewrite cycles merely to satisfy a universal-connectivity marketing claim.
+
+### Gate E — Clean-environment portability
+
+Repeat the test from a fresh installation/account using only packaged TCJ assets. The canonical Voice Profile, judge policy and acceptance thresholds must reproduce the intended behavior without conversational memory or undocumented operator tuning.
+
+---
+
+## 28. Corrected commercial promise
+
+The defensible TCJ 1.0 promise is:
+
+> **Bring your model. Choose your Voice Profile. TCJ connects through a compatible adapter, determines which execution modes your model can safely support, and applies the same canonical Thai quality/voice contract without tying that contract to the model's weights.**
+
+This is stronger and more accurate than promising identical scores from every model.
+
+The commercial moat is the portability of the **quality contract, Voice Profile, evidence discipline and runtime gate** across model changes. The underlying models may improve, degrade or change vendors; TCJ should preserve the customer's intended Thai quality definition and make those differences measurable.
+
 This document governs final-product deployment and Voice Profile improvement design until expressly superseded by a newer applied policy.
