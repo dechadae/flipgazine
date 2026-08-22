@@ -2,13 +2,23 @@
 
 **Checkpoint:** 22 August 2026  
 **Status:** governing execution checkpoint until fresh native-human Qualification v2 is frozen and run.  
-**Production authority:** **NONE**.
+**Production authority:** **NONE**.  
+**Final-product execution plan:** `ANSWERS-TCJ-FINAL-PRODUCT-IMPLEMENTATION-AND-QUALIFICATION-PLAN-20260822.md`  
+**Governing clarification:** `ANSWERS-TCJ-SOL-PRIVATE-EVIDENCE-TOOL-AND-COMMERCIAL-LICENSING-CLARIFICATION-20260822.md`
 
 ## 1. Purpose
 
-This checkpoint supersedes stale execution-next-action text that still says to build the v4 evaluator. That development cycle is complete on exposed Qualification v1.1 evidence. The exact composite evaluator has been research-frozen **before** construction of a new hidden authority bank.
+This checkpoint supersedes stale execution-next-action text that still says to build the v4 evaluator. The eager/precomputed derived-signal development cycle is complete on exposed Qualification v1.1 evidence. The exact composite evaluator has been research-frozen **before** construction of a new hidden authority bank.
 
 Historical Qualification v1.1 remains valid completed research evidence. Its human gold and thresholds are unchanged. It is exposed development evidence only and cannot grant authority to the new evaluator.
+
+### Scope correction required by the governing Private Evidence Tool clarification
+
+`TCJ-EVAL-ANSWERS-BFF-SOL-v1.5-frozen-dev` does **not** bind an interactive Private Evidence Tool schema, allowlisted evidence-analysis families or a tool-call budget. Its fresh Qualification therefore evaluates only the exact **eager/precomputed derived-signal** evaluator represented by its configuration hash.
+
+A v1.5 Qualification pass must not be described as qualification of the preferred final interactive Sol runtime. The interactive `tcj_evidence_assess` product form is a successor authority-bearing evaluator configuration and requires its own exact freeze and fresh hidden Qualification after the tool contract is implemented.
+
+This scope distinction preserves the current blind bank's validity and prevents authority from being transferred across materially different evaluator configurations.
 
 ## 2. Reference semantic judge
 
@@ -112,7 +122,9 @@ Frozen Qualification threshold SHA-256:
 
 `b805b1f9484ea5ce576f09187c467b268c1f7c20263efa3889041680af426836`
 
-Any material change to judge model/settings, prompt manifest, Voice Profile, Private Evidence Engine, derived-signal schema, adapter, router, challenge context, guards or resolver creates a **new evaluator configuration**. v1.5 may not be edited after seeing fresh Qualification gold.
+Any material change to judge model/settings, prompt manifest, Voice Profile, Private Evidence Engine, derived-signal schema, adapter, router, challenge context, guards or resolver creates a **new evaluator configuration**. For an interactive successor this list also includes Evidence Tool version/schema, allowed analysis families/dimensions, tool-call budget and tool response/aggregation policy.
+
+v1.5 may not be edited after seeing fresh Qualification gold.
 
 ## 6. Materialized exposed-development result
 
@@ -201,28 +213,57 @@ Only **after** the human bank is frozen may the research-frozen evaluator SHA `2
 
 If it fails the unchanged thresholds, preserve the failure, expose this bank as future development evidence, create a successor evaluator and then another fresh bank. Do not change gold or thresholds.
 
-If it passes, issue an authority-bearing evaluator Passport, then proceed to Panel and independent Assurance before commercial release.
+If it passes, issue an authority-bearing Passport **scoped to `eager_precomputed_derived_signals` only**. The Passport must state that interactive Private Evidence Tool behavior is not in scope.
 
-## 9. Remaining commercial gates after Qualification
+A later interactive Sol/BYOJ successor must implement and bind the narrow `tcj_evidence_assess` tool contract, freeze the exact configuration, and face a **new** fresh hidden Qualification bank before interactive commercial authority can exist.
+
+## 9. Final-product execution after v1.5 Qualification
+
+The governing path is:
+
+```text
+v1.5 Qualification result preserved
+→ if PASS: scoped eager/precomputed Passport
+→ implement narrow tcj_evidence_assess capability
+→ opaque evaluation IDs + allowlisted analysis families/dimensions
+→ derived/non-reconstructive response schema only
+→ capability-denial / exfiltration tests
+→ bind tool schema/version/hash + call budget + signal contract into successor evaluator
+→ replay successor on exposed development evidence only
+→ freeze exact interactive evaluator
+→ construct new fresh hidden Qualification bank after freeze
+→ native-human blind review/freeze
+→ interactive Qualification
+→ if PASS: interactive authority-bearing Passport
+→ Panel
+→ independent Assurance
+→ security / tenant isolation / reproducibility / packaging
+→ final commercial release freeze
+```
+
+The exact requirements are governed by `ANSWERS-TCJ-FINAL-PRODUCT-IMPLEMENTATION-AND-QUALIFICATION-PLAN-20260822.md`.
+
+## 10. Remaining commercial gates
 
 A Qualification pass is necessary but not sufficient. Still required:
 
-- minimum reliable Panel architecture
-- untouched Assurance holdout + blind human gold
-- false-fluent / extreme-reversal / escalation checks
-- source-identity invariance
-- reproducibility
-- evidence leakage tests
-- latency/cost and one-revision success measurement
-- fresh-install reproducibility
-- project/security advisor remediation or explicit isolation
-- dedicated rotatable TCJ internal secret
-- tenant isolation
-- writer/judge evidence-exfiltration tests
-- BYOJ adapters and compatibility probe
-- Docker/Compose and appropriate Helm packaging
-- setup/onboarding, health, audit, cost/latency, rollback, signed profile/evaluator packages
-- commercial diligence and provider-terms refresh
-- final runtime/product freeze
+- preferred interactive Private Evidence Tool successor Qualification if that runtime is shipped;
+- minimum reliable Panel architecture;
+- untouched Assurance holdout + blind human gold;
+- false-fluent / extreme-reversal / escalation checks;
+- source-identity invariance;
+- reproducibility;
+- evidence leakage tests;
+- latency/cost and one-revision success measurement;
+- fresh-install reproducibility;
+- project/security advisor remediation or explicit isolation;
+- dedicated rotatable TCJ internal secret;
+- tenant isolation;
+- writer/judge evidence-exfiltration tests;
+- BYOJ adapters and compatibility probe;
+- Docker/Compose and appropriate Helm packaging;
+- setup/onboarding, health, audit, cost/latency, rollback, signed profile/evaluator packages;
+- commercial diligence and provider-terms refresh;
+- final runtime/product freeze.
 
-OpenAI is the reference judge for this proof, not a mandatory commercial dependency. BYOJ remains the commercial runtime abstraction.
+OpenAI is the reference judge for this proof, not a mandatory commercial dependency. BYOJ remains the commercial runtime abstraction. Under the preferred BYOK commercial structure, the buyer controls and pays for its provider account/API usage separately from the TCJ license.
