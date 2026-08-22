@@ -85,16 +85,40 @@ Attempts, judgments, and summaries are append-only. Run configuration becomes im
 
 ## Exposure transition
 
-The 48 cases remain `private` until the first `run_next` call. The first model call atomically changes all 48 to `qualification_exposed` and changes the qualification protocol/run from frozen to running.
+The 48 cases remain `private` until the first successful `run_next` start. The first successful start atomically changes all 48 to `qualification_exposed`, records one append-only exposure event bound to the frozen config/threshold/human/evidence hashes, and changes the qualification protocol/run from frozen to running.
 
-At the checkpoint recorded here:
+The database permits only the lifecycle transition `private -> qualification_exposed`; all scenario text, candidate text, human gold, content hashes, provenance, source metadata, and creation timestamps remain immutable after bank freeze.
+
+## Pre-exposure start incident — 2026-08-22
+
+The first user-initiated Qualification start reached `tcj-qualification-runner` but PostgreSQL rejected the exposure-state update with `frozen_qualification_item_immutable`. This was a lifecycle-contract mismatch: the frozen-item trigger protected every column, including the intended exposure-state transition.
+
+Evidence-validity result:
+
+- the start transaction rolled back completely,
+- run state remained `frozen`,
+- protocol state remained `bank_frozen`,
+- 48 / 48 items remained `private`,
+- 0 items became `qualification_exposed`,
+- 0 provider attempts were written,
+- 0 qualification judgments were written,
+- 0 qualification failures were written,
+- no candidate model received a Qualification case.
+
+The fix was made before first machine exposure. Database migrations added a dedicated exposure-event ledger and a statement-level authorization gate. The row-level frozen-item trigger now accepts only the exact lifecycle transition while rejecting any content/gold/hash mutation. An after-statement transition-table trigger requires the exposure update to cover exactly all 48 items and writes the single exposure event atomically.
+
+The exact deployed runner start sequence was rehearsed inside a database transaction and rolled back. The rehearsal completed without error; after rollback the authoritative state remained 48 private / 0 exposed / 0 exposure events / 0 attempts. No runner prompt, model adapter, thresholds, human gold, or frozen run configuration changed as part of this repair.
+
+## Current pre-run checkpoint
 
 - run state = `frozen`,
 - protocol state = `bank_frozen`,
 - 48 private items,
 - 0 qualification-exposed items,
+- 0 exposure events,
 - 0 provider attempts,
-- 0 qualification judgments.
+- 0 qualification judgments,
+- 0 qualification failures.
 
 ## Runner / control surface
 
