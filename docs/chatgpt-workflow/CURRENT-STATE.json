@@ -2,7 +2,7 @@
   "schema_version": 1,
   "as_of": "2026-08-22",
   "scope": "repository_documentation_checkpoint",
-  "live_state_independently_reverified": false,
+  "live_state_independently_reverified": true,
   "canonical_book": {
     "corpus_revision": 127,
     "active_answers": 988,
@@ -21,7 +21,7 @@
     "supplemental_clean_target": 20,
     "clean_benchmark_target": 1000,
     "unique_reviewed_evidence_target": 1968,
-    "next_action": "Complete sealed Qwen/TCJ evidence for B2-0041-B2-0060 before native-human review."
+    "next_action": "Reverify canonical Batch 2 live state before continuing B2-0041-B2-0060; this manifest's live revalidation flag refers to the TCJ Qualification state below, not every Batch 2 count."
   },
   "tcj": {
     "standard_live": true,
@@ -30,8 +30,31 @@
     "judge_admission_stage_a_frozen": true,
     "judge_admission_stage_b_v1_1_complete": true,
     "frozen_input_robustness_cells": 198,
-    "perturbation_cases": 33,
-    "perturbation_native_reviews_complete": 0,
+    "qualification_v1_1": {
+      "run_key": "TCJ-JUDGE-QUALIFICATION-RUN-2026Q3-v1.1",
+      "run_status": "complete",
+      "protocol_status": "complete",
+      "human_cases": 48,
+      "expected_cells": 144,
+      "valid_judgments": 144,
+      "committed_dispatches": 146,
+      "durable_responses": 146,
+      "open_dispatches": 0,
+      "terminal_generation_contract_failures": 0,
+      "blocking_or_compromising_incidents": 0,
+      "warning_incidents": 1,
+      "summaries": 3,
+      "qualification_passports": 3,
+      "authority_passports": 0,
+      "qualified_dimensions": 0,
+      "partially_qualified_dimensions": 0,
+      "run_manifest_sha256": "98f905fb2ccf5d8175eb9c0bb8ad77d3ffb8138170df9ed159d4ff6ebb4ab2c1",
+      "result": "all_candidates_research_only",
+      "research_gate": "no_production_panel_can_be_assembled_from_current_candidate_set"
+    },
+    "current_architecture_stage": 8,
+    "current_stage_key": "panel",
+    "current_stage_state": "research_gate_no_qualified_judges",
     "product_direction": "plug_and_play_gateway",
     "external_ai_required": false,
     "tcj_core_class": "non_model_software_methodology",
@@ -41,7 +64,7 @@
     "voice_profile_improvement_service": "recurring_license_extension",
     "buyer_data_improvement": "opt_in_provenance_controlled",
     "cross_customer_improvement": "separate_explicit_opt_in_required",
-    "next_action": "Continue the verified TCJ Qualification/Panel architecture track; product deployment and Voice Profile licensing policies are governed separately by the 22 August product authorities."
+    "next_action": "Automatically diagnose Qualification v1.1 failure clusters and identify materially stronger candidate judges/configurations. Do not loosen frozen thresholds, do not tune against v1.1 and reuse it as hidden authority evidence, and do not assemble a production Panel. Prepare a fresh hidden Qualification bank for the next candidate contract, then stop for native-human blind review/freeze."
   },
   "security": {
     "private_server_migration_complete": true,
@@ -54,7 +77,7 @@
     "buyer_export": "ANSWERS-BATCH2-BUYER-DATA-EXTRACTION-SPEC.md",
     "commercial_timeline": "ANSWERS-COMMERCIAL-EXECUTION-TIMELINE.md",
     "tcj_method": "ANSWERS-TCJ-MULTI-JUDGE-CONSENSUS-ARCHITECTURE.md",
-    "tcj_execution": "ANSWERS-TCJ-ROBUSTNESS-V1-COMPLETION-AND-PERTURBATION-DRAFT-20260821.md",
+    "tcj_execution": "ANSWERS-TCJ-QUALIFICATION-V11-COMPLETION-AND-RESEARCH-GATE-20260822.md",
     "tcj_commercial_boundary": "ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md",
     "tcj_product_deployment": "ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md",
     "tcj_voice_profile_licensing_extension": "ANSWERS-TCJ-VOICE-PROFILE-LICENSING-EXTENSION-20260822.md"
