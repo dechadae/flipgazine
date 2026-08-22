@@ -22,6 +22,7 @@
 - `ANSWERS-TCJ-EXPERT-OPERABLE-CONTROL-PLANE-IMPLEMENTATION.md` — control-plane implementation contract.
 - `ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md` — current commercial-use and provenance policy.
 - `ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-FREEZE-20260822.md` — **frozen final commercial product architecture authority**: fixes the component order, trust boundaries, Voice Profile position, Private Evidence Engine role, derived-signal boundary, BYOJ abstraction, writer/judge roles, one-revision default, independent six-dimension resolution, risk-triggered challenge, full-evaluator Qualification unit and managed/VPC/on-prem product shapes. This freezes architecture only; production authority remains pending Qualification/Assurance/security/reproducibility/release gates.
+- `ANSWERS-TCJ-SOL-PRIVATE-EVIDENCE-TOOL-AND-COMMERCIAL-LICENSING-CLARIFICATION-20260822.md` — **governing frozen-architecture clarification**: a selected judge, including the Sol reference BYOK judge, may call a narrow TCJ Private Evidence Tool for allowlisted derived analysis; no direct SQL/database/vault/raw-corpus access is granted. The tool schema/call budget is authority-bearing. Also records the default commercial structure: TCJ licensed separately from the buyer's BYOK provider account/API usage, with current OpenAI business/API data and ZDR terms checkpointed on 22 August 2026.
 - `ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md` — governing deployment, packaging, Voice Profile, opt-in improvement and provenance-firewall policy within the frozen architecture.
 - `ANSWERS-TCJ-PRIVATE-EVIDENCE-ENGINE-AND-BUYER-ISOLATION-POLICY-20260822.md` — governing final-runtime evidence boundary: internal TCJ batches/evidence are non-deliverable; raw proprietary evidence remains inside the Private Evidence Engine; buyer writer models do not receive the internal corpus.
 - `ANSWERS-TCJ-BYOJ-JUDGE-RUNTIME-AND-API-KEY-POLICY-20260822.md` — governing judge-runtime terminology and integration policy: BYOJ is the umbrella; Local Judge means a self-hosted/private judge endpoint; BYOK Judge means a supported external provider using the buyer's credential; neither receives raw proprietary TCJ rows; connected is not qualified; OpenAI Sol may be a reference BYOK candidate but is not mandatory.
@@ -56,7 +57,7 @@
 - `ANSWERS-VOICE-BENCHMARK-PLAN.md` — public Voice design history; implementation/acceptance records govern deployed state.
 - `ANSWERS-OUTREACH-FIRST-CONTACT-STRATEGY.md` — historical sent-copy strategy; refresh counts/routes before new outreach.
 - `ANSWERS-OUTREACH-DELIVERY-STATUS-2026-08-19.md` — historical delivery outcome, not a current contact directory.
-- `ANSWERS-PRIVATE-SERVER-MIGRATION-PLAN.md` — completed historical plan; do not rerun. Final commercial deployment shape is governed by the frozen final architecture plus the plug-and-play/private-evidence/BYOJ policies.
+- `ANSWERS-PRIVATE-SERVER-MIGRATION-PLAN.md` — completed historical plan; do not rerun. Final commercial deployment shape is governed by the frozen final architecture plus the plug-and-play/private-evidence/BYOJ policies and the Sol Private Evidence Tool clarification.
 - `ANSWERS-PRIVATE-SERVER-PHASE-A-INVENTORY.md` — historical migration evidence.
 - `ANSWERS-PRIVATE-SERVER-PHASE-B-REPORT.md` — historical migration evidence.
 - `ANSWERS-PRIVATE-SERVER-PHASE-C-REPORT.md` — historical migration evidence.
@@ -76,10 +77,14 @@ When two documents conflict:
 2. within that domain, follow the newer applied/verified checkpoint;
 3. preserve older evidence without executing its stale next action;
 4. for final commercial product topology, component placement and trust boundaries, the **final commercial product architecture freeze** is controlling and may be reopened only by an explicit superseding architecture decision;
-5. the architecture freeze does not grant production authority; Qualification, Panel, Assurance, security, reproducibility and release gates remain mandatory;
-6. for runtime evidence exposure details, the private-evidence/buyer-isolation policy applies inside the frozen topology;
-7. for semantic-judge terminology and integration, the BYOJ judge-runtime policy applies inside the frozen topology;
-8. `Local Judge` means self-hosted/private inference, `BYOK Judge` means supported external provider with buyer-owned credentials, and `BYOJ` is the umbrella for both;
-9. neither Local nor BYOK judge receives raw proprietary TCJ rows in the commercial default architecture;
-10. frozen native-human gold and historical thresholds are never changed to accommodate the frozen architecture or a failing model;
-11. update `README.md`, `CURRENT-STATE.json` and this map in the same documentation change.
+5. the **Sol Private Evidence Tool clarification** is an allowed implementation inside that frozen trust boundary: the selected judge may request allowlisted derived analysis, but it may not receive database credentials, SQL, arbitrary corpus search, raw examples/rows or reconstructive evidence;
+6. the evidence-tool schema, allowed analysis families, call budget and derived-signal response contract are authority-bearing evaluator components and must be frozen/qualified with the exact evaluator;
+7. the architecture freeze does not grant production authority; Qualification, Panel, Assurance, security, reproducibility and release gates remain mandatory;
+8. for runtime evidence exposure details, the private-evidence/buyer-isolation policy applies inside the frozen topology;
+9. for semantic-judge terminology and integration, the BYOJ judge-runtime policy applies inside the frozen topology;
+10. `Local Judge` means self-hosted/private inference, `BYOK Judge` means supported external provider with buyer-owned credentials, and `BYOJ` is the umbrella for both;
+11. neither Local nor BYOK judge receives raw proprietary TCJ rows in the commercial default architecture;
+12. BYOK is the preferred initial enterprise billing/integration model: buyer supplies/controls the provider account/API credential and pays provider usage directly; TCJ licensing/services remain separate; TCJ does not sell or transfer provider API keys;
+13. current OpenAI terms/data-control statements are a checkpoint, not a legal warranty; recheck provider terms and endpoint/ZDR eligibility before material launch or contract signature;
+14. frozen native-human gold and historical thresholds are never changed to accommodate the frozen architecture or a failing model;
+15. update `README.md`, `CURRENT-STATE.json` and this map in the same documentation change.
