@@ -41,8 +41,9 @@
       "durable_responses": 146,
       "open_dispatches": 0,
       "terminal_generation_contract_failures": 0,
-      "blocking_or_compromising_incidents": 0,
+      "effective_blocking_or_compromising_incidents": 0,
       "warning_incidents": 1,
+      "superseded_audit_incidents": 1,
       "summaries": 3,
       "qualification_passports": 3,
       "authority_passports": 0,
@@ -50,13 +51,28 @@
       "partially_qualified_dimensions": 0,
       "run_manifest_sha256": "98f905fb2ccf5d8175eb9c0bb8ad77d3ffb8138170df9ed159d4ff6ebb4ab2c1",
       "result": "all_candidates_research_only",
-      "research_gate": "no_production_panel_can_be_assembled_from_current_candidate_set"
+      "interpretation": "valid_candidate_judge_failure_not_human_gold_failure"
+    },
+    "research_remediation": {
+      "source_run": "TCJ-JUDGE-QUALIFICATION-RUN-2026Q3-v1.1",
+      "source_evidence_role": "exposed_development_evidence_only",
+      "profile_version": "TCJ-ANSWERS-BFF-v3-research",
+      "profile_status": "research_draft",
+      "profile_sha256": "1538c9fd6b9487b5e8a3757ec69ba88a27efeb74b058c70a7875d17ce8e88fa1",
+      "prevention_rules": 10,
+      "failure_clusters": 8,
+      "native_human_gold_authoritative": true,
+      "case_design_labels_are_hypotheses": true,
+      "historical_thresholds_unchanged": true,
+      "v1_1_may_not_be_reused_as_hidden_authority_evidence": true
     },
     "current_architecture_stage": 8,
     "current_stage_key": "panel",
-    "current_stage_state": "research_gate_no_qualified_judges",
+    "current_stage_state": "research_remediation_no_qualified_judges",
     "product_direction": "plug_and_play_gateway",
     "external_ai_required": false,
+    "external_api_integration_gate": "after_fresh_qualification_panel_assurance_reproducibility_and_final_freeze",
+    "post_freeze_adapters_planned": ["openai", "xai"],
     "tcj_core_class": "non_model_software_methodology",
     "voice_profile_class": "non_model_versioned_configuration",
     "voice_profile_classification_rule": "technical_substance_over_label",
@@ -64,7 +80,7 @@
     "voice_profile_improvement_service": "recurring_license_extension",
     "buyer_data_improvement": "opt_in_provenance_controlled",
     "cross_customer_improvement": "separate_explicit_opt_in_required",
-    "next_action": "Automatically diagnose Qualification v1.1 failure clusters and identify materially stronger candidate judges/configurations. Do not loosen frozen thresholds, do not tune against v1.1 and reuse it as hidden authority evidence, and do not assemble a production Panel. Prepare a fresh hidden Qualification bank for the next candidate contract, then stop for native-human blind review/freeze."
+    "next_action": "Replay and iterate TCJ-ANSWERS-BFF-v3-research on exposed Qualification v1.1 as development evidence, reducing known judge failure modes without changing native-human gold or frozen thresholds. When the revised judge contract is ready, freeze it, create a fresh hidden Qualification bank, then stop for native-human blind review. Do not connect OpenAI or xAI production adapters until fresh Qualification, Panel, Assurance, reproducibility and final TCJ freeze all pass."
   },
   "security": {
     "private_server_migration_complete": true,
@@ -77,7 +93,8 @@
     "buyer_export": "ANSWERS-BATCH2-BUYER-DATA-EXTRACTION-SPEC.md",
     "commercial_timeline": "ANSWERS-COMMERCIAL-EXECUTION-TIMELINE.md",
     "tcj_method": "ANSWERS-TCJ-MULTI-JUDGE-CONSENSUS-ARCHITECTURE.md",
-    "tcj_execution": "ANSWERS-TCJ-QUALIFICATION-V11-COMPLETION-AND-RESEARCH-GATE-20260822.md",
+    "tcj_execution": "ANSWERS-TCJ-QUALIFICATION-V11-RESEARCH-REMEDIATION-AND-EXTERNAL-API-GATE-20260822.md",
+    "tcj_qualification_completion": "ANSWERS-TCJ-QUALIFICATION-V11-COMPLETION-AND-RESEARCH-GATE-20260822.md",
     "tcj_commercial_boundary": "ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md",
     "tcj_product_deployment": "ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md",
     "tcj_voice_profile_licensing_extension": "ANSWERS-TCJ-VOICE-PROFILE-LICENSING-EXTENSION-20260822.md"
