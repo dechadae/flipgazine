@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "as_of": "2026-08-21",
+  "as_of": "2026-08-22",
   "scope": "repository_documentation_checkpoint",
   "live_state_independently_reverified": false,
   "canonical_book": {
@@ -32,7 +32,12 @@
     "frozen_input_robustness_cells": 198,
     "perturbation_cases": 33,
     "perturbation_native_reviews_complete": 0,
-    "next_action": "Native-review all 33 constructed perturbations before pack freeze or 99-cell model execution."
+    "product_direction": "plug_and_play_gateway",
+    "external_ai_required": false,
+    "tcj_core_class": "non_model_software_methodology",
+    "voice_profile_class": "non_model_versioned_configuration",
+    "buyer_data_improvement": "opt_in_provenance_controlled",
+    "next_action": "Continue the verified TCJ Qualification/Panel architecture track; product deployment policy is now governed separately by the plug-and-play deployment authority."
   },
   "security": {
     "private_server_migration_complete": true,
@@ -46,6 +51,7 @@
     "commercial_timeline": "ANSWERS-COMMERCIAL-EXECUTION-TIMELINE.md",
     "tcj_method": "ANSWERS-TCJ-MULTI-JUDGE-CONSENSUS-ARCHITECTURE.md",
     "tcj_execution": "ANSWERS-TCJ-ROBUSTNESS-V1-COMPLETION-AND-PERTURBATION-DRAFT-20260821.md",
-    "tcj_commercial_boundary": "ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md"
+    "tcj_commercial_boundary": "ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md",
+    "tcj_product_deployment": "ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md"
   }
 }
