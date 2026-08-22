@@ -23,11 +23,12 @@
 - `ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md` — current commercial-use and provenance policy.
 - `ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md` — governing final-product deployment, local-runtime, Voice Profile, opt-in improvement and provenance-firewall policy.
 - `ANSWERS-TCJ-VOICE-PROFILE-LICENSING-EXTENSION-20260822.md` — governing commercial clarification that Voice Profile classification follows technical substance, not labels; formalizes portable Voice Profile licensing and the recurring Voice Profile Improvement Service.
-- `ANSWERS-TCJ-QUALIFICATION-V11-COMPLETION-AND-RESEARCH-GATE-20260822.md` — **current TCJ execution authority**: Qualification v1.1 completed with verified integrity; all three candidates remain research-only; no production Panel can be assembled; next valid action is automatic failure diagnosis/new-candidate research followed by a fresh hidden Qualification bank and native-human review.
+- `ANSWERS-TCJ-QUALIFICATION-V11-RESEARCH-REMEDIATION-AND-EXTERNAL-API-GATE-20260822.md` — **current TCJ execution authority**: v1.1 remains valid failed-judge evidence; frozen native-human ratings are authoritative; `TCJ-ANSWERS-BFF-v3-research` and the eight failure clusters govern research remediation; OpenAI/xAI adapters are gated until fresh Qualification, Panel, Assurance, reproducibility and final freeze pass.
 - `ANSWERS-PRIVATE-SERVER-PHASE-K-MIGRATION-MANIFEST.md` — final private-server migration authority; counts are the migration snapshot.
 
 ## Completed evidence with continuing operational value
 
+- `ANSWERS-TCJ-QUALIFICATION-V11-COMPLETION-AND-RESEARCH-GATE-20260822.md` — verified v1.1 completion evidence, frozen metrics/hashes/Passports and original research gate. Its next-action text is superseded by the newer research-remediation authority.
 - `ANSWERS-BATCH2-CORPUS-ROUTING-REACHABILITY-IMPLEMENTATION-REPORT.md` — implemented routing/promotion evidence; checkpoint counts superseded.
 - `ANSWERS-BATCH2-TECH-PILOT-COMPLETION-REPORT.md` — immutable technical-pilot completion evidence.
 - `ANSWERS-TCJ-CALIBRATION-RERUN-20260820.md` — completed stored calibration-rerun evidence.
@@ -36,7 +37,7 @@
 - `ANSWERS-TCJ-STAGE-B-V11-VALIDITY-20260820.md` — applied Stage B validity remediation.
 - `ANSWERS-TCJ-STAGE-B-V11-CARE-PATCH-20260820.md` — applied CARE parity patch.
 - `ANSWERS-TCJ-ROBUSTNESS-FROZEN-INPUT-20260820.md` — frozen pack provenance; execution completed later.
-- `ANSWERS-TCJ-ROBUSTNESS-V1-COMPLETION-AND-PERTURBATION-DRAFT-20260821.md` — completed robustness/perturbation execution checkpoint; its next action is superseded by the completed Qualification v1.1 research-gate checkpoint.
+- `ANSWERS-TCJ-ROBUSTNESS-V1-COMPLETION-AND-PERTURBATION-DRAFT-20260821.md` — completed robustness/perturbation execution checkpoint; its next action is superseded by the completed Qualification/remediation checkpoints.
 - `ANSWERS-TCJ-LIVE-DEPLOYMENT-20260819.md` — TCJ Standard deployment provenance; empty-table statement superseded.
 - `ANSWERS-VOICE-BENCHMARK-ACCEPTANCE-2026-08-18.md` — production acceptance evidence.
 - `ANSWERS-VOICE-BENCHMARK-IMPLEMENTATION-REPORT.md` — implementation and security evidence.
