@@ -22,9 +22,10 @@
 - `ANSWERS-TCJ-EXPERT-OPERABLE-CONTROL-PLANE-IMPLEMENTATION.md` — control-plane implementation contract.
 - `ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md` — current commercial-use and provenance policy.
 - `ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md` — governing final-product deployment, local-runtime, Voice Profile, opt-in improvement and provenance-firewall policy.
-- `ANSWERS-TCJ-PRIVATE-EVIDENCE-ENGINE-AND-BUYER-ISOLATION-POLICY-20260822.md` — **governing final-runtime evidence boundary**: internal TCJ batches/evidence are non-deliverable; the Private Evidence Engine and private TCJ local evaluator remain inside the TCJ trust boundary; buyer-connected AI is writer/reviser only and receives final decisions/revision guidance, never raw proprietary corpus evidence.
+- `ANSWERS-TCJ-PRIVATE-EVIDENCE-ENGINE-AND-BUYER-ISOLATION-POLICY-20260822.md` — governing final-runtime evidence boundary: internal TCJ batches/evidence are non-deliverable; raw proprietary evidence remains inside the Private Evidence Engine; buyer writer models do not receive the internal corpus.
+- `ANSWERS-TCJ-BYOJ-JUDGE-RUNTIME-AND-API-KEY-POLICY-20260822.md` — **governing judge-runtime terminology and integration policy**: BYOJ is the umbrella; Local Judge means a self-hosted/private judge endpoint; BYOK Judge means a supported external provider using the buyer's credential; neither receives raw proprietary TCJ rows; connected is not qualified; OpenAI Sol may be a reference BYOK candidate but is not mandatory.
 - `ANSWERS-TCJ-VOICE-PROFILE-LICENSING-EXTENSION-20260822.md` — governing commercial clarification that Voice Profile classification follows technical substance, not labels; formalizes portable Voice Profile licensing and the recurring Voice Profile Improvement Service.
-- `ANSWERS-TCJ-V3-ABLATION-COMPLETION-AND-PRIVATE-EVIDENCE-V4-DIRECTION-20260822.md` — **current TCJ execution authority**: the v3 prompt-only replay completed 48/48 as a negative ablation; the next research target is the full Private Evidence Engine + private local evaluator configuration; OpenAI/xAI adapters remain gated until fresh Qualification, Panel, Assurance, reproducibility and final freeze pass.
+- `ANSWERS-TCJ-V3-ABLATION-COMPLETION-AND-PRIVATE-EVIDENCE-V4-DIRECTION-20260822.md` — **current TCJ execution authority**: the v3 prompt-only replay completed 48/48 as a negative ablation; the next research target is the full Voice Profile + Private Evidence Engine + derived-signal + selected-judge evaluator configuration; OpenAI/xAI adapters remain gated until fresh Qualification, Panel, Assurance, reproducibility and final freeze pass.
 - `ANSWERS-PRIVATE-SERVER-PHASE-K-MIGRATION-MANIFEST.md` — final private-server migration authority; counts are the migration snapshot.
 
 ## Completed evidence with continuing operational value
@@ -54,7 +55,7 @@
 - `ANSWERS-VOICE-BENCHMARK-PLAN.md` — public Voice design history; implementation/acceptance records govern deployed state.
 - `ANSWERS-OUTREACH-FIRST-CONTACT-STRATEGY.md` — historical sent-copy strategy; refresh counts/routes before new outreach.
 - `ANSWERS-OUTREACH-DELIVERY-STATUS-2026-08-19.md` — historical delivery outcome, not a current contact directory.
-- `ANSWERS-PRIVATE-SERVER-MIGRATION-PLAN.md` — completed historical plan; do not rerun. Final commercial deployment shape is governed by the plug-and-play deployment policy plus the newer private-evidence runtime policy.
+- `ANSWERS-PRIVATE-SERVER-MIGRATION-PLAN.md` — completed historical plan; do not rerun. Final commercial deployment shape is governed by the plug-and-play deployment policy plus the newer private-evidence and BYOJ runtime policies.
 - `ANSWERS-PRIVATE-SERVER-PHASE-A-INVENTORY.md` — historical migration evidence.
 - `ANSWERS-PRIVATE-SERVER-PHASE-B-REPORT.md` — historical migration evidence.
 - `ANSWERS-PRIVATE-SERVER-PHASE-C-REPORT.md` — historical migration evidence.
@@ -74,4 +75,7 @@ When two documents conflict:
 2. within that domain, follow the newer applied/verified checkpoint;
 3. preserve older evidence without executing its stale next action;
 4. for final runtime evidence exposure, the private-evidence/buyer-isolation policy supersedes older wording that could imply raw proprietary evidence is sent to buyer-connected models;
-5. update `README.md`, `CURRENT-STATE.json` and this map in the same documentation change.
+5. for semantic-judge terminology and placement, the BYOJ judge-runtime policy supersedes older wording that implies the judge must always be TCJ-owned/local or that an external API judge should be called local;
+6. `Local Judge` means self-hosted/private inference, `BYOK Judge` means supported external provider with buyer-owned credentials, and `BYOJ` is the umbrella for both;
+7. neither Local nor BYOK judge receives raw proprietary TCJ rows in the commercial default architecture;
+8. update `README.md`, `CURRENT-STATE.json` and this map in the same documentation change.
