@@ -1,0 +1,2 @@
+alter table private.tcj_qualification_attempts drop constraint if exists tcj_qualification_attempts_attempt_index_check;
+alter table private.tcj_qualification_attempts add constraint tcj_qualification_attempts_attempt_index_check check (attempt_index>0);
