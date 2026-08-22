@@ -1,37 +1,208 @@
 import postgres from 'npm:postgres@3.4.7';
 
-const DB=Deno.env.get('SUPABASE_DB_URL');
-if(!DB)throw new Error('SUPABASE_DB_URL required');
-const sql=postgres(DB,{prepare:false,max:2,idle_timeout:20,connect_timeout:10});
-const ORIGIN='https://flipgazine.pages.dev';
-const PROTOCOL='TCJ-JUDGE-QUALIFICATION-2026Q3-v1';
-const DIMS=['intent','thai_pragmatics','bff_voice','lexical_social_fit','stance','composition'] as const;
-const FLAGS=new Set([
+const DB = Deno.env.get('SUPABASE_DB_URL');
+if (!DB) throw new Error('SUPABASE_DB_URL required');
+const sql = postgres(DB, { prepare: false, max: 2, idle_timeout: 20, connect_timeout: 10 });
+const ORIGIN = 'https://flipgazine.pages.dev';
+const PROTOCOL = 'TCJ-JUDGE-QUALIFICATION-2026Q3-v1';
+const DIMS = ['intent','thai_pragmatics','bff_voice','lexical_social_fit','stance','composition'] as const;
+const FLAGS = new Set([
   'over_explained','too_complete','advisor_like','translation_shaped','weak_stance',
   'excessive_hedging','semantic_drift','unnatural_lexical_choice','inappropriate_code_mixing',
   'particle_stance_problem','register_mismatch','generic_cliche','culturally_implausible',
   'forced_humor','forced_camp','overly_slangy','weak_social_grounding','weak_composition',
   'grammatical_not_designed_breaks','weak_final_landing'
 ]);
-type Claims={sub:string;session_id:string};
-function dec(s:string){return atob(s.replace(/-/g,'+').replace(/_/g,'/')+'='.repeat((4-s.length%4)%4));}
-function claims(req:Request):Claims|null{const m=(req.headers.get('authorization')||'').match(/^Bearer\s+([^\s]+)$/i);if(!m)return null;try{const p=m[1].split('.');if(p.length!==3)return null;const c=JSON.parse(dec(p[1]));return typeof c?.sub==='string'&&typeof c?.session_id==='string'?{sub:c.sub,session_id:c.session_id}:null;}catch{return null;}}
-function headers(origin:string|null){const h=new Headers({'content-type':'application/json; charset=utf-8','cache-control':'no-store, private, max-age=0','pragma':'no-cache','x-content-type-options':'nosniff','referrer-policy':'no-referrer'});if(origin===ORIGIN){h.set('access-control-allow-origin',ORIGIN);h.set('vary','Origin');h.set('access-control-allow-methods','POST, OPTIONS');h.set('access-control-allow-headers','content-type, authorization');h.set('access-control-max-age','600');}return h;}
-function out(origin:string|null,body:unknown,status=200){return new Response(JSON.stringify(body),{status,headers:headers(origin)});}
-async function admin(c:Claims){return sql.begin(async tx=>{const a=await tx`select exists(select 1 from auth.users u join auth.sessions s on s.user_id=u.id where u.id=${c.sub}::uuid and s.id=${c.session_id}::uuid and u.deleted_at is null and (u.banned_until is null or u.banned_until<=pg_catalog.now()) and (s.not_after is null or s.not_after>pg_catalog.now())) ok`;if(!a?.[0]?.ok)return false;await tx`select pg_catalog.set_config('request.jwt.claim.sub',${c.sub},true)`;const r=await tx`select public.is_fg_admin() ok`;return !!r?.[0]?.ok;});}
-function cleanText(v:any,max=6000){const s=String(v??'').replace(/\r\n/g,'\n').replace(/\r/g,'\n').trim();if(!s||s.length>max)throw new Error('invalid_text');return s;}
-function ratings(v:any){if(!v||typeof v!=='object'||Array.isArray(v))throw new Error('ratings_required');const keys=Object.keys(v);if(keys.length!==6||DIMS.some(k=>!keys.includes(k)))throw new Error('ratings_keys');const r:any={};for(const k of DIMS){const n=Number(v[k]);if(!Number.isInteger(n)||n<1||n>4)throw new Error('rating_'+k);r[k]=n;}return r;}
-function flags(v:any){if(v==null)return[];if(!Array.isArray(v)||v.length>8)throw new Error('invalid_flags');const a=[...new Set(v.map(String))];if(a.some(x=>!FLAGS.has(x)))throw new Error('invalid_flag');return a;}
-async function progress(){const q=await sql`select p.id protocol_id,p.status protocol_status,p.item_target,p.threshold_sha256,p.human_manifest_sha256,p.bank_frozen_at,s.status set_status,s.manifest_sha256 evidence_manifest_sha256,s.frozen_at evidence_frozen_at,(select count(*)::int from private.tcj_evidence_items i where i.evidence_set_id=p.evidence_set_id) items,(select count(*)::int from private.tcj_qualification_human_reviews r where r.protocol_id=p.id and r.review_state in ('draft','frozen')) reviewed,(select count(*)::int from private.tcj_qualification_human_reviews r where r.protocol_id=p.id and r.review_state='frozen') frozen_reviews from private.tcj_qualification_protocols p join private.tcj_evidence_sets s on s.id=p.evidence_set_id where p.protocol_key=${PROTOCOL} limit 1`;const r=q[0];if(!r)throw new Error('qualification_protocol_missing');const reviewed=Number(r.reviewed||0),target=Number(r.item_target||0);return{protocol_key:PROTOCOL,protocol_state:String(r.protocol_status),bank_state:String(r.set_status),items:Number(r.items||0),target,reviewed,frozen_reviews:Number(r.frozen_reviews||0),remaining:Math.max(0,target-reviewed),threshold_sha256:r.threshold_sha256,human_manifest_sha256:r.human_manifest_sha256||null,evidence_manifest_sha256:r.evidence_manifest_sha256||null,bank_frozen:!!r.bank_frozen_at&&String(r.set_status)==='frozen'};}
-async function getCase(order:number|null){const base=await progress();let rows:any[]=[];if(order&&Number.isInteger(order)&&order>=1&&order<=base.target){rows=await sql`select d.opaque_review_id,d.review_order,i.scenario_text,i.candidate_text,r.ratings,r.severity,r.flags,r.confidence,r.human_ambiguous,r.review_note,r.review_state,r.revision_no from private.tcj_qualification_protocols p join private.tcj_qualification_case_designs d on d.protocol_id=p.id join private.tcj_evidence_items i on i.id=d.evidence_item_id left join private.tcj_qualification_human_reviews r on r.evidence_item_id=i.id and r.protocol_id=p.id where p.protocol_key=${PROTOCOL} and d.review_order=${order} limit 1`;}else{rows=await sql`select d.opaque_review_id,d.review_order,i.scenario_text,i.candidate_text,r.ratings,r.severity,r.flags,r.confidence,r.human_ambiguous,r.review_note,r.review_state,r.revision_no from private.tcj_qualification_protocols p join private.tcj_qualification_case_designs d on d.protocol_id=p.id join private.tcj_evidence_items i on i.id=d.evidence_item_id left join private.tcj_qualification_human_reviews r on r.evidence_item_id=i.id and r.protocol_id=p.id where p.protocol_key=${PROTOCOL} and r.id is null order by d.review_order limit 1`;if(!rows.length&&base.reviewed>0){rows=await sql`select d.opaque_review_id,d.review_order,i.scenario_text,i.candidate_text,r.ratings,r.severity,r.flags,r.confidence,r.human_ambiguous,r.review_note,r.review_state,r.revision_no from private.tcj_qualification_protocols p join private.tcj_qualification_case_designs d on d.protocol_id=p.id join private.tcj_evidence_items i on i.id=d.evidence_item_id left join private.tcj_qualification_human_reviews r on r.evidence_item_id=i.id and r.protocol_id=p.id where p.protocol_key=${PROTOCOL} order by d.review_order desc limit 1`;}}
- const c=rows[0];return{...base,current:c?{opaque_review_id:c.opaque_review_id,review_order:Number(c.review_order),scenario_text:c.scenario_text,candidate_text:c.candidate_text,review:c.ratings?{ratings:c.ratings,severity:c.severity,flags:c.flags||[],confidence:c.confidence,human_ambiguous:!!c.human_ambiguous,review_note:c.review_note||'',review_state:c.review_state,revision_no:Number(c.revision_no||1)}:null}:null};}
-async function saveReview(body:any,actor:string){const opaque=String(body?.opaque_review_id||'');if(!opaque)throw new Error('case_required');const scenario=cleanText(body?.scenario_text),candidate=cleanText(body?.candidate_text),rr=ratings(body?.ratings),sev=String(body?.severity||'').toUpperCase();if(!['PASS','MINOR','MAJOR','CRITICAL'].includes(sev))throw new Error('severity_required');const ff=flags(body?.flags),conf=String(body?.confidence||'').toLowerCase();if(!['high','medium','low'].includes(conf))throw new Error('confidence_required');const amb=!!body?.human_ambiguous,note=String(body?.review_note||'').trim().slice(0,1200);
- await sql.begin(async tx=>{const rows=await tx`select p.id protocol_id,p.status protocol_status,p.evidence_set_id,s.status set_status,d.evidence_item_id from private.tcj_qualification_protocols p join private.tcj_evidence_sets s on s.id=p.evidence_set_id join private.tcj_qualification_case_designs d on d.protocol_id=p.id where p.protocol_key=${PROTOCOL} and d.opaque_review_id=${opaque} for update of p,s,d`;const x=rows[0];if(!x)throw new Error('case_missing');if(String(x.protocol_status)!=='draft_review'||String(x.set_status)!=='draft')throw new Error('qualification_bank_not_editable');
- const h=await tx`select encode(extensions.digest(${scenario},'sha256'),'hex') scenario_sha,encode(extensions.digest(${candidate},'sha256'),'hex') candidate_sha,private.tcj_qualification_review_hash(${scenario},${candidate},jsonb_build_object('intent',${rr.intent},'thai_pragmatics',${rr.thai_pragmatics},'bff_voice',${rr.bff_voice},'lexical_social_fit',${rr.lexical_social_fit},'stance',${rr.stance},'composition',${rr.composition}),${sev},${ff}::text[],${conf},${amb},${note||null}) review_sha,private.tcj_qualification_ratings_valid(jsonb_build_object('intent',${rr.intent},'thai_pragmatics',${rr.thai_pragmatics},'bff_voice',${rr.bff_voice},'lexical_social_fit',${rr.lexical_social_fit},'stance',${rr.stance},'composition',${rr.composition})) ratings_ok`;
- const hs=h[0];if(!hs?.ratings_ok)throw new Error('ratings_server_validation_failed');const old=await tx`select id,review_state,review_sha256,revision_no from private.tcj_qualification_human_reviews where protocol_id=${Number(x.protocol_id)} and evidence_item_id=${Number(x.evidence_item_id)} limit 1 for update`;if(old[0]?.review_state==='frozen')throw new Error('review_frozen');
- await tx`update private.tcj_evidence_items set scenario_text=${scenario},candidate_text=${candidate},scenario_sha256=${hs.scenario_sha},candidate_sha256=${hs.candidate_sha},gold=jsonb_build_object('intent',${rr.intent},'thai_pragmatics',${rr.thai_pragmatics},'bff_voice',${rr.bff_voice},'lexical_social_fit',${rr.lexical_social_fit},'stance',${rr.stance},'composition',${rr.composition},'severity',${sev},'flags',to_jsonb(${ff}::text[]),'care_mode',false),provenance='fresh qualification v1 native-human reviewed draft; machine-unexposed' where id=${Number(x.evidence_item_id)} and evidence_set_id=${Number(x.evidence_set_id)}`;
- if(old.length){if(old[0].review_sha256!==hs.review_sha){await tx`update private.tcj_qualification_human_reviews set reviewer_user_id=${actor}::uuid,final_scenario_text=${scenario},final_candidate_text=${candidate},scenario_sha256=${hs.scenario_sha},candidate_sha256=${hs.candidate_sha},ratings=jsonb_build_object('intent',${rr.intent},'thai_pragmatics',${rr.thai_pragmatics},'bff_voice',${rr.bff_voice},'lexical_social_fit',${rr.lexical_social_fit},'stance',${rr.stance},'composition',${rr.composition}),severity=${sev},flags=${ff}::text[],confidence=${conf},human_ambiguous=${amb},review_note=${note||null},revision_no=revision_no+1,review_sha256=${hs.review_sha},updated_at=pg_catalog.now() where id=${Number(old[0].id)}`;}}else{await tx`insert into private.tcj_qualification_human_reviews(protocol_id,evidence_item_id,reviewer_user_id,review_state,final_scenario_text,final_candidate_text,scenario_sha256,candidate_sha256,ratings,severity,flags,confidence,human_ambiguous,review_note,review_sha256) values(${Number(x.protocol_id)},${Number(x.evidence_item_id)},${actor}::uuid,'draft',${scenario},${candidate},${hs.scenario_sha},${hs.candidate_sha},jsonb_build_object('intent',${rr.intent},'thai_pragmatics',${rr.thai_pragmatics},'bff_voice',${rr.bff_voice},'lexical_social_fit',${rr.lexical_social_fit},'stance',${rr.stance},'composition',${rr.composition}),${sev},${ff}::text[],${conf},${amb},${note||null},${hs.review_sha})`;}});
- return getCase(null);
+
+type Claims = { sub: string; session_id: string };
+
+function dec(s:string){ return atob(s.replace(/-/g,'+').replace(/_/g,'/') + '='.repeat((4-s.length%4)%4)); }
+function claims(req:Request):Claims|null {
+  const m=(req.headers.get('authorization')||'').match(/^Bearer\s+([^\s]+)$/i);
+  if(!m) return null;
+  try {
+    const p=m[1].split('.'); if(p.length!==3) return null;
+    const c=JSON.parse(dec(p[1]));
+    return typeof c?.sub==='string' && typeof c?.session_id==='string' ? {sub:c.sub,session_id:c.session_id} : null;
+  } catch { return null; }
 }
-async function freeze(actor:string){const r=await sql`select private.tcj_freeze_qualification_bank(${PROTOCOL},${actor}::uuid) result`;return{...(await progress()),freeze:r[0]?.result||null,current:null};}
-Deno.serve(async(req:Request)=>{const origin=req.headers.get('origin');if(req.method==='OPTIONS')return new Response(null,{status:204,headers:headers(origin)});if(req.method!=='POST')return out(origin,{error:'method_not_allowed'},405);const c=claims(req);if(!c)return out(origin,{error:'unauthorized'},401);if(!(await admin(c)))return out(origin,{error:'forbidden'},403);let body:any={};try{body=await req.json();}catch{}const action=String(body?.action||'status');try{if(action==='status')return out(origin,await getCase(null));if(action==='case')return out(origin,await getCase(Number(body?.review_order||0)||null));if(action==='save_review')return out(origin,await saveReview(body,c.sub));if(action==='freeze')return out(origin,await freeze(c.sub));return out(origin,{error:'unknown_action'},400);}catch(e){const msg=e instanceof Error?e.message:'unexpected_error';const blocked=/gate|frozen|not_editable|missing|required|invalid|rating|severity|confidence|flags|case/.test(msg);return out(origin,{error:msg},blocked?409:503);}});
+function headers(origin:string|null){
+  const h=new Headers({'content-type':'application/json; charset=utf-8','cache-control':'no-store, private, max-age=0','pragma':'no-cache','x-content-type-options':'nosniff','referrer-policy':'no-referrer'});
+  if(origin===ORIGIN){ h.set('access-control-allow-origin',ORIGIN); h.set('vary','Origin'); h.set('access-control-allow-methods','POST, OPTIONS'); h.set('access-control-allow-headers','content-type, authorization'); h.set('access-control-max-age','600'); }
+  return h;
+}
+function out(origin:string|null,body:unknown,status=200){ return new Response(JSON.stringify(body),{status,headers:headers(origin)}); }
+async function admin(c:Claims){
+  return sql.begin(async tx=>{
+    const a=await tx`select exists(select 1 from auth.users u join auth.sessions s on s.user_id=u.id where u.id=${c.sub}::uuid and s.id=${c.session_id}::uuid and u.deleted_at is null and (u.banned_until is null or u.banned_until<=pg_catalog.now()) and (s.not_after is null or s.not_after>pg_catalog.now())) ok`;
+    if(!a?.[0]?.ok) return false;
+    await tx`select pg_catalog.set_config('request.jwt.claim.sub',${c.sub}::text,true)`;
+    const r=await tx`select public.is_fg_admin() ok`;
+    return !!r?.[0]?.ok;
+  });
+}
+function cleanText(v:any,max=6000){ const s=String(v??'').replace(/\r\n/g,'\n').replace(/\r/g,'\n').trim(); if(!s||s.length>max) throw new Error('invalid_text'); return s; }
+function parseRatings(v:any){
+  if(!v||typeof v!=='object'||Array.isArray(v)) throw new Error('ratings_required');
+  const keys=Object.keys(v); if(keys.length!==6||DIMS.some(k=>!keys.includes(k))) throw new Error('ratings_keys');
+  const r:any={}; for(const k of DIMS){ const n=Number(v[k]); if(!Number.isInteger(n)||n<1||n>4) throw new Error('rating_'+k); r[k]=n; }
+  return r;
+}
+function parseFlags(v:any){
+  if(v==null) return [];
+  if(!Array.isArray(v)||v.length>8) throw new Error('invalid_flags');
+  const a=[...new Set(v.map(String))]; if(a.some(x=>!FLAGS.has(x))) throw new Error('invalid_flag');
+  return a;
+}
+
+async function progress(){
+  const q=await sql`select p.id protocol_id,p.status protocol_status,p.item_target,p.threshold_sha256,p.human_manifest_sha256,p.bank_frozen_at,s.status set_status,s.manifest_sha256 evidence_manifest_sha256,s.frozen_at evidence_frozen_at,(select count(*)::int from private.tcj_evidence_items i where i.evidence_set_id=p.evidence_set_id) items,(select count(*)::int from private.tcj_qualification_human_reviews r where r.protocol_id=p.id and r.review_state in ('draft','frozen')) reviewed,(select count(*)::int from private.tcj_qualification_human_reviews r where r.protocol_id=p.id and r.review_state='frozen') frozen_reviews from private.tcj_qualification_protocols p join private.tcj_evidence_sets s on s.id=p.evidence_set_id where p.protocol_key=${PROTOCOL}::text limit 1`;
+  const r=q[0]; if(!r) throw new Error('qualification_protocol_missing');
+  const reviewed=Number(r.reviewed||0), target=Number(r.item_target||0);
+  return {protocol_key:PROTOCOL,protocol_state:String(r.protocol_status),bank_state:String(r.set_status),items:Number(r.items||0),target,reviewed,frozen_reviews:Number(r.frozen_reviews||0),remaining:Math.max(0,target-reviewed),threshold_sha256:r.threshold_sha256,human_manifest_sha256:r.human_manifest_sha256||null,evidence_manifest_sha256:r.evidence_manifest_sha256||null,bank_frozen:!!r.bank_frozen_at&&String(r.set_status)==='frozen'};
+}
+async function getCase(order:number|null){
+  const base=await progress(); let rows:any[]=[];
+  if(order&&Number.isInteger(order)&&order>=1&&order<=base.target){
+    rows=await sql`select d.opaque_review_id,d.review_order,i.scenario_text,i.candidate_text,r.ratings,r.severity,r.flags,r.confidence,r.human_ambiguous,r.review_note,r.review_state,r.revision_no from private.tcj_qualification_protocols p join private.tcj_qualification_case_designs d on d.protocol_id=p.id join private.tcj_evidence_items i on i.id=d.evidence_item_id left join private.tcj_qualification_human_reviews r on r.evidence_item_id=i.id and r.protocol_id=p.id where p.protocol_key=${PROTOCOL}::text and d.review_order=${order}::int limit 1`;
+  } else {
+    rows=await sql`select d.opaque_review_id,d.review_order,i.scenario_text,i.candidate_text,r.ratings,r.severity,r.flags,r.confidence,r.human_ambiguous,r.review_note,r.review_state,r.revision_no from private.tcj_qualification_protocols p join private.tcj_qualification_case_designs d on d.protocol_id=p.id join private.tcj_evidence_items i on i.id=d.evidence_item_id left join private.tcj_qualification_human_reviews r on r.evidence_item_id=i.id and r.protocol_id=p.id where p.protocol_key=${PROTOCOL}::text and r.id is null order by d.review_order limit 1`;
+    if(!rows.length&&base.reviewed>0) rows=await sql`select d.opaque_review_id,d.review_order,i.scenario_text,i.candidate_text,r.ratings,r.severity,r.flags,r.confidence,r.human_ambiguous,r.review_note,r.review_state,r.revision_no from private.tcj_qualification_protocols p join private.tcj_qualification_case_designs d on d.protocol_id=p.id join private.tcj_evidence_items i on i.id=d.evidence_item_id left join private.tcj_qualification_human_reviews r on r.evidence_item_id=i.id and r.protocol_id=p.id where p.protocol_key=${PROTOCOL}::text order by d.review_order desc limit 1`;
+  }
+  const c=rows[0];
+  return {...base,current:c?{opaque_review_id:c.opaque_review_id,review_order:Number(c.review_order),scenario_text:c.scenario_text,candidate_text:c.candidate_text,review:c.ratings?{ratings:c.ratings,severity:c.severity,flags:c.flags||[],confidence:c.confidence,human_ambiguous:!!c.human_ambiguous,review_note:c.review_note||'',review_state:c.review_state,revision_no:Number(c.revision_no||1)}:null}:null};
+}
+
+async function saveReview(body:any,actor:string){
+  const opaque=String(body?.opaque_review_id||''); if(!opaque) throw new Error('case_required');
+  const scenario=cleanText(body?.scenario_text), candidate=cleanText(body?.candidate_text), rr=parseRatings(body?.ratings);
+  const sev=String(body?.severity||'').toUpperCase(); if(!['PASS','MINOR','MAJOR','CRITICAL'].includes(sev)) throw new Error('severity_required');
+  const ff=parseFlags(body?.flags), conf=String(body?.confidence||'').toLowerCase(); if(!['high','medium','low'].includes(conf)) throw new Error('confidence_required');
+  const amb=!!body?.human_ambiguous, note=String(body?.review_note||'').trim().slice(0,1200);
+
+  await sql.begin(async tx=>{
+    const rows=await tx`select p.id protocol_id,p.status protocol_status,p.evidence_set_id,s.status set_status,d.evidence_item_id from private.tcj_qualification_protocols p join private.tcj_evidence_sets s on s.id=p.evidence_set_id join private.tcj_qualification_case_designs d on d.protocol_id=p.id where p.protocol_key=${PROTOCOL}::text and d.opaque_review_id=${opaque}::text for update of p,s,d`;
+    const x=rows[0]; if(!x) throw new Error('case_missing');
+    if(String(x.protocol_status)!=='draft_review'||String(x.set_status)!=='draft') throw new Error('qualification_bank_not_editable');
+
+    const h=await tx`select
+      encode(extensions.digest(${scenario}::text,'sha256'),'hex') scenario_sha,
+      encode(extensions.digest(${candidate}::text,'sha256'),'hex') candidate_sha,
+      private.tcj_qualification_review_hash(
+        ${scenario}::text,
+        ${candidate}::text,
+        jsonb_build_object(
+          'intent',${rr.intent}::int,
+          'thai_pragmatics',${rr.thai_pragmatics}::int,
+          'bff_voice',${rr.bff_voice}::int,
+          'lexical_social_fit',${rr.lexical_social_fit}::int,
+          'stance',${rr.stance}::int,
+          'composition',${rr.composition}::int
+        ),
+        ${sev}::text,
+        ${ff}::text[],
+        ${conf}::text,
+        ${amb}::boolean,
+        ${note||null}::text
+      ) review_sha,
+      private.tcj_qualification_ratings_valid(jsonb_build_object(
+        'intent',${rr.intent}::int,
+        'thai_pragmatics',${rr.thai_pragmatics}::int,
+        'bff_voice',${rr.bff_voice}::int,
+        'lexical_social_fit',${rr.lexical_social_fit}::int,
+        'stance',${rr.stance}::int,
+        'composition',${rr.composition}::int
+      )) ratings_ok`;
+    const hs=h[0]; if(!hs?.ratings_ok) throw new Error('ratings_server_validation_failed');
+
+    const old=await tx`select id,review_state,review_sha256,revision_no from private.tcj_qualification_human_reviews where protocol_id=${Number(x.protocol_id)}::bigint and evidence_item_id=${Number(x.evidence_item_id)}::bigint limit 1 for update`;
+    if(old[0]?.review_state==='frozen') throw new Error('review_frozen');
+
+    await tx`update private.tcj_evidence_items set
+      scenario_text=${scenario}::text,
+      candidate_text=${candidate}::text,
+      scenario_sha256=${hs.scenario_sha}::text,
+      candidate_sha256=${hs.candidate_sha}::text,
+      gold=jsonb_build_object(
+        'intent',${rr.intent}::int,
+        'thai_pragmatics',${rr.thai_pragmatics}::int,
+        'bff_voice',${rr.bff_voice}::int,
+        'lexical_social_fit',${rr.lexical_social_fit}::int,
+        'stance',${rr.stance}::int,
+        'composition',${rr.composition}::int,
+        'severity',${sev}::text,
+        'flags',to_jsonb(${ff}::text[]),
+        'care_mode',false
+      ),
+      provenance='fresh qualification v1 native-human reviewed draft; machine-unexposed'
+      where id=${Number(x.evidence_item_id)}::bigint and evidence_set_id=${Number(x.evidence_set_id)}::bigint`;
+
+    if(old.length){
+      if(old[0].review_sha256!==hs.review_sha){
+        await tx`update private.tcj_qualification_human_reviews set
+          reviewer_user_id=${actor}::uuid,
+          final_scenario_text=${scenario}::text,
+          final_candidate_text=${candidate}::text,
+          scenario_sha256=${hs.scenario_sha}::text,
+          candidate_sha256=${hs.candidate_sha}::text,
+          ratings=jsonb_build_object('intent',${rr.intent}::int,'thai_pragmatics',${rr.thai_pragmatics}::int,'bff_voice',${rr.bff_voice}::int,'lexical_social_fit',${rr.lexical_social_fit}::int,'stance',${rr.stance}::int,'composition',${rr.composition}::int),
+          severity=${sev}::text,
+          flags=${ff}::text[],
+          confidence=${conf}::text,
+          human_ambiguous=${amb}::boolean,
+          review_note=${note||null}::text,
+          revision_no=revision_no+1,
+          review_sha256=${hs.review_sha}::text,
+          updated_at=pg_catalog.now()
+          where id=${Number(old[0].id)}::bigint`;
+      }
+    } else {
+      await tx`insert into private.tcj_qualification_human_reviews(
+        protocol_id,evidence_item_id,reviewer_user_id,review_state,final_scenario_text,final_candidate_text,scenario_sha256,candidate_sha256,ratings,severity,flags,confidence,human_ambiguous,review_note,review_sha256
+      ) values(
+        ${Number(x.protocol_id)}::bigint,
+        ${Number(x.evidence_item_id)}::bigint,
+        ${actor}::uuid,
+        'draft',
+        ${scenario}::text,
+        ${candidate}::text,
+        ${hs.scenario_sha}::text,
+        ${hs.candidate_sha}::text,
+        jsonb_build_object('intent',${rr.intent}::int,'thai_pragmatics',${rr.thai_pragmatics}::int,'bff_voice',${rr.bff_voice}::int,'lexical_social_fit',${rr.lexical_social_fit}::int,'stance',${rr.stance}::int,'composition',${rr.composition}::int),
+        ${sev}::text,
+        ${ff}::text[],
+        ${conf}::text,
+        ${amb}::boolean,
+        ${note||null}::text,
+        ${hs.review_sha}::text
+      )`;
+    }
+  });
+  return getCase(null);
+}
+
+async function freeze(actor:string){
+  const r=await sql`select private.tcj_freeze_qualification_bank(${PROTOCOL}::text,${actor}::uuid) result`;
+  return {...(await progress()),freeze:r[0]?.result||null,current:null};
+}
+
+Deno.serve(async(req:Request)=>{
+  const origin=req.headers.get('origin');
+  if(req.method==='OPTIONS') return new Response(null,{status:204,headers:headers(origin)});
+  if(req.method!=='POST') return out(origin,{error:'method_not_allowed'},405);
+  const c=claims(req); if(!c) return out(origin,{error:'unauthorized'},401);
+  if(!(await admin(c))) return out(origin,{error:'forbidden'},403);
+  let body:any={}; try{ body=await req.json(); }catch{}
+  const action=String(body?.action||'status');
+  try{
+    if(action==='status') return out(origin,await getCase(null));
+    if(action==='case') return out(origin,await getCase(Number(body?.review_order||0)||null));
+    if(action==='save_review') return out(origin,await saveReview(body,c.sub));
+    if(action==='freeze') return out(origin,await freeze(c.sub));
+    return out(origin,{error:'unknown_action'},400);
+  }catch(e){
+    const msg=e instanceof Error?e.message:'unexpected_error';
+    const blocked=/gate|frozen|not_editable|missing|required|invalid|rating|severity|confidence|flags|case/.test(msg);
+    return out(origin,{error:msg},blocked?409:503);
+  }
+});
