@@ -21,7 +21,7 @@
     "supplemental_clean_target": 20,
     "clean_benchmark_target": 1000,
     "unique_reviewed_evidence_target": 1968,
-    "next_action": "Reverify canonical Batch 2 live state before continuing B2-0041-B2-0060; this manifest's live revalidation flag refers to the TCJ Qualification state below, not every Batch 2 count."
+    "next_action": "Reverify canonical Batch 2 live state before continuing B2-0041-B2-0060; this manifest's live revalidation flag refers to the TCJ state below, not every Batch 2 count."
   },
   "tcj": {
     "standard_live": true,
@@ -56,10 +56,30 @@
     "research_remediation": {
       "source_run": "TCJ-JUDGE-QUALIFICATION-RUN-2026Q3-v1.1",
       "source_evidence_role": "exposed_development_evidence_only",
-      "profile_version": "TCJ-ANSWERS-BFF-v3-research",
-      "profile_status": "research_draft",
-      "profile_sha256": "1538c9fd6b9487b5e8a3757ec69ba88a27efeb74b058c70a7875d17ce8e88fa1",
-      "prevention_rules": 10,
+      "v3_prompt_ablation": {
+        "profile_version": "TCJ-ANSWERS-BFF-v3-research",
+        "profile_sha256": "1538c9fd6b9487b5e8a3757ec69ba88a27efeb74b058c70a7875d17ce8e88fa1",
+        "status": "running_research_replay",
+        "early_signal": "prompt_tightening_regressed_native_alignment",
+        "authority": "none"
+      },
+      "contrastive_anchor_set": {
+        "anchor_set_key": "ANSWERS-BFF-VOICE-ANCHORS-v1",
+        "anchor_count": 968,
+        "approved_unchanged": 566,
+        "human_edited_pairs": 402,
+        "manifest_sha256": "260bdf1c00f7c4ac8560b29ef2f4895438fb5a368a644f9658a3c335f584a92a",
+        "status": "research_frozen",
+        "model_training_eligible_default": false
+      },
+      "next_evaluator": {
+        "evaluator_key": "TCJ-EVAL-ANSWERS-BFF-v4-research",
+        "configuration_sha256": "581873845b0656294874b37913d02a920a3628127f8f9b2a68671ac48807ac32",
+        "status": "research_draft",
+        "qualification_unit": "full_evaluator_configuration_not_naked_model",
+        "architecture": "contrastive_guarded_multi_pass",
+        "authority": "none"
+      },
       "failure_clusters": 8,
       "native_human_gold_authoritative": true,
       "case_design_labels_are_hypotheses": true,
@@ -68,7 +88,7 @@
     },
     "current_architecture_stage": 8,
     "current_stage_key": "panel",
-    "current_stage_state": "research_remediation_no_qualified_judges",
+    "current_stage_state": "research_remediation_no_qualified_evaluator",
     "product_direction": "plug_and_play_gateway",
     "external_ai_required": false,
     "external_api_integration_gate": "after_fresh_qualification_panel_assurance_reproducibility_and_final_freeze",
@@ -80,7 +100,7 @@
     "voice_profile_improvement_service": "recurring_license_extension",
     "buyer_data_improvement": "opt_in_provenance_controlled",
     "cross_customer_improvement": "separate_explicit_opt_in_required",
-    "next_action": "Replay and iterate TCJ-ANSWERS-BFF-v3-research on exposed Qualification v1.1 as development evidence, reducing known judge failure modes without changing native-human gold or frozen thresholds. When the revised judge contract is ready, freeze it, create a fresh hidden Qualification bank, then stop for native-human blind review. Do not connect OpenAI or xAI production adapters until fresh Qualification, Panel, Assurance, reproducibility and final TCJ freeze all pass."
+    "next_action": "Finish the v3 prompt-only replay as a research ablation. Then implement and evaluate TCJ-EVAL-ANSWERS-BFF-v4-research using contrastive native anchors, conservative guards, challenge-on-risk and independent dimension resolution on exposed v1.1 DEV evidence. Do not change native-human gold or frozen thresholds. After research convergence, freeze the evaluator configuration, create a fresh hidden Qualification bank, and stop for native-human blind review. OpenAI/xAI adapters remain gated until final TCJ release freeze."
   },
   "security": {
     "private_server_migration_complete": true,
