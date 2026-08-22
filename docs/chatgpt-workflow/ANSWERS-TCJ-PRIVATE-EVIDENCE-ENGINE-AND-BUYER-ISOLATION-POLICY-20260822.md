@@ -509,4 +509,27 @@ For buyer-specific profiles:
 
 > **Your private evidence can remain in your environment. TCJ uses it to improve your own private Voice Profile and evaluation layer without requiring your raw evidence to be sent to an external AI provider.**
 
+---
+
+## 19. Architecture-inversion rule before escalation
+
+When TCJ encounters a provider, model-capability, licensing, privacy, latency or evidence-exposure wall, the default response is **not** to weaken the evaluation method, expose more proprietary evidence, or ask the human owner to invent the implementation path.
+
+Before escalation, TCJ development must systematically test whether the constraint can be removed by changing the architecture itself:
+
+```text
+1. Can the dependency be eliminated?
+2. Can the trust boundary move?
+3. Can the buyer/external model become writer-only instead of judge?
+4. Can proprietary evidence remain behind a private service boundary?
+5. Can raw evidence be converted into non-reconstructive derived signals?
+6. Can a local/private component replace an external dependency?
+7. Can the commercial artifact be separated from the underlying R&D asset?
+8. Can qualification apply to a complete evaluator configuration rather than forcing a naked model to pass?
+```
+
+Only after these architecture-inversion checks fail should the project require a new human product decision.
+
+Frozen native-human gold, hidden-test integrity and proprietary evidence isolation must never be weakened merely to accommodate a model/provider limitation.
+
 This policy governs the final TCJ runtime evidence boundary until expressly superseded by a newer applied policy.
