@@ -36,8 +36,12 @@
     "external_ai_required": false,
     "tcj_core_class": "non_model_software_methodology",
     "voice_profile_class": "non_model_versioned_configuration",
+    "voice_profile_classification_rule": "technical_substance_over_label",
+    "voice_profile_portable_across_models": true,
+    "voice_profile_improvement_service": "recurring_license_extension",
     "buyer_data_improvement": "opt_in_provenance_controlled",
-    "next_action": "Continue the verified TCJ Qualification/Panel architecture track; product deployment policy is now governed separately by the plug-and-play deployment authority."
+    "cross_customer_improvement": "separate_explicit_opt_in_required",
+    "next_action": "Continue the verified TCJ Qualification/Panel architecture track; product deployment and Voice Profile licensing policies are governed separately by the 22 August product authorities."
   },
   "security": {
     "private_server_migration_complete": true,
@@ -52,6 +56,7 @@
     "tcj_method": "ANSWERS-TCJ-MULTI-JUDGE-CONSENSUS-ARCHITECTURE.md",
     "tcj_execution": "ANSWERS-TCJ-ROBUSTNESS-V1-COMPLETION-AND-PERTURBATION-DRAFT-20260821.md",
     "tcj_commercial_boundary": "ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md",
-    "tcj_product_deployment": "ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md"
+    "tcj_product_deployment": "ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md",
+    "tcj_voice_profile_licensing_extension": "ANSWERS-TCJ-VOICE-PROFILE-LICENSING-EXTENSION-20260822.md"
   }
 }
