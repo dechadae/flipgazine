@@ -6,6 +6,7 @@ const sql=postgres(DB,{prepare:false,max:2,idle_timeout:20,connect_timeout:10});
 const ORIGIN='https://flipgazine.pages.dev';
 const RUN_KEY='TCJ-JUDGE-QUALIFICATION-RUN-2026Q3-v1.1';
 const ADMISSION_KEY='TCJ-JUDGE-ADMISSION-2026Q3-v1.2';
+const QUAL_PASSPORT_VERSION='qualification-v1.1';
 
 type Claims={sub:string;session_id:string};
 function dec(s:string){return atob(s.replace(/-/g,'+').replace(/_/g,'/')+'='.repeat((4-s.length%4)%4));}
@@ -34,6 +35,10 @@ async function snapshot(){
   (select count(*)::int from private.tcj_qualification_run_incidents z where z.run_id=r.id and z.severity='warning') warning_incidents,
   (select count(*)::int from private.tcj_qualification_hash_attestations h where h.run_id=r.id) hash_attestations,
   (select count(*)::int from private.tcj_qualification_summaries q where q.run_id=r.id) qualification_summaries,
+  (select count(*)::int from private.tcj_judge_passports jp where jp.evidence_set_id=s.id and jp.passport_version=${QUAL_PASSPORT_VERSION}::text and jp.profile_id=p.profile_id) qualification_passports,
+  (select count(*)::int from private.tcj_judge_passports jp where jp.evidence_set_id=s.id and jp.passport_version=${QUAL_PASSPORT_VERSION}::text and jp.profile_id=p.profile_id and jp.qualification_state in ('qualified','partially_qualified')) authority_passports,
+  (select coalesce(sum(cardinality(jp.qualified_dimensions)),0)::int from private.tcj_judge_passports jp where jp.evidence_set_id=s.id and jp.passport_version=${QUAL_PASSPORT_VERSION}::text and jp.profile_id=p.profile_id) qualified_dimensions,
+  (select coalesce(sum(case when jsonb_typeof(jp.judging_evidence->'partially_qualified_dimensions')='array' then jsonb_array_length(jp.judging_evidence->'partially_qualified_dimensions') else 0 end),0)::int from private.tcj_judge_passports jp where jp.evidence_set_id=s.id and jp.passport_version=${QUAL_PASSPORT_VERSION}::text and jp.profile_id=p.profile_id) partial_dimensions,
   (select count(*)::int from private.tcj_panel_members) panel_members,
   (select count(*)::int from private.tcj_panel_runs) panel_runs,
   (select count(*)::int from private.tcj_panel_consensus) panel_consensus,
@@ -52,7 +57,7 @@ async function snapshot(){
  join private.tcj_qualification_protocols p on p.id=r.protocol_id
  join private.tcj_evidence_sets s on s.id=p.evidence_set_id
  where r.run_key=${RUN_KEY}::text limit 1`;
- const x:any=rows[0]; if(!x)throw new Error('qualification_run_missing');
+ const x:any=rows[0];if(!x)throw new Error('qualification_run_missing');
  const expected=Number(x.expected_cells||144),judgments=Number(x.judgments||0),terminal=Number(x.terminal_failures||0),done=judgments+terminal,pending=Math.max(0,expected-done),pct=expected?Math.round(done/expected*1000)/10:0;
  const admissionComplete=String(x.admission_state)==='complete'&&Number(x.stage_b_summaries)>=3;
  const robustnessComplete=Number(x.robustness_packs)>=2&&Number(x.robustness_summaries)>=6;
@@ -61,12 +66,14 @@ async function snapshot(){
  const qualificationBlocked=String(x.run_state)==='blocked'||Number(x.blocking_incidents)>0;
  const qualificationComplete=done>=expected&&Number(x.open_dispatches)===0&&!qualificationBlocked;
  const qualificationRunning=!qualificationComplete&&!qualificationBlocked&&String(x.run_state)==='running';
- const verificationComplete=Number(x.qualification_summaries)>=3&&qualificationComplete;
+ const verificationComplete=qualificationComplete&&String(x.run_state)==='complete'&&String(x.protocol_state)==='complete'&&!!x.run_manifest_sha256&&Number(x.qualification_summaries)>=3&&Number(x.qualification_passports)>=3;
+ const authorityAvailable=Number(x.authority_passports)>0&&(Number(x.qualified_dimensions)+Number(x.partial_dimensions)>0);
  const panelStarted=Number(x.panel_members)>0||Number(x.panel_runs)>0;
  const panelComplete=Number(x.panel_members)>0&&Number(x.panel_runs)>0&&Number(x.panel_consensus)>0;
  const assuranceStarted=Number(x.assurance_packs)>0||Number(x.assurance_items)>0||String(x.assurance_bank_state)==='frozen';
  const assuranceComplete=Number(x.assurance_exposures)>0&&String(x.assurance_bank_state)==='frozen';
  const foundationComplete=!!x.threshold_sha256&&!!x.human_manifest_sha256&&!!x.evidence_manifest;
+ const noQualifiedJudges=verificationComplete&&!authorityAvailable;
  const stages=[
   stage(1,'foundation','Core architecture + frozen evaluation contract',foundationComplete?'complete':'pending',foundationComplete?'Core/profile, thresholds and evidence contracts are version-bound.':'Foundation contract is not fully frozen.'),
   stage(2,'admission','Candidate judge admission',admissionComplete?'complete':'pending',admissionComplete?'Admission v1.2 completed with frozen Stage B evidence.':'Admission evidence is incomplete.',String(x.stage_b_summaries||0)+' Stage B summaries'),
@@ -74,8 +81,8 @@ async function snapshot(){
   stage(4,'preliminary_passports','Preliminary research passports',prelimPassportsComplete?'complete':'pending',prelimPassportsComplete?'Preliminary passports exist; they do not grant production authority.':'Preliminary passport evidence is incomplete.',String(x.passport_dossiers||0)+' dossiers'),
   stage(5,'human_qualification','Hidden Qualification human gold',humanBankComplete?'complete':'pending',humanBankComplete?'48/48 native-human reviews are frozen and manifest-bound.':'Human Qualification bank is not frozen.',String(x.frozen_reviews||0)+' / 48'),
   stage(6,'machine_qualification','Machine Qualification',qualificationBlocked?'blocked':qualificationComplete?'complete':qualificationRunning?'running':'pending',qualificationBlocked?'Research-integrity block requires investigation before any continuation.':qualificationComplete?'All 144 qualification evidence cells are accounted for.':qualificationRunning?'Server-owned worker is evaluating the 144 hidden cells.':'Waiting to begin machine Qualification.',done+' / '+expected),
-  stage(7,'verification','Qualification ledger verification + production Passports',verificationComplete?'complete':qualificationComplete?'ready':'pending',verificationComplete?'Qualification summaries are verified and production authority can be derived.':qualificationComplete?'Machine evidence is complete; independent verification is the next automatic gate.':'Starts only after 144/144 machine evidence cells.',String(x.qualification_summaries||0)+' summaries'),
-  stage(8,'panel','Qualified Panel assembly + disagreement policy',panelComplete?'complete':panelStarted?'running':'pending',panelComplete?'Qualified panel evidence and consensus layer exist.':panelStarted?'Panel construction is in progress.':'Not started; waits for final dimension-level Qualification.',String(x.panel_members||0)+' members'),
+  stage(7,'verification','Qualification ledger verification + Qualification Passports',verificationComplete?'complete':qualificationComplete?'ready':'pending',verificationComplete?(authorityAvailable?'Ledger, summaries and Qualification Passports are frozen; production-authority dimensions are available for Panel assembly.':'Ledger, 3 summaries and 3 Qualification Passports are frozen. All candidates remain research-only; no production authority was established.'):qualificationComplete?'Machine evidence is complete; independent verification is the next automatic gate.':'Starts only after all machine evidence cells are accounted for.',String(x.qualification_summaries||0)+' summaries · '+String(x.qualification_passports||0)+' Passports'),
+  stage(8,'panel','Qualified Panel assembly + disagreement policy',panelComplete?'complete':panelStarted?'running':'pending',panelComplete?'Qualified panel evidence and consensus layer exist.':panelStarted?'Panel construction is in progress.':noQualifiedJudges?'Cannot assemble a production Panel from this candidate set: zero candidates passed a Qualification dimension. A new candidate/config set and a fresh hidden Qualification bank are required.':'Not started; waits for final dimension-level Qualification.',noQualifiedJudges?'0 qualified judges':String(x.panel_members||0)+' members'),
   stage(9,'assurance','Independent Assurance holdout',assuranceComplete?'complete':assuranceStarted?'draft':'pending',assuranceComplete?'Separate Assurance evidence has been exercised.':assuranceStarted?'Assurance bank exists but is not yet a completed validation run.':'Separate holdout remains untouched.',String(x.assurance_items||0)+' items'),
   stage(10,'final_freeze','Final TCJ architecture freeze',assuranceComplete&&panelComplete&&verificationComplete?'ready':'pending','Final release gate: freeze architecture/runtime after Qualification, Panel and Assurance all pass.')
  ];
@@ -83,12 +90,13 @@ async function snapshot(){
  const completeCount=stages.filter((s:any)=>s.status==='complete').length;
  const worker:any=x.worker||{};
  let humanNeeded=false,humanMessage='No human judgment required at this stage.';
- if(qualificationBlocked){humanNeeded=false;humanMessage='Automation is blocked by an integrity gate. Technical investigation is required before any human judgment.';}
+ if(qualificationBlocked){humanMessage='Automation is blocked by an integrity gate. Technical investigation is required before any human judgment.';}
+ else if(noQualifiedJudges){humanMessage='No human judgment required yet. Automatic candidate/config diagnosis can continue; native-human review will be required before a fresh hidden Qualification bank is frozen.';}
  else if(current.key==='assurance'&&String(current.status)==='draft'){humanNeeded=true;humanMessage='A future Assurance human-review gate may require native judgment once its evidence bank is prepared.';}
  return{
   generated_at:new Date().toISOString(),
   overall:{current_stage:current.n,current_key:current.key,current_title:current.title,stage_count:stages.length,complete_gates:completeCount,human_needed:humanNeeded,human_message:humanMessage},
-  qualification:{run_key:RUN_KEY,run_state:String(x.run_state),protocol_state:String(x.protocol_state),bank_state:String(x.bank_state),expected,done,pending,percent:pct,judgments,terminal_failures:terminal,dispatches:Number(x.dispatches||0),responses:Number(x.responses||0),attempts:Number(x.attempts||0),open_dispatches:Number(x.open_dispatches||0),active_failures:Number(x.active_failures||0),warning_incidents:Number(x.warning_incidents||0),blocking_incidents:Number(x.blocking_incidents||0),hash_attestations:Number(x.hash_attestations||0),started_at:x.started_at||null,completed_at:x.completed_at||null},
+  qualification:{run_key:RUN_KEY,run_state:String(x.run_state),protocol_state:String(x.protocol_state),bank_state:String(x.bank_state),expected,done,pending,percent:pct,judgments,terminal_failures:terminal,dispatches:Number(x.dispatches||0),responses:Number(x.responses||0),attempts:Number(x.attempts||0),open_dispatches:Number(x.open_dispatches||0),active_failures:Number(x.active_failures||0),warning_incidents:Number(x.warning_incidents||0),blocking_incidents:Number(x.blocking_incidents||0),hash_attestations:Number(x.hash_attestations||0),summaries:Number(x.qualification_summaries||0),passports:Number(x.qualification_passports||0),authority_passports:Number(x.authority_passports||0),qualified_dimensions:Number(x.qualified_dimensions||0),partial_dimensions:Number(x.partial_dimensions||0),run_manifest_sha256:x.run_manifest_sha256||null,started_at:x.started_at||null,completed_at:x.completed_at||null},
   worker:{enabled:!!worker.enabled,last_status:worker.last_status||null,last_error:worker.last_error||null,lease_until:worker.lease_until||null,updated_at:worker.updated_at||null},
   latest_incident:x.latest_incident||null,
   stages
