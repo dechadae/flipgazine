@@ -75,12 +75,16 @@ Detailed Answers documentation is indexed at:
 
 Use these ownership boundaries:
 
-1. `docs/chatgpt-workflow/ANSWERS-COMMERCIAL-EXECUTION-TIMELINE.md` — current dated work and milestones.
-2. `docs/chatgpt-workflow/ANSWERS-COMMERCIAL-BENCHMARK-PLAN.md` — commercial methodology, positioning, licensing and claim limits.
-3. `docs/chatgpt-workflow/ANSWERS-VOICE-TONE.md` — canonical Thai/English editorial authority.
-4. `docs/chatgpt-workflow/ANSWERS-HUMAN-REVIEW.md` — immutable Batch 1 review/provenance record.
-5. `docs/chatgpt-workflow/ANSWERS-PRIVATE-SERVER-PHASE-K-MIGRATION-MANIFEST.md` — final migration proof/current security checkpoint.
-6. `docs/chatgpt-workflow/ANSWERS-PRIVATE-SERVER-MIGRATION-PLAN.md` plus Phase A–K reports — historical implementation/audit trail.
+1. `docs/chatgpt-workflow/ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-FREEZE-20260822.md` — frozen final commercial TCJ topology/trust-boundary authority. Architecture is frozen; production authority is not.
+2. `docs/chatgpt-workflow/ANSWERS-TCJ-V3-ABLATION-COMPLETION-AND-PRIVATE-EVIDENCE-V4-DIRECTION-20260822.md` — current TCJ execution authority inside the frozen architecture.
+3. `docs/chatgpt-workflow/ANSWERS-TCJ-PRIVATE-EVIDENCE-ENGINE-AND-BUYER-ISOLATION-POLICY-20260822.md` — proprietary evidence boundary.
+4. `docs/chatgpt-workflow/ANSWERS-TCJ-BYOJ-JUDGE-RUNTIME-AND-API-KEY-POLICY-20260822.md` — BYOJ / Local Judge / BYOK Judge runtime authority.
+5. `docs/chatgpt-workflow/ANSWERS-COMMERCIAL-EXECUTION-TIMELINE.md` — current dated work and milestones.
+6. `docs/chatgpt-workflow/ANSWERS-COMMERCIAL-BENCHMARK-PLAN.md` — commercial methodology, positioning, licensing and claim limits.
+7. `docs/chatgpt-workflow/ANSWERS-VOICE-TONE.md` — canonical Thai/English editorial authority.
+8. `docs/chatgpt-workflow/ANSWERS-HUMAN-REVIEW.md` — immutable Batch 1 review/provenance record.
+9. `docs/chatgpt-workflow/ANSWERS-PRIVATE-SERVER-PHASE-K-MIGRATION-MANIFEST.md` — final migration proof/current security checkpoint.
+10. `docs/chatgpt-workflow/ANSWERS-PRIVATE-SERVER-MIGRATION-PLAN.md` plus Phase A–K reports — historical implementation/audit trail.
 
 Editorial precedence:
 
@@ -88,7 +92,9 @@ Editorial precedence:
 
 Architecture precedence:
 
-> **current live state → current operational authority → frozen historical evidence**
+> **current live state → frozen final commercial TCJ architecture → current operational authority → frozen historical evidence**
+
+The frozen commercial architecture may be reopened only by an explicit superseding architecture decision. Do not redesign its trust boundaries merely because one model/provider cannot satisfy them.
 
 ---
 
@@ -324,3 +330,42 @@ DOCUMENTATION
 ```
 
 The sophistication belongs backstage. The public Book should continue to feel simple.
+
+---
+
+## 13. Frozen final TCJ commercial architecture
+
+For TCJ commercial-product work, preserve this frozen topology:
+
+```text
+BUYER WRITER
+→ TCJ GATEWAY
+→ VOICE PROFILE
+→ PRIVATE TCJ EVIDENCE ENGINE
+→ DERIVED NON-RECONSTRUCTIVE SIGNALS
+→ BYOJ SELECTED JUDGE
+     ├─ LOCAL JUDGE = self-hosted/private inference
+     └─ BYOK JUDGE = supported external provider + buyer credential
+→ TCJ DETERMINISTIC GUARDS
+→ RISK-TRIGGERED CHALLENGE
+→ INDEPENDENT SIX-DIMENSION RESOLVER
+→ ACCEPT / REVISE / ESCALATE
+→ TARGETED WRITER REVISION IF REQUIRED
+→ TCJ RECHECK
+→ FINAL OUTPUT
+```
+
+Hard rules:
+
+- Voice Profile defines target quality; it does not expose the corpus.
+- Private Evidence Engine is the only normal runtime component allowed to inspect raw proprietary TCJ evidence.
+- Local/BYOK judges receive the current candidate, Voice Profile contract and derived/non-reconstructive TCJ signals, not raw Batch rows/anchors.
+- Buyer writer receives only final decision/revision guidance.
+- Default real-time `max_revision_cycles = 1`.
+- Qualification authority attaches to the complete frozen evaluator configuration, not a naked model.
+- OpenAI/Sol may be a reference/recommended BYOK judge but is not mandatory.
+- Architecture freeze does not mean production authority. Fresh Qualification, Panel/reliability validation, Assurance, security, tenant/evidence-isolation tests, reproducibility and release acceptance remain mandatory.
+
+Primary authority:
+
+`docs/chatgpt-workflow/ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-FREEZE-20260822.md`
