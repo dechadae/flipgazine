@@ -91,7 +91,7 @@
         "configuration_sha256": "581873845b0656294874b37913d02a920a3628127f8f9b2a68671ac48807ac32",
         "status": "research_draft",
         "qualification_unit": "full_evaluator_configuration_not_naked_model",
-        "architecture": "private_evidence_contrastive_guarded_multi_pass_local_judge",
+        "architecture": "voice_profile_private_evidence_derived_signals_selected_judge_runtime_guarded_multi_pass",
         "authority": "none"
       },
       "failure_clusters": 8,
@@ -103,10 +103,10 @@
     "current_architecture_stage": 8,
     "current_stage_key": "panel",
     "current_stage_state": "research_remediation_no_qualified_evaluator",
-    "product_direction": "private_evidence_local_judge_gateway",
-    "final_runtime_path": "buyer_ai_candidate_to_tcj_private_evidence_engine_to_private_local_judge_to_tcj_resolver_to_revision_instruction_to_buyer_ai",
-    "buyer_ai_role": "writer_reviser_only",
-    "buyer_connected_ai_raw_internal_evidence_access": false,
+    "product_direction": "private_evidence_byoj_gateway",
+    "final_runtime_path": "buyer_writer_candidate_to_tcj_gateway_to_voice_profile_to_private_evidence_engine_to_derived_non_reconstructive_signals_to_selected_judge_runtime_to_tcj_resolver_to_revision_instruction_to_buyer_writer",
+    "buyer_writer_role": "generation_and_inference_time_revision",
+    "buyer_writer_raw_internal_evidence_access": false,
     "buyer_raw_internal_corpus_access": false,
     "internal_batches_non_deliverable": true,
     "private_evidence_engine": {
@@ -114,17 +114,33 @@
       "raw_internal_corpus_access": true,
       "buyer_facing_retrieval_api": false,
       "preferred_downstream_output": "derived_non_reconstructive_signals",
-      "raw_examples_to_buyer_ai": false
+      "raw_examples_to_writer": false,
+      "raw_examples_to_judge_runtime_default": false
     },
-    "private_local_judge": {
-      "role": "tcj_internal_semantic_evaluator",
-      "buyer_model": false,
-      "production_authority_requires_fresh_qualification": true
+    "judge_runtime": {
+      "umbrella_term": "BYOJ",
+      "byoj_expansion": "Bring Your Own Judge",
+      "local_judge_definition": "buyer_or_tcj_self_hosted_private_model_endpoint_no_external_provider_required",
+      "byok_judge_definition": "supported_external_provider_model_using_buyer_supplied_api_credential",
+      "external_judge_preferred_buyer_term": "BYOK Judge",
+      "raw_internal_evidence_access": false,
+      "runtime_inputs": [
+        "current_candidate",
+        "selected_voice_profile_contract",
+        "derived_non_reconstructive_tcj_signals"
+      ],
+      "connected_not_equal_qualified": true,
+      "production_authority_unit": "full_frozen_evaluator_configuration",
+      "buyer_pays_external_provider_directly_by_default": true,
+      "reference_byok_candidate": "OpenAI latest approved Sol-class model; resolve and freeze exact API identifier at integration/Qualification time",
+      "openai_mandatory": false
     },
+    "voice_profile_runtime_position": "after_gateway_before_private_evidence_engine",
+    "voice_profile_role": "defines_target_quality_and_retrieval_policy_without_exposing_raw_evidence",
     "air_gapped_default_profile_policy": "signed_compiled_non_reconstructive_evidence_artifact_no_raw_internal_rows",
     "external_ai_required": false,
     "external_api_integration_gate": "after_fresh_qualification_panel_assurance_reproducibility_and_final_freeze",
-    "post_freeze_adapters_planned": ["openai", "xai"],
+    "post_freeze_reference_byok_adapters_planned": ["openai", "xai"],
     "tcj_core_class": "non_model_software_methodology",
     "voice_profile_class": "non_model_versioned_configuration",
     "voice_profile_classification_rule": "technical_substance_over_label",
@@ -132,7 +148,7 @@
     "voice_profile_improvement_service": "recurring_license_extension",
     "buyer_data_improvement": "opt_in_provenance_controlled",
     "cross_customer_improvement": "separate_explicit_opt_in_required",
-    "next_action": "Treat the completed v3 replay as a negative prompt-only ablation. Implement TCJ-EVAL-ANSWERS-BFF-v4-research around the Private Evidence Engine, non-reconstructive contrastive signals, risk-triggered challenge, independent dimension resolution and a private TCJ local semantic judge. Buyer-connected AI must receive only final decisions/revision instructions, never raw internal corpus evidence. Do not change native-human gold or frozen thresholds. After research convergence, freeze the evaluator configuration, create a fresh hidden Qualification bank, and stop for native-human blind review. OpenAI/xAI adapters remain gated until final TCJ release freeze."
+    "next_action": "Treat the completed v3 replay as a negative prompt-only ablation. Implement TCJ-EVAL-ANSWERS-BFF-v4-research around the Voice Profile, Private Evidence Engine, derived non-reconstructive contrastive signals, risk-triggered challenge and independent dimension resolution, while keeping the semantic judge behind a BYOJ abstraction. The commercial judge may later be a qualified Local Judge or supported BYOK Judge; neither receives raw internal corpus evidence. Do not change native-human gold or frozen thresholds. After research convergence, freeze the evaluator configuration, create a fresh hidden Qualification bank, and stop for native-human blind review. OpenAI/xAI BYOK adapters remain gated until final TCJ release freeze."
   },
   "security": {
     "private_server_migration_complete": true,
@@ -150,6 +166,7 @@
     "tcj_commercial_boundary": "ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md",
     "tcj_product_deployment": "ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md",
     "tcj_private_evidence_runtime": "ANSWERS-TCJ-PRIVATE-EVIDENCE-ENGINE-AND-BUYER-ISOLATION-POLICY-20260822.md",
+    "tcj_judge_runtime": "ANSWERS-TCJ-BYOJ-JUDGE-RUNTIME-AND-API-KEY-POLICY-20260822.md",
     "tcj_voice_profile_licensing_extension": "ANSWERS-TCJ-VOICE-PROFILE-LICENSING-EXTENSION-20260822.md"
   }
 }
