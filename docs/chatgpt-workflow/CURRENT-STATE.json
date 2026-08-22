@@ -1,6 +1,6 @@
 {
-  "schema_version": 2,
-  "as_of": "2026-08-22T23:47:00+07:00",
+  "schema_version": 3,
+  "as_of": "2026-08-22T23:54:00+07:00",
   "scope": "repository_documentation_checkpoint",
   "live_state_independently_reverified": true,
   "canonical_supabase_project": "sjpvhgxacsiorrtijqua",
@@ -56,23 +56,6 @@
       "observed_resolved_model": "gpt-5.6-sol",
       "role": "reference_BYOK_semantic_judge_not_authority_by_itself"
     },
-    "sol_primary_dev": {
-      "run_key": "TCJ-SOL-REFERENCE-DEV-QV11-v1.3",
-      "status": "complete",
-      "independent_dimension_calls": 288,
-      "valid_calls": 288,
-      "extreme_reversals_before_tcj_composite": 25
-    },
-    "sol_challenge_dev": {
-      "clean_run_key": "TCJ-SOL-COMPOSITE-DEV-QV11-v1.4.1",
-      "status": "challenge_complete",
-      "selected_dimension_calls": 139,
-      "valid_calls": 139,
-      "provider_context_private_evidence_leaks": 0,
-      "provider_context_primary_score_leaks": 0,
-      "blocked_predecessor": "TCJ-SOL-COMPOSITE-DEV-QV11-v1.4",
-      "blocked_reason": "challenge metadata label crossed intended independence boundary; preserved as failed experiment"
-    },
     "research_frozen_reference_evaluator": {
       "evaluator_key": "TCJ-EVAL-ANSWERS-BFF-SOL-v1.5-frozen-dev",
       "status": "research_frozen",
@@ -83,7 +66,10 @@
       "guard_policy_sha256": "8e6b3ce97f6c27554133c05508a86996386d8426a1d88b86012a6f9370faf268",
       "resolver": "TCJ-DIM-RESOLVER-v1.1",
       "resolver_sha256": "99d7146a4c6244ff61a2825a5b5c204dc502151e8d14f4f021a1a030e277308d",
-      "authority": "none_until_fresh_hidden_qualification"
+      "evidence_mode": "eager_precomputed_derived_signals",
+      "interactive_private_evidence_tool_bound": false,
+      "authority": "none_until_fresh_hidden_qualification",
+      "passport_scope_if_pass": "eager_precomputed_derived_signals_only"
     },
     "materialized_exposed_dev_result": {
       "run_key": "TCJ-SOL-COMPOSITE-DEV-QV11-v1.5",
@@ -95,14 +81,6 @@
       "extreme_reversals": 0,
       "false_fluent_human_major_or_critical": 0,
       "production_decisions": {"ACCEPT": 28, "REVISE": 7, "ESCALATE": 13},
-      "dimension_metrics": {
-        "intent": {"mae": 0.2292, "within_one": 48, "extreme_reversals": 0, "target_within_one": 8},
-        "thai_pragmatics": {"mae": 0.3333, "within_one": 48, "extreme_reversals": 0, "target_within_one": 8},
-        "bff_voice": {"mae": 0.2292, "within_one": 47, "extreme_reversals": 0, "target_within_one": 8},
-        "lexical_social_fit": {"mae": 0.5, "within_one": 48, "extreme_reversals": 0, "target_within_one": 8},
-        "stance": {"mae": 0.3958, "within_one": 48, "extreme_reversals": 0, "target_within_one": 8},
-        "composition": {"mae": 0.4375, "within_one": 47, "extreme_reversals": 0, "target_within_one": 8}
-      },
       "interpretation": "clears_unchanged_thresholds_on_exposed_development_evidence_only_not_authority"
     },
     "fresh_hidden_qualification_v2": {
@@ -111,6 +89,7 @@
       "status": "draft_review",
       "evaluator_frozen_before_bank_construction": true,
       "evaluator_configuration_sha256": "2894444317a07cccc89bef3a80d6d3851740c726f61863109afad487978f3191",
+      "qualified_mode_if_pass": "eager_precomputed_derived_signals_only",
       "threshold_sha256": "b805b1f9484ea5ce576f09187c467b268c1f7c20263efa3889041680af426836",
       "cases": 48,
       "distinct_scenarios": 48,
@@ -123,14 +102,67 @@
       "blind_review_url": "https://flipgazine.pages.dev/tcj-evaluator-qualification-review.html",
       "next_action": "STOP for native-human blind review. Freeze human gold before any evaluator call on this bank."
     },
+    "preferred_final_interactive_reference": {
+      "required": true,
+      "runtime": "selected_BYOJ_judge_bidirectionally_calls_narrow_tcj_evidence_assess_then_guards_challenge_resolver",
+      "tool_name_target": "tcj_evidence_assess",
+      "opaque_evaluation_id": true,
+      "arbitrary_search": false,
+      "sql_or_database_access": false,
+      "raw_row_return": false,
+      "nearest_example_return": false,
+      "returns_only_derived_non_reconstructive_signals": true,
+      "authority_bearing_fields": [
+        "tool_version",
+        "tool_schema_hash",
+        "allowed_analysis_families",
+        "allowed_dimensions",
+        "tool_call_budget",
+        "derived_signal_response_schema_hash",
+        "signal_aggregation_policy",
+        "private_evidence_engine_manifest",
+        "judge_model_and_settings",
+        "prompt_hash",
+        "guard_policy",
+        "challenge_policy",
+        "resolver_policy",
+        "revision_policy",
+        "complete_evaluator_configuration_hash"
+      ],
+      "qualification_rule": "materially_changed_interactive_successor_must_freeze_then_face_new_fresh_hidden_bank",
+      "current_v1_5_qualification_does_not_cover_this": true
+    },
     "commercial_architecture": {
       "topology_status": "frozen",
-      "runtime_path": "buyer_writer_to_gateway_to_voice_profile_to_private_evidence_engine_to_derived_non_reconstructive_signals_to_BYOJ_judge_to_guards_to_risk_challenge_to_dimension_resolver_to_ACCEPT_REVISE_ESCALATE_to_one_writer_revision_to_recheck",
+      "runtime_path": "buyer_writer_to_gateway_to_voice_profile_to_selected_BYOJ_judge_with_private_evidence_tool_to_private_evidence_engine_to_derived_non_reconstructive_signals_back_to_judge_to_guards_to_risk_challenge_to_dimension_resolver_to_ACCEPT_REVISE_ESCALATE_to_one_writer_revision_to_recheck",
+      "eager_precomputed_evidence_mode_also_valid": true,
       "raw_internal_evidence_to_writer": false,
-      "raw_internal_evidence_to_external_judge_default": false,
+      "raw_internal_evidence_to_judge": false,
       "max_revision_cycles_default": 1,
       "byoj": {"local_judge": true, "byok_external_judge": true, "openai_mandatory": false},
-      "remaining_after_qualification": ["authority_passport", "panel", "independent_assurance", "security_and_exfiltration_tests", "fresh_install_reproducibility", "BYOJ_packaging", "commercial_release_freeze"]
+      "byok_commercial_default": {
+        "buyer_owns_provider_account": true,
+        "buyer_controls_api_key": true,
+        "buyer_pays_provider_usage_directly": true,
+        "tcj_license_separate": true,
+        "managed_bundled_inference": "future_separate_review"
+      },
+      "remaining_release_path": [
+        "complete_current_v1_5_blind_qualification",
+        "scoped_eager_passport_if_pass",
+        "implement_interactive_private_evidence_tool",
+        "freeze_interactive_successor",
+        "new_fresh_hidden_qualification_for_interactive_successor",
+        "interactive_authority_passport_if_pass",
+        "panel",
+        "independent_assurance",
+        "security_and_exfiltration_tests",
+        "tenant_isolation",
+        "fresh_install_reproducibility",
+        "BYOJ_packaging",
+        "latency_cost_revision_success_measurement",
+        "commercial_release_freeze"
+      ]
     }
   },
   "security": {
@@ -138,7 +170,8 @@
     "commercial_release_blockers": [
       "resolve_or_isolate remaining project-wide Supabase advisor findings including legacy SECURITY DEFINER surfaces",
       "replace service-role-key reuse in x-tcj-internal-key with dedicated independently rotatable TCJ internal secret",
-      "complete tenant-isolation and evidence-exfiltration tests"
+      "complete tenant-isolation and evidence-exfiltration tests",
+      "prove private evidence tool capability denial and server-enforced call budgets"
     ]
   },
   "github_sync": {
@@ -150,6 +183,8 @@
   "authorities": {
     "document_map": "DOCUMENT-AUTHORITY-MAP.md",
     "tcj_final_product_architecture": "ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-FREEZE-20260822.md",
+    "tcj_private_evidence_tool_clarification": "ANSWERS-TCJ-SOL-PRIVATE-EVIDENCE-TOOL-AND-COMMERCIAL-LICENSING-CLARIFICATION-20260822.md",
+    "tcj_final_product_execution_plan": "ANSWERS-TCJ-FINAL-PRODUCT-IMPLEMENTATION-AND-QUALIFICATION-PLAN-20260822.md",
     "tcj_private_evidence_runtime": "ANSWERS-TCJ-PRIVATE-EVIDENCE-ENGINE-AND-BUYER-ISOLATION-POLICY-20260822.md",
     "tcj_judge_runtime": "ANSWERS-TCJ-BYOJ-JUDGE-RUNTIME-AND-API-KEY-POLICY-20260822.md",
     "tcj_current_execution_checkpoint": "ANSWERS-TCJ-SOL-V15-RESEARCH-FREEZE-AND-FRESH-QUALIFICATION-V2-20260822.md",
