@@ -121,13 +121,21 @@
         "accept_revise_escalate_policy",
         "buyer_writer_revision_loop"
       ],
+      "clarifications": [
+        {
+          "document": "ANSWERS-TCJ-SOL-PRIVATE-EVIDENCE-TOOL-AND-COMMERCIAL-LICENSING-CLARIFICATION-20260822.md",
+          "status": "governing_without_reopening_freeze",
+          "scope": "judge_initiated_private_evidence_tool_commercial_licensing_byok_and_openai_terms_checkpoint",
+          "preserves_original_freeze_blob": true
+        }
+      ],
       "reopen_rule": "only_explicit_superseding_architecture_decision"
     },
     "current_architecture_stage": 8,
     "current_stage_key": "panel",
     "current_stage_state": "research_remediation_no_qualified_evaluator",
     "product_direction": "frozen_private_evidence_byoj_gateway_architecture",
-    "final_runtime_path": "buyer_writer_candidate_to_tcj_gateway_to_voice_profile_to_private_evidence_engine_to_derived_non_reconstructive_signals_to_selected_judge_runtime_to_tcj_guards_challenge_resolver_to_revision_instruction_to_buyer_writer_to_tcj_recheck",
+    "final_runtime_path": "buyer_writer_candidate_to_tcj_gateway_to_voice_profile_to_private_evidence_engine_or_judge_initiated_private_evidence_tool_to_derived_non_reconstructive_signals_to_selected_judge_runtime_to_tcj_guards_challenge_resolver_to_revision_instruction_to_buyer_writer_to_tcj_recheck",
     "buyer_writer_role": "generation_and_inference_time_revision",
     "buyer_writer_raw_internal_evidence_access": false,
     "buyer_raw_internal_corpus_access": false,
@@ -138,7 +146,20 @@
       "buyer_facing_retrieval_api": false,
       "preferred_downstream_output": "derived_non_reconstructive_signals",
       "raw_examples_to_writer": false,
-      "raw_examples_to_judge_runtime_default": false
+      "raw_examples_to_judge_runtime_default": false,
+      "judge_initiated_tool_mode": {
+        "approved": true,
+        "tool_name_target": "tcj_evidence_assess",
+        "interface_type": "narrow_allowlisted_capability_not_generic_search",
+        "preferred_primary_key": "opaque_evaluation_id",
+        "free_form_sql": false,
+        "arbitrary_corpus_search": false,
+        "raw_row_return": false,
+        "nearest_example_return": false,
+        "returns_only_derived_non_reconstructive_signals": true,
+        "prompt_injection_exfiltration_prevented_by_capability_absence": true,
+        "authority_bearing_component": true
+      }
     },
     "judge_runtime": {
       "umbrella_term": "BYOJ",
@@ -152,13 +173,30 @@
         "selected_voice_profile_contract",
         "derived_non_reconstructive_tcj_signals"
       ],
+      "evidence_invocation_modes": [
+        "eager_precomputed_derived_signals",
+        "judge_initiated_private_evidence_tool_derived_signals_only"
+      ],
       "connected_not_equal_qualified": true,
-      "production_authority_unit": "full_frozen_evaluator_configuration",
+      "production_authority_unit": "full_frozen_evaluator_configuration_including_evidence_tool_schema_and_budget",
       "buyer_pays_external_provider_directly_by_default": true,
       "reference_byok_candidate": "OpenAI latest approved Sol-class model; resolve and freeze exact API identifier at integration/Qualification time",
       "openai_mandatory": false
     },
-    "voice_profile_runtime_position": "after_gateway_before_private_evidence_engine",
+    "commercial_licensing": {
+      "tcj_and_third_party_ai_licensed_separately_by_default": true,
+      "byok_default_enterprise_model": true,
+      "buyer_supplies_provider_account_and_credential": true,
+      "buyer_pays_provider_usage_directly": true,
+      "tcj_does_not_sell_or_transfer_api_keys": true,
+      "managed_bundled_inference": "future_separately_reviewed_option",
+      "openai_terms_rechecked_on": "2026-08-22",
+      "openai_customer_application_integration_supported_by_current_services_agreement": true,
+      "openai_api_business_data_training_default": "not_used_for_training_or_improvement_unless_opt_in",
+      "openai_zdr": "available_for_qualifying_api_organizations_and_eligible_endpoints_subject_to_current_terms_and_configuration",
+      "legal_warranty": false
+    },
+    "voice_profile_runtime_position": "after_gateway_before_private_evidence_interpretation_and_judge_tool_loop",
     "voice_profile_role": "defines_target_quality_and_retrieval_policy_without_exposing_raw_evidence",
     "air_gapped_default_profile_policy": "signed_compiled_non_reconstructive_evidence_artifact_no_raw_internal_rows",
     "external_ai_required": false,
@@ -174,7 +212,7 @@
     "voice_profile_improvement_service": "recurring_license_extension",
     "buyer_data_improvement": "opt_in_provenance_controlled",
     "cross_customer_improvement": "separate_explicit_opt_in_required",
-    "next_action": "Implement and qualify TCJ-EVAL-ANSWERS-BFF-v4-research inside the frozen final commercial architecture: Voice Profile -> Private Evidence Engine -> derived non-reconstructive signals -> BYOJ semantic judge -> TCJ guards -> risk-triggered challenge -> independent six-dimension resolver. Do not redesign the frozen trust boundary to accommodate a model/provider. Do not change native-human gold or frozen thresholds. After research convergence, freeze the exact evaluator configuration, create a fresh hidden Qualification bank, and stop for native-human blind review."
+    "next_action": "Implement and qualify TCJ-EVAL-ANSWERS-BFF-v4-research inside the frozen final commercial architecture, with the Sol reference path allowed to use a narrow judge-initiated TCJ Private Evidence Tool. The tool must resolve evidence server-side and return only derived non-reconstructive signals; no raw vault access, arbitrary search or SQL. Bind tool schema, allowed analysis families, call budget and signal contract into the evaluator configuration. Do not change native-human gold or frozen thresholds. After research convergence, freeze the exact evaluator configuration, create a fresh hidden Qualification bank, and stop for native-human blind review."
   },
   "security": {
     "private_server_migration_complete": true,
@@ -189,6 +227,7 @@
     "tcj_method": "ANSWERS-TCJ-MULTI-JUDGE-CONSENSUS-ARCHITECTURE.md",
     "tcj_execution": "ANSWERS-TCJ-V3-ABLATION-COMPLETION-AND-PRIVATE-EVIDENCE-V4-DIRECTION-20260822.md",
     "tcj_final_product_architecture": "ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-FREEZE-20260822.md",
+    "tcj_final_product_architecture_clarification": "ANSWERS-TCJ-SOL-PRIVATE-EVIDENCE-TOOL-AND-COMMERCIAL-LICENSING-CLARIFICATION-20260822.md",
     "tcj_qualification_completion": "ANSWERS-TCJ-QUALIFICATION-V11-COMPLETION-AND-RESEARCH-GATE-20260822.md",
     "tcj_commercial_boundary": "ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md",
     "tcj_product_deployment": "ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md",
