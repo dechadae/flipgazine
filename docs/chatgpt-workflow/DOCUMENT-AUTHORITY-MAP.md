@@ -1,6 +1,6 @@
 # ChatGPT Workflow — Document Authority Map
 
-**Checkpoint:** 21 August 2026  
+**Checkpoint:** 22 August 2026  
 **Purpose:** prevent historical plans and checkpoint-specific next actions from being mistaken for current operating authority.
 
 `CURRENT-STATE.json` provides the compact current checkpoint. This map classifies every Markdown document in this folder. Historical does not mean disposable: preserve evidence, hashes, decisions and proof chains, but do not execute stale next-step text.
@@ -21,7 +21,8 @@
 - `ANSWERS-TCJ-MULTI-JUDGE-CONSENSUS-ARCHITECTURE.md` — approved Panel methodology; not a production-live claim.
 - `ANSWERS-TCJ-EXPERT-OPERABLE-CONTROL-PLANE-IMPLEMENTATION.md` — control-plane implementation contract.
 - `ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md` — current commercial-use and provenance policy.
-- `ANSWERS-TCJ-ROBUSTNESS-V1-COMPLETION-AND-PERTURBATION-DRAFT-20260821.md` — latest TCJ execution state and valid next action.
+- `ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md` — governing final-product deployment, local-runtime, Voice Profile, opt-in improvement and provenance-firewall policy. It extends the commercial-use policy and supersedes older product-shape assumptions where they conflict.
+- `ANSWERS-TCJ-ROBUSTNESS-V1-COMPLETION-AND-PERTURBATION-DRAFT-20260821.md` — latest TCJ execution state and valid next action where not superseded by newer Qualification checkpoints.
 - `ANSWERS-PRIVATE-SERVER-PHASE-K-MIGRATION-MANIFEST.md` — final private-server migration authority; counts are the migration snapshot.
 
 ## Completed evidence with continuing operational value
@@ -48,7 +49,7 @@
 - `ANSWERS-VOICE-BENCHMARK-PLAN.md` — public Voice design history; implementation/acceptance records govern deployed state.
 - `ANSWERS-OUTREACH-FIRST-CONTACT-STRATEGY.md` — historical sent-copy strategy; refresh counts/routes before new outreach.
 - `ANSWERS-OUTREACH-DELIVERY-STATUS-2026-08-19.md` — historical delivery outcome, not a current contact directory.
-- `ANSWERS-PRIVATE-SERVER-MIGRATION-PLAN.md` — completed historical plan; do not rerun.
+- `ANSWERS-PRIVATE-SERVER-MIGRATION-PLAN.md` — completed historical plan; do not rerun. Final commercial deployment shape is governed by the plug-and-play deployment policy.
 - `ANSWERS-PRIVATE-SERVER-PHASE-A-INVENTORY.md` — historical migration evidence.
 - `ANSWERS-PRIVATE-SERVER-PHASE-B-REPORT.md` — historical migration evidence.
 - `ANSWERS-PRIVATE-SERVER-PHASE-C-REPORT.md` — historical migration evidence.
