@@ -1,8 +1,8 @@
 # The Book of Answers — Commercial Execution Timeline
 
-**Status:** ACTIVE MASTER EXECUTION PLAN — OUTREACH ACTIVE · FIRST CLEAN UNIT PROMOTED · SECOND CLEAN UNIT READY FOR HUMAN REVIEW · TCJ PERTURBATION REVIEW VALIDITY-GATED 17/33  
+**Status:** ACTIVE MASTER EXECUTION PLAN — OUTREACH ACTIVE · FIRST CLEAN UNIT PROMOTED · B2-0041–0060 REMAINS CORPUS CRITICAL PATH · TCJ QUALIFICATION v1.1 COMPLETE / RESEARCH GATE  
 **Created:** 17 August 2026  
-**Reconciled:** 21 August 2026 · 20:07 ICT  
+**Reconciled:** 22 August 2026 · 20:12 ICT  
 **Project:** Flipgazine / The Book of Answers  
 **Repository:** `dechadae/flipgazine`  
 **Supabase:** `sjpvhgxacsiorrtijqua`
@@ -15,9 +15,9 @@
 - Buyer export authority: `ANSWERS-BATCH2-BUYER-DATA-EXTRACTION-SPEC.md`
 - TCJ architecture: `ANSWERS-THAI-CONVERSATION-JUDGE-ARCHITECTURE.md`
 - TCJ multi-judge / admission architecture: `ANSWERS-TCJ-MULTI-JUDGE-CONSENSUS-ARCHITECTURE.md`
-- TCJ expert-operable control plane: `ANSWERS-TCJ-EXPERT-OPERABLE-CONTROL-PLANE-IMPLEMENTATION.md`
-- TCJ measurement implementation: `ANSWERS-TCJ-MEASUREMENT-IMPLEMENTATION-20260820.md`
-- TCJ perturbation validity authority: `ANSWERS-TCJ-PERTURBATION-SURVIVAL-AUDIT-20260821.md`
+- **Current TCJ execution checkpoint:** `ANSWERS-TCJ-QUALIFICATION-V11-COMPLETION-AND-RESEARCH-GATE-20260822.md`
+- TCJ deployment/product authority: `ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md`
+- Voice Profile licensing authority: `ANSWERS-TCJ-VOICE-PROFILE-LICENSING-EXTENSION-20260822.md`
 - TCJ commercial-use boundary: `ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md`
 - Source replacement record: `ANSWERS-BATCH2-SOURCESET-V1-1-REPLACEMENT-PATCH.md`
 - Technical pilot record: `ANSWERS-BATCH2-TECH-PILOT-COMPLETION-REPORT.md`
@@ -28,20 +28,20 @@ When checkpoint wording conflicts, use the newest document that owns that decisi
 
 # 1. Executive status
 
-Commercial outreach remains live. Clean Batch 2 production remains the corpus critical path. In parallel, TCJ has materially advanced from a single production judge toward an expert-operable, evidence-preserving judge-admission and multi-judge research system.
+Commercial outreach remains live. Clean Batch 2 production remains the corpus/commercial-suite critical path. The canonical corpus has **not** advanced beyond revision 127 / 988 active answers; B2-0041–0060 remains the active clean unit.
 
-Completed through 21 August:
+TCJ materially advanced on 22 August. Hidden Qualification v1.1 completed with a verified evidence ledger: 48 human-gold cases × 3 candidate judges = 144 valid machine judgment cells, zero terminal generation-contract failures, zero blocking/compromising incidents, three frozen Qualification summaries and three Qualification-era Passports. The run passed integrity verification, but **all three candidate judges failed the preregistered production-authority thresholds**. All three Passports are `research_only` with zero production-qualified dimensions. This is a candidate-set qualification failure, not a run/evidence failure. Thresholds were not weakened after observing results.
+
+Therefore TCJ Panel construction is now explicitly blocked. The valid TCJ continuation is research diagnosis → stronger/new candidate/config contract → fresh hidden Qualification bank → native-human blind review/freeze → new machine Qualification → new Passports. Qualification v1.1 is historical evaluation evidence and must not be reused as hidden authority for a configuration designed after seeing its outcomes.
+
+Completed through 22 August includes:
 
 ```text
 private-server security migration
 Voice methodology/public benchmark
 36-case editor-grounded evaluator calibration
-Qwen3.6-27B production judge selection
 1,000-row Batch 2 source-set freeze
-Batch 2 audit/provenance/Qwen infrastructure
-100% human-first reviewer implementation
-routing / reachability / atomic-promotion infrastructure
-buyer-export checkpoint infrastructure
+Batch 2 human-first / routing / atomic-promotion / buyer-export infrastructure
 B2-0001–B2-0020 technical pilot full cycle
 B2-0021–B2-0040 clean full production cycle
 corpus revision 127 / 988 active canonical answers
@@ -51,17 +51,16 @@ OpenAI Data Partnerships expression of interest submitted
 B2-0041–B2-0060 generated + sealed ChatGPT self-audit
 B2-SOURCESET-v1.1 preparation-leak replacements frozen and verified
 TCJ multi-judge consensus architecture approved
-TCJ expert-operable control-plane implementation established
-TCJ Stage A admission campaign corrected/restarted under reasoning-safe generation contract
-TCJ Stage A human-final EDIT/REWRITE capture fixed
-TCJ Stage A freeze achieved for the current admission campaign
-TCJ Stage B foundation + sealed admission runner implemented
-TCJ Stage B v1.1 completed under corrected validity + CARE contract
-TCJ frozen-input Robustness v1 completed and independently verified
-TCJ 33-case constructed perturbation pack drafted for native review
-TCJ perturbation survival audit completed; seven defects repaired/redesigned
-TCJ server-authoritative perturbation survival gate deployed
-TCJ commercial benchmark-vs-model-development boundary documented
+TCJ expert-operable control plane established
+TCJ Stage A / Stage B / Robustness v1 completed as preliminary research evidence
+TCJ perturbation validity/survival work completed as historical qualification research evidence
+TCJ Qualification v1.1 hidden bank frozen, executed, verified and finalized
+144/144 Qualification judgment cells valid
+3/3 Qualification-era Passports frozen as research_only
+TCJ production Panel correctly blocked: zero qualified dimensions
+TCJ plug-and-play deployment / model portability policy documented
+TCJ Voice Profile classification, licensing and recurring improvement-service extension documented
+TCJ benchmark-vs-model-development commercial boundary documented
 ```
 
 Active tracks:
@@ -70,40 +69,38 @@ Active tracks:
 TRACK A — OpenAI corpus/evaluation conversation
 TRACK B — Thai + SEA LLM benchmark/rubric conversations
 TRACK C — clean Batch 2 production
-TRACK D — TCJ judge admission / multi-judge validation
+TRACK D — TCJ post-Qualification research / fresh candidate qualification
 ```
 
-The primary schedule risk for the 1,000-row clean benchmark remains native-human review throughput. TCJ admission is a parallel product/research track and must not weaken or reorder the Batch 2 human-first corpus gates.
+The primary schedule risk for the clean 1,000-row benchmark remains native-human review throughput. TCJ research remains parallel and must not weaken, reorder or block the Batch 2 human-first corpus gates.
 
 ---
 
 # 2. Planned vs actual reconciliation
 
-| Workstream | Actual state at 21 Aug 2026 | Timeline action |
+| Workstream | Actual state at 22 Aug 2026 | Timeline action |
 |---|---|---|
-| Private-server security | Complete 17 Aug | DONE |
-| Voice benchmark + 36-case calibration | Complete 18 Aug | DONE |
-| Production second judge | Qwen3.6-27B selected | DONE |
+| Private-server security | Complete | DONE |
+| Voice benchmark + 36-case calibration | Complete | DONE |
 | Batch 2 base source freeze | 1,000 frozen | DONE |
 | Technical B2-0001–0020 | Full cycle; IDs 949–968 | DONE · NON-METRIC |
 | First clean B2-0021–0040 | Full cycle; IDs 969–988 | DONE |
-| Canonical corpus | Revision 127 / 988 | CURRENT |
+| Canonical corpus | Revision 127 / 988; no verified later promotion | CURRENT |
 | Buyer export checkpoints | Snapshots 1 and 2 complete | CONTINUE PER PROMOTION |
 | OpenAI outreach | Data Partnerships submission sent | ACTIVE |
 | Thai/SEA outreach | First-contact emails sent | ACTIVE |
-| B2-0041–0060 | 20 clean active rows; ChatGPT sealed; Qwen/human gate remains | ACTIVE / CRITICAL PATH |
+| B2-0041–0060 | Active clean unit; machine evidence/human gate still incomplete | ACTIVE / CORPUS CRITICAL PATH |
 | Preparation-leak handling | retire → replace → refreeze rule governing | DONE / STANDING RULE |
-| TCJ multi-judge architecture | approved methodology | DONE DESIGN |
-| TCJ expert control plane | implementation spec + live proof-of-concept surfaces | ACTIVE IMPLEMENTATION |
-| TCJ Judge Admission Stage A | current campaign frozen after corrected generation/review workflow | DONE FOR CURRENT CAMPAIGN |
-| TCJ Judge Admission Stage B | v1.1 completed; no admission decision yet | DONE FOR CURRENT CAMPAIGN |
-| TCJ Robustness v1 | 198 cells complete; 197 valid + 1 terminal contract event | DONE · PRELIMINARY EVIDENCE |
-| TCJ perturbation validity audit | full 33-case structural audit; seven cases repaired/redesigned; survival gate deployed | DONE / GOVERNING GATE |
-| TCJ perturbation pack | live draft; 17/33 approved, 16 pending/reopened; 33/33 survival pass; 0 executions | ACTIVE / NEXT VALID ACTION |
+| TCJ Stage A / B / Robustness | completed preliminary evidence | DONE · HISTORICAL/PRELIMINARY |
+| TCJ Qualification v1.1 | 48 gold × 3 judges; 144/144 valid; verified finalization | DONE · CURRENT EVIDENCE GATE |
+| Qualification Passports | 3 frozen; all `research_only`; 0 qualified dimensions | DONE · NO PRODUCTION AUTHORITY |
+| TCJ Panel | cannot be assembled from current candidate set | BLOCKED BY QUALIFICATION |
+| TCJ next candidate/config research | diagnose v1.1 failures; identify materially stronger candidates/configs | ACTIVE / NEXT VALID TCJ ACTION |
+| Fresh hidden Qualification bank | required after new candidate/config contract freezes | DEPENDENT · FUTURE HUMAN GATE |
+| Plug-and-play/private deployment policy | documented; local-runtime/model portability acceptance criteria established | DONE POLICY |
+| Voice Profile licensing extension | portable profile + recurring improvement-service boundary documented | DONE POLICY |
 | B2R supplemental clean set | exactly 20 still required | KEEP |
 | Final clean analysis/package | follows clean 1,000 freeze | DEPENDENT |
-
-Live Supabase verification at this reconciliation confirms corpus revision **127**, **988** active answers, **40** Batch 2 mappings, and perturbation pack state **draft** with **17/33 approved**, **16 pending**, **33/33 survival pass**, **0 survival fail**, no manifest and no freeze.
 
 No evidence supports advancing the canonical corpus beyond revision 127 / 988 in this reconciliation.
 
@@ -128,7 +125,7 @@ B2-0001–0020 remain canonical Book content and qualitative technical-pilot evi
 
 B2-0021–0040 remain the first completed clean unit: 9 ACCEPT / 8 EDIT / 3 REWRITE, fully enriched, deterministically validated, promoted, live-verified and exported to buyer checkpoint 2.
 
-Current clean unit B2-0041–0060 remains gated before human review completion. Do not prepare B2-0061–0080 until the current unit completes its full post-review promotion/export cycle.
+B2-0041–0060 remains the active clean unit. Do not prepare B2-0061–0080 until B2-0041–0060 completes its full human-first review, post-review promotion, live verification and buyer-export checkpoint.
 
 ---
 
@@ -208,43 +205,51 @@ If B2R remains benchmark-only, the final evidence count may be described as 1,96
 
 # 6. TCJ commercial/product track
 
-TCJ is now tracked as a distinct commercial IP/product layer rather than merely a public benchmark backend.
+TCJ is a distinct commercial IP/product layer rather than merely the public benchmark backend.
 
-Current state:
-
-```text
-live TCJ Standard path                existing production authority
-multi-judge Panel architecture        approved methodology, not yet production replacement
-expert-operable control plane         implementation underway / proof-of-concept live
-Judge Admission Stage A               frozen for current campaign
-Judge Admission Stage B               v1.1 completed
-frozen-input Robustness v1             198 cells complete
-constructed perturbation pack          draft · native review 17/33 · 16 pending
-perturbation survival gate             live · 33/33 pass · freeze enforced server-side
-perturbation judge executions          0 until valid 33/33 freeze
-identity reveal / passports            only after protocol permits
-```
-
-The control plane must remain server-authoritative. Browser surfaces may request methodology-aware commands but must never create methodological state or receive sealed identities/machine evidence before the approved reveal point.
-
-The perturbation validity rule is now explicit: a constructed case may not be approved unless its declared perturbation survives native editing without confounding its family contract. Runtime-only families must preserve frozen scenario/candidate content exactly where specified; prompt-injection cases must retain the complete baseline candidate plus the adversarial suffix; and freeze is blocked unless **33/33 are approved, 33/33 pass survival, 0 are rejected and identities remain sealed**.
-
-TCJ judge admission must preserve:
+Current verified Qualification state:
 
 ```text
-candidate-set freeze
-→ sealed generation
-→ global randomization
-→ blind native-human review
-→ human-final text + hashes
-→ Stage A freeze
-→ Stage B judging competence measurement
-→ meta-review / freeze where required
-→ identity reveal only when allowed
-→ judge passport / admission decision
+Qualification run                    TCJ-JUDGE-QUALIFICATION-RUN-2026Q3-v1.1
+human gold cases                     48
+candidate judges                      3
+valid machine judgment cells        144 / 144
+terminal generation failures          0
+blocking/compromising incidents       0
+Qualification summaries               3
+Qualification-era Passports           3
+production-qualified dimensions       0
+candidate qualification state         research_only × 3
+production Panel availability         NO
 ```
 
-Raw majority voting remains rejected. Future Panel consensus must use admitted/calibrated competence, per-dimension evidence, disagreement preservation and human escalation according to the multi-judge architecture.
+Candidate set:
+
+```text
+qwen/qwen3.6-27b        research_only
+openai/gpt-oss-120b     research_only
+openai/gpt-oss-20b      research_only
+```
+
+The Qualification v1.1 run passed integrity verification. Do **not** reinterpret the result as a failed experiment or loosen thresholds. The exposed bank is now research-diagnosis evidence, not reusable hidden authority.
+
+Valid continuation:
+
+```text
+diagnose v1.1 dimension/failure clusters
+→ separate model-capability failures from prompt/rubric-contract failures
+→ identify materially improved candidate models/configurations
+→ freeze/preregister new candidate/config + thresholds
+→ construct a fresh hidden Qualification bank
+→ native-human blind review and freeze
+→ execute new machine Qualification
+→ issue new Passports
+→ assemble Panel only from dimensions that actually pass
+```
+
+The live TCJ Standard path remains separate from the future Panel methodology. Qualification failure of the Panel candidate set does not erase the existing TCJ Standard product/evaluation path.
+
+Final-product policy now also recognizes TCJ Gateway packaging for managed/VPC/on-prem deployment, local judge-runtime portability, Voice Profiles as non-model methodology assets, buyer-model final-writer patterns, and opt-in customer improvement with a provenance firewall. Voice Profile classification follows technical substance rather than labels; portable licensing and recurring Voice Profile Improvement Service are commercial options subject to the governing rights/provenance policy.
 
 Commercially, the default TCJ license remains **Benchmark Use**, not unrestricted Model-Development Use. API, source or private-deployment access does not imply rights to use TCJ scores, diagnoses, labels or derived evidence as training, fine-tuning, reward, preference, distillation, checkpoint-selection or other model-development signals.
 
@@ -255,30 +260,32 @@ Commercially, the default TCJ license remains **Benchmark Use**, not unrestricte
 | Date | Milestone / status |
 |---|---|
 | **17 Aug** | ✅ Private-server migration/security acceptance |
-| **18 Aug** | ✅ Voice benchmark, calibration, evaluator selection, B2 infrastructure/base freeze |
+| **18 Aug** | ✅ Voice benchmark, calibration, B2 infrastructure/base freeze |
 | **18 Aug** | ✅ Technical B2-0001–0020 full cycle; revision 126 / 968 |
 | **19 Aug** | ✅ OpenAI submission + Thai/SEA first-contact outreach |
 | **19 Aug** | ✅ Clean B2-0021–0040 full cycle; revision 127 / 988; buyer snapshot 2 |
 | **19 Aug** | ✅ B2-0041–0060 generated/self-audited + source-set replacement integrity repair |
-| **20 Aug** | ✅ TCJ multi-judge/control-plane architecture materially implemented; Stage A frozen; Stage B runner implemented |
-| **21 Aug** | ✅ Stage B v1.1 + frozen-input Robustness v1 complete |
-| **21 Aug** | ✅ Full perturbation survival audit + server-authoritative validity gate; review resumes from corrected state at 17/33 approved |
-| **20 Aug onward** | Complete B2-0041–0060, then remaining original B2 in verified 20-row cycles |
-| **By 1 Sep working target** | Freeze separate B2R-0001–B2R-0020 before generation |
+| **20–21 Aug** | ✅ TCJ multi-judge/control-plane, Stage A/B, robustness and validity work completed as preliminary research evidence |
+| **22 Aug** | ✅ Hidden Qualification v1.1 finalized: 144/144 valid cells; three verified Passports; all research_only; production Panel blocked |
+| **22 Aug** | ✅ Plug-and-play deployment/model-portability and Voice Profile licensing/improvement policies documented |
+| **Now** | Complete B2-0041–0060 through the unchanged human-first promotion/export cycle |
+| **Parallel now** | TCJ failure diagnosis + materially stronger candidate/config research; no Panel assembly |
+| **Before next TCJ Qualification** | Freeze new candidate/config contract and construct a fresh hidden bank; stop for native-human blind review/freeze |
+| **1 Sep** | Previous B2R freeze date is now a **soft working target only**; do not force it if verified 20-row throughput has not reached the prerequisite point |
 | **After clean 1,000 freeze** | Package-integrity verification + cross-batch/human↔machine analysis |
 | **After analysis** | Assemble commercial suite, manifests, data card, methodology |
 | **After substantive completion** | Update active OpenAI + Thai/SEA conversations |
 
-The former 5–10 September package dates remain **working targets, not integrity deadlines**. Because only one clean 20-row metric unit is fully promoted as of this checkpoint, downstream analysis/package dates must move if native-human throughput does not support them. Do not compress the review gate to preserve a cosmetic date.
+The former 5–10 September package dates are no longer treated as meaningful schedule commitments. With only one clean 20-row metric unit fully promoted at this checkpoint, downstream completion is throughput-dependent. Integrity gates and human-first review outrank cosmetic dates.
 
 ---
 
-# 8. Critical path
+# 8. Critical paths
 
-## Corpus/commercial suite critical path
+## Corpus/commercial suite — primary critical path
 
 ```text
-B2-0041–0060 required sealed Qwen evidence
+B2-0041–0060 required sealed machine evidence
 → native-human review 20/20
 → final Thai freeze
 → English + semantics
@@ -293,24 +300,23 @@ B2-0041–0060 required sealed Qwen evidence
 → substantive completion update
 ```
 
-## TCJ parallel critical path
+## TCJ — parallel research critical path
 
 ```text
-Stage A + Stage B frozen evidence
-→ frozen-input Robustness v1 complete
-→ resume validity-gated native review from 17/33
-→ approve all remaining 16 while survival remains 33/33 pass
-→ freeze/independently verify perturbation pack
-→ run/verify 99 perturbation cells
-→ build anonymous dossiers
-→ independent blind ChatGPT + Grok meta-review
-→ reveal identities only after both meta-reviews freeze
-→ assign evidence-backed judge passports/admission decisions
-→ validate qualified consensus behavior
-→ only then consider Panel as a production option
+Qualification v1.1 complete / 3 research_only Passports
+→ diagnose exposed-v1.1 failure clusters
+→ identify materially stronger candidates/configurations
+→ preregister/freeze new candidate contract + thresholds
+→ build fresh hidden Qualification bank
+→ native-human blind review/freeze
+→ execute/verify new hidden Qualification
+→ issue new Passports
+→ if and only if dimensions qualify: assemble qualified Panel
+→ validate consensus behavior
+→ production consideration / Assurance only after authority gates pass
 ```
 
-TCJ Panel work does **not** block Batch 2 production and must not be allowed to become a dependency for corpus completion.
+TCJ Panel work does **not** block Batch 2 production and must not become a dependency for corpus completion.
 
 ---
 
@@ -332,9 +338,11 @@ private evidence only through an accepted transfer method
 
 For frontier/model labs, preserve the commercial-use boundary: benchmark/evaluation rights do not automatically include model-development rights.
 
+Do not market Qualification v1.1 as production Panel validation. The commercially honest claim is that TCJ now has a verified qualification mechanism that rejected all three tested candidates under frozen thresholds and preserved the result rather than weakening the gate.
+
 ---
 
-# 10. Continuous unit QA
+# 10. Continuous unit QA — unchanged
 
 Every promoted 20-row clean unit requires:
 
@@ -365,92 +373,47 @@ A failed technical gate does not advance to the next unit.
 - [x] private-server corpus/security migration
 - [x] Voice methodology + public benchmark
 - [x] 36-case selective calibration
-- [x] Qwen production evaluator selection
-- [x] Batch 2 protocol/audit infrastructure
-- [x] frozen 1,000-row Batch 2 base source set
-- [x] human-first reviewer implementation
-- [x] routing/reachability/promotion infrastructure
-- [x] technical B2-0001–0020 full cycle
-- [x] first buyer-export preview
-- [x] B2-0021–0040 full clean production cycle
-- [x] corpus revision 127 / 988
-- [x] clean buyer-export preview id 2
-- [x] OpenAI Data Partnerships submission
-- [x] Thai/SEA first-contact emails
-- [x] B2-0041–0060 initial generation + ChatGPT sealing
-- [x] B2-SOURCESET-v1.1 replacement patch + fresh replacements
-- [x] standing automatic preparation-leak replacement rule
-- [x] TCJ multi-judge consensus architecture approved
-- [x] TCJ expert-operable control-plane implementation established
-- [x] TCJ current admission Stage A frozen
-- [x] TCJ sealed Stage B admission runner implemented
-- [x] TCJ Stage B v1.1 completed
-- [x] TCJ frozen-input Robustness v1 completed
-- [x] TCJ full 33-case perturbation survival audit completed
-- [x] TCJ server-authoritative perturbation survival gate deployed
-- [x] TCJ benchmark-vs-model-development commercial boundary documented
+- [x] Batch 2 source-set freeze and human-first production infrastructure
+- [x] B2-0001–0020 technical-pilot full cycle
+- [x] B2-0021–0040 first clean full cycle
+- [x] buyer export checkpoints 1 and 2
+- [x] OpenAI + Thai/SEA first-contact outreach
+- [x] TCJ multi-judge/control-plane methodology and preliminary admission evidence
+- [x] TCJ Qualification v1.1 hidden run integrity completion
+- [x] three Qualification-era research-only Passports frozen without threshold relaxation
+- [x] TCJ production Panel correctly blocked for current candidate set
+- [x] TCJ plug-and-play/private deployment and model-portability policy
+- [x] Voice Profile licensing/improvement-service extension
+- [x] TCJ benchmark-vs-model-development commercial boundary
 
-## Remaining production
+## Remaining corpus/commercial-suite work
 
-- [ ] required Qwen seal + human review B2-0041–0060
-- [ ] English / semantics / validation / promotion / buyer checkpoint B2-0041–0060
-- [ ] remaining B2-0061–B2-1000 verified original cycles
-- [ ] freeze + complete B2R-0001–B2R-0020
-- [ ] clean 1,000-row benchmark freeze
-- [ ] canonical original Batch 2 reaches 1,000/1,000 linked answers
+- [ ] complete B2-0041–0060 through human review, enrichment, validation, promotion, live verification and buyer checkpoint
+- [ ] repeat clean 20-row cycles through B2-1000
+- [ ] freeze and complete separate B2R-0001–B2R-0020
+- [ ] freeze clean 1,000 benchmark
+- [ ] run package-integrity and final cross-batch analysis
+- [ ] assemble final buyer suite / manifests / data card / methodology
+- [ ] send substantive completion update to active conversations
 
-## Remaining TCJ
+## Remaining TCJ research/product work
 
-- [ ] native-review remaining 16 constructed perturbations to reach valid 33/33 approval
-- [ ] freeze/verify the perturbation pack and run/verify 99 cells
-- [ ] build anonymous dossiers and complete both blind meta-reviews
-- [ ] reveal identities only at protocol-approved point
-- [ ] assign judge passports/admission decisions
-- [ ] validate qualified multi-judge consensus before any production cutover
-
-## Remaining commercialization
-
-- [ ] respond to substantive OpenAI / buyer replies
-- [ ] cross-batch analysis
-- [ ] human↔machine disagreement analysis
-- [ ] final buyer bundle + hashes/data card/methodology
-- [ ] substantive completion update
+- [ ] diagnose Qualification v1.1 failure clusters
+- [ ] select materially stronger/new candidate models or configurations
+- [ ] preregister/freeze next candidate/config contract and thresholds
+- [ ] construct a fresh hidden Qualification bank
+- [ ] native-human blind review/freeze of that new bank
+- [ ] execute and verify next Qualification
+- [ ] issue new Passports
+- [ ] assemble Panel only if actual dimensions qualify
+- [ ] validate qualified consensus and production authority before any Panel cutover
 
 ---
 
 # 12. Immediate next actions
 
-Corpus:
+**Corpus:** finish B2-0041–0060 under the unchanged human-first sequence. No later unit begins before its promotion/live-verification/buyer-export checkpoint.
 
-```text
-1. finish required sealed Qwen evidence for B2-0041–0060
-2. native-human review all 20 without machine-judgment exposure
-3. freeze final Thai
-4. run English → enrich → validate → promote → verify → buyer checkpoint
-5. prepare B2-0061–0080 only after that checkpoint
-```
+**TCJ:** do not assemble Panel from the current candidates. Use Qualification v1.1 only for failure diagnosis, identify materially improved candidates/configurations, freeze the next contract, then create a fresh hidden Qualification bank and stop for native-human blind review before machine execution.
 
-TCJ:
-
-```text
-1. resume native review from corrected 17/33 state
-2. complete the remaining 16 cases while the server survival gate stays 33/33 pass
-3. freeze and independently verify the perturbation pack only after valid 33/33 approval
-4. run and verify the 99-cell perturbation stratum
-5. preserve candidate blindness while building identical anonymous dossiers
-6. freeze independent ChatGPT + Grok meta-reviews before identity reveal
-```
-
-Commercially:
-
-```text
-monitor replies
-answer substantive buyer questions
-send no generic chase email
-send no unsolicited private package
-keep Benchmark Use separate from Model-Development Use
-```
-
-The operative rule remains:
-
-> **Outreach runs in parallel. Batch 2 advances only through evidence-preserving verified 20-row cycles. TCJ admission advances independently through blinded, frozen evidence gates.**
+**Commercial:** keep outreach live but avoid generic follow-up. The next outbound update should be tied to substantive new evidence or completion. Preserve the benchmark-vs-model-development licensing boundary in every frontier-lab discussion.
