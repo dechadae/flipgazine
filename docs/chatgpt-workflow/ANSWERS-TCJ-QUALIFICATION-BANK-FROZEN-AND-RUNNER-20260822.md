@@ -62,9 +62,12 @@ The following are explicitly excluded from judge payloads:
 
 Each Qualification provider call preserves:
 
-- exact request payload,
+- parsed request payload JSONB,
+- exact serialized request-body text,
 - request SHA-256,
+- exact system prompt text,
 - system prompt SHA-256,
+- exact serialized user-payload text,
 - user payload SHA-256,
 - exact provider HTTP response body,
 - provider response SHA-256,
@@ -75,6 +78,8 @@ Each Qualification provider call preserves:
 - usage,
 - latency,
 - attempt role and transport attempt index.
+
+The exact-request serializer is private and reconstructs the frozen JavaScript `JSON.stringify()` field order from stored JSONB. Before model exposure it was cross-checked against an independently generated JavaScript-compatible serialization containing Thai, English, quotes, newlines, and backslashes; the SHA-256 matched exactly. All 48 frozen scenario/candidate texts were also scanned and contained no unusual control characters or backslashes. Database CHECK gates require every attempt's stored exact request/system/user text to recompute to its corresponding SHA-256.
 
 Attempts, judgments, and summaries are append-only. Run configuration becomes immutable once frozen.
 
@@ -106,7 +111,9 @@ The controller runs one evidence cell at a time, supports safe resume, and recon
 After 144 / 144, do not derive qualification decisions immediately. First verify independently:
 
 - exact cell cardinality,
-- request hashes,
+- exact request-body hashes,
+- exact system-prompt hashes,
+- exact user-payload hashes,
 - provider-response hashes,
 - assistant-output hashes,
 - parsed diagnosis hashes,
