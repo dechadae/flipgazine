@@ -4,7 +4,10 @@
 **Date:** 22 August 2026  
 **Source Qualification:** `TCJ-JUDGE-QUALIFICATION-RUN-2026Q3-v1.1`  
 **Replay:** `TCJ-ANSWERS-BFF-v3-REPLAY-QWEN-20260822`  
-**Next evaluator:** `TCJ-EVAL-ANSWERS-BFF-v4-research`
+**Next evaluator:** `TCJ-EVAL-ANSWERS-BFF-v4-research`  
+**Frozen product architecture authority:** `ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-FREEZE-20260822.md`
+
+The v4 evaluator implementation may evolve internally, but it SHALL remain inside the frozen commercial topology/trust boundaries unless a later explicit architecture decision supersedes the freeze.
 
 ## 1. Source Qualification remains valid
 
@@ -61,9 +64,9 @@ and still fail to distinguish when those devices are actually native-good versus
 
 The missing signal is **contrastive native evidence plus a controlled decision algorithm**, not a longer system prompt.
 
-## 4. New final runtime trust boundary
+## 4. Frozen final runtime trust boundary
 
-The governing product path is now:
+The product topology is frozen by `ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-FREEZE-20260822.md` as:
 
 ```text
 buyer writer candidate
@@ -79,11 +82,19 @@ derived, non-reconstructive evidence signals
 SELECTED TCJ JUDGE RUNTIME
 Local Judge OR BYOK Judge
         ↓
-TCJ guards + challenge + independent-dimension resolver
+TCJ deterministic guards
+        ↓
+risk-triggered challenge
+        ↓
+independent six-dimension resolver
         ↓
 final diagnosis / ACCEPT / REVISE / ESCALATE
         ↓
 buyer writer receives only revision guidance / final decision
+        ↓
+writer rewrites once if required
+        ↓
+TCJ recheck
 ```
 
 The buyer writer is generation/revision compute. A buyer may separately supply the semantic judge through BYOJ, but that judge also does not receive the proprietary raw corpus.
@@ -94,6 +105,8 @@ Runtime evidence exposure is governed by:
 
 - `ANSWERS-TCJ-PRIVATE-EVIDENCE-ENGINE-AND-BUYER-ISOLATION-POLICY-20260822.md`
 - `ANSWERS-TCJ-BYOJ-JUDGE-RUNTIME-AND-API-KEY-POLICY-20260822.md`
+
+Do not redesign this trust boundary merely because a model/provider cannot satisfy it. Use the architecture-inversion rule first.
 
 ## 5. Private Evidence Engine
 
@@ -178,7 +191,8 @@ Do not change:
 - native-human gold;
 - historical v1.1 thresholds;
 - frozen historical model outputs;
-- historical Passports.
+- historical Passports;
+- frozen product trust boundaries merely to make a model pass.
 
 ## 8. Buyer-specific profile architecture
 
@@ -222,21 +236,23 @@ BYOK Judge   supported external provider using buyer-supplied credential
 
 A cloud OpenAI/xAI judge is not called `Local Judge` merely because TCJ runs locally.
 
-OpenAI and xAI paid API adapters remain disconnected during this research phase.
+The product architecture is now frozen, but paid external-provider integration remains a later implementation/release gate. OpenAI and xAI BYOK adapters may be connected when the project is ready to qualify the exact reference evaluator configuration under the frozen architecture.
 
-They may be connected only after:
+Before production authority, the exact evaluator still must pass:
 
 ```text
 v4 evaluator research convergence
-→ evaluator configuration freeze
+→ exact evaluator configuration freeze
 → fresh hidden Qualification PASS
-→ qualified Panel
+→ authority-bearing Passport
+→ qualified Panel / final reliability architecture
 → independent Assurance PASS
+→ security + evidence-isolation acceptance
 → reproducibility / clean-install PASS
-→ final TCJ architecture/runtime freeze
+→ commercial release freeze
 ```
 
-After that gate, the latest approved OpenAI Sol-class model may be used as a recommended/reference BYOK judge candidate, with the exact API model/version resolved and frozen at integration/Qualification time. OpenAI is not mandatory; a qualified Local Judge or another supported BYOK Judge may replace it.
+The latest approved OpenAI Sol-class model may be used as a recommended/reference BYOK judge candidate, with the exact API model/version resolved and frozen at integration/Qualification time. OpenAI is not mandatory; a qualified Local Judge or another supported BYOK Judge may replace it.
 
 Under the default enterprise BYOK model, the buyer pays the external model provider directly for API usage while TCJ license/Voice Profile/service fees remain separate.
 
@@ -244,13 +260,13 @@ External APIs do not redefine the canonical Voice Profile and do not receive pro
 
 ## 11. Immediate automatic next action
 
-Continue autonomously:
+Continue autonomously **inside the frozen commercial architecture**:
 
 1. implement canonical Voice Profile binding before private evidence interpretation;
 2. implement the Private Evidence Engine retrieval/derived-signal layer;
 3. define deterministic risk-family detection for the eight known failure clusters;
 4. abstract semantic judging behind a BYOJ-compatible judge interface;
-5. implement the selected research judge adapter without granting it raw-corpus access;
+5. implement the selected research/reference judge adapter without granting it raw-corpus access;
 6. implement independent dimension resolution;
 7. implement risk-triggered challenge rather than universal extra prompting;
 8. replay v4 on exposed v1.1 development evidence;
@@ -276,7 +292,7 @@ B. BYOK Judge
    supported provider model through buyer-owned API credentials
 ```
 
-Both operate behind the same TCJ evaluator contract and both receive only the current candidate, Voice Profile contract and derived/non-reconstructive evidence signals by default.
+Both operate behind the same frozen TCJ product topology and both receive only the current candidate, Voice Profile contract and derived/non-reconstructive evidence signals by default.
 
 The approved product statement is:
 
