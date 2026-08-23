@@ -1,6 +1,6 @@
 {
-  "schema_version": 11,
-  "as_of": "2026-08-23T21:15:05+07:00",
+  "schema_version": 12,
+  "as_of": "2026-08-24T06:48:49+07:00",
   "scope": "repository_documentation_checkpoint",
   "live_state_independently_reverified": true,
   "canonical_supabase_project": "sjpvhgxacsiorrtijqua",
@@ -8,37 +8,41 @@
   "tcj_status_url": "https://flipgazine.pages.dev/tcj-status.html",
   "tcj": {
     "production_authority": false,
-    "authority_state": "NONE_candidate_successor_is_in_fresh_development_validation_not_frozen_not_hidden_qualified",
-    "current_phase": "fresh_development_validation_native_human_gate",
+    "authority_state": "NONE_candidate_successor_remains_development_only_not_frozen_not_hidden_qualified",
+    "current_phase": "rewrite_lift_hard_native_blind_human_gate",
     "human_gold_authoritative": true,
     "governing_documents": {
       "document_map": "DOCUMENT-AUTHORITY-MAP.md",
       "mandatory_pee_topology": "ANSWERS-TCJ-MANDATORY-PROTECTED-EVIDENCE-ARCHITECTURE-AMENDMENT-20260823.md",
       "commercial_architecture": "ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-V2-20260823.md",
       "roadmap": "ANSWERS-TCJ-ROADMAP-TO-FINAL-COMMERCIAL-PRODUCT-20260823.md",
-      "active_phase_checkpoint": "ANSWERS-TCJ-PHASE-B-FOCUS-PEE-EDITOR-ROLE-AND-FRESH-VALIDATION-20260823.md"
+      "previous_phase_checkpoint": "ANSWERS-TCJ-PHASE-B-FOCUS-PEE-EDITOR-ROLE-AND-FRESH-VALIDATION-20260823.md",
+      "active_phase_checkpoint": "ANSWERS-TCJ-REWRITE-LIFT-DEVELOPMENT-CHECKPOINT-20260824.md"
+    },
+    "product_definition": {
+      "evaluation_is_feedback_engine": true,
+      "rewrite_guidance_is_product_capability": true,
+      "plain_language_loop": "draft -> TCJ understands what is wrong and why -> bounded native-editor brief -> same/customer model rewrites -> TCJ can check rewrite",
+      "buyer_story": "TCJ gives the customer's model the native editorial context and guidance that a competent local editor or QA lead would use, without exporting raw private evidence."
     },
     "design_principles": {
       "reasoning_first": true,
       "sophisticated_not_complicated": true,
       "measurement_role": "verify_human_reasoning_not_drive_case_specific_complexity",
       "do_not_chase_exposed_bank_perfection": true,
-      "primary_human_boundary": {
+      "do_not_retune_blind_bank_after_unblinding_to_force_a_win": true,
+      "primary_evaluation_boundary": {
         "usable": ["PASS", "MINOR"],
         "failed": ["MAJOR", "CRITICAL"],
-        "consequential_boundary": "MINOR_vs_MAJOR",
-        "exact_PASS_vs_MINOR_primary_target": false,
-        "exact_MAJOR_vs_CRITICAL_primary_target": false
+        "consequential_boundary": "MINOR_vs_MAJOR"
       }
     },
-    "selected_reference_judge": {
+    "selected_development_model": {
       "provider": "google",
       "model": "gemini-3.5-flash-lite",
-      "status": "development_reference_not_frozen_not_production_authority",
-      "vendor_lock_in": false,
+      "status": "development_reference_not_production_authority",
       "free_development_calls_allowed": true,
-      "professional_role_for_answers_bff": "senior_Thai_magazine_and_conversation_editor",
-      "role_capsule_is_voice_profile_concept": true
+      "vendor_lock_in": false
     },
     "current_research_architecture": {
       "topology": "mandatory_protected_evidence_v2_1",
@@ -46,85 +50,88 @@
       "semantic_strategy": "Book_of_Answers_style_canonical_focus_normalization_then_relevant_private_neighborhood",
       "methodology_pack": "TCJ-METHODOLOGY-BFF-v1.2-research",
       "context_retriever": "TCJ-CONTEXT-RETRIEVER-v1.5-research",
-      "protected_evidence": "TCJ-MANDATORY-PROTECTED-EVIDENCE-v10-FOCUS-EXCEPTION-RESEARCH",
-      "private_evidence_assessor": "TCJ-PRIVATE-EVIDENCE-ASSESS-v1.10-FOCUS-CLEAN-RESEARCH",
-      "licensed_exception_matcher": "TCJ-LICENSED-EXCEPTION-MATCH-v4-research",
+      "initial_protected_evidence": "TCJ-MANDATORY-PROTECTED-EVIDENCE-v11-NEGATIVE-FIRST-RESEARCH",
+      "candidate_specific_exception_rescue": "TCJ-LICENSED-WEIRDNESS-RESCUE-v1",
       "release_policy": "TCJ-RELEASE-POLICY-v1.7-BANDED-RESEARCH",
-      "mandatory_initial_pee_calls": 1,
-      "max_total_pee_calls": 2,
-      "raw_private_rows_to_judge": false,
-      "raw_private_examples_to_judge": false,
+      "professional_role_for_answers_bff": "senior_Thai_magazine_and_conversation_editor",
+      "role_capsule_is_voice_profile_concept": true,
+      "raw_private_rows_to_external_model": false,
+      "raw_private_examples_to_external_model": false,
       "bounded_non_reconstructive_evidence_only": true,
-      "code_switch_rule": "mixed_script_is_non_diagnostic_and_must_be_judged_for_integration_quality_not_whitelisted_as_good",
-      "licensed_weirdness_rule": "licensed_mechanism_removes_false_reason_for_failure_but_never_grants_blanket_PASS"
+      "code_switch_rule": "code_switching_itself_is_neutral; judge integration_quality_and_whole_copy_coherence",
+      "licensed_weirdness_rule": "candidate_specific_rescue_can_remove_a_false_surface_reason_for_rejection_but_never_proves_the_whole_response_good_or_overrides_an_independent_defect"
     },
-    "exposed_development_regression": {
-      "source_bank": "TCJ-EVALUATOR-QUALIFICATION-BANK-2026Q3-v3",
-      "source_bank_role": "exposed_development_evidence_only",
-      "original_gemini_run": {
-        "run_id": 8,
-        "usable_failed_band_correct": 39,
-        "cases": 48,
-        "band_accuracy": 0.8125,
-        "false_usable": 5,
-        "false_failure": 4
+    "development_evidence": {
+      "exposed_48_regression": {
+        "source_bank": "TCJ-EVALUATOR-QUALIFICATION-BANK-2026Q3-v3",
+        "original_gemini_run_id": 8,
+        "original_band_correct": 39,
+        "original_cases": 48,
+        "original_band_accuracy": 0.8125,
+        "successor_run_id": 25,
+        "successor_band_correct": 44,
+        "successor_cases": 48,
+        "successor_band_accuracy": 0.9167,
+        "successor_false_usable": 2,
+        "successor_false_failure": 2,
+        "further_case_specific_tuning_allowed": false
       },
-      "simplified_successor_run": {
-        "run_id": 25,
-        "run_key": "TCJ-GEMINI-BFF-EDITOR-FOCUS-EXCEPTION-FULL48-BANDED-v1",
-        "usable_failed_band_correct": 44,
-        "cases": 48,
-        "band_accuracy": 0.9167,
-        "false_usable": 2,
-        "false_failure": 2,
-        "complete": 48,
+      "fresh_evaluator_validation_v1": {
+        "cases": 24,
+        "human_review_complete": true,
+        "baseline_band_correct": 21,
+        "baseline_band_accuracy": 0.875,
+        "full_tcj_band_correct": 21,
+        "full_tcj_band_accuracy": 0.875,
+        "net_lift": 0,
+        "interpretation": "TCJ fixed two baseline mistakes but introduced two others; this was not treated as a win. The result motivated the simpler negative-first evidence flow rather than more score tuning."
+      },
+      "rewrite_lift_v1": {
+        "experiment_key": "TCJ-REWRITE-LIFT-GEMINI35-v1",
+        "protocol_key": "TCJ-REWRITE-LIFT-BLIND-REVIEW-2026Q3-v1",
+        "source_bank": "TCJ-REWRITE-LIFT-SOURCE-BANK-2026Q3-v1",
+        "source_manifest_sha256": "37fc7c3d5206b8272b07d4928ff50ab0eff22c40edf6bd38970f71d4842c584a",
+        "human_review_manifest_sha256": "427a6e71042804d8ca987819edad7d555c673539c28f63a338ae12432c30e877",
+        "cases": 16,
+        "tcj_wins": 2,
+        "baseline_wins": 1,
+        "ties": 13,
+        "neither": 0,
+        "frozen": true,
+        "material_lift_claim_allowed": false,
+        "reason": "baseline was overpowered by the same specialist BFF writer role and distilled voice rules, making the control effectively TCJ-lite",
+        "diagnostic_example": "RW-014 baseline wrote Green flag with a red-flag emoji; TCJ-guided output did not."
+      },
+      "rewrite_lift_hard_v2": {
+        "status": "ACTIVE_NATIVE_HUMAN_BLIND_REVIEW",
+        "source_bank": "TCJ-REWRITE-LIFT-HARD-SOURCE-BANK-2026Q3-v2",
+        "source_bank_id": 12,
+        "source_manifest_sha256": "fc76e21ad36a5d11685db3dd4aa16398bc817ba0882dd3a20a04a31e0ecd8d79",
+        "experiment_key": "TCJ-REWRITE-LIFT-HARD-GEMINI35-v2",
+        "model": "gemini-3.5-flash-lite",
+        "cases": 12,
+        "generation_complete": 12,
         "terminal_failures": 0,
-        "provider_requests": 53,
-        "total_evidence_calls": 51,
-        "optional_second_pee_calls": 3
-      },
-      "final_definition_correction": {
-        "change": "remove_natural_code_switch_from_positive_exception_whitelist_and_add_integration_register_quality_evidence",
-        "heavy_codeswitch_shadow_false_usable_flags": 0,
-        "formal_register_collision_shadow_false_usable_flags": 0,
-        "followup_gemini_sanity_run_id": 26,
-        "followup_run_status": "stopped_at_zero_requests_by_design",
-        "reason": "shadow_definition_check_sufficient_and_user_directed_no_perfection_chasing"
-      },
-      "further_exposed_case_tuning_allowed": false
-    },
-    "fresh_development_validation": {
-      "status": "native_human_review_required_before_any_Gemini_exposure",
-      "evidence_set_key": "TCJ-DEVELOPMENT-VALIDATION-BANK-2026Q3-v1",
-      "evidence_set_id": 8,
-      "protocol_key": "TCJ-DEVELOPMENT-VALIDATION-2026Q3-v1",
-      "protocol_id": 5,
-      "cases": 24,
-      "reviewed": 0,
-      "bank_state": "draft",
-      "protocol_state": "draft_review",
-      "gemini_exposed": false,
-      "qualification_2_0_reused": false,
-      "threshold_sha256": "11e3e2448e048633925e6dc7148323021f57282d5da1c471a5b5a7a997dd1c06",
-      "private_review_url": "https://flipgazine.pages.dev/tcj-development-validation-review.html",
-      "review_function": "tcj-development-validation-review-v1",
-      "construction_labels_are_hypotheses_only": true,
-      "primary_metric": "PASS_MINOR_vs_MAJOR_CRITICAL_band_accuracy",
-      "comparison_after_human_freeze": [
-        "same_Gemini_model_alone",
-        "same_Gemini_with_full_TCJ"
-      ],
-      "development_guidance": {
-        "minimum_full_tcj_band_accuracy": 0.80,
-        "minimum_boundary_error_reduction_vs_model_alone_fraction": 0.20,
-        "full_tcj_false_usable_must_not_exceed_model_alone": true,
-        "max_full_tcj_false_usable": 3,
-        "max_terminal_protocol_failures": 0,
-        "commercial_authority_gate": false
+        "identical_pairs": 1,
+        "obvious_internal_leak_pairs": 0,
+        "worker": "tcj-rewrite-lift-hard-gemini35-worker-v2",
+        "worker_sha256": "bd6aa2b5afed8dc71468d22d12957de7d9cd311a354f5a00176c04a73465b6b7",
+        "protocol_key": "TCJ-REWRITE-LIFT-HARD-BLIND-REVIEW-2026Q3-v2",
+        "protocol_id": 2,
+        "protocol_status": "reviewing",
+        "reviewed": 0,
+        "review_api": "tcj-rewrite-lift-hard-review-v2",
+        "review_api_sha256": "2d65c604b21116fc61eca9132c68b3a33aee86974c79c5c4048114567504c402",
+        "private_review_url": "https://flipgazine.pages.dev/tcj-rewrite-lift-hard-review.html",
+        "baseline_contract": "same ordinary natural-Thai rewrite instruction; scenario + source draft only",
+        "tcj_contract": "same ordinary writer instruction plus a short TCJ-derived editorial brief produced from role/voice/methodology/reachability/bounded private evidence",
+        "writer_raw_private_evidence_access": false,
+        "case_design": "subtle native-language composition and preservation problems rather than easy formal-to-casual conversions"
       }
     },
-    "next_action": "NATIVE_HUMAN_GATE: user reviews all 24 cases at tcj-development-validation-review.html. Do not expose the bank to Gemini before review completion/freeze. After 24/24: freeze human manifest, run same Gemini alone vs full TCJ, compare usable/failed band uplift, and if materially positive without a new general architectural defect stop development refinement and freeze the candidate runtime.",
+    "next_action": "NATIVE_HUMAN_GATE: user reviews all 12 blind rewrite pairs at tcj-rewrite-lift-hard-review.html. After 12/12, freeze the human preference manifest and unblind exactly once. Report TCJ wins / baseline wins / ties / neither. Do not tune this same bank to force a TCJ win.",
     "post_validation_sequence": [
+      "decide_rewrite_lift_claim_and_candidate_architecture",
       "candidate_runtime_freeze",
       "new_hidden_native_human_authority_instrument",
       "final_paid_OpenAI_xAI_causal_frontier_experiment",
@@ -159,11 +166,6 @@
         "bank_manifest_sha256": "8e3d6c5fff4860f97bfbfcd8d69c46e5484da0d5c315ed6f4888d0061d09b7c8",
         "development_model_exposure_allowed": false,
         "can_certify_current_successor": false
-      },
-      "optional_pee_reference": {
-        "freeze_key": "TCJ-ARCHV2-REFERENCE-EVALUATOR-FREEZE-v1",
-        "manifest_sha256": "916ffa3632e428f287692632d9e11b0eda5ea88fe39399fc39e362e0cae13d5c",
-        "role": "immutable_historical_control_not_final_product"
       }
     },
     "stopped_model_runs": {
