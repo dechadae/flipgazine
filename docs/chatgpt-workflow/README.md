@@ -11,31 +11,28 @@ Before consequential work, inspect canonical Supabase project `sjpvhgxacsiorrtij
 ## Current TCJ authorities — read first
 
 1. `ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-V2-20260823.md` — **current final commercial architecture.** The judge receives a compiled TCJ Methodology Pack through a local Context Retriever; the raw corpus remains behind the Private Evidence Engine; six-dimensional diagnosis and production Release Policy are separate; BYOJ/BYOK remains first-class.
-2. `ANSWERS-TCJ-METHODOLOGY-PACK-AND-CONTEXT-RETRIEVER-SPEC-20260823.md` — **governing Methodology Pack / retrieval spec.** GitHub is a development source, not a runtime dependency. Production compiles TCJ knowledge once and retrieves only relevant modules per request.
-3. `ANSWERS-TCJ-FINAL-PRODUCT-IMPLEMENTATION-AND-QUALIFICATION-PLAN-V2-20260823.md` — **governing final-product execution plan.** No paid external model calls during ordinary development; one final paid authority run only after full freeze and explicit user approval.
-4. `ANSWERS-TCJ-V17-QUALIFICATION-FAILURE-AND-CONTEXT-ENGINE-PIVOT-20260823.md` — **current execution checkpoint.** v1.7 failed fresh v3 Qualification, has no authority, and the project pivoted from repeated 48×6/API replay loops to context-engine + contrastive development.
-5. `ANSWERS-TCJ-PRIVATE-EVIDENCE-ENGINE-AND-BUYER-ISOLATION-POLICY-20260822.md` — raw-corpus and buyer-evidence isolation authority.
-6. `ANSWERS-TCJ-SOL-PRIVATE-EVIDENCE-TOOL-AND-COMMERCIAL-LICENSING-CLARIFICATION-20260822.md` — narrow judge-initiated evidence-tool capability; no SQL/arbitrary corpus search/raw rows.
-7. `ANSWERS-TCJ-BYOJ-JUDGE-RUNTIME-AND-API-KEY-POLICY-20260822.md` — Local Judge / BYOK Judge / BYOJ and buyer-owned key policy.
-8. `ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md` — deployment/private-server improvement policy where not superseded by architecture v2.
-9. `ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md` — commercial-use/provenance authority.
-10. `ANSWERS-THAI-CONVERSATION-JUDGE-ARCHITECTURE.md` and `ANSWERS-VOICE-TONE.md` — legacy methodology/editorial source material where not superseded; important inputs to Methodology Pack compilation.
+2. `ANSWERS-TCJ-METHODOLOGY-PACK-AND-CONTEXT-RETRIEVER-SPEC-20260823.md` — governing Methodology Pack / retrieval spec. GitHub is a development source, not a runtime dependency.
+3. `ANSWERS-TCJ-METHODOLOGY-BFF-V1-COMPILED-20260823.md` — current compiled `TCJ-METHODOLOGY-BFF-v1` artifact and module/component hashes.
+4. `ANSWERS-TCJ-FINAL-PRODUCT-IMPLEMENTATION-AND-QUALIFICATION-PLAN-V2-20260823.md` — governing final-product execution plan. No paid external model calls during ordinary development; one final paid authority run only after full freeze and explicit user approval.
+5. `ANSWERS-TCJ-ARCHITECTURE-V2-OFFLINE-COMPONENTS-AND-CONTRASTIVE-HUMAN-GATE-20260823.md` — **current execution checkpoint.** Offline Phases B–E are ready; the current gate is 30 A/B/Tie native-human comparisons.
+6. `ANSWERS-TCJ-V17-QUALIFICATION-FAILURE-AND-CONTEXT-ENGINE-PIVOT-20260823.md` — preserved v1.7 fresh-Qualification failure and architecture pivot evidence.
+7. `ANSWERS-TCJ-PRIVATE-EVIDENCE-ENGINE-AND-BUYER-ISOLATION-POLICY-20260822.md` — raw-corpus and buyer-evidence isolation authority.
+8. `ANSWERS-TCJ-SOL-PRIVATE-EVIDENCE-TOOL-AND-COMMERCIAL-LICENSING-CLARIFICATION-20260822.md` — narrow judge-initiated private-evidence capability; no SQL/arbitrary corpus search/raw rows.
+9. `ANSWERS-TCJ-BYOJ-JUDGE-RUNTIME-AND-API-KEY-POLICY-20260822.md` — Local Judge / BYOK Judge / BYOJ and buyer-owned key policy.
+10. `ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md` — commercial-use/provenance authority.
+11. `ANSWERS-THAI-CONVERSATION-JUDGE-ARCHITECTURE.md` and `ANSWERS-VOICE-TONE.md` — legacy method/editorial source material where not superseded; important inputs to Methodology Pack compilation.
 
-The 22 Aug final architecture freeze and execution plan are preserved historical design evidence but are superseded for current topology/execution where they conflict with architecture v2.
+The 22 Aug final architecture freeze and execution plan remain historical design evidence but are superseded for current topology/execution where they conflict with Architecture v2.
 
 ---
 
 ## Current product definition
 
-TCJ is now intended to be:
+TCJ is intended to be:
 
 > **a portable Thai conversational methodology + protected native-human evidence system + replaceable semantic judge + deterministic release authority.**
 
 It is not intended to become an ever-growing pile of regex guards around a model.
-
----
-
-## Architecture v2
 
 ```text
 BUYER WRITER
@@ -53,8 +50,6 @@ BUYER WRITER
 → FINAL OUTPUT
 ```
 
-Component meanings:
-
 ```text
 Methodology Pack = how TCJ reasons about Thai conversational quality
 Context Retriever = which TCJ concepts matter for this request
@@ -66,13 +61,46 @@ Release Policy = may this output ship?
 
 ---
 
+## Architecture-v2 components now implemented
+
+```text
+Methodology Pack
+  TCJ-METHODOLOGY-BFF-v1
+  13 modules M00–M12
+  SHA 22ab0440b41708f41d8abe3a546b7c6197220a1824c59de56a6e86a4b7761f0a
+  status research_compiled
+
+Context Retriever
+  TCJ-CONTEXT-RETRIEVER-v1.1
+  SHA ce572d4ad361d563229c27da9c111647c4571af7ceab02b6940dd2eca6d693a2
+  status research_active
+  module cap 8
+  external LLM required: no
+
+Private Evidence Assessment
+  TCJ-PRIVATE-EVIDENCE-ASSESS-v1
+  SHA 9f6a93d92e79651b095803cd064d0d9c9e1414ef2db9b6c2314d1196e19a67cf
+  status research_active
+  max 4 allowlisted analysis families/call
+  raw rows / arbitrary search / nearest examples: no
+
+Release Policy
+  TCJ-RELEASE-POLICY-v1.1
+  SHA c237fcf664ee67083bc4c7c3a46645a12fbad929cf2a93c363818d9b95a75e23
+  status research_active
+  dimension scores do not mechanically drive release
+  deterministic high-confidence false blocks on frozen human-PASS v2+v3: 0 / 49
+```
+
+Retriever v1 and Release Policy v1 are preserved as retired research evidence; they were not silently overwritten.
+
+---
+
 ## Production does not reread GitHub
 
 The clean-account GitHub experiment showed that a capable model can acquire much of the intended TCJ/BFF behavior by reading the project's documentation.
 
-The production lesson is **not** to browse GitHub on each request.
-
-Production should do this:
+The production lesson is not to browse GitHub on each request. Production should do this:
 
 ```text
 canonical Git/docs
@@ -88,16 +116,16 @@ GitHub remains source control and development provenance only.
 
 ## Judge-visible vs private knowledge
 
-### Judge-visible
+Judge-visible:
 
 - stable TCJ core methodology;
 - relevant Methodology Pack modules;
 - Voice Profile contract;
 - current scenario/candidate;
 - structured evaluation contract;
-- bounded derived PEE response when invoked.
+- bounded PEE assessment when invoked.
 
-### Private
+Private:
 
 - raw Batch rows;
 - raw human edits;
@@ -107,41 +135,61 @@ GitHub remains source control and development provenance only.
 - buyer-private evidence;
 - arbitrary database/search access.
 
-The Private Evidence Engine is now a **targeted second-stage evidence source**, not the sole carrier of TCJ intelligence.
+The Private Evidence Engine is a targeted second-stage evidence source, not the sole carrier of TCJ intelligence.
 
 ---
 
-## Current failed Qualification evidence
-
-Frozen evaluator:
+## Preserved failed Qualification evidence
 
 ```text
-TCJ-EVAL-ANSWERS-BFF-SOL-v1.7-frozen-dev
-SHA 5eb3d2354717573e1d8f48a574a960d3bea63a855409ac23932530be7bc23d07
-```
-
-Fresh v3 Qualification:
-
-```text
+Evaluator     TCJ-EVAL-ANSWERS-BFF-SOL-v1.7-frozen-dev
+Config SHA    5eb3d2354717573e1d8f48a574a960d3bea63a855409ac23932530be7bc23d07
+Run           TCJ-EVALUATOR-QUALIFICATION-RUN-2026Q3-v3-SOL-v1.7
 48 cases
 288 primary judgments
 101 challenge judgments
-389 dispatches / 389 responses
+389 provider dispatches / responses
 288 resolution cells
 overall MAE .5729
-false-fluent human MAJOR/CRITICAL ACCEPT = 3
-terminal generation failures = 0
-credit incidents = 0
-Qualification = FAILED
-production authority = NONE
+extreme reversals 17
+false-fluent human MAJOR/CRITICAL ACCEPT 3
+terminal generation failures 0
+credit incidents 0
+Qualification FAILED
+production authority NONE
 summary SHA 52c507629205ddbb532faf57db2b9e8346ad82cfcf2e65d014231f80ddc70fd5
 ```
 
-Do not modify the human gold or old thresholds to make this pass. v3 is now exposed development evidence.
+Do not modify human gold or old thresholds to make this pass. v3 is exposed development evidence only.
 
 ---
 
-## Current development mode
+## Current human gate — Contrastive Review v1
+
+The next required action is now native-human judgment, not more implementation and not another API call.
+
+```text
+Protocol       TCJ-CONTRASTIVE-DEVELOPMENT-v1
+30 A/B/Tie comparisons
+26 unique
+4 hidden reversed consistency repeats
+12 mechanism families
+reviewed 0 / 30
+```
+
+Review page:
+
+`https://flipgazine.pages.dev/tcj-contrastive-review.html`
+
+Each screen asks only the comparison that matters, e.g. which response better answers the question, which is more socially appropriate, which is better composed, or which sounds more like a close friend. `Tie` is allowed.
+
+This is development evidence, not the future final hidden Qualification 2.0.
+
+After the 30 choices, development resumes autonomously with consistency/mechanism analysis, general corrections where the human evidence invalidates a hypothesis, mock judge adapters, runtime integration, offline replay, security and packaging.
+
+---
+
+## Current development spend rule
 
 **No paid external model/API calls.**
 
@@ -151,56 +199,15 @@ Development uses:
 - already-paid stored model responses;
 - deterministic replay;
 - current ChatGPT reasoning;
-- local Methodology Pack/retrieval work;
-- contrastive A/B/Tie human evidence.
+- Methodology Pack/retrieval work;
+- contrastive A/B/Tie human evidence;
+- mocks/local fixtures.
 
-External provider credit is reserved for **one final frozen authority test** unless the user explicitly authorizes an exception.
-
-There must be no background cron/worker that silently consumes development credit.
-
----
-
-## Contrastive Review v1
-
-Current development instrument:
-
-```text
-30 A/B/Tie comparisons
-26 unique comparisons
-4 hidden reversed consistency repeats
-12 mechanism families
-```
-
-Review page:
-
-`https://flipgazine.pages.dev/tcj-contrastive-review.html`
-
-It is designed to give more mechanism evidence per human action than another six-slider absolute-rating bank.
-
-It is development evidence, not the future final hidden Qualification.
-
----
-
-## Current offline v1.8 direction
-
-A parallel research path uses only stored judgments and deterministic logic.
-
-First release-safety result on exposed evidence:
-
-```text
-v2 human MAJOR/CRITICAL falsely ACCEPTed = 0
-v3 human MAJOR/CRITICAL falsely ACCEPTed = 0
-```
-
-This is not authority and not a claim that v1.8 is finished. The current Release Policy remains somewhat conservative and false-blocks some human-PASS cases; narrowing that behavior is active work.
-
-The main architecture lesson is that Release Policy should not be forced to operate only through manipulated 1–4 scores.
+External provider credit is reserved for **one final frozen authority test** unless the user explicitly authorizes an exception. There must be no background cron/worker that silently consumes development credit.
 
 ---
 
 ## BYOK commercial default
-
-Preferred enterprise structure:
 
 ```text
 BUYER PAYS TCJ FOR
@@ -226,32 +233,26 @@ TCJ software in buyer environment
 + buyer pays OpenAI directly
 ```
 
-The developer's OpenAI credit is not a production dependency.
-
-Local Judge remains supported for VPC/on-prem/provider-independent deployment.
-
-Connected ≠ compatible ≠ qualified.
+Developer OpenAI credit is not a production dependency. Local Judge remains supported for VPC/on-prem/provider-independent deployment. Connected ≠ compatible ≠ qualified.
 
 ---
 
-## Final implementation sequence
+## Remaining implementation sequence
 
 ```text
-1. Compile TCJ-METHODOLOGY-BFF-v1.
-2. Build/test Context Retriever v1 offline.
-3. Refactor PEE into richer bounded analysis families.
-4. Narrow Release Policy false blocks using exposed evidence.
-5. Complete/analyze Contrastive Review v1.
-6. Build provider-neutral judge adapter with mocks/stored fixtures.
-7. Integrate architecture-v2 runtime.
-8. Complete security, tenant isolation and plug-and-play packaging.
-9. Freeze exact final reference configuration.
-10. Construct a fresh post-freeze Qualification 2.0 instrument.
-11. Native-human blind A/B/Tie + limited calibration review; freeze gold.
-12. Show final call count/cost/balance and obtain explicit user approval.
-13. Run one final paid provider Qualification.
-14. If PASS: issue Passport and finish Assurance/security/release gates.
-15. If FAIL: preserve the failure and make an explicit product decision; do not enter an automatic paid retry loop.
+1. Complete/analyze Contrastive Review v1.
+2. Correct only general mechanisms invalidated by native-human contrastive evidence.
+3. Build provider-neutral BYOJ/BYOK + Local Judge adapters with mocks/stored fixtures.
+4. Integrate the complete Architecture-v2 runtime.
+5. Run full offline/exposed-bank orchestration and provenance replay.
+6. Complete security, tenant isolation, exfiltration testing and plug-and-play packaging.
+7. Freeze the exact final reference configuration.
+8. Construct a fresh post-freeze Qualification 2.0 instrument.
+9. Native-human blind A/B/Tie + limited calibration review; freeze gold.
+10. Show exact final call count/cost/balance and obtain explicit user approval.
+11. Run one final paid provider Qualification.
+12. If PASS: issue Passport and finish Assurance/security/release gates.
+13. If FAIL: preserve failure and make an explicit product decision; no automatic paid retry loop.
 ```
 
 ---
@@ -286,17 +287,5 @@ Before final commercial release:
 - prove BYOK secret rotation and no developer-key dependency;
 - prove fresh install/restart/rollback/reproducibility;
 - complete licensing/data-processing diligence.
-
----
-
-## Related Answers authorities
-
-- `ANSWERS-BATCH2-BUYER-DATA-EXTRACTION-SPEC.md` — buyer export contract.
-- `ANSWERS-BATCH2-HUMAN-FIRST-REVIEW-CORRECTION.md` — human-first visibility authority.
-- `ANSWERS-BATCH2-SOURCESET-V1-1-REPLACEMENT-PATCH.md` — clean source replacement authority.
-- `ANSWERS-COMMERCIAL-EXECUTION-TIMELINE.md` — commercialization schedule.
-- `ANSWERS-COMMERCIAL-BENCHMARK-PLAN.md` — positioning/claim boundaries.
-- `ANSWERS-HUMAN-REVIEW.md` — immutable Batch 1 provenance.
-- `ANSWERS-PRIVATE-SERVER-PHASE-K-MIGRATION-MANIFEST.md` — completed private-server migration proof.
 
 Repository-root `AGENTS.md` remains a short operational entry point, but this README + `CURRENT-STATE.json` + `DOCUMENT-AUTHORITY-MAP.md` control current TCJ continuation.
