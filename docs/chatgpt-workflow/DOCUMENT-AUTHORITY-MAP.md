@@ -1,26 +1,28 @@
 # ChatGPT Workflow — Document Authority Map
 
-**Checkpoint:** 23 August 2026, 13:47 ICT  
-**Purpose:** prevent historical TCJ plans, failed Qualification loops and superseded checkpoints from being mistaken for current authority.
+**Checkpoint:** 23 August 2026, mandatory-PEE architecture amendment applied  
+**Purpose:** prevent historical TCJ plans, failed Qualification loops and superseded optional-PEE checkpoints from being mistaken for current authority.
 
 `CURRENT-STATE.json` is the compact machine-readable checkpoint. Historical evidence remains preserved even when its next-action text is superseded.
 
 ## Current governing TCJ authorities — read first
 
-1. `ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-V2-20260823.md` — **current commercial product architecture authority.** Methodology Pack + local Context Retriever are first-class; PEE remains protected/bounded; diagnosis and Release Policy are separate; BYOJ/BYOK is first-class; GitHub is not a production runtime dependency.
-2. `ANSWERS-TCJ-METHODOLOGY-PACK-AND-CONTEXT-RETRIEVER-SPEC-20260823.md` — governing Methodology Pack / Context Retriever specification.
-3. `ANSWERS-TCJ-FINAL-PRODUCT-IMPLEMENTATION-AND-QUALIFICATION-PLAN-V2-20260823.md` — governing execution/spend plan. Ordinary paid development inference is forbidden; the final authority run requires explicit user approval.
-4. `ANSWERS-TCJ-LOW-TIER-JUDGE-TRANSFER-RESEARCH-CHECKPOINT-20260823.md` — **current execution checkpoint. Read this before taking any next action.** Qualification 2.0 human evidence is frozen and protected; current work is free low-tier judge transfer research on already-exposed v3 evidence.
-5. `ANSWERS-TCJ-ARCHV2-REFERENCE-FREEZE-AND-QUALIFICATION2-HUMAN-GATE-20260823.md` — reference evaluator freeze + Qualification 2.0 construction/human-freeze authority. Its human-review next-action text is now superseded because 28/28 review is complete.
-6. `ANSWERS-TCJ-V17-QUALIFICATION-FAILURE-AND-CONTEXT-ENGINE-PIVOT-20260823.md` — preserved v1.7 fresh-Qualification failure and architecture-pivot evidence. v1.7 has no authority.
-7. `ANSWERS-TCJ-PRIVATE-EVIDENCE-ENGINE-AND-BUYER-ISOLATION-POLICY-20260822.md` — raw-corpus and buyer-evidence isolation authority where not superseded by Architecture v2.
-8. `ANSWERS-TCJ-SOL-PRIVATE-EVIDENCE-TOOL-AND-COMMERCIAL-LICENSING-CLARIFICATION-20260822.md` — narrow judge-initiated evidence capability; no SQL, arbitrary search, raw rows or hidden-test retrieval.
-9. `ANSWERS-TCJ-BYOJ-JUDGE-RUNTIME-AND-API-KEY-POLICY-20260822.md` — Local Judge / BYOK / buyer-owned key policy.
-10. `ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md` — deployment and private-server voice-profile policy where consistent with Architecture v2.
-11. `ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md` — commercial-use/provenance boundary.
-12. `ANSWERS-THAI-CONVERSATION-JUDGE-ARCHITECTURE.md` and `ANSWERS-VOICE-TONE.md` — legacy method/editorial source material where not superseded.
+1. `ANSWERS-TCJ-MANDATORY-PROTECTED-EVIDENCE-ARCHITECTURE-AMENDMENT-20260823.md` — **highest current topology amendment.** Protected Evidence is required before every semantic diagnosis. Supersedes all older wording that makes PEE optional/risk-driven.
+2. `ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-V2-20260823.md` — underlying commercial Architecture-v2 authority where not superseded by the mandatory-evidence amendment.
+3. `ANSWERS-TCJ-METHODOLOGY-PACK-AND-CONTEXT-RETRIEVER-SPEC-20260823.md` — governing Methodology Pack / Context Retriever specification.
+4. `ANSWERS-TCJ-MANDATORY-PEE-FREE-MODEL-TREATMENT-CHECKPOINT-20260823.md` — **current execution checkpoint. Read this before taking the next research action.**
+5. `ANSWERS-TCJ-FINAL-PRODUCT-IMPLEMENTATION-AND-QUALIFICATION-PLAN-V2-20260823.md` — governing execution/spend plan except its optional-PEE topology language is superseded by item 1.
+6. `ANSWERS-TCJ-ARCHV2-REFERENCE-FREEZE-AND-QUALIFICATION2-HUMAN-GATE-20260823.md` — historical optional-PEE reference freeze + Qualification 2.0 construction/human-freeze authority. The frozen stack remains immutable evidence but is not the intended final product.
+7. `ANSWERS-TCJ-LOW-TIER-JUDGE-TRANSFER-RESEARCH-CHECKPOINT-20260823.md` — historical pre-amendment low-tier checkpoint. Its GPT-OSS control evidence remains valid; its optional-PEE next-action sequence is superseded.
+8. `ANSWERS-TCJ-V17-QUALIFICATION-FAILURE-AND-CONTEXT-ENGINE-PIVOT-20260823.md` — preserved v1.7 failure/pivot evidence. No authority.
+9. `ANSWERS-TCJ-PRIVATE-EVIDENCE-ENGINE-AND-BUYER-ISOLATION-POLICY-20260822.md` — raw-corpus / tenant isolation authority. Still fully governing.
+10. `ANSWERS-TCJ-SOL-PRIVATE-EVIDENCE-TOOL-AND-COMMERCIAL-LICENSING-CLARIFICATION-20260822.md` — bounded evidence capability and no-raw-row/search boundary. Optional-only invocation language is superseded.
+11. `ANSWERS-TCJ-BYOJ-JUDGE-RUNTIME-AND-API-KEY-POLICY-20260822.md` — Local Judge / BYOK / buyer-owned key policy. Raw evidence remains inaccessible to the judge; mandatory derived evidence is now supplied before diagnosis.
+12. `ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md` — deployment and private-server voice-profile policy where consistent with Architecture v2.1.
+13. `ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md` — commercial-use/provenance boundary.
+14. `ANSWERS-THAI-CONVERSATION-JUDGE-ARCHITECTURE.md` and `ANSWERS-VOICE-TONE.md` — legacy source material where not superseded.
 
-## Current core architecture
+## Current governing architecture — v2.1 mandatory protected evidence
 
 ```text
 BUYER WRITER
@@ -28,8 +30,10 @@ BUYER WRITER
 → VOICE PROFILE
 → LOCAL CONTEXT RETRIEVER
 → RELEVANT TCJ METHODOLOGY PACK MODULES
-→ SELECTED BYOJ JUDGE
-↔ OPTIONAL BOUNDED PRIVATE EVIDENCE TOOL
+→ MANDATORY PROTECTED-EVIDENCE PLANNER
+→ MANDATORY BOUNDED PRIVATE EVIDENCE ASSESSMENT
+→ SELECTED BYOJ/BYOK SEMANTIC JUDGE
+↔ OPTIONAL ONE ADDITIONAL TARGETED PRIVATE-EVIDENCE CALL
 → SIX-DIMENSION DIAGNOSIS
 → INDEPENDENT TCJ RELEASE POLICY
 → ACCEPT / REVISE / ESCALATE
@@ -38,34 +42,47 @@ BUYER WRITER
 Hard distinctions:
 
 ```text
-Methodology Pack = portable TCJ mental model
-Voice Profile     = what good means for this profile/domain
-Context Retriever = which TCJ ideas matter for this request
-Private Evidence  = protected empirical native-human memory
-Judge             = replaceable semantic reasoner
-Release Policy    = may this candidate ship?
+Methodology Pack     = portable TCJ conceptual knowledge
+Voice Profile        = what good means for this profile/domain
+Context Retriever    = which TCJ ideas matter for this request
+Protected Evidence   = protected native-human empirical grounding; REQUIRED
+Judge                = replaceable semantic reasoner
+Release Policy       = may this candidate ship?
 ```
 
-## Frozen Architecture-v2 reference evaluator
+Mandatory does not mean raw evidence leaves the private layer. The selected judge may receive only bounded, non-reconstructive derived evidence. It must not receive raw corpus rows, nearest proprietary examples, raw human edit pairs, hidden Qualification cases, private row IDs or arbitrary database/search access.
+
+## Successor research runtime
+
+```text
+Runtime        TCJ-RUNTIME-ANSWERS-BFF-ARCHV2-v2-MANDATORY-PEE
+Runtime SHA    9c418186601158ffe0afa85a1ce68a22e48b81e9dbd086d8b1fc10f0f9e51842
+Judge Adapter  TCJ-JUDGE-ADAPTER-v2.2-MANDATORY-PEE
+Planner        TCJ-PROTECTED-EVIDENCE-PLAN-v1
+Status         research_active / NOT production authority
+Min PEE calls  1
+Max PEE calls  2
+```
+
+The planner is server-only. `anon` and `authenticated` have no execute permission; `postgres` does. It deterministically uses the local Context Retriever, requests all six dimensions, and selects at most four allowlisted evidence families.
+
+## Historical frozen Architecture-v2 reference evaluator
 
 ```text
 Freeze key       TCJ-ARCHV2-REFERENCE-EVALUATOR-FREEZE-v1
 manifest SHA     916ffa3632e428f287692632d9e11b0eda5ea88fe39399fc39e362e0cae13d5c
-
 Methodology      TCJ-METHODOLOGY-BFF-v1.1
-Pack SHA         4050f13b38efdabc6c36cc99b10b813ef46909ca11b6596d1591c9dea76df6e6
 Retriever        TCJ-CONTEXT-RETRIEVER-v1.4
 Voice Profile    TCJ-VOICE-ANSWERS-BFF-v1
 Private Evidence TCJ-PRIVATE-EVIDENCE-ASSESS-v1.1
 Release Policy   TCJ-RELEASE-POLICY-v1.1
 Judge Adapter    TCJ-JUDGE-ADAPTER-v2.1
 Runtime          TCJ-RUNTIME-ANSWERS-BFF-ARCHV2-v1
-Runtime SHA      43df71f47353c6abfd96f2a020e3bd8dc97e9ef4dc7c5071df8f4309a138f6da
 ```
 
-Do not silently mutate this frozen reference stack.
+Do not mutate or delete this stack. It is historical optional-PEE evidence and useful as an ablation/control, but it is not the intended final commercial topology.
 
-## Qualification 2.0 — protected final authority evidence
+## Qualification 2.0 — protected historical final-test evidence
 
 ```text
 Protocol         TCJ-QUALIFICATION-2.0-2026Q3-v1
@@ -74,94 +91,50 @@ Unique pairs     24
 Human clicks     28 / 28
 Hidden repeats   4 / 4 consistent
 Human manifest   07a25c08b331c215bf6a7378665726c376045bcb9d547d3cd21eaca22b51428d
-Threshold SHA    c9bd44181023471a961ddcce698e6c4141961573d4eae359ea73529ee12026e5
-Bank SHA         8e3d6c5fff4860f97bfbfcd8d69c46e5484da0d5c315ed6f4888d0061d09b7c8
-Evaluator SHA    916ffa3632e428f287692632d9e11b0eda5ea88fe39399fc39e362e0cae13d5c
+Threshold SHA    c9bd44181023471a961ddcce698e6c4141961573d4eae1d69c46e5484da0d5c315ed6f4888d0061d09b7c8
 ```
 
-**Do not expose Qualification 2.0 to development models.** Groq, Qwen, Gemini, Claude and any other free/experimental judge must use already-exposed development evidence only.
+**Do not expose Qualification 2.0 to development models.** It was constructed for the older optional-PEE freeze. It must not be used to certify the mandatory-PEE successor as though the evaluator had not changed. A future authority instrument must be created only after the successor is finalized/frozen.
 
-Final OpenAI run:
+The old staged paid authority run remains non-authoritative and must not be restarted without live-state revalidation and explicit user approval.
 
-`TCJ-QUALIFICATION-2.0-FINAL-RUN-2026Q3-v1`
+## Current execution track — mandatory-PEE free-model control/treatment research
 
-Live checkpoint:
-
-- status `stopped_incident`;
-- no incident row / incident field null;
-- provider requests `0`;
-- actual spend `$0`;
-- external dispatch disabled;
-- user approval absent.
-
-This is an administrative locked/stopped pre-dispatch state, not a semantic Qualification result. Reverify live state and require explicit user approval before any provider dispatch.
-
-## Current execution track — low-tier judge transfer research
-
-Use only exposed v3 development evidence:
+Development source bank only:
 
 `TCJ-EVALUATOR-QUALIFICATION-BANK-2026Q3-v3`
 
-The purpose is to test provider portability and whether TCJ context/release architecture can support weaker judges. Because v3 informed Architecture-v2 development, this is **not independent unseen generalization evidence**.
+Historical controls are preserved, including the completed GPT-OSS zero-PEE run and stopped partial optional-PEE Qwen/Gemini runs.
 
-### Groq GPT-OSS 20B — completed
+Current treatment runs:
 
 ```text
-Run                  TCJ-ARCHV2-GROQ-GPTOSS20B-STRESS-v1
-Provider/model        Groq free / openai/gpt-oss-20b
-Source cases          48
-Usable semantic       47
-Terminal protocol     1
-PEE calls             0
-Dimension cells       282
-Mismatched cells      1 total
-Errors >=2            0
-False ACCEPT serious  0
-False BLOCK PASS      0
-Serious undercalls    1
-Release rescues       1 / 1
-Observed free limit   8000 TPM
+TCJ-ARCHV2-GROQ-GPTOSS20B-STRESS-MANDATORY-PEE-v1
+TCJ-ARCHV2-GROQ-QWEN36-27B-STRESS-MANDATORY-PEE-v1
+TCJ-ARCHV2-GEMINI35-FLASHLITE-STRESS-MANDATORY-PEE-v1
 ```
 
-The terminal protocol failure was a model attempt to call a nonexistent `json` tool. Preserve it as compatibility evidence; do not silently regenerate it and claim 48/48.
+Every treatment task must have a mandatory initial evidence packet and SHA before the judge produces a diagnosis. Provider 429s may be retried as operational throttling; semantic/schema/protocol failures must be preserved, not resampled away.
 
-Allowed provider-compatibility normalization is structural only: rationale-string container normalization and omitted empty arrays. Never change scores, severity, confidence, explicit escalation, or semantic content.
-
-The 47 usable cases made **zero PEE calls**, so this run primarily tests:
-
-`Methodology Pack + Retriever + Voice Profile + low-tier model + Release Policy`
-
-not PEE benefit.
-
-### Planned cross-family sequence
-
-1. Groq `openai/gpt-oss-20b` — complete.
-2. Groq `qwen/qwen3.6-27b` — **next action**.
-3. Verified-free Gemini API family — after Qwen.
-4. Claude only if a genuinely free API allowance/credit exists; otherwise stop and ask the user before spending anything.
-
-Do not turn this into an endless model leaderboard. The goal is a small set of genuinely different model families.
-
-For each family record semantic completion rate, schema/protocol failures, dimension mismatch/MAE, serious false ACCEPTs, PASS false blocks, Release Policy rescues/mistakes, PEE call frequency, rate limits and production economics.
+Gemini can run independently. GPT-OSS and Qwen share the Groq free-tier quota and should be serialized/paced so the experiment does not manufacture rate-limit noise.
 
 ## Spend rule
 
 ```text
 Paid OpenAI development calls = NO.
-Qualification 2.0 paid authority run = locked until explicit user approval.
-Groq free tests = allowed.
-Gemini tests = allowed only after verifying a genuinely zero-cost path.
-Claude = only if genuinely free API allowance exists; otherwise stop for permission.
-Never silently upgrade a free tier to paid.
+Groq free research = allowed.
+Verified free Gemini research = allowed.
+Claude/other paid research = explicit user approval required.
+Never silently upgrade a free experiment to paid inference.
 ```
 
 ## Operating rules
 
-1. Architecture v2 governs current topology.
-2. The current low-tier research checkpoint governs the immediate next action.
-3. Human gold remains authoritative.
-4. Frozen thresholds/hashes must not be relaxed.
-5. Historical failures remain evidence and must not be rewritten away.
-6. Raw TCJ corpus/evidence must not be exposed to external judges.
-7. Qualification 2.0 must remain untouched until the final authority run.
-8. Preserve provider-specific contract failures separately from semantic failures.
+1. Architecture v2.1 mandatory Protected Evidence governs current topology.
+2. Human gold remains authoritative.
+3. Frozen historical hashes/thresholds are never relaxed or rewritten.
+4. Raw TCJ/buyer evidence stays private; only bounded derived evidence reaches the judge.
+5. Qualification 2.0 stays untouched by free development models.
+6. Preserve all provider responses, evidence packets/hashes, rate-limit events and terminal failures.
+7. Separate semantic quality, mandatory-evidence lift, optional second-call value, Release Policy rescue and provider serialization compatibility.
+8. No successor configuration receives production authority until frozen and independently qualified.
