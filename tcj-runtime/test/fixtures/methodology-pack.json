@@ -1,0 +1,19 @@
+{
+  "pack_key": "TCJ-METHODOLOGY-BFF-test-fixture",
+  "pack_sha256": "fixture-only-not-authority",
+  "modules": [
+    {"id":"M00","title":"Core","body":"Fixture core methodology."},
+    {"id":"M01","title":"Intent","body":"Fixture intent methodology."},
+    {"id":"M02","title":"Pragmatics","body":"Fixture pragmatics methodology."},
+    {"id":"M03","title":"BFF","body":"Fixture BFF methodology."},
+    {"id":"M04","title":"Lexical","body":"Fixture lexical methodology."},
+    {"id":"M05","title":"Stance","body":"Fixture stance methodology."},
+    {"id":"M06","title":"Composition","body":"Fixture composition methodology."},
+    {"id":"M07","title":"Event","body":"Fixture event methodology."},
+    {"id":"M08","title":"Code-switch","body":"Fixture code-switch methodology."},
+    {"id":"M09","title":"Formality","body":"Fixture formality methodology."},
+    {"id":"M10","title":"Isolation","body":"Fixture isolation methodology."},
+    {"id":"M11","title":"Release","body":"Fixture release methodology."},
+    {"id":"M12","title":"Traps","body":"Fixture semantic trap methodology."}
+  ]
+}
