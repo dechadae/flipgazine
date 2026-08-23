@@ -39,18 +39,7 @@ BUYER WRITER
 → ACCEPT / REVISE / ESCALATE
 ```
 
-Hard distinctions:
-
-```text
-Methodology Pack     = portable TCJ conceptual knowledge
-Voice Profile        = what good means for this profile/domain
-Context Retriever    = which TCJ ideas matter for this request
-Protected Evidence   = protected native-human empirical grounding; REQUIRED
-Judge                = replaceable semantic reasoner
-Release Policy       = may this candidate ship?
-```
-
-Mandatory does not mean raw evidence leaves the private layer. The selected judge may receive only bounded, non-reconstructive derived evidence. It must not receive raw corpus rows, nearest proprietary examples, raw human edit pairs, hidden Qualification cases, private row IDs or arbitrary database/search access.
+Mandatory does not mean raw evidence leaves the private layer. The judge receives bounded, non-reconstructive derived evidence only. Raw corpus rows, nearest proprietary examples, human edit pairs, hidden Qualification cases, row IDs and arbitrary private search are prohibited.
 
 ## Successor research runtime
 
@@ -66,21 +55,15 @@ Max PEE calls  2
 
 The planner is server-only. `anon` and `authenticated` have no execute permission; `postgres` does. It deterministically uses the local Context Retriever, requests all six dimensions, and selects at most four allowlisted evidence families.
 
-## Historical frozen Architecture-v2 reference evaluator
+## Historical optional-PEE reference
 
 ```text
 Freeze key       TCJ-ARCHV2-REFERENCE-EVALUATOR-FREEZE-v1
 manifest SHA     916ffa3632e428f287692632d9e11b0eda5ea88fe39399fc39e362e0cae13d5c
-Methodology      TCJ-METHODOLOGY-BFF-v1.1
-Retriever        TCJ-CONTEXT-RETRIEVER-v1.4
-Voice Profile    TCJ-VOICE-ANSWERS-BFF-v1
-Private Evidence TCJ-PRIVATE-EVIDENCE-ASSESS-v1.1
-Release Policy   TCJ-RELEASE-POLICY-v1.1
-Judge Adapter    TCJ-JUDGE-ADAPTER-v2.1
 Runtime          TCJ-RUNTIME-ANSWERS-BFF-ARCHV2-v1
 ```
 
-Do not mutate or delete this stack. It is historical optional-PEE evidence and useful as an ablation/control, but it is not the intended final commercial topology.
+Do not mutate/delete it. It is historical control/ablation evidence, not the intended final commercial topology.
 
 ## Qualification 2.0 — protected historical final-test evidence
 
@@ -95,29 +78,33 @@ Threshold SHA    c9bd44181023471a961ddcce698e6c4141961573d4eae359ea73529ee12026e
 Bank SHA         8e3d6c5fff4860f97bfbfcd8d69c46e5484da0d5c315ed6f4888d0061d09b7c8
 ```
 
-**Do not expose Qualification 2.0 to development models.** It was constructed for the older optional-PEE freeze. It must not be used to certify the mandatory-PEE successor as though the evaluator had not changed. A future authority instrument must be created only after the successor is finalized/frozen.
-
-The old staged paid authority run remains non-authoritative and must not be restarted without live-state revalidation and explicit user approval.
+**Do not expose Qualification 2.0 to development models.** It was constructed for the older optional-PEE freeze and cannot certify the mandatory-PEE successor as if the evaluator had not changed. Build a new hidden authority instrument only after the successor is finalized/frozen.
 
 ## Current execution track — mandatory-PEE free-model control/treatment research
 
-Development source bank only:
+Development bank only:
 
 `TCJ-EVALUATOR-QUALIFICATION-BANK-2026Q3-v3`
 
-Historical controls are preserved, including the completed GPT-OSS zero-PEE run and stopped partial optional-PEE Qwen/Gemini runs.
+Preserved controls include the completed GPT-OSS zero-PEE run and stopped partial optional-PEE Qwen/Gemini runs.
 
-Current treatment runs:
+The first GPT-OSS mandatory run is also preserved separately as adapter-calibration evidence:
+
+`TCJ-ARCHV2-GROQ-GPTOSS20B-STRESS-MANDATORY-PEE-v1`
+
+It is **not** the fair treatment run because its inherited prompt omitted the explicit severity/confidence enum contract. Raw provider reasoning confirmed the under-specification. It was stopped; no rows were deleted or relabeled.
+
+Current fair treatment runs:
 
 ```text
-TCJ-ARCHV2-GROQ-GPTOSS20B-STRESS-MANDATORY-PEE-v1
+TCJ-ARCHV2-GROQ-GPTOSS20B-STRESS-MANDATORY-PEE-v2
 TCJ-ARCHV2-GROQ-QWEN36-27B-STRESS-MANDATORY-PEE-v1
 TCJ-ARCHV2-GEMINI35-FLASHLITE-STRESS-MANDATORY-PEE-v1
 ```
 
-Every treatment task must have a mandatory initial evidence packet and SHA before the judge produces a diagnosis. Provider 429s may be retried as operational throttling; semantic/schema/protocol failures must be preserved, not resampled away.
+Every treatment case must have a mandatory initial evidence packet + SHA before semantic diagnosis. Provider 429s may be retried as operational throttling; semantic/schema/protocol failures are preserved and not resampled away.
 
-Gemini can run independently. GPT-OSS and Qwen share the Groq free-tier quota and should be serialized/paced so the experiment does not manufacture rate-limit noise.
+Gemini may run independently. GPT-OSS and Qwen share Groq's observed free-tier 8,000 TPM quota and should be serialized/paced rather than intentionally competing.
 
 ## Spend rule
 
