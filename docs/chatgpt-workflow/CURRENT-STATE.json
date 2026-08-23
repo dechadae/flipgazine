@@ -1,6 +1,6 @@
 {
-  "schema_version": 4,
-  "as_of": "2026-08-23T10:02:00+07:00",
+  "schema_version": 5,
+  "as_of": "2026-08-23T10:15:00+07:00",
   "scope": "repository_documentation_checkpoint",
   "live_state_independently_reverified": true,
   "canonical_supabase_project": "sjpvhgxacsiorrtijqua",
@@ -20,6 +20,7 @@
     "historical_thresholds_are_immutable_evidence": true,
     "qualification_threshold_sha256_historical_absolute_rating_protocol": "b805b1f9484ea5ce576f09187c467b268c1f7c20263efa3889041680af426836",
     "external_paid_api_development_calls_allowed": false,
+    "external_paid_api_calls_since_architecture_v2_pivot": 0,
     "external_paid_api_policy": "reserve external model credit for one final frozen authority test only unless the user explicitly authorizes an exception",
     "reference_judge": {
       "provider": "OpenAI",
@@ -45,6 +46,7 @@
       "blocking_incidents": 0,
       "credit_incidents": 0,
       "overall_mae": 0.5729,
+      "extreme_reversals_total": 17,
       "false_fluent_human_major_or_critical": 3,
       "authority": "none",
       "evidence_role_now": "exposed_development_evidence_only",
@@ -83,34 +85,76 @@
       }
     },
     "methodology_pack": {
-      "target_id": "TCJ-METHODOLOGY-BFF-v1",
-      "status": "implementation_pending",
+      "pack_id": "TCJ-METHODOLOGY-BFF-v1",
+      "status": "research_compiled",
+      "pack_sha256": "22ab0440b41708f41d8abe3a546b7c6197220a1824c59de56a6e86a4b7761f0a",
+      "module_count": 13,
+      "module_range": "M00-M12",
       "spec_doc": "ANSWERS-TCJ-METHODOLOGY-PACK-AND-CONTEXT-RETRIEVER-SPEC-20260823.md",
-      "purpose": "compile durable TCJ conceptual knowledge from canonical docs into a versioned judge-visible artifact",
-      "raw_corpus_included_by_default": false,
+      "compiled_doc": "ANSWERS-TCJ-METHODOLOGY-BFF-V1-COMPILED-20260823.md",
+      "raw_corpus_included": false,
+      "hidden_qualification_items_included": false,
+      "buyer_private_data_included": false,
+      "raw_human_edit_pairs_included": false,
       "production_rereads_git_each_request": false,
       "portable_local_retrieval_default": true
     },
+    "context_retriever": {
+      "active": "TCJ-CONTEXT-RETRIEVER-v1.1",
+      "status": "research_active",
+      "definition_sha256": "ce572d4ad361d563229c27da9c111647c4571af7ceab02b6940dd2eca6d693a2",
+      "module_cap": 8,
+      "external_llm_required": false,
+      "role": "methodology_selection_only_not_quality_judgment",
+      "retired_predecessor": {
+        "key": "TCJ-CONTEXT-RETRIEVER-v1",
+        "definition_sha256": "f9c948e0a154a697ec92018ccf3e536b3e5238f89984022d70a839590e324541"
+      }
+    },
+    "private_evidence_assessment": {
+      "tool_key": "TCJ-PRIVATE-EVIDENCE-ASSESS-v1",
+      "status": "research_active",
+      "engine_dependency": "TCJ-PRIVATE-EVIDENCE-v3",
+      "definition_sha256": "9f6a93d92e79651b095803cd064d0d9c9e1414ef2db9b6c2314d1196e19a67cf",
+      "max_families_per_call": 4,
+      "arbitrary_search": false,
+      "raw_rows_exported": false,
+      "nearest_examples_exported": false,
+      "row_ids_exported": false,
+      "bounded_non_reconstructive_explanation": true
+    },
+    "release_policy": {
+      "active": "TCJ-RELEASE-POLICY-v1.1",
+      "status": "research_active",
+      "definition_sha256": "c237fcf664ee67083bc4c7c3a46645a12fbad929cf2a93c363818d9b95a75e23",
+      "release_evidence_version": "TCJ-RELEASE-EVIDENCE-v1.1",
+      "dimension_scores_drive_release": false,
+      "human_gold_correction_applied": true,
+      "frozen_v2_v3_human_pass_cases_checked": 49,
+      "high_confidence_hard_false_blocks_on_human_pass": 0,
+      "retired_predecessor": {
+        "key": "TCJ-RELEASE-POLICY-v1",
+        "definition_sha256": "a292e06aeeb38b552624bbc7af03ea51c236b4a891a265f072048dcdcda415b0"
+      }
+    },
     "contrastive_review_v1": {
-      "status": "development_instrument_ready",
+      "protocol_key": "TCJ-CONTRASTIVE-DEVELOPMENT-v1",
+      "status": "human_review_required",
       "url": "https://flipgazine.pages.dev/tcj-contrastive-review.html",
       "comparisons": 30,
+      "reviewed": 0,
       "unique_comparisons": 26,
       "hidden_reversed_repeats": 4,
       "mechanism_families": 12,
       "response_format": "A_or_B_or_Tie",
-      "authority_role": "development_evidence_not_final_hidden_qualification"
+      "authority_role": "development_evidence_not_final_hidden_qualification",
+      "current_human_gate": true
     },
-    "v1_8_offline_research": {
-      "status": "research_only",
-      "paid_external_calls": 0,
-      "primary_goal": "architecture-v2 release safety and mechanism coverage using stored judgments",
-      "first_release_safety_result": {
-        "v2_false_accept_human_major_critical": 0,
-        "v3_false_accept_human_major_critical": 0
-      },
-      "known_current_issue": "release_policy_is_still_conservative_and_false_blocks_some_human_PASS_cases",
-      "numeric_mae_is_not_the_primary_optimization_target": true
+    "architecture_v2_offline_checkpoint": {
+      "status": "phases_B_to_E_ready_for_human_validation",
+      "checkpoint_doc": "ANSWERS-TCJ-ARCHITECTURE-V2-OFFLINE-COMPONENTS-AND-CONTRASTIVE-HUMAN-GATE-20260823.md",
+      "paid_external_model_calls": 0,
+      "next_action": "native_human_complete_30_contrastive_A_B_Tie_reviews"
     },
     "final_qualification_2_0": {
       "status": "not_yet_constructed",
@@ -128,13 +172,11 @@
       "if_final_run_fails": "preserve failure and stop automatic paid retries"
     },
     "remaining_release_path": [
-      "compile_TCJ_METHODOLOGY_BFF_v1",
-      "build_context_retriever_v1_offline",
-      "refactor_private_evidence_tool_to_rich_bounded_analysis",
-      "narrow_release_policy_false_blocks",
       "complete_and_analyze_contrastive_review_v1",
+      "correct_general_mechanisms_invalidated_by_human_contrastive_evidence",
       "build_provider_neutral_judge_adapter_with_mocks",
       "integrate_architecture_v2_runtime",
+      "full_offline_exposed_bank_orchestration_replay",
       "complete_security_tenant_isolation_and_packaging",
       "freeze_exact_final_reference_configuration",
       "construct_fresh_qualification_2_0_instrument",
@@ -159,8 +201,10 @@
     "document_map": "DOCUMENT-AUTHORITY-MAP.md",
     "tcj_final_product_architecture": "ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-V2-20260823.md",
     "tcj_methodology_pack_context_retriever": "ANSWERS-TCJ-METHODOLOGY-PACK-AND-CONTEXT-RETRIEVER-SPEC-20260823.md",
+    "tcj_compiled_methodology_pack": "ANSWERS-TCJ-METHODOLOGY-BFF-V1-COMPILED-20260823.md",
     "tcj_final_product_execution_plan": "ANSWERS-TCJ-FINAL-PRODUCT-IMPLEMENTATION-AND-QUALIFICATION-PLAN-V2-20260823.md",
-    "tcj_current_execution_checkpoint": "ANSWERS-TCJ-V17-QUALIFICATION-FAILURE-AND-CONTEXT-ENGINE-PIVOT-20260823.md",
+    "tcj_current_execution_checkpoint": "ANSWERS-TCJ-ARCHITECTURE-V2-OFFLINE-COMPONENTS-AND-CONTRASTIVE-HUMAN-GATE-20260823.md",
+    "tcj_v17_failure_pivot_evidence": "ANSWERS-TCJ-V17-QUALIFICATION-FAILURE-AND-CONTEXT-ENGINE-PIVOT-20260823.md",
     "tcj_private_evidence_runtime": "ANSWERS-TCJ-PRIVATE-EVIDENCE-ENGINE-AND-BUYER-ISOLATION-POLICY-20260822.md",
     "tcj_judge_runtime": "ANSWERS-TCJ-BYOJ-JUDGE-RUNTIME-AND-API-KEY-POLICY-20260822.md",
     "tcj_commercial_boundary": "ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md"
