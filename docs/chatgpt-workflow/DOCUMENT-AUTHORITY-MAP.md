@@ -1,88 +1,199 @@
 # ChatGPT Workflow — Document Authority Map
 
-**Checkpoint:** 22 August 2026  
-**Purpose:** prevent historical plans and checkpoint-specific next actions from being mistaken for current operating authority.
+**Checkpoint:** 23 August 2026  
+**Purpose:** prevent historical TCJ plans, failed Qualification loops and superseded topology from being mistaken for current authority.
 
-`CURRENT-STATE.json` provides the compact current checkpoint. This map classifies the governing documents and the key supersession rules needed for continued work. Historical evidence remains preserved even when its next-action text is superseded.
+`CURRENT-STATE.json` is the compact machine-readable checkpoint. Historical evidence remains preserved even when its next-action text is superseded.
 
-## Current governing or active authority
+## Current governing TCJ authorities — read first
 
-- `README.md` — human-readable current entry point and supersession rules.
-- `CURRENT-STATE.json` — compact machine-readable live checkpoint; reverify canonical Supabase before consequential work.
-- `ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-FREEZE-20260822.md` — **frozen final commercial product architecture authority**: component order, trust boundaries, Voice Profile position, Private Evidence Engine role, derived-signal boundary, BYOJ abstraction, writer/judge roles, one-revision default, independent six-dimension resolution, risk-triggered challenge, full-evaluator Qualification unit and managed/VPC/on-prem shapes. Production authority remains pending.
-- `ANSWERS-TCJ-SOL-PRIVATE-EVIDENCE-TOOL-AND-COMMERCIAL-LICENSING-CLARIFICATION-20260822.md` — **governing frozen-architecture clarification**: the selected judge may call a narrow TCJ Private Evidence Tool for allowlisted derived analysis; no SQL/database/vault/raw-corpus access. The tool schema/call budget is authority-bearing. BYOK is the preferred initial enterprise commercial structure: TCJ is licensed separately and the buyer supplies/pays for its provider account/API usage.
-- `ANSWERS-TCJ-FINAL-PRODUCT-IMPLEMENTATION-AND-QUALIFICATION-PLAN-20260822.md` — **governing final-product execution plan**. It translates the frozen architecture + clarification into the release path. It distinguishes the current eager/precomputed v1.5 evaluator from the preferred interactive `tcj_evidence_assess` successor and requires a new fresh Qualification for any materially changed interactive evaluator.
-- `ANSWERS-TCJ-SOL-V15-RESEARCH-FREEZE-AND-FRESH-QUALIFICATION-V2-20260822.md` — **current execution checkpoint**: v1.5 is research-frozen; fresh Qualification v2 is awaiting native-human blind review. Any pass is scoped to eager/precomputed derived signals only, not to the later interactive Evidence Tool runtime.
-- `ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md` — governing deployment, packaging, setup, buyer-specific improvement and Voice Profile policy inside the frozen topology.
-- `ANSWERS-TCJ-PRIVATE-EVIDENCE-ENGINE-AND-BUYER-ISOLATION-POLICY-20260822.md` — governing raw-corpus isolation and buyer/writer evidence boundary. Read together with the Private Evidence Tool clarification: a narrow derived-analysis tool is allowed; generic/raw retrieval remains forbidden.
-- `ANSWERS-TCJ-BYOJ-JUDGE-RUNTIME-AND-API-KEY-POLICY-20260822.md` — governing Local Judge/BYOK Judge/BYOJ terminology and judge-runtime boundary. Read together with the clarification for the approved interactive derived-evidence capability.
-- `ANSWERS-TCJ-VOICE-PROFILE-LICENSING-EXTENSION-20260822.md` — governing Voice Profile classification, portable licensing and recurring Voice Profile Improvement Service.
-- `ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md` — current commercial-use / provenance / model-development boundary.
-- `ANSWERS-TCJ-MULTI-JUDGE-CONSENSUS-ARCHITECTURE.md` — approved Panel methodology; production Panel remains gated by qualified evaluator configurations.
-- `ANSWERS-TCJ-EXPERT-OPERABLE-CONTROL-PLANE-IMPLEMENTATION.md` — control-plane implementation contract where not superseded by newer frozen-product authorities.
-- `ANSWERS-THAI-CONVERSATION-JUDGE-ARCHITECTURE.md` — TCJ core/profile method authority where not superseded by the final product freeze/clarification.
-- `ANSWERS-BATCH2-BUYER-DATA-EXTRACTION-SPEC.md` — buyer schema, eligibility and reconciled count language.
-- `ANSWERS-BATCH2-HUMAN-FIRST-REVIEW-CORRECTION.md` — human-first visibility and replacement rules.
-- `ANSWERS-BATCH2-SOURCESET-V1-1-REPLACEMENT-PATCH.md` — applied B2-0048/B2-0059 replacement authority.
-- `ANSWERS-BATCH2-CORPUS-ROUTING-REACHABILITY-PLAN.md` — routing/reachability/promotion architecture; baseline numbers are historical.
-- `ANSWERS-COMMERCIAL-EXECUTION-TIMELINE.md` — active production and commercialization schedule.
-- `ANSWERS-COMMERCIAL-BENCHMARK-PLAN.md` — commercial positioning and claims boundary.
-- `ANSWERS-HUMAN-EVALUATION-SCHEME.md` — human-evaluation deliverable boundary.
-- `ANSWERS-HUMAN-REVIEW.md` — immutable Batch 1 provenance authority.
-- `ANSWERS-VOICE-TONE.md` — Thai/English editorial authority.
-- `ANSWERS-PRIVATE-SERVER-PHASE-K-MIGRATION-MANIFEST.md` — final private-server migration authority; counts are the migration snapshot.
+1. `ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-V2-20260823.md` — **current final commercial product architecture authority.** Adds the TCJ Methodology Pack + local Context Retriever as first-class components, keeps the Private Evidence Engine behind a bounded tool, separates six-dimensional diagnosis from independent Release Policy, preserves BYOJ/BYOK, and explicitly removes GitHub as a production runtime dependency.
 
-## Completed evidence with continuing operational value
+2. `ANSWERS-TCJ-METHODOLOGY-PACK-AND-CONTEXT-RETRIEVER-SPEC-20260823.md` — **governing Methodology Pack / Context Retriever implementation spec.** Defines judge-visible methodology knowledge, private evidence tiers, module map, retrieval contract, BYOK portability and build-time compilation from canonical docs.
 
-- `ANSWERS-TCJ-V3-ABLATION-COMPLETION-AND-PRIVATE-EVIDENCE-V4-DIRECTION-20260822.md` — completed negative-ablation / v4-direction checkpoint. Its immediate “build v4” next action is superseded by the v1.5 execution checkpoint and the final-product implementation plan.
-- `ANSWERS-TCJ-QUALIFICATION-V11-RESEARCH-REMEDIATION-AND-EXTERNAL-API-GATE-20260822.md` — prior remediation checkpoint; immediate next-action wording superseded.
-- `ANSWERS-TCJ-QUALIFICATION-V11-COMPLETION-AND-RESEARCH-GATE-20260822.md` — verified v1.1 completion evidence, frozen metrics/hashes/Passports and original research gate. v1.1 is now exposed development evidence only.
-- `ANSWERS-BATCH2-CORPUS-ROUTING-REACHABILITY-IMPLEMENTATION-REPORT.md` — implemented routing/promotion evidence; checkpoint counts superseded.
-- `ANSWERS-BATCH2-TECH-PILOT-COMPLETION-REPORT.md` — immutable technical-pilot completion evidence.
-- `ANSWERS-TCJ-CALIBRATION-RERUN-20260820.md` — completed stored calibration-rerun evidence.
-- `ANSWERS-TCJ-CALIBRATION-SHADOW-V3-20260820.md` — completed calibration failure analysis.
-- `ANSWERS-TCJ-MEASUREMENT-IMPLEMENTATION-20260820.md` — measurement/Stage A foundation; later next actions superseded.
-- `ANSWERS-TCJ-STAGE-B-V11-VALIDITY-20260820.md` — applied Stage B validity remediation.
-- `ANSWERS-TCJ-STAGE-B-V11-CARE-PATCH-20260820.md` — applied CARE parity patch.
-- `ANSWERS-TCJ-ROBUSTNESS-FROZEN-INPUT-20260820.md` — frozen pack provenance; execution completed later.
-- `ANSWERS-TCJ-ROBUSTNESS-V1-COMPLETION-AND-PERTURBATION-DRAFT-20260821.md` — completed robustness/perturbation checkpoint; next action superseded.
-- `ANSWERS-TCJ-LIVE-DEPLOYMENT-20260819.md` — TCJ Standard deployment provenance; historical state only.
-- `ANSWERS-VOICE-BENCHMARK-ACCEPTANCE-2026-08-18.md` — production acceptance evidence.
-- `ANSWERS-VOICE-BENCHMARK-IMPLEMENTATION-REPORT.md` — implementation and security evidence.
-- `ANSWERS-VOICE-PUBLIC-OPERATIONS-AUDIT-2026-08-18.md` — operations snapshot; reverify live quotas before relying on it.
-- `ANSWERS-OUTREACH-ENGAGEMENT-TRACKING.md` — telemetry interpretation rules; reverify live endpoint/configuration.
+3. `ANSWERS-TCJ-FINAL-PRODUCT-IMPLEMENTATION-AND-QUALIFICATION-PLAN-V2-20260823.md` — **governing final-product execution plan.** Development uses no paid external model calls by default. It defines the offline build sequence, plug-and-play packaging, final architecture freeze, Qualification 2.0 methodology, and one final paid provider run after explicit user approval.
 
-## Historical planning, correction or delivery records
+4. `ANSWERS-TCJ-V17-QUALIFICATION-FAILURE-AND-CONTEXT-ENGINE-PIVOT-20260823.md` — **current execution checkpoint.** v1.7 failed fresh v3 Qualification, retains zero authority, v3 is exposed development evidence, repeated 48×6 banks are retired as the default loop, contrastive A/B/Tie development is active, and external development API spending is stopped.
 
-- `ANSWERS-BATCH2-ACTIVE-REVIEW-ORDER-CORRECTION.md` — historical review-order correction.
-- `ANSWERS-BATCH2-SELF-AUDIT-PROTOCOL.md` — frozen historical protocol; partly superseded.
-- `ANSWERS-BATCH2-SELF-AUDIT-IMPLEMENTATION-REPORT.md` — historical implementation checkpoint.
-- `ANSWERS-VOICE-BENCHMARK-PLAN.md` — public Voice design history.
-- `ANSWERS-OUTREACH-FIRST-CONTACT-STRATEGY.md` — historical sent-copy strategy.
-- `ANSWERS-OUTREACH-DELIVERY-STATUS-2026-08-19.md` — historical delivery outcome.
-- `ANSWERS-PRIVATE-SERVER-MIGRATION-PLAN.md` and phase A–J reports — completed migration history. Do not rerun as current plans.
+5. `ANSWERS-TCJ-PRIVATE-EVIDENCE-ENGINE-AND-BUYER-ISOLATION-POLICY-20260822.md` — raw-corpus / buyer-evidence isolation authority where not superseded by architecture v2. Read together with the v2 architecture: PEE is a protected empirical memory/evidence layer, not the sole carrier of TCJ conceptual intelligence.
 
-## Operating rule
+6. `ANSWERS-TCJ-SOL-PRIVATE-EVIDENCE-TOOL-AND-COMMERCIAL-LICENSING-CLARIFICATION-20260822.md` — governing narrow judge-initiated private-evidence capability where not superseded by richer bounded-response language in architecture v2. No SQL, arbitrary corpus search, raw rows or hidden-test retrieval.
 
-When two documents conflict:
+7. `ANSWERS-TCJ-BYOJ-JUDGE-RUNTIME-AND-API-KEY-POLICY-20260822.md` — governing Local Judge / BYOK Judge / BYOJ terminology and buyer-owned API-key boundary. Architecture v2 adds Methodology Pack/Context Retriever to the authority-bearing configuration but does not change the buyer-controlled BYOK principle.
+
+8. `ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md` — deployment/setup/private-server improvement authority where not contradicted by architecture v2.
+
+9. `ANSWERS-TCJ-MULTI-JUDGE-CONSENSUS-ARCHITECTURE.md` — Panel/reliability methodology if a final product actually uses a Panel. Architecture v2 does not require a universal Panel or universal second semantic pass.
+
+10. `ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md` — commercial-use/provenance/model-development boundary.
+
+11. `ANSWERS-THAI-CONVERSATION-JUDGE-ARCHITECTURE.md` — legacy TCJ core/profile methodology details that remain useful where not superseded by architecture v2.
+
+12. `ANSWERS-VOICE-TONE.md` — current Thai/English editorial source material; may inform Methodology Pack compilation subject to protected-evidence review.
+
+## Architecture v2 supersession rules
+
+For product topology and execution sequencing, architecture v2 supersedes conflicting portions of:
+
+- `ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-FREEZE-20260822.md`
+- `ANSWERS-TCJ-FINAL-PRODUCT-IMPLEMENTATION-AND-QUALIFICATION-PLAN-20260822.md`
+- older next-action language requiring another mechanically identical 48×6 Qualification bank;
+- older assumptions that eager/precomputed scalar PEE signals should carry most TCJ intelligence;
+- older development loops that repeatedly call paid external judges before final freeze.
+
+Those documents remain historical design evidence and must not be deleted or rewritten to hide the evolution.
+
+## Current core architecture
+
+```text
+BUYER WRITER
+→ TCJ GATEWAY
+→ VOICE PROFILE
+→ LOCAL CONTEXT RETRIEVER
+→ RELEVANT TCJ METHODOLOGY PACK MODULES
+→ SELECTED BYOJ JUDGE
+↔ OPTIONAL NARROW PRIVATE EVIDENCE TOOL
+→ DIMENSION DIAGNOSIS
+→ INDEPENDENT TCJ RELEASE POLICY
+→ ACCEPT / REVISE / ESCALATE
+→ ONE TARGETED WRITER REVISION IF REQUIRED
+→ RECHECK
+→ FINAL OUTPUT
+```
+
+Hard distinctions:
+
+```text
+Methodology Pack = portable TCJ mental model / conceptual knowledge
+Voice Profile     = what good means for this profile/buyer/domain
+Context Retriever = which TCJ ideas matter for this request
+Private Evidence  = protected native-human empirical memory
+Judge             = replaceable semantic reasoner
+Release Policy    = may the candidate ship?
+```
+
+## Current execution state
+
+v1.7 reference evaluator:
+
+```text
+TCJ-EVAL-ANSWERS-BFF-SOL-v1.7-frozen-dev
+SHA 5eb3d2354717573e1d8f48a574a960d3bea63a855409ac23932530be7bc23d07
+```
+
+Fresh v3 Qualification result:
+
+```text
+48 cases
+288 primary judgments
+101 challenge judgments
+389 total provider dispatches/responses
+288 resolution cells
+overall MAE .5729
+false-fluent human MAJOR/CRITICAL ACCEPT = 3
+terminal generation failures = 0
+credit incidents = 0
+Qualification = FAILED
+authority = NONE
+sealed summary SHA = 52c507629205ddbb532faf57db2b9e8346ad82cfcf2e65d014231f80ddc70fd5
+```
+
+Do not rerun v1.7 or reinterpret the failed v3 bank as fresh authority evidence.
+
+## Current development instrument
+
+`TCJ Contrastive Review v1`:
+
+```text
+30 A/B/Tie comparisons
+26 unique
+4 hidden reversed repeats
+12 mechanism families
+```
+
+Review page:
+
+`https://flipgazine.pages.dev/tcj-contrastive-review.html`
+
+This is **development evidence**, not final hidden authority evidence.
+
+## External API spend rule
+
+Current governing rule:
+
+```text
+Paid external model/API calls for ordinary TCJ development = NO.
+```
+
+Use:
+
+- stored historical provider outputs;
+- exposed human-reviewed banks;
+- deterministic replay;
+- contrastive human evidence;
+- local pack/retrieval tests;
+- current ChatGPT reasoning.
+
+Paid external provider credit is reserved for **one final frozen authority test** after explicit user approval and a call-count/cost/balance check.
+
+No autonomous cron/worker may consume external-model credit during development.
+
+## Final Qualification direction
+
+Do not construct the final hidden instrument until the exact architecture-v2 evaluator is frozen.
+
+The final Qualification 2.0 should combine fresh post-freeze evidence for:
+
+- A/B/Tie controlled discrimination;
+- context counterfactuals;
+- dimension isolation;
+- release safety;
+- preservation of acceptable/unconventional native Thai;
+- repeated/reversed consistency;
+- limited absolute calibration for continuity.
+
+A new instrument may use new preregistered thresholds appropriate to the new measurement methodology. This does **not** rewrite or weaken the historical v1.7 failed threshold contract.
+
+## Related Answers authorities
+
+- `ANSWERS-BATCH2-BUYER-DATA-EXTRACTION-SPEC.md` — buyer export/schema/eligibility.
+- `ANSWERS-BATCH2-HUMAN-FIRST-REVIEW-CORRECTION.md` — human-first replacement/visibility rules.
+- `ANSWERS-BATCH2-SOURCESET-V1-1-REPLACEMENT-PATCH.md` — applied Batch 2 replacement authority.
+- `ANSWERS-COMMERCIAL-EXECUTION-TIMELINE.md` — commercialization schedule; update separately if TCJ changes affect dates.
+- `ANSWERS-COMMERCIAL-BENCHMARK-PLAN.md` — buyer-facing claim boundary.
+- `ANSWERS-HUMAN-REVIEW.md` — immutable Batch 1 provenance.
+- `ANSWERS-PRIVATE-SERVER-PHASE-K-MIGRATION-MANIFEST.md` — completed private-server migration proof.
+
+## Historical evidence with continuing value
+
+The following remain evidence but are not current next-action authority:
+
+- the 22 Aug architecture freeze and v1 final-product plan;
+- v1.1 Qualification evidence;
+- v1.5/v1.6 research checkpoints;
+- v1.7 fresh-bank construction checkpoint;
+- v3 negative ablation;
+- prior calibration/robustness/perturbation records;
+- earlier hidden-bank plans and runners.
+
+Never delete failed runs or stale architectures merely because newer ones supersede them.
+
+## Operating rules
+
+When documents conflict:
 
 1. follow the document that owns the decision domain;
-2. within that domain, follow the newer applied/verified checkpoint;
-3. preserve older evidence without executing stale next-action text;
-4. the final commercial architecture freeze controls topology, component placement and trust boundaries unless explicitly superseded;
-5. the Private Evidence Tool clarification is an allowed implementation inside that freeze and is governing for judge-initiated evidence access and BYOK commercial structure;
-6. the final-product implementation plan is governing for the current release sequence and Qualification scope;
-7. a narrow `tcj_evidence_assess` capability may return allowlisted derived/non-reconstructive signals, but may not expose SQL, generic search, raw rows/examples, nearest matches or hidden test evidence;
-8. Evidence Tool version/schema, allowed analysis families/dimensions, call budget, signal response schema and aggregation policy are authority-bearing evaluator components;
-9. the current v1.5 evaluator does not bind those interactive-tool components. Its Qualification v2 can therefore authorize only the eager/precomputed derived-signal mode;
-10. an interactive successor must be frozen as a new evaluator configuration and face a fresh hidden Qualification bank created after that freeze;
-11. the architecture freeze and any Qualification pass do not by themselves grant commercial release: Panel, Assurance, security, tenant-isolation, reproducibility, packaging and final release gates remain mandatory;
-12. frozen native-human gold and historical thresholds are never changed to accommodate a failing model/configuration;
-13. case-design labels are hypotheses only; native-human ratings are authoritative;
-14. BYOJ is the umbrella: Local Judge is self-hosted/private; BYOK Judge is an external provider using buyer-controlled credentials;
-15. OpenAI/Sol may be the reference BYOK judge but is not mandatory;
-16. under the preferred BYOK commercial structure, the buyer controls and pays its provider account/API usage separately from the TCJ license; TCJ does not sell or transfer buyer API keys;
-17. internal proprietary batches/evidence remain non-deliverable R&D assets by default;
-18. buyer-specific improvement requires explicit rights/opt-in and cannot silently change production behavior;
-19. cross-customer learning requires separate explicit permission;
-20. update `README.md`, `CURRENT-STATE.json` and this map together when current execution authority changes.
+2. within that domain, follow the newer verified/applied authority;
+3. architecture v2 governs current commercial topology;
+4. the v2 execution plan governs current release sequence;
+5. the Methodology Pack spec governs judge-visible conceptual context and retrieval;
+6. PEE/buyer-isolation docs continue to govern raw evidence privacy;
+7. BYOJ/BYOK docs continue to govern provider/key ownership;
+8. human gold remains authoritative historical evidence;
+9. old Qualification thresholds are not retroactively changed;
+10. final Qualification 2.0 must be preregistered only after the exact new evaluator is frozen;
+11. no paid external development calls occur without explicit user authorization;
+12. GitHub is source control/documentation, not a production runtime dependency;
+13. buyer-owned API credentials are the preferred external-provider production structure;
+14. production authority belongs to the exact frozen evaluator configuration, never a naked model name;
+15. update `README.md`, `CURRENT-STATE.json` and this map together whenever current execution authority changes.
