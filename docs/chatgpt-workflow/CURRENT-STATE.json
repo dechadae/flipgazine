@@ -1,6 +1,6 @@
 {
-  "schema_version": 9,
-  "as_of": "2026-08-23T17:12:00+07:00",
+  "schema_version": 10,
+  "as_of": "2026-08-23T18:06:00+07:00",
   "scope": "repository_documentation_checkpoint",
   "live_state_independently_reverified": true,
   "canonical_supabase_project": "sjpvhgxacsiorrtijqua",
@@ -48,6 +48,88 @@
         "planner_postgres_execute": true,
         "external_dispatch_default": false
       }
+    },
+    "final_product_roadmap": {
+      "status": "governing_execution_roadmap",
+      "document": "ANSWERS-TCJ-ROADMAP-TO-FINAL-COMMERCIAL-PRODUCT-20260823.md",
+      "sequence": [
+        "Gemini_centered_TCJ_refinement",
+        "fresh_development_validation",
+        "candidate_runtime_freeze",
+        "new_closed_native_human_authority_qualification",
+        "final_paid_OpenAI_xAI_causal_frontier_experiment",
+        "authority_decision",
+        "plug_and_play_API_productization",
+        "private_server_BYOJ_BYOK_edition",
+        "customer_specific_voice_profile_and_controlled_quality_improvement",
+        "operator_control_plane",
+        "production_security_hardening",
+        "commercial_packaging_and_release"
+      ],
+      "fresh_development_validation_target_unique_cases": "24-32",
+      "hidden_authority_planning_target": {
+        "unique_cases": 32,
+        "concealed_consistency_or_reversal_presentations": 4,
+        "count_not_yet_frozen": true
+      },
+      "paid_frontier_primary_design": {
+        "condition_A": "frontier_model_alone_neutral_six_dimension_schema",
+        "condition_B": "TCJ_methodology_voice_profile_context_retriever_without_private_PEE",
+        "condition_C": "full_TCJ_with_mandatory_bounded_protected_evidence_and_independent_release_policy",
+        "derived_value_tests": [
+          "A_to_B_methodology_context_contribution",
+          "B_to_C_protected_evidence_contribution",
+          "A_to_C_total_TCJ_contribution"
+        ],
+        "primary_scores_frozen_before_post_primary_diagnostics": true
+      },
+      "commercial_completion_requires": [
+        "qualified_frozen_runtime",
+        "Gemini_reference_judge_configuration",
+        "independent_frontier_authority_evidence",
+        "causal_model_alone_vs_methodology_vs_full_TCJ_evidence",
+        "mandatory_protected_evidence",
+        "six_dimension_diagnosis",
+        "independent_release_policy",
+        "plug_and_play_API",
+        "batch_API",
+        "BYOJ_BYOK",
+        "private_server_deployment",
+        "customer_voice_profiles",
+        "customer_local_retrieval_and_protected_evidence",
+        "controlled_versioned_quality_improvement_loop",
+        "operator_control_plane",
+        "auditability",
+        "production_security_test_pack",
+        "versioning_and_rollback",
+        "qualification_report",
+        "commercial_licensing_documentation",
+        "buyer_ready_data_room_and_demo"
+      ]
+    },
+    "frontier_paid_budget": {
+      "status": "reserved_for_post_freeze_authority_research_only",
+      "user_declared_no_top_up": true,
+      "as_of": "2026-08-23",
+      "openai_usd_remaining": 1.82,
+      "xai_usd_remaining": 3.42,
+      "total_usd_remaining": 5.24,
+      "openai_paid_development_allowed": false,
+      "xai_paid_development_allowed": false,
+      "explicit_user_approval_required_immediately_before_dispatch": true,
+      "must_reverify_live_balance_model_id_pricing_request_count_and_projected_spend_before_dispatch": true,
+      "hard_rule": "do_not_intentionally_exceed_remaining_credit_or_trigger_silent_overage",
+      "leftover_credit_priority": [
+        "serious_false_ACCEPT",
+        "frontier_vs_human_disagreement",
+        "cross_model_disagreement",
+        "methodology_helps_but_PEE_hurts",
+        "PEE_rescues_baseline_failure",
+        "full_TCJ_worse_than_model_alone",
+        "release_policy_rescue_or_false_block",
+        "repeat_instability",
+        "high_confidence_wrong_diagnosis"
+      ]
     },
     "historical_optional_pee_reference": {
       "freeze_key": "TCJ-ARCHV2-REFERENCE-EVALUATOR-FREEZE-v1",
@@ -139,6 +221,7 @@
           "complete": 21,
           "terminal": 4,
           "staged": 23,
+          "live_request_count_at_roadmap_adoption": 76,
           "protocol_completion_among_semantic_attempts": "21/25",
           "restart_without_explicit_user_intent": false
         },
@@ -149,11 +232,14 @@
           "complete": 16,
           "terminal": 3,
           "staged": 29,
+          "live_request_count_at_roadmap_adoption": 31,
           "protocol_completion_among_semantic_attempts": "16/19",
           "restart_without_explicit_user_intent": false
         },
         "ox_alpha": {
+          "run_id": 12,
           "status": "stopped_excluded_from_finalist_selection",
+          "live_request_count_at_roadmap_adoption": 5,
           "restart_without_explicit_user_intent": false
         }
       },
@@ -191,16 +277,21 @@
     },
     "spend_policy": {
       "openai_paid_development": "forbidden",
+      "xai_paid_development": "forbidden",
+      "openai_remaining_credit_reserved_for_post_freeze_authority_usd": 1.82,
+      "xai_remaining_credit_reserved_for_post_freeze_authority_usd": 3.42,
+      "user_declared_no_top_up": true,
       "groq_free_testing": "do_not_continue_stopped_finalists_without_explicit_user_intent",
       "gemini_free_testing": "allowed_for_selected_reference_judge_refinement",
       "claude_or_other_paid_testing": "explicit_user_approval_required",
       "do_not_silently_upgrade_free_tier_to_paid": true
     },
-    "next_action": "begin_Gemini_centered_TCJ_refinement_on_exposed_development_evidence_fix_PEE_false_reassurance_and_Gemini_evidence_consumption_then_validate_on_fresh_development_set_before_freeze;do_not_use_Qualification_2_0_for_tuning",
+    "next_action": "execute_Phase_B_of_ANSWERS-TCJ-ROADMAP-TO-FINAL-COMMERCIAL-PRODUCT-20260823.md:begin_Gemini_centered_TCJ_refinement_on_exposed_development_evidence_fix_PEE_false_reassurance_structural_completeness_evidence_routing_Gemini_consumption_and_release_containment_then_build_fresh_development_validation_bank;do_not_spend_OpenAI_xAI_and_do_not_use_Qualification_2_0_for_tuning",
     "authorities": {
       "document_map": "DOCUMENT-AUTHORITY-MAP.md",
       "mandatory_protected_evidence_amendment": "ANSWERS-TCJ-MANDATORY-PROTECTED-EVIDENCE-ARCHITECTURE-AMENDMENT-20260823.md",
       "current_research_decision": "ANSWERS-TCJ-FREE-MODEL-FINALIST-SELECTION-20260823.md",
+      "final_product_roadmap": "ANSWERS-TCJ-ROADMAP-TO-FINAL-COMMERCIAL-PRODUCT-20260823.md",
       "historical_execution_checkpoint": "ANSWERS-TCJ-MANDATORY-PEE-FREE-MODEL-TREATMENT-CHECKPOINT-20260823.md",
       "underlying_commercial_architecture": "ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-V2-20260823.md",
       "methodology_pack_context_retriever": "ANSWERS-TCJ-METHODOLOGY-PACK-AND-CONTEXT-RETRIEVER-SPEC-20260823.md",
