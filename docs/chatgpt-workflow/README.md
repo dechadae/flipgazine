@@ -8,13 +8,11 @@ Before consequential work, inspect canonical Supabase project `sjpvhgxacsiorrtij
 
 ## Current TCJ state
 
-TCJ is on **Architecture v2** and the exact reference evaluator is now frozen.
+TCJ is on **Architecture v2** and the exact reference evaluator is frozen.
 
 Production authority remains **NONE** until the final Qualification 2.0 machine run passes all pre-registered gates.
 
-Current human-review page:
-
-`https://flipgazine.pages.dev/tcj-qualification2-review.html`
+Qualification 2.0 human evidence is now **28/28 complete and frozen**. The current work is no longer human review; it is **free low-tier judge transfer research on already-exposed development evidence** before deciding whether to spend on the final OpenAI authority run.
 
 Current live status:
 
@@ -25,21 +23,20 @@ Current live status:
 1. `ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-V2-20260823.md` — current commercial architecture.
 2. `ANSWERS-TCJ-FINAL-PRODUCT-IMPLEMENTATION-AND-QUALIFICATION-PLAN-V2-20260823.md` — current execution/spend plan.
 3. `ANSWERS-TCJ-METHODOLOGY-PACK-AND-CONTEXT-RETRIEVER-SPEC-20260823.md` — Methodology Pack and retrieval contract.
-4. `ANSWERS-TCJ-ARCHV2-REFERENCE-FREEZE-AND-QUALIFICATION2-HUMAN-GATE-20260823.md` — **current execution checkpoint and immediate next action.**
-5. `ANSWERS-TCJ-V17-QUALIFICATION-FAILURE-AND-CONTEXT-ENGINE-PIVOT-20260823.md` — preserved v1.7 failure and Architecture-v2 pivot evidence.
-6. `ANSWERS-TCJ-PRIVATE-EVIDENCE-ENGINE-AND-BUYER-ISOLATION-POLICY-20260822.md` — protected-evidence boundary.
-7. `ANSWERS-TCJ-BYOJ-JUDGE-RUNTIME-AND-API-KEY-POLICY-20260822.md` — local/BYOK judge boundary.
-8. `ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md` — commercial-use/provenance boundary.
+4. `ANSWERS-TCJ-LOW-TIER-JUDGE-TRANSFER-RESEARCH-CHECKPOINT-20260823.md` — **current execution checkpoint and immediate next action.**
+5. `ANSWERS-TCJ-ARCHV2-REFERENCE-FREEZE-AND-QUALIFICATION2-HUMAN-GATE-20260823.md` — frozen reference evaluator and final Qualification 2.0 construction/human-freeze record.
+6. `ANSWERS-TCJ-V17-QUALIFICATION-FAILURE-AND-CONTEXT-ENGINE-PIVOT-20260823.md` — preserved v1.7 failure and Architecture-v2 pivot evidence.
+7. `ANSWERS-TCJ-PRIVATE-EVIDENCE-ENGINE-AND-BUYER-ISOLATION-POLICY-20260822.md` — protected-evidence boundary.
+8. `ANSWERS-TCJ-BYOJ-JUDGE-RUNTIME-AND-API-KEY-POLICY-20260822.md` — local/BYOK judge boundary.
+9. `ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md` — commercial-use/provenance boundary.
 
-Older freeze/checkpoint documents remain historical evidence; do not delete them or treat their old next-action text as current authority.
+Older freeze/checkpoint documents remain historical evidence; do not delete them or treat old next-action text as current authority.
 
 ## Current product definition
 
 TCJ is:
 
 > **a portable Thai conversational methodology + protected native-human evidence system + replaceable semantic judge + deterministic release authority.**
-
-It is not an ever-growing pile of regex guards around a model.
 
 ```text
 BUYER WRITER
@@ -54,15 +51,6 @@ BUYER WRITER
 → ACCEPT / REVISE / ESCALATE
 ```
 
-```text
-Methodology Pack = how TCJ reasons about Thai conversational quality
-Context Retriever = which concepts matter for this request
-Voice Profile = what good means for this buyer/domain/voice
-Private Evidence Engine = protected native-human empirical memory
-Judge = replaceable semantic reasoner
-Release Policy = may this output ship?
-```
-
 Production does **not** reread GitHub for every request. Git/docs are development sources compiled into a versioned Methodology Pack; runtime retrieval selects only relevant modules.
 
 ## Frozen reference evaluator
@@ -70,112 +58,96 @@ Production does **not** reread GitHub for every request. Git/docs are developmen
 ```text
 Freeze key       TCJ-ARCHV2-REFERENCE-EVALUATOR-FREEZE-v1
 Freeze SHA       916ffa3632e428f287692632d9e11b0eda5ea88fe39399fc39e362e0cae13d5c
-
 Methodology      TCJ-METHODOLOGY-BFF-v1.1
-Pack SHA         4050f13b38efdabc6c36cc99b10b813ef46909ca11b6596d1591c9dea76df6e6
-Modules          13
-
 Retriever        TCJ-CONTEXT-RETRIEVER-v1.4
-PEE tool         TCJ-PRIVATE-EVIDENCE-ASSESS-v1.1
 Voice Profile    TCJ-VOICE-ANSWERS-BFF-v1
+PEE tool         TCJ-PRIVATE-EVIDENCE-ASSESS-v1.1
 Release Policy   TCJ-RELEASE-POLICY-v1.1
 Judge Adapter    TCJ-JUDGE-ADAPTER-v2.1
 Runtime          TCJ-RUNTIME-ANSWERS-BFF-ARCHV2-v1
 Runtime SHA      43df71f47353c6abfd96f2a020e3bd8dc97e9ef4dc7c5071df8f4309a138f6da
 ```
 
-Reference semantic contract:
+Do not mutate the frozen reference stack during compatibility research.
 
-- one coherent six-dimension judge call per option;
-- OpenAI Responses API for the reference configuration;
-- reference model id `gpt-5.6`, model family `gpt-5.6-sol`;
-- up to two bounded PEE tool calls;
-- strict structured output;
-- `parallel_tool_calls=false`;
-- no universal second semantic pass;
-- no semantic retry/resampling;
-- external dispatch off by default.
-
-OpenAI is a reference qualified judge target, not a mandatory product dependency. Buyers can use a compatible buyer-owned API key or local/self-hosted judge, but a different evaluator configuration is not automatically Qualified.
-
-## Completed development evidence
-
-The original 48×6 human banks v1.1/v2/v3 are now exposed development evidence. They are not the template for another final bank.
-
-The later `TCJ-CONTRASTIVE-DEVELOPMENT-v1` is complete:
-
-```text
-30/30 reviewed
-26 unique comparisons
-4 hidden reversed repeats
-4/4 repeat consistency
-manifest c2424faff7f7169ee69babd1205654a636d82d0845138fc3d8487f70bfc784f2
-```
-
-Its human evidence was incorporated before the Architecture-v2 reference freeze.
-
-## Current gate — Qualification 2.0
+## Qualification 2.0 — protected final authority evidence
 
 ```text
 Protocol         TCJ-QUALIFICATION-2.0-2026Q3-v1
-Status           draft_review
-Unique cases     24
-Human clicks     28
-Hidden repeats   4
-Reviewed         0 / 28 at checkpoint
+Status           human_frozen
+Unique pairs     24
+Human clicks     28 / 28
+Hidden repeats   4 / 4 consistent
+Human manifest   07a25c08b331c215bf6a7378665726c376045bcb9d547d3cd21eaca22b51428d
 Threshold SHA    c9bd44181023471a961ddcce698e6c4141961573d4eae359ea73529ee12026e5
 Bank SHA         8e3d6c5fff4860f97bfbfcd8d69c46e5484da0d5c315ed6f4888d0061d09b7c8
-Bank locked      yes, before any human review
 Evaluator SHA    916ffa3632e428f287692632d9e11b0eda5ea88fe39399fc39e362e0cae13d5c
 ```
 
-This is deliberately a different measurement instrument:
+**Do not expose this bank to free-development models.** It remains reserved for the final frozen authority run.
 
-- A / B / Tie controlled comparisons;
-- true context flip;
-- dimension isolation;
-- release-safety classification using A only / B only / Both / Neither;
-- hidden reversed consistency checks;
-- no six human score sliders.
+The staged OpenAI final run has sent **0 provider requests** and spent **$0**. Live status currently reports `stopped_incident` with no incident row / null incident field, external dispatch off and no user approval. Treat that as a locked administrative state, not a semantic Qualification result.
 
-The evaluator was frozen before bank construction. The bank, hidden design contract and thresholds were then locked before the first human choice.
+## Current research — low-tier judge transfer
+
+Use the already-exposed v3 human bank only.
+
+### Groq GPT-OSS 20B — complete
+
+```text
+Run                  TCJ-ARCHV2-GROQ-GPTOSS20B-STRESS-v1
+Provider/model        Groq free / openai/gpt-oss-20b
+Source cases          48
+Usable semantic       47
+Terminal protocol     1
+PEE calls             0
+Dimension cells       282
+Mismatched cells      1
+Errors >=2            0
+False ACCEPT serious  0
+False BLOCK PASS      0
+Serious undercalls    1
+Release rescues       1 / 1
+Free-tier limit       8000 TPM
+```
+
+The one terminal failure was protocol compliance: the model attempted a nonexistent `json` tool. Preserve it rather than silently regenerating it.
+
+The 47 usable cases differed from human six-dimensional gold on only one Lexical/Social Fit cell by one point. Simple cell MAE is approximately `0.0035`.
+
+**Interpretation warning:** v3 is exposed development evidence and informed Architecture-v2 development. This near-perfect result is strong provider-portability / exposed-bank-fit evidence, but it is **not independent unseen generalization evidence**. Qualification 2.0 remains the authority test.
+
+The 47 usable cases made **zero PEE calls**, so this run primarily demonstrates Methodology Pack + Retriever + Voice Profile + low-tier judge + Release Policy behavior, not PEE benefit.
+
+## Planned free model matrix
+
+Keep this small and cross-family:
+
+1. Groq `openai/gpt-oss-20b` — complete.
+2. Groq `qwen/qwen3.6-27b` — **next**.
+3. Verified-free Gemini API model — after Qwen.
+4. Claude only if a genuinely free API allowance/credit exists; otherwise stop and ask before any spend.
+
+Measure semantic completion rate, protocol failures, dimension mismatch/MAE, serious false ACCEPTs, PASS false blocks, Release Policy rescues/mistakes, PEE calls, rate limits, adapter requirements and production economics.
+
+Separate:
+
+- base-model capability;
+- Methodology Pack / Retriever transfer;
+- PEE contribution;
+- Release Policy containment;
+- mere serialization/protocol normalization.
 
 ## Spend rule
 
-**Paid external model calls for ordinary development are forbidden.**
+**Paid OpenAI development inference is forbidden.**
 
-Current provider-capable background TCJ cron jobs: `0`.
-
-Do not use OpenAI/xAI/Groq/other provider credit for prompt tuning, debugging, replay or case checking.
-
-After human Qualification 2.0 is frozen:
-
-1. verify evaluator/bank/human/threshold manifests;
-2. materialize machine scoring for the 24 unique pairs only;
-3. estimate exact provider calls, tool-followups and cost;
-4. ask the user for explicit approval;
-5. run the exact frozen evaluator once if approved;
-6. no semantic retry/resampling;
-7. issue Passport/authority only if every gate passes;
-8. if it fails, preserve failure and stop automatic paid retries.
-
-## Security boundary
-
-The Architecture-v2 freeze attests:
-
-- zero public/anon/authenticated grants on relevant private TCJ tables;
-- zero provider-capable background cron jobs;
-- dedicated rotatable Evidence-sidecar secret `tcj_runtime_v2_internal_key`;
-- raw Evidence export disabled;
-- Methodology Pack private-anchor/old-Qualification exact-leak scans clean;
-- external provider dispatch disabled by default.
-
-Project-wide legacy Flipgazine Supabase advisor findings remain outside the isolated TCJ package and should only be changed through a separate impact-reviewed site-security project.
+- Groq free research: allowed.
+- Gemini: only after verifying a genuinely zero-cost current-account path.
+- Claude: only if genuinely free API allowance exists; otherwise stop for permission.
+- Never silently upgrade a free tier to paid.
+- Qualification 2.0 paid authority run remains locked until explicit user approval.
 
 ## Immediate next action
 
-**Native-human gate:** complete and freeze the 28 choices at:
-
-`https://flipgazine.pages.dev/tcj-qualification2-review.html`
-
-Until that is complete, do not run the reference provider and do not construct another human bank.
+Run `qwen/qwen3.6-27b` through the same Architecture-v2 stress harness on the already-exposed v3 bank, preserve provider-specific failures, compare it against GPT-OSS 20B, then move to a verified-free Gemini family.
