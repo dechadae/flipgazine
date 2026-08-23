@@ -1,6 +1,6 @@
 {
-  "schema_version": 8,
-  "as_of": "2026-08-23T14:11:11+07:00",
+  "schema_version": 9,
+  "as_of": "2026-08-23T17:12:00+07:00",
   "scope": "repository_documentation_checkpoint",
   "live_state_independently_reverified": true,
   "canonical_supabase_project": "sjpvhgxacsiorrtijqua",
@@ -8,14 +8,22 @@
   "tcj_status_url": "https://flipgazine.pages.dev/tcj-status.html",
   "tcj": {
     "production_authority": false,
-    "authority_state": "NONE_successor_mandatory_PEE_runtime_is_research_active_not_frozen_or_qualified",
+    "authority_state": "NONE_mandatory_PEE_successor_is_research_active_Gemini_selected_for_refinement_not_frozen_or_qualified",
     "human_gold_authoritative": true,
     "external_paid_api_development_calls_allowed": false,
+    "selected_reference_judge": {
+      "status": "development_selected_not_frozen_not_production_authority",
+      "provider": "google",
+      "model": "gemini-3.5-flash-lite",
+      "selection_document": "ANSWERS-TCJ-FREE-MODEL-FINALIST-SELECTION-20260823.md",
+      "selection_reason": "best_same_case_native_human_agreement_best_large_error_profile_best_overall_safety_containment_and_100_percent_protocol_completion",
+      "vendor_lock_in": false,
+      "portability_rule": "keep_Gemini_specific_optimization_in_adapter_evidence_presentation_and_configuration_layers_where_possible_so_BYOJ_BYOK_remains_viable"
+    },
     "architecture_v2_1": {
       "status": "governing_final_product_topology",
       "governing_amendment": "ANSWERS-TCJ-MANDATORY-PROTECTED-EVIDENCE-ARCHITECTURE-AMENDMENT-20260823.md",
       "underlying_architecture_doc": "ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-V2-20260823.md",
-      "current_checkpoint_doc": "ANSWERS-TCJ-MANDATORY-PEE-FREE-MODEL-TREATMENT-CHECKPOINT-20260823.md",
       "github_runtime_dependency": false,
       "methodology_pack_required": true,
       "context_retriever_required": true,
@@ -61,114 +69,139 @@
       "bank_manifest_sha256": "8e3d6c5fff4860f97bfbfcd8d69c46e5484da0d5c315ed6f4888d0061d09b7c8",
       "development_model_exposure_allowed": false,
       "successor_authority_role": "cannot_certify_mandatory_PEE_successor_because_evaluator_topology_changed_after_instrument_construction",
-      "future_rule": "construct_new_hidden_authority_instrument_only_after_mandatory_PEE_successor_is_finalized_and_frozen"
+      "future_rule": "construct_new_hidden_authority_instrument_only_after_Gemini_centered_refined_successor_is_finalized_and_frozen"
     },
-    "low_tier_mandatory_pee_research": {
-      "purpose": "paired_control_treatment_measurement_of_mandatory_protected_evidence_across_free_or_low_tier_judges",
+    "free_model_finalist_selection": {
+      "status": "selection_complete_runs_frozen_for_selection_purposes",
       "source_bank": "TCJ-EVALUATOR-QUALIFICATION-BANK-2026Q3-v3",
       "source_bank_role": "already_exposed_development_evidence_only_not_unseen_authority",
-      "invariant": "every_treatment_case_must_persist_mandatory_protected_evidence_before_semantic_diagnosis",
-      "controls": {
-        "gpt_oss_20b_zero_pee": {
-          "run_key": "TCJ-ARCHV2-GROQ-GPTOSS20B-STRESS-v1",
-          "status": "complete",
-          "usable_semantic_cases": 47,
-          "terminal_protocol_failures": 1,
-          "pee_calls": 0,
-          "canonical_direct_mismatch_audit": "1_mismatched_dimension_cell_of_282_absolute_cell_MAE_0.0035"
+      "selection_document": "ANSWERS-TCJ-FREE-MODEL-FINALIST-SELECTION-20260823.md",
+      "winner": "gemini-3.5-flash-lite",
+      "primary_same_case_intersection": {
+        "cases": 13,
+        "gemini_mae": 0.5385,
+        "qwen_mae": 0.8077,
+        "gpt_oss_mae": 1.0897,
+        "gemini_errors_ge_2": 10,
+        "qwen_errors_ge_2": 18,
+        "gpt_oss_errors_ge_2": 28,
+        "gemini_cases_with_ge_2": 4,
+        "qwen_cases_with_ge_2": 7,
+        "gpt_oss_cases_with_ge_2": 10,
+        "gemini_serious_false_accept": "0/2",
+        "qwen_serious_false_accept": "0/2",
+        "gpt_oss_serious_false_accept": "2/2",
+        "gemini_pass_false_block": "3/9",
+        "qwen_pass_false_block": "4/9",
+        "gpt_oss_pass_false_block": "5/9"
+      },
+      "pairwise_robustness": {
+        "gemini_vs_qwen_21": {
+          "cases": 21,
+          "gemini_mae": 0.5238,
+          "qwen_mae": 0.7460,
+          "gemini_serious_false_accept": "0/5",
+          "qwen_serious_false_accept": "1/5",
+          "gemini_pass_false_block": "3/13",
+          "qwen_pass_false_block": "5/13"
         },
-        "qwen_optional_pee_partial": {
-          "run_key": "TCJ-ARCHV2-GROQ-QWEN36-27B-STRESS-v2",
-          "status": "stopped_preserved_partial_control"
-        },
-        "gemini_optional_pee_partial": {
-          "run_key": "TCJ-ARCHV2-GEMINI35-FLASHLITE-STRESS-v2",
-          "status": "stopped_preserved_partial_control"
-        },
-        "gpt_oss_mandatory_pee_v1_adapter_calibration": {
-          "run_key": "TCJ-ARCHV2-GROQ-GPTOSS20B-STRESS-MANDATORY-PEE-v1",
-          "status": "stopped_preserved_adapter_calibration",
-          "reason": "inherited_prompt_omitted_explicit_severity_and_confidence_enums_raw_provider_reasoning_confirmed_adapter_under_specification"
+        "gemini_vs_gptoss_16": {
+          "cases": 16,
+          "gemini_mae": 0.5729,
+          "gpt_oss_mae": 1.0,
+          "gemini_serious_false_accept": "0/4",
+          "gpt_oss_serious_false_accept": "2/4",
+          "gemini_pass_false_block": "3/9",
+          "gpt_oss_pass_false_block": "5/9"
         }
       },
-      "treatments": {
-        "gpt_oss_20b": {
-          "run_key": "TCJ-ARCHV2-GROQ-GPTOSS20B-STRESS-MANDATORY-PEE-v2",
-          "provider": "Groq_free_API",
-          "model": "openai/gpt-oss-20b",
-          "status": "running",
-          "expected_cases": 48,
-          "complete": 1,
-          "terminal": 0,
-          "staged": 47,
-          "provider_request_count": 1,
-          "mandatory_evidence_packets": 1,
-          "evidence_calls": 1,
-          "validation": "Q3-001_complete_one_provider_request_native_JSON_evidence_and_diagnosis_release"
-        },
-        "qwen_3_6_27b": {
-          "run_key": "TCJ-ARCHV2-GROQ-QWEN36-27B-STRESS-MANDATORY-PEE-v1",
-          "provider": "Groq_free_API",
-          "model": "qwen/qwen3.6-27b",
-          "status": "running",
-          "expected_cases": 48,
-          "complete": 9,
-          "terminal": 0,
-          "staged": 39,
-          "provider_request_count": 23,
-          "mandatory_evidence_packets": 9,
-          "evidence_calls": 9,
-          "observed_constraint": "shared_Groq_8000_TPM_requires_pacing_429_is_operational_not_semantic"
-        },
-        "gemini_3_5_flash_lite": {
+      "runs": {
+        "gemini": {
+          "run_id": 8,
           "run_key": "TCJ-ARCHV2-GEMINI35-FLASHLITE-STRESS-MANDATORY-PEE-v1",
-          "provider": "Google_free_API",
-          "model": "gemini-3.5-flash-lite",
-          "status": "running",
-          "expected_cases": 48,
-          "complete": 34,
+          "status": "complete",
+          "complete": 48,
           "terminal": 0,
-          "staged": 14,
-          "provider_request_count": 34,
-          "mandatory_evidence_packets": 34,
-          "evidence_calls": 34
+          "staged": 0,
+          "provider_requests": 49,
+          "mandatory_evidence_packets": 48,
+          "total_evidence_calls": 49,
+          "second_pee_cases": 1,
+          "full_bank_mae": 0.6875,
+          "full_bank_serious_false_accept": "2/17",
+          "full_bank_pass_false_block": "4/21",
+          "protocol_completion": "48/48"
+        },
+        "qwen": {
+          "run_id": 7,
+          "run_key": "TCJ-ARCHV2-GROQ-QWEN36-27B-STRESS-MANDATORY-PEE-v1",
+          "status": "stopped_preserved_partial_finalist",
+          "complete": 21,
+          "terminal": 4,
+          "staged": 23,
+          "protocol_completion_among_semantic_attempts": "21/25",
+          "restart_without_explicit_user_intent": false
+        },
+        "gpt_oss": {
+          "run_id": 9,
+          "run_key": "TCJ-ARCHV2-GROQ-GPTOSS20B-STRESS-MANDATORY-PEE-v2",
+          "status": "stopped_preserved_partial_finalist",
+          "complete": 16,
+          "terminal": 3,
+          "staged": 29,
+          "protocol_completion_among_semantic_attempts": "16/19",
+          "restart_without_explicit_user_intent": false
+        },
+        "ox_alpha": {
+          "status": "stopped_excluded_from_finalist_selection",
+          "restart_without_explicit_user_intent": false
         }
       },
-      "execution_policy": {
-        "gemini_can_run_independently": true,
-        "qwen_and_gpt_oss_share_groq_tpm": true,
-        "serialize_groq_families": true,
-        "retry_429_as_operational_throttle": true,
-        "semantic_or_schema_resampling": false,
-        "preserve_all_terminal_failures": true
-      },
-      "research_metrics": [
-        "usable_semantic_completion_rate",
-        "protocol_schema_failures",
-        "six_dimension_MAE_and_mismatch_distribution",
-        "errors_ge_2",
-        "false_accept_human_serious",
-        "false_block_human_pass",
-        "release_policy_rescues_and_mistakes",
-        "mandatory_initial_evidence_family_usage",
-        "optional_second_evidence_call_frequency",
-        "rate_limit_behavior",
-        "production_economics",
-        "provider_specific_adapter_requirements"
+      "terminal_failure_classes": {
+        "qwen": [
+          "three_non_JSON_prose_outputs_despite_JSON_only_contract",
+          "one_invalid_optional_PEE_tool_call_schema"
+        ],
+        "gpt_oss": [
+          "two_bad_rationale_intent_structured_output_failures",
+          "one_unterminated_truncated_JSON"
+        ],
+        "gemini": []
+      }
+    },
+    "critical_refinement_findings": {
+      "gemini_serious_false_accept_item_keys": ["Q3-026", "Q3-043"],
+      "gemini_serious_false_accept_count": 2,
+      "finding": "both serious false ACCEPTs received an overly reassuring mandatory PEE structural assessment; Q3-043 clearly demonstrates structural-completeness false reassurance",
+      "implication": "refinement_must_target_both_Gemini_judgment_calibration_and_TCJ_protected_evidence_detector_planner_quality_not_prompt_only",
+      "priority_dimensions": [
+        "bff_voice",
+        "stance",
+        "composition",
+        "thai_pragmatics",
+        "lexical_social_fit"
+      ],
+      "priority_engine_areas": [
+        "linebreak_and_structural_completeness",
+        "false_reassurance_detection",
+        "evidence_family_routing",
+        "global_overpositive_judge_containment",
+        "release_policy_safety_backstop"
       ]
     },
     "spend_policy": {
       "openai_paid_development": "forbidden",
-      "groq_free_testing": "allowed",
-      "gemini_free_testing": "allowed_verified_current_path",
+      "groq_free_testing": "do_not_continue_stopped_finalists_without_explicit_user_intent",
+      "gemini_free_testing": "allowed_for_selected_reference_judge_refinement",
       "claude_or_other_paid_testing": "explicit_user_approval_required",
       "do_not_silently_upgrade_free_tier_to_paid": true
     },
-    "next_action": "continue_mandatory_PEE_treatment_runs_on_exposed_v3_validate_every_processed_case_has_initial_protected_evidence_serialize_Groq_Qwen_and_GPTOSS_run_Gemini_independently_then_compute_paired_control_vs_treatment_metrics",
+    "next_action": "begin_Gemini_centered_TCJ_refinement_on_exposed_development_evidence_fix_PEE_false_reassurance_and_Gemini_evidence_consumption_then_validate_on_fresh_development_set_before_freeze;do_not_use_Qualification_2_0_for_tuning",
     "authorities": {
       "document_map": "DOCUMENT-AUTHORITY-MAP.md",
       "mandatory_protected_evidence_amendment": "ANSWERS-TCJ-MANDATORY-PROTECTED-EVIDENCE-ARCHITECTURE-AMENDMENT-20260823.md",
-      "current_execution_checkpoint": "ANSWERS-TCJ-MANDATORY-PEE-FREE-MODEL-TREATMENT-CHECKPOINT-20260823.md",
+      "current_research_decision": "ANSWERS-TCJ-FREE-MODEL-FINALIST-SELECTION-20260823.md",
+      "historical_execution_checkpoint": "ANSWERS-TCJ-MANDATORY-PEE-FREE-MODEL-TREATMENT-CHECKPOINT-20260823.md",
       "underlying_commercial_architecture": "ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-V2-20260823.md",
       "methodology_pack_context_retriever": "ANSWERS-TCJ-METHODOLOGY-PACK-AND-CONTEXT-RETRIEVER-SPEC-20260823.md",
       "private_evidence_runtime": "ANSWERS-TCJ-PRIVATE-EVIDENCE-ENGINE-AND-BUYER-ISOLATION-POLICY-20260822.md",
