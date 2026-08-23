@@ -1,7 +1,7 @@
 # ChatGPT Workflow — Document Authority Map
 
-**Checkpoint:** 23 August 2026  
-**Purpose:** prevent historical TCJ plans, failed Qualification loops and superseded topology from being mistaken for current authority.
+**Checkpoint:** 23 August 2026, 13:47 ICT  
+**Purpose:** prevent historical TCJ plans, failed Qualification loops and superseded checkpoints from being mistaken for current authority.
 
 `CURRENT-STATE.json` is the compact machine-readable checkpoint. Historical evidence remains preserved even when its next-action text is superseded.
 
@@ -9,17 +9,16 @@
 
 1. `ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-V2-20260823.md` — **current commercial product architecture authority.** Methodology Pack + local Context Retriever are first-class; PEE remains protected/bounded; diagnosis and Release Policy are separate; BYOJ/BYOK is first-class; GitHub is not a production runtime dependency.
 2. `ANSWERS-TCJ-METHODOLOGY-PACK-AND-CONTEXT-RETRIEVER-SPEC-20260823.md` — governing Methodology Pack / Context Retriever specification.
-3. `ANSWERS-TCJ-FINAL-PRODUCT-IMPLEMENTATION-AND-QUALIFICATION-PLAN-V2-20260823.md` — governing execution/spend plan. Ordinary development makes zero paid provider calls; one final frozen authority run requires explicit user approval.
-4. `ANSWERS-TCJ-ARCHV2-REFERENCE-FREEZE-AND-QUALIFICATION2-HUMAN-GATE-20260823.md` — **current execution checkpoint. Read this before taking any next action.** Architecture v2 is frozen and the current gate is the 28-click Qualification 2.0 native-human review.
-5. `ANSWERS-TCJ-V17-QUALIFICATION-FAILURE-AND-CONTEXT-ENGINE-PIVOT-20260823.md` — preserved v1.7 fresh-Qualification failure and architecture-pivot evidence. v1.7 has no authority.
-6. `ANSWERS-TCJ-PRIVATE-EVIDENCE-ENGINE-AND-BUYER-ISOLATION-POLICY-20260822.md` — raw-corpus and buyer-evidence isolation authority where not superseded by Architecture v2.
-7. `ANSWERS-TCJ-SOL-PRIVATE-EVIDENCE-TOOL-AND-COMMERCIAL-LICENSING-CLARIFICATION-20260822.md` — narrow judge-initiated evidence capability; no SQL, arbitrary search, raw rows or hidden-test retrieval.
-8. `ANSWERS-TCJ-BYOJ-JUDGE-RUNTIME-AND-API-KEY-POLICY-20260822.md` — Local Judge / BYOK / buyer-owned key policy.
-9. `ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md` — deployment and private-server voice-profile policy where consistent with Architecture v2.
-10. `ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md` — commercial-use/provenance boundary.
-11. `ANSWERS-THAI-CONVERSATION-JUDGE-ARCHITECTURE.md` and `ANSWERS-VOICE-TONE.md` — legacy method/editorial source material where not superseded.
-
-`ANSWERS-TCJ-ARCHITECTURE-V2-OFFLINE-COMPONENTS-AND-CONTRASTIVE-HUMAN-GATE-20260823.md` is now a **superseded checkpoint**: its 30-click development contrastive gate was completed and incorporated before the reference evaluator freeze.
+3. `ANSWERS-TCJ-FINAL-PRODUCT-IMPLEMENTATION-AND-QUALIFICATION-PLAN-V2-20260823.md` — governing execution/spend plan. Ordinary paid development inference is forbidden; the final authority run requires explicit user approval.
+4. `ANSWERS-TCJ-LOW-TIER-JUDGE-TRANSFER-RESEARCH-CHECKPOINT-20260823.md` — **current execution checkpoint. Read this before taking any next action.** Qualification 2.0 human evidence is frozen and protected; current work is free low-tier judge transfer research on already-exposed v3 evidence.
+5. `ANSWERS-TCJ-ARCHV2-REFERENCE-FREEZE-AND-QUALIFICATION2-HUMAN-GATE-20260823.md` — reference evaluator freeze + Qualification 2.0 construction/human-freeze authority. Its human-review next-action text is now superseded because 28/28 review is complete.
+6. `ANSWERS-TCJ-V17-QUALIFICATION-FAILURE-AND-CONTEXT-ENGINE-PIVOT-20260823.md` — preserved v1.7 fresh-Qualification failure and architecture-pivot evidence. v1.7 has no authority.
+7. `ANSWERS-TCJ-PRIVATE-EVIDENCE-ENGINE-AND-BUYER-ISOLATION-POLICY-20260822.md` — raw-corpus and buyer-evidence isolation authority where not superseded by Architecture v2.
+8. `ANSWERS-TCJ-SOL-PRIVATE-EVIDENCE-TOOL-AND-COMMERCIAL-LICENSING-CLARIFICATION-20260822.md` — narrow judge-initiated evidence capability; no SQL, arbitrary search, raw rows or hidden-test retrieval.
+9. `ANSWERS-TCJ-BYOJ-JUDGE-RUNTIME-AND-API-KEY-POLICY-20260822.md` — Local Judge / BYOK / buyer-owned key policy.
+10. `ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md` — deployment and private-server voice-profile policy where consistent with Architecture v2.
+11. `ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md` — commercial-use/provenance boundary.
+12. `ANSWERS-THAI-CONVERSATION-JUDGE-ARCHITECTURE.md` and `ANSWERS-VOICE-TONE.md` — legacy method/editorial source material where not superseded.
 
 ## Current core architecture
 
@@ -34,7 +33,6 @@ BUYER WRITER
 → SIX-DIMENSION DIAGNOSIS
 → INDEPENDENT TCJ RELEASE POLICY
 → ACCEPT / REVISE / ESCALATE
-→ optional targeted writer revision outside evaluator authority
 ```
 
 Hard distinctions:
@@ -50,141 +48,120 @@ Release Policy    = may this candidate ship?
 
 ## Frozen Architecture-v2 reference evaluator
 
-Freeze:
-
 ```text
-TCJ-ARCHV2-REFERENCE-EVALUATOR-FREEZE-v1
-manifest SHA 916ffa3632e428f287692632d9e11b0eda5ea88fe39399fc39e362e0cae13d5c
+Freeze key       TCJ-ARCHV2-REFERENCE-EVALUATOR-FREEZE-v1
+manifest SHA     916ffa3632e428f287692632d9e11b0eda5ea88fe39399fc39e362e0cae13d5c
+
+Methodology      TCJ-METHODOLOGY-BFF-v1.1
+Pack SHA         4050f13b38efdabc6c36cc99b10b813ef46909ca11b6596d1591c9dea76df6e6
+Retriever        TCJ-CONTEXT-RETRIEVER-v1.4
+Voice Profile    TCJ-VOICE-ANSWERS-BFF-v1
+Private Evidence TCJ-PRIVATE-EVIDENCE-ASSESS-v1.1
+Release Policy   TCJ-RELEASE-POLICY-v1.1
+Judge Adapter    TCJ-JUDGE-ADAPTER-v2.1
+Runtime          TCJ-RUNTIME-ANSWERS-BFF-ARCHV2-v1
+Runtime SHA      43df71f47353c6abfd96f2a020e3bd8dc97e9ef4dc7c5071df8f4309a138f6da
 ```
 
-Frozen components:
+Do not silently mutate this frozen reference stack.
+
+## Qualification 2.0 — protected final authority evidence
 
 ```text
-Methodology Pack     TCJ-METHODOLOGY-BFF-v1.1
-SHA                  4050f13b38efdabc6c36cc99b10b813ef46909ca11b6596d1591c9dea76df6e6
-13 modules           M00–M12
-
-Context Retriever    TCJ-CONTEXT-RETRIEVER-v1.4
-registry SHA         8fbb7346175be7ea8ffecdcf3b4a799b8926fca403d6dbab89c6102c6a2c4cdd
-implementation SHA   aefc5ed958c1d5a05b818e1945bfe4393f335d6f4d5b0dd5ae5dbe2a3f9ac130
-
-Voice Profile        TCJ-VOICE-ANSWERS-BFF-v1
-contract SHA         731121e592c773d36bbe7414dfdcee98b0a338fecee71dd6da1da9e8ef41bb9d
-
-Private Evidence     TCJ-PRIVATE-EVIDENCE-ASSESS-v1.1
-registry SHA         ff28943fcb133c5819a197a600039fe7ab92364d2d725161909c6124570beee7
-max runtime calls    2
-raw evidence export  no
-
-Release Policy       TCJ-RELEASE-POLICY-v1.1
-SHA                  c237fcf664ee67083bc4c7c3a46645a12fbad929cf2a93c363818d9b95a75e23
-human PASS hard false blocks on exposed v2+v3  0 / 49
-
-Judge Adapter        TCJ-JUDGE-ADAPTER-v2.1
-SHA                  cdc8ba26f611cc5fe5f9915478ffbb7827db4b0580efae1a635f45c4a63a6727
-reference API        OpenAI Responses
-reference model      gpt-5.6 / gpt-5.6-sol family
-semantic calls       one coherent six-dimension call per option
-semantic retry       forbidden
-
-Runtime              TCJ-RUNTIME-ANSWERS-BFF-ARCHV2-v1
-config SHA           43df71f47353c6abfd96f2a020e3bd8dc97e9ef4dc7c5071df8f4309a138f6da
-external dispatch    false by default
+Protocol         TCJ-QUALIFICATION-2.0-2026Q3-v1
+Status           human_frozen
+Unique pairs     24
+Human clicks     28 / 28
+Hidden repeats   4 / 4 consistent
+Human manifest   07a25c08b331c215bf6a7378665726c376045bcb9d547d3cd21eaca22b51428d
+Threshold SHA    c9bd44181023471a961ddcce698e6c4141961573d4eae359ea73529ee12026e5
+Bank SHA         8e3d6c5fff4860f97bfbfcd8d69c46e5484da0d5c315ed6f4888d0061d09b7c8
+Evaluator SHA    916ffa3632e428f287692632d9e11b0eda5ea88fe39399fc39e362e0cae13d5c
 ```
 
-## Preserved v1.7 failure
+**Do not expose Qualification 2.0 to development models.** Groq, Qwen, Gemini, Claude and any other free/experimental judge must use already-exposed development evidence only.
+
+Final OpenAI run:
+
+`TCJ-QUALIFICATION-2.0-FINAL-RUN-2026Q3-v1`
+
+Live checkpoint:
+
+- status `stopped_incident`;
+- no incident row / incident field null;
+- provider requests `0`;
+- actual spend `$0`;
+- external dispatch disabled;
+- user approval absent.
+
+This is an administrative locked/stopped pre-dispatch state, not a semantic Qualification result. Reverify live state and require explicit user approval before any provider dispatch.
+
+## Current execution track — low-tier judge transfer research
+
+Use only exposed v3 development evidence:
+
+`TCJ-EVALUATOR-QUALIFICATION-BANK-2026Q3-v3`
+
+The purpose is to test provider portability and whether TCJ context/release architecture can support weaker judges. Because v3 informed Architecture-v2 development, this is **not independent unseen generalization evidence**.
+
+### Groq GPT-OSS 20B — completed
 
 ```text
-Run             TCJ-EVALUATOR-QUALIFICATION-RUN-2026Q3-v3-SOL-v1.7
-48 cases
-288 resolved cells
-101 challenge judgments
-overall MAE .5729
-extreme reversals 17
-false-fluent human MAJOR/CRITICAL ACCEPT 3
-terminal generation failures 0
-credit incidents 0
-Qualification FAILED
-Authority NONE
-Summary SHA 52c507629205ddbb532faf57db2b9e8346ad82cfcf2e65d014231f80ddc70fd5
+Run                  TCJ-ARCHV2-GROQ-GPTOSS20B-STRESS-v1
+Provider/model        Groq free / openai/gpt-oss-20b
+Source cases          48
+Usable semantic       47
+Terminal protocol     1
+PEE calls             0
+Dimension cells       282
+Mismatched cells      1 total
+Errors >=2            0
+False ACCEPT serious  0
+False BLOCK PASS      0
+Serious undercalls    1
+Release rescues       1 / 1
+Observed free limit   8000 TPM
 ```
 
-Do not rerun v1.7 or reinterpret v3 as fresh authority evidence.
+The terminal protocol failure was a model attempt to call a nonexistent `json` tool. Preserve it as compatibility evidence; do not silently regenerate it and claim 48/48.
 
-## Completed development contrastive gate
+Allowed provider-compatibility normalization is structural only: rationale-string container normalization and omitted empty arrays. Never change scores, severity, confidence, explicit escalation, or semantic content.
 
-`TCJ-CONTRASTIVE-DEVELOPMENT-v1`
+The 47 usable cases made **zero PEE calls**, so this run primarily tests:
+
+`Methodology Pack + Retriever + Voice Profile + low-tier model + Release Policy`
+
+not PEE benefit.
+
+### Planned cross-family sequence
+
+1. Groq `openai/gpt-oss-20b` — complete.
+2. Groq `qwen/qwen3.6-27b` — **next action**.
+3. Verified-free Gemini API family — after Qwen.
+4. Claude only if a genuinely free API allowance/credit exists; otherwise stop and ask the user before spending anything.
+
+Do not turn this into an endless model leaderboard. The goal is a small set of genuinely different model families.
+
+For each family record semantic completion rate, schema/protocol failures, dimension mismatch/MAE, serious false ACCEPTs, PASS false blocks, Release Policy rescues/mistakes, PEE call frequency, rate limits and production economics.
+
+## Spend rule
 
 ```text
-30/30 reviewed
-26 unique
-4 hidden reversed repeats
-4/4 consistency
-manifest c2424faff7f7169ee69babd1205654a636d82d0845138fc3d8487f70bfc784f2
+Paid OpenAI development calls = NO.
+Qualification 2.0 paid authority run = locked until explicit user approval.
+Groq free tests = allowed.
+Gemini tests = allowed only after verifying a genuinely zero-cost path.
+Claude = only if genuinely free API allowance exists; otherwise stop for permission.
+Never silently upgrade a free tier to paid.
 ```
-
-Its evidence has already been incorporated into Methodology v1.1 / Retriever v1.4 / PEE v1.1 / Release Policy v1.1 before the reference freeze.
-
-## Current human gate — Qualification 2.0
-
-Protocol:
-
-`TCJ-QUALIFICATION-2.0-2026Q3-v1`
-
-```text
-status              draft_review
-24 unique comparisons
-28 human clicks
-4 hidden reversed repeats
-reviewed             0 / 28 at checkpoint
-threshold SHA        c9bd44181023471a961ddcce698e6c4141961573d4eae359ea73529ee12026e5
-bank manifest SHA    8e3d6c5fff4860f97bfbfcd8d69c46e5484da0d5c315ed6f4888d0061d09b7c8
-bank locked          yes, before first human review
-evaluator freeze     916ffa3632e428f287692632d9e11b0eda5ea88fe39399fc39e362e0cae13d5c
-```
-
-Review page:
-
-`https://flipgazine.pages.dev/tcj-qualification2-review.html`
-
-Measurement is deliberately different from the old 48×6 matrix:
-
-- A / B / Tie comparisons;
-- one true context flip;
-- dimension-isolation comparisons;
-- direct release questions using A only / B only / Both / Neither;
-- four hidden reversed consistency checks.
-
-The evaluator was frozen before bank construction, and the bank/thresholds were locked before any human review record existed.
-
-## External API spend rule
-
-```text
-Paid external model/API calls for ordinary TCJ development = NO.
-Background provider-capable TCJ cron jobs = 0.
-```
-
-After the 28 human choices are frozen:
-
-1. verify evaluator/bank/human/threshold manifests;
-2. materialize machine scoring for the 24 unique comparisons only;
-3. estimate final provider calls/tool follow-ups/cost and current balance;
-4. ask the user for explicit permission;
-5. if approved, run the exact frozen evaluator once;
-6. no semantic retry/resampling;
-7. issue Passport/authority only if every pre-registered gate passes.
-
-If the final run fails, preserve the failure and do not automatically create another paid loop.
 
 ## Operating rules
 
-When documents conflict:
-
 1. Architecture v2 governs current topology.
-2. The v2 execution plan governs release sequence/spend policy.
-3. The current freeze + Qualification 2.0 checkpoint governs the immediate next action.
-4. Human gold remains authoritative.
-5. Frozen thresholds/hashes must not be relaxed after seeing human or machine results.
-6. Historical failures remain evidence and must not be rewritten away.
-7. Raw TCJ corpus/evidence must not be exposed to writer or external judge context.
-8. Buyer-private evidence is tenant-local and is not pooled across customers by default.
+2. The current low-tier research checkpoint governs the immediate next action.
+3. Human gold remains authoritative.
+4. Frozen thresholds/hashes must not be relaxed.
+5. Historical failures remain evidence and must not be rewritten away.
+6. Raw TCJ corpus/evidence must not be exposed to external judges.
+7. Qualification 2.0 must remain untouched until the final authority run.
+8. Preserve provider-specific contract failures separately from semantic failures.
