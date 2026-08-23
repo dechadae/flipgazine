@@ -6,286 +6,176 @@ Before consequential work, inspect canonical Supabase project `sjpvhgxacsiorrtij
 
 `CURRENT-STATE.json` is the compact machine-readable checkpoint. `DOCUMENT-AUTHORITY-MAP.md` classifies current authorities and supersession rules.
 
----
+## Current TCJ state
 
-## Current TCJ authorities — read first
+TCJ is on **Architecture v2** and the exact reference evaluator is now frozen.
 
-1. `ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-V2-20260823.md` — **current final commercial architecture.** The judge receives a compiled TCJ Methodology Pack through a local Context Retriever; the raw corpus remains behind the Private Evidence Engine; six-dimensional diagnosis and production Release Policy are separate; BYOJ/BYOK remains first-class.
-2. `ANSWERS-TCJ-METHODOLOGY-PACK-AND-CONTEXT-RETRIEVER-SPEC-20260823.md` — governing Methodology Pack / retrieval spec. GitHub is a development source, not a runtime dependency.
-3. `ANSWERS-TCJ-METHODOLOGY-BFF-V1-COMPILED-20260823.md` — current compiled `TCJ-METHODOLOGY-BFF-v1` artifact and module/component hashes.
-4. `ANSWERS-TCJ-FINAL-PRODUCT-IMPLEMENTATION-AND-QUALIFICATION-PLAN-V2-20260823.md` — governing final-product execution plan. No paid external model calls during ordinary development; one final paid authority run only after full freeze and explicit user approval.
-5. `ANSWERS-TCJ-ARCHITECTURE-V2-OFFLINE-COMPONENTS-AND-CONTRASTIVE-HUMAN-GATE-20260823.md` — **current execution checkpoint.** Offline Phases B–E are ready; the current gate is 30 A/B/Tie native-human comparisons.
-6. `ANSWERS-TCJ-V17-QUALIFICATION-FAILURE-AND-CONTEXT-ENGINE-PIVOT-20260823.md` — preserved v1.7 fresh-Qualification failure and architecture pivot evidence.
-7. `ANSWERS-TCJ-PRIVATE-EVIDENCE-ENGINE-AND-BUYER-ISOLATION-POLICY-20260822.md` — raw-corpus and buyer-evidence isolation authority.
-8. `ANSWERS-TCJ-SOL-PRIVATE-EVIDENCE-TOOL-AND-COMMERCIAL-LICENSING-CLARIFICATION-20260822.md` — narrow judge-initiated private-evidence capability; no SQL/arbitrary corpus search/raw rows.
-9. `ANSWERS-TCJ-BYOJ-JUDGE-RUNTIME-AND-API-KEY-POLICY-20260822.md` — Local Judge / BYOK Judge / BYOJ and buyer-owned key policy.
-10. `ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md` — commercial-use/provenance authority.
-11. `ANSWERS-THAI-CONVERSATION-JUDGE-ARCHITECTURE.md` and `ANSWERS-VOICE-TONE.md` — legacy method/editorial source material where not superseded; important inputs to Methodology Pack compilation.
+Production authority remains **NONE** until the final Qualification 2.0 machine run passes all pre-registered gates.
 
-The 22 Aug final architecture freeze and execution plan remain historical design evidence but are superseded for current topology/execution where they conflict with Architecture v2.
+Current human-review page:
 
----
+`https://flipgazine.pages.dev/tcj-qualification2-review.html`
+
+Current live status:
+
+`https://flipgazine.pages.dev/tcj-status.html`
+
+### Read these first
+
+1. `ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-V2-20260823.md` — current commercial architecture.
+2. `ANSWERS-TCJ-FINAL-PRODUCT-IMPLEMENTATION-AND-QUALIFICATION-PLAN-V2-20260823.md` — current execution/spend plan.
+3. `ANSWERS-TCJ-METHODOLOGY-PACK-AND-CONTEXT-RETRIEVER-SPEC-20260823.md` — Methodology Pack and retrieval contract.
+4. `ANSWERS-TCJ-ARCHV2-REFERENCE-FREEZE-AND-QUALIFICATION2-HUMAN-GATE-20260823.md` — **current execution checkpoint and immediate next action.**
+5. `ANSWERS-TCJ-V17-QUALIFICATION-FAILURE-AND-CONTEXT-ENGINE-PIVOT-20260823.md` — preserved v1.7 failure and Architecture-v2 pivot evidence.
+6. `ANSWERS-TCJ-PRIVATE-EVIDENCE-ENGINE-AND-BUYER-ISOLATION-POLICY-20260822.md` — protected-evidence boundary.
+7. `ANSWERS-TCJ-BYOJ-JUDGE-RUNTIME-AND-API-KEY-POLICY-20260822.md` — local/BYOK judge boundary.
+8. `ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md` — commercial-use/provenance boundary.
+
+Older freeze/checkpoint documents remain historical evidence; do not delete them or treat their old next-action text as current authority.
 
 ## Current product definition
 
-TCJ is intended to be:
+TCJ is:
 
 > **a portable Thai conversational methodology + protected native-human evidence system + replaceable semantic judge + deterministic release authority.**
 
-It is not intended to become an ever-growing pile of regex guards around a model.
+It is not an ever-growing pile of regex guards around a model.
 
 ```text
 BUYER WRITER
 → TCJ GATEWAY
 → VOICE PROFILE
-→ LOCAL TCJ CONTEXT RETRIEVER
-→ RELEVANT TCJ METHODOLOGY PACK MODULES
+→ LOCAL CONTEXT RETRIEVER
+→ RELEVANT METHODOLOGY PACK MODULES
 → SELECTED BYOJ JUDGE
-↔ OPTIONAL NARROW PRIVATE EVIDENCE TOOL
-→ TCJ DIMENSION DIAGNOSIS
+↔ OPTIONAL BOUNDED PRIVATE EVIDENCE TOOL
+→ SIX-DIMENSION DIAGNOSIS
 → INDEPENDENT RELEASE POLICY
 → ACCEPT / REVISE / ESCALATE
-→ ONE TARGETED WRITER REVISION IF REQUIRED
-→ RECHECK
-→ FINAL OUTPUT
 ```
 
 ```text
 Methodology Pack = how TCJ reasons about Thai conversational quality
-Context Retriever = which TCJ concepts matter for this request
+Context Retriever = which concepts matter for this request
 Voice Profile = what good means for this buyer/domain/voice
 Private Evidence Engine = protected native-human empirical memory
 Judge = replaceable semantic reasoner
 Release Policy = may this output ship?
 ```
 
----
+Production does **not** reread GitHub for every request. Git/docs are development sources compiled into a versioned Methodology Pack; runtime retrieval selects only relevant modules.
 
-## Architecture-v2 components now implemented
-
-```text
-Methodology Pack
-  TCJ-METHODOLOGY-BFF-v1
-  13 modules M00–M12
-  SHA 22ab0440b41708f41d8abe3a546b7c6197220a1824c59de56a6e86a4b7761f0a
-  status research_compiled
-
-Context Retriever
-  TCJ-CONTEXT-RETRIEVER-v1.1
-  SHA ce572d4ad361d563229c27da9c111647c4571af7ceab02b6940dd2eca6d693a2
-  status research_active
-  module cap 8
-  external LLM required: no
-
-Private Evidence Assessment
-  TCJ-PRIVATE-EVIDENCE-ASSESS-v1
-  SHA 9f6a93d92e79651b095803cd064d0d9c9e1414ef2db9b6c2314d1196e19a67cf
-  status research_active
-  max 4 allowlisted analysis families/call
-  raw rows / arbitrary search / nearest examples: no
-
-Release Policy
-  TCJ-RELEASE-POLICY-v1.1
-  SHA c237fcf664ee67083bc4c7c3a46645a12fbad929cf2a93c363818d9b95a75e23
-  status research_active
-  dimension scores do not mechanically drive release
-  deterministic high-confidence false blocks on frozen human-PASS v2+v3: 0 / 49
-```
-
-Retriever v1 and Release Policy v1 are preserved as retired research evidence; they were not silently overwritten.
-
----
-
-## Production does not reread GitHub
-
-The clean-account GitHub experiment showed that a capable model can acquire much of the intended TCJ/BFF behavior by reading the project's documentation.
-
-The production lesson is not to browse GitHub on each request. Production should do this:
+## Frozen reference evaluator
 
 ```text
-canonical Git/docs
-→ build-time compile/review
-→ TCJ-METHODOLOGY-BFF-v1
-→ local Context Retriever selects only relevant modules
-→ selected judge receives those modules
+Freeze key       TCJ-ARCHV2-REFERENCE-EVALUATOR-FREEZE-v1
+Freeze SHA       916ffa3632e428f287692632d9e11b0eda5ea88fe39399fc39e362e0cae13d5c
+
+Methodology      TCJ-METHODOLOGY-BFF-v1.1
+Pack SHA         4050f13b38efdabc6c36cc99b10b813ef46909ca11b6596d1591c9dea76df6e6
+Modules          13
+
+Retriever        TCJ-CONTEXT-RETRIEVER-v1.4
+PEE tool         TCJ-PRIVATE-EVIDENCE-ASSESS-v1.1
+Voice Profile    TCJ-VOICE-ANSWERS-BFF-v1
+Release Policy   TCJ-RELEASE-POLICY-v1.1
+Judge Adapter    TCJ-JUDGE-ADAPTER-v2.1
+Runtime          TCJ-RUNTIME-ANSWERS-BFF-ARCHV2-v1
+Runtime SHA      43df71f47353c6abfd96f2a020e3bd8dc97e9ef4dc7c5071df8f4309a138f6da
 ```
 
-GitHub remains source control and development provenance only.
+Reference semantic contract:
 
----
+- one coherent six-dimension judge call per option;
+- OpenAI Responses API for the reference configuration;
+- reference model id `gpt-5.6`, model family `gpt-5.6-sol`;
+- up to two bounded PEE tool calls;
+- strict structured output;
+- `parallel_tool_calls=false`;
+- no universal second semantic pass;
+- no semantic retry/resampling;
+- external dispatch off by default.
 
-## Judge-visible vs private knowledge
+OpenAI is a reference qualified judge target, not a mandatory product dependency. Buyers can use a compatible buyer-owned API key or local/self-hosted judge, but a different evaluator configuration is not automatically Qualified.
 
-Judge-visible:
+## Completed development evidence
 
-- stable TCJ core methodology;
-- relevant Methodology Pack modules;
-- Voice Profile contract;
-- current scenario/candidate;
-- structured evaluation contract;
-- bounded PEE assessment when invoked.
+The original 48×6 human banks v1.1/v2/v3 are now exposed development evidence. They are not the template for another final bank.
 
-Private:
-
-- raw Batch rows;
-- raw human edits;
-- anchor library;
-- hidden test cases;
-- private review notes;
-- buyer-private evidence;
-- arbitrary database/search access.
-
-The Private Evidence Engine is a targeted second-stage evidence source, not the sole carrier of TCJ intelligence.
-
----
-
-## Preserved failed Qualification evidence
+The later `TCJ-CONTRASTIVE-DEVELOPMENT-v1` is complete:
 
 ```text
-Evaluator     TCJ-EVAL-ANSWERS-BFF-SOL-v1.7-frozen-dev
-Config SHA    5eb3d2354717573e1d8f48a574a960d3bea63a855409ac23932530be7bc23d07
-Run           TCJ-EVALUATOR-QUALIFICATION-RUN-2026Q3-v3-SOL-v1.7
-48 cases
-288 primary judgments
-101 challenge judgments
-389 provider dispatches / responses
-288 resolution cells
-overall MAE .5729
-extreme reversals 17
-false-fluent human MAJOR/CRITICAL ACCEPT 3
-terminal generation failures 0
-credit incidents 0
-Qualification FAILED
-production authority NONE
-summary SHA 52c507629205ddbb532faf57db2b9e8346ad82cfcf2e65d014231f80ddc70fd5
+30/30 reviewed
+26 unique comparisons
+4 hidden reversed repeats
+4/4 repeat consistency
+manifest c2424faff7f7169ee69babd1205654a636d82d0845138fc3d8487f70bfc784f2
 ```
 
-Do not modify human gold or old thresholds to make this pass. v3 is exposed development evidence only.
+Its human evidence was incorporated before the Architecture-v2 reference freeze.
 
----
-
-## Current human gate — Contrastive Review v1
-
-The next required action is now native-human judgment, not more implementation and not another API call.
+## Current gate — Qualification 2.0
 
 ```text
-Protocol       TCJ-CONTRASTIVE-DEVELOPMENT-v1
-30 A/B/Tie comparisons
-26 unique
-4 hidden reversed consistency repeats
-12 mechanism families
-reviewed 0 / 30
+Protocol         TCJ-QUALIFICATION-2.0-2026Q3-v1
+Status           draft_review
+Unique cases     24
+Human clicks     28
+Hidden repeats   4
+Reviewed         0 / 28 at checkpoint
+Threshold SHA    c9bd44181023471a961ddcce698e6c4141961573d4eae359ea73529ee12026e5
+Bank SHA         8e3d6c5fff4860f97bfbfcd8d69c46e5484da0d5c315ed6f4888d0061d09b7c8
+Bank locked      yes, before any human review
+Evaluator SHA    916ffa3632e428f287692632d9e11b0eda5ea88fe39399fc39e362e0cae13d5c
 ```
 
-Review page:
+This is deliberately a different measurement instrument:
 
-`https://flipgazine.pages.dev/tcj-contrastive-review.html`
-
-Each screen asks only the comparison that matters, e.g. which response better answers the question, which is more socially appropriate, which is better composed, or which sounds more like a close friend. `Tie` is allowed.
-
-This is development evidence, not the future final hidden Qualification 2.0.
-
-After the 30 choices, development resumes autonomously with consistency/mechanism analysis, general corrections where the human evidence invalidates a hypothesis, mock judge adapters, runtime integration, offline replay, security and packaging.
-
----
-
-## Current development spend rule
-
-**No paid external model/API calls.**
-
-Development uses:
-
-- v1.1/v2/v3 human-reviewed evidence;
-- already-paid stored model responses;
-- deterministic replay;
-- current ChatGPT reasoning;
-- Methodology Pack/retrieval work;
-- contrastive A/B/Tie human evidence;
-- mocks/local fixtures.
-
-External provider credit is reserved for **one final frozen authority test** unless the user explicitly authorizes an exception. There must be no background cron/worker that silently consumes development credit.
-
----
-
-## BYOK commercial default
-
-```text
-BUYER PAYS TCJ FOR
-- TCJ Runtime/Core
-- Methodology Pack
-- Context Retriever
-- Voice Profile(s)
-- Private Evidence capability/tool
-- Release Policy
-- Qualification/Passport framework
-- deployment/support
-
-BUYER SEPARATELY PROVIDES / PAYS FOR
-- its chosen provider account/API usage
-```
-
-For OpenAI-backed deployment:
-
-```text
-TCJ software in buyer environment
-+ buyer-owned OpenAI organization/account
-+ buyer-controlled API key
-+ buyer pays OpenAI directly
-```
-
-Developer OpenAI credit is not a production dependency. Local Judge remains supported for VPC/on-prem/provider-independent deployment. Connected ≠ compatible ≠ qualified.
-
----
-
-## Remaining implementation sequence
-
-```text
-1. Complete/analyze Contrastive Review v1.
-2. Correct only general mechanisms invalidated by native-human contrastive evidence.
-3. Build provider-neutral BYOJ/BYOK + Local Judge adapters with mocks/stored fixtures.
-4. Integrate the complete Architecture-v2 runtime.
-5. Run full offline/exposed-bank orchestration and provenance replay.
-6. Complete security, tenant isolation, exfiltration testing and plug-and-play packaging.
-7. Freeze the exact final reference configuration.
-8. Construct a fresh post-freeze Qualification 2.0 instrument.
-9. Native-human blind A/B/Tie + limited calibration review; freeze gold.
-10. Show exact final call count/cost/balance and obtain explicit user approval.
-11. Run one final paid provider Qualification.
-12. If PASS: issue Passport and finish Assurance/security/release gates.
-13. If FAIL: preserve failure and make an explicit product decision; no automatic paid retry loop.
-```
-
----
-
-## Final Qualification 2.0 direction
-
-Do not create another clone of the old 48×6 instrument.
-
-The final hidden post-freeze instrument should combine:
-
-- fresh A/B/Tie controlled discrimination;
-- context counterfactuals;
+- A / B / Tie controlled comparisons;
+- true context flip;
 - dimension isolation;
-- release safety;
-- preservation of good/unconventional native Thai;
+- release-safety classification using A only / B only / Both / Neither;
 - hidden reversed consistency checks;
-- limited absolute calibration for continuity.
+- no six human score sliders.
 
-The new thresholds must be preregistered before model exposure. Historical threshold failures remain historical evidence and are not retroactively weakened.
+The evaluator was frozen before bank construction. The bank, hidden design contract and thresholds were then locked before the first human choice.
 
----
+## Spend rule
 
-## Security release blockers still apply
+**Paid external model calls for ordinary development are forbidden.**
 
-Before final commercial release:
+Current provider-capable background TCJ cron jobs: `0`.
 
-- resolve/isolate relevant remaining Supabase SECURITY DEFINER/public findings;
-- replace service-role-key reuse with a dedicated independently rotatable TCJ internal secret;
-- complete tenant-isolation/evidence-exfiltration testing;
-- prove PEE tool capability denial and server-side call budgets;
-- scan/classify the Methodology Pack for protected-evidence leakage;
-- prove BYOK secret rotation and no developer-key dependency;
-- prove fresh install/restart/rollback/reproducibility;
-- complete licensing/data-processing diligence.
+Do not use OpenAI/xAI/Groq/other provider credit for prompt tuning, debugging, replay or case checking.
 
-Repository-root `AGENTS.md` remains a short operational entry point, but this README + `CURRENT-STATE.json` + `DOCUMENT-AUTHORITY-MAP.md` control current TCJ continuation.
+After human Qualification 2.0 is frozen:
+
+1. verify evaluator/bank/human/threshold manifests;
+2. materialize machine scoring for the 24 unique pairs only;
+3. estimate exact provider calls, tool-followups and cost;
+4. ask the user for explicit approval;
+5. run the exact frozen evaluator once if approved;
+6. no semantic retry/resampling;
+7. issue Passport/authority only if every gate passes;
+8. if it fails, preserve failure and stop automatic paid retries.
+
+## Security boundary
+
+The Architecture-v2 freeze attests:
+
+- zero public/anon/authenticated grants on relevant private TCJ tables;
+- zero provider-capable background cron jobs;
+- dedicated rotatable Evidence-sidecar secret `tcj_runtime_v2_internal_key`;
+- raw Evidence export disabled;
+- Methodology Pack private-anchor/old-Qualification exact-leak scans clean;
+- external provider dispatch disabled by default.
+
+Project-wide legacy Flipgazine Supabase advisor findings remain outside the isolated TCJ package and should only be changed through a separate impact-reviewed site-security project.
+
+## Immediate next action
+
+**Native-human gate:** complete and freeze the 28 choices at:
+
+`https://flipgazine.pages.dev/tcj-qualification2-review.html`
+
+Until that is complete, do not run the reference provider and do not construct another human bank.
