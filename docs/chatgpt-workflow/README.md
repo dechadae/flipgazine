@@ -10,275 +10,282 @@ Before consequential work, inspect canonical Supabase project `sjpvhgxacsiorrtij
 
 ## Current TCJ authorities — read first
 
-1. `ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-FREEZE-20260822.md` — **frozen commercial topology and trust boundaries**. This controls component order, Voice Profile placement, Private Evidence Engine, derived-signal boundary, BYOJ abstraction, writer/judge roles, risk-triggered challenge, independent six-dimension resolver, one-revision default and deployment shapes. It does not grant production authority.
-2. `ANSWERS-TCJ-SOL-PRIVATE-EVIDENCE-TOOL-AND-COMMERCIAL-LICENSING-CLARIFICATION-20260822.md` — **governing clarification** for judge-initiated private evidence access and BYOK commercial licensing. A selected judge may call a narrow TCJ Private Evidence Tool; it never receives SQL/database/vault/raw-corpus access. Tool schema/call budget is authority-bearing.
-3. `ANSWERS-TCJ-FINAL-PRODUCT-IMPLEMENTATION-AND-QUALIFICATION-PLAN-20260822.md` — **governing final-product execution plan**. It aligns the final product with the clarification and distinguishes eager/precomputed v1.5 authority from the later interactive Evidence Tool evaluator.
-4. `ANSWERS-TCJ-SOL-V15-RESEARCH-FREEZE-AND-FRESH-QUALIFICATION-V2-20260822.md` — **current execution checkpoint**. v1.5 is research-frozen and fresh Qualification v2 is waiting for native-human blind review.
-5. `ANSWERS-TCJ-PRIVATE-EVIDENCE-ENGINE-AND-BUYER-ISOLATION-POLICY-20260822.md` — raw-corpus isolation and buyer/writer evidence boundary. Read with the clarification: narrow derived-analysis tool access is allowed; generic/raw retrieval is not.
-6. `ANSWERS-TCJ-BYOJ-JUDGE-RUNTIME-AND-API-KEY-POLICY-20260822.md` — BYOJ / Local Judge / BYOK Judge terminology and runtime boundary.
-7. `ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md` — deployment, setup, private-server improvement and packaging policy.
-8. `ANSWERS-TCJ-MULTI-JUDGE-CONSENSUS-ARCHITECTURE.md` — Panel methodology; production Panel remains Qualification-gated.
-9. `ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md` — commercial-use and provenance authority.
-10. `ANSWERS-THAI-CONVERSATION-JUDGE-ARCHITECTURE.md` — TCJ core/profile method details where not superseded by newer frozen-product authorities.
+1. `ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-V2-20260823.md` — **current final commercial architecture.** The judge receives a compiled TCJ Methodology Pack through a local Context Retriever; the raw corpus remains behind the Private Evidence Engine; six-dimensional diagnosis and production Release Policy are separate; BYOJ/BYOK remains first-class.
+2. `ANSWERS-TCJ-METHODOLOGY-PACK-AND-CONTEXT-RETRIEVER-SPEC-20260823.md` — **governing Methodology Pack / retrieval spec.** GitHub is a development source, not a runtime dependency. Production compiles TCJ knowledge once and retrieves only relevant modules per request.
+3. `ANSWERS-TCJ-FINAL-PRODUCT-IMPLEMENTATION-AND-QUALIFICATION-PLAN-V2-20260823.md` — **governing final-product execution plan.** No paid external model calls during ordinary development; one final paid authority run only after full freeze and explicit user approval.
+4. `ANSWERS-TCJ-V17-QUALIFICATION-FAILURE-AND-CONTEXT-ENGINE-PIVOT-20260823.md` — **current execution checkpoint.** v1.7 failed fresh v3 Qualification, has no authority, and the project pivoted from repeated 48×6/API replay loops to context-engine + contrastive development.
+5. `ANSWERS-TCJ-PRIVATE-EVIDENCE-ENGINE-AND-BUYER-ISOLATION-POLICY-20260822.md` — raw-corpus and buyer-evidence isolation authority.
+6. `ANSWERS-TCJ-SOL-PRIVATE-EVIDENCE-TOOL-AND-COMMERCIAL-LICENSING-CLARIFICATION-20260822.md` — narrow judge-initiated evidence-tool capability; no SQL/arbitrary corpus search/raw rows.
+7. `ANSWERS-TCJ-BYOJ-JUDGE-RUNTIME-AND-API-KEY-POLICY-20260822.md` — Local Judge / BYOK Judge / BYOJ and buyer-owned key policy.
+8. `ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md` — deployment/private-server improvement policy where not superseded by architecture v2.
+9. `ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md` — commercial-use/provenance authority.
+10. `ANSWERS-THAI-CONVERSATION-JUDGE-ARCHITECTURE.md` and `ANSWERS-VOICE-TONE.md` — legacy methodology/editorial source material where not superseded; important inputs to Methodology Pack compilation.
 
-Historical v1.1 Qualification, v3 ablation and earlier v4-direction documents remain evidence, not current next-action authority.
+The 22 Aug final architecture freeze and execution plan are preserved historical design evidence but are superseded for current topology/execution where they conflict with architecture v2.
 
 ---
 
-## Frozen final product shape
+## Current product definition
 
-Base topology:
+TCJ is now intended to be:
+
+> **a portable Thai conversational methodology + protected native-human evidence system + replaceable semantic judge + deterministic release authority.**
+
+It is not intended to become an ever-growing pile of regex guards around a model.
+
+---
+
+## Architecture v2
 
 ```text
 BUYER WRITER
 → TCJ GATEWAY
 → VOICE PROFILE
-→ PRIVATE TCJ EVIDENCE ENGINE
-→ DERIVED NON-RECONSTRUCTIVE SIGNALS
+→ LOCAL TCJ CONTEXT RETRIEVER
+→ RELEVANT TCJ METHODOLOGY PACK MODULES
 → SELECTED BYOJ JUDGE
-→ TCJ GUARDS
-→ RISK-TRIGGERED CHALLENGE
-→ INDEPENDENT SIX-DIMENSION RESOLVER
+↔ OPTIONAL NARROW PRIVATE EVIDENCE TOOL
+→ TCJ DIMENSION DIAGNOSIS
+→ INDEPENDENT RELEASE POLICY
 → ACCEPT / REVISE / ESCALATE
-→ TARGETED WRITER REVISION ONCE IF REQUIRED
-→ TCJ RECHECK
+→ ONE TARGETED WRITER REVISION IF REQUIRED
+→ RECHECK
 → FINAL OUTPUT
 ```
 
-Preferred interactive Sol/BYOJ reference form:
+Component meanings:
 
 ```text
-candidate
-→ Voice Profile
-→ selected TCJ Judge
-   ↕
-   tcj_evidence_assess
-   ↓
-   PRIVATE TCJ Evidence Engine / Data Vault
-   ↓
-   derived non-reconstructive signals only
-   ↑
-→ selected Judge
-→ Guards / Challenge / Resolver
-→ ACCEPT / REVISE / ESCALATE
+Methodology Pack = how TCJ reasons about Thai conversational quality
+Context Retriever = which TCJ concepts matter for this request
+Voice Profile = what good means for this buyer/domain/voice
+Private Evidence Engine = protected native-human empirical memory
+Judge = replaceable semantic reasoner
+Release Policy = may this output ship?
 ```
-
-The interactive tool is a narrow capability, not database access. The judge cannot request SQL, generic corpus search, raw rows, nearest examples, hidden Qualification/Assurance cases or unrestricted resource browsing.
 
 ---
 
-## Current reference evaluator
+## Production does not reread GitHub
+
+The clean-account GitHub experiment showed that a capable model can acquire much of the intended TCJ/BFF behavior by reading the project's documentation.
+
+The production lesson is **not** to browse GitHub on each request.
+
+Production should do this:
 
 ```text
-Evaluator                     TCJ-EVAL-ANSWERS-BFF-SOL-v1.5-frozen-dev
-Configuration SHA             2894444317a07cccc89bef3a80d6d3851740c726f61863109afad487978f3191
-Reference judge               OpenAI GPT-5.6 alias / observed GPT-5.6 Sol
-Evidence mode                 eager/precomputed derived signals
-Private Evidence Engine       TCJ-PRIVATE-EVIDENCE-v2
-Guard                         TCJ-SOL-GUARDS-v1.1
-Resolver                      TCJ-DIM-RESOLVER-v1.1
-Production authority          none
+canonical Git/docs
+→ build-time compile/review
+→ TCJ-METHODOLOGY-BFF-v1
+→ local Context Retriever selects only relevant modules
+→ selected judge receives those modules
 ```
 
-Exposed-development result:
+GitHub remains source control and development provenance only.
+
+---
+
+## Judge-visible vs private knowledge
+
+### Judge-visible
+
+- stable TCJ core methodology;
+- relevant Methodology Pack modules;
+- Voice Profile contract;
+- current scenario/candidate;
+- structured evaluation contract;
+- bounded derived PEE response when invoked.
+
+### Private
+
+- raw Batch rows;
+- raw human edits;
+- anchor library;
+- hidden test cases;
+- private review notes;
+- buyer-private evidence;
+- arbitrary database/search access.
+
+The Private Evidence Engine is now a **targeted second-stage evidence source**, not the sole carrier of TCJ intelligence.
+
+---
+
+## Current failed Qualification evidence
+
+Frozen evaluator:
+
+```text
+TCJ-EVAL-ANSWERS-BFF-SOL-v1.7-frozen-dev
+SHA 5eb3d2354717573e1d8f48a574a960d3bea63a855409ac23932530be7bc23d07
+```
+
+Fresh v3 Qualification:
 
 ```text
 48 cases
-288/288 persisted resolution cells
-overall MAE 0.3542
-extreme reversals 0
-false-fluent on human MAJOR/CRITICAL 0
-28 ACCEPT / 7 REVISE / 13 ESCALATE
+288 primary judgments
+101 challenge judgments
+389 dispatches / 389 responses
+288 resolution cells
+overall MAE .5729
+false-fluent human MAJOR/CRITICAL ACCEPT = 3
+terminal generation failures = 0
+credit incidents = 0
+Qualification = FAILED
+production authority = NONE
+summary SHA 52c507629205ddbb532faf57db2b9e8346ad82cfcf2e65d014231f80ddc70fd5
 ```
 
-These are development results only.
-
-### Critical scope rule
-
-v1.5 does **not** bind an interactive Evidence Tool schema, allowed analysis families, allowed dimensions or tool-call budget.
-
-Therefore a fresh v1.5 Qualification pass can authorize only:
-
-```text
-mode = eager_precomputed_derived_signals
-interactive_private_evidence_tool = not_in_scope
-```
-
-It must not be marketed or recorded as qualification of the preferred interactive Sol Private Evidence Tool runtime.
+Do not modify the human gold or old thresholds to make this pass. v3 is now exposed development evidence.
 
 ---
 
-## Current human gate
+## Current development mode
 
-Fresh Qualification v2:
+**No paid external model/API calls.**
 
-```text
-Protocol       TCJ-EVALUATOR-QUALIFICATION-2026Q3-v2
-Cases          48
-Threshold SHA  b805b1f9484ea5ce576f09187c467b268c1f7c20263efa3889041680af426836
-Evaluator      frozen before bank construction
-Human reviews  pending
-Machine access none
-```
+Development uses:
 
-Blind review:
+- v1.1/v2/v3 human-reviewed evidence;
+- already-paid stored model responses;
+- deterministic replay;
+- current ChatGPT reasoning;
+- local Methodology Pack/retrieval work;
+- contrastive A/B/Tie human evidence.
 
-`https://flipgazine.pages.dev/tcj-evaluator-qualification-review.html`
+External provider credit is reserved for **one final frozen authority test** unless the user explicitly authorizes an exception.
 
-The reviewer sees scenario + candidate and rates the six frozen dimensions plus severity/confidence/ambiguity. Construction labels, model identity and TCJ judgments remain hidden.
-
-If v1.5 passes, issue a scoped eager/precomputed Passport only.
+There must be no background cron/worker that silently consumes development credit.
 
 ---
 
-## Final interactive reference evaluator — required successor
+## Contrastive Review v1
 
-To ship the preferred final Sol/BYOJ interactive product, implement a successor evaluator that binds at minimum:
-
-```text
-Evidence Tool version
-Evidence Tool schema/hash
-opaque evaluation-ID resolution contract
-allowed analysis families
-allowed dimensions
-maximum tool-call budget
-derived-signal response schema/hash
-signal aggregation policy
-Private Evidence Engine/evidence manifest
-Voice Profile version/hash
-judge provider/model/settings
-adapter
-prompt/instruction hash
-guards
-challenge policy
-resolver
-revision policy
-complete evaluator configuration hash
-```
-
-Preferred tool:
+Current development instrument:
 
 ```text
-tcj_evidence_assess(
-  evaluation_id,
-  requested_analysis_families,
-  requested_dimensions
-)
+30 A/B/Tie comparisons
+26 unique comparisons
+4 hidden reversed consistency repeats
+12 mechanism families
 ```
 
-Initial analysis-family target:
+Review page:
 
-```text
-literal_vs_social_intent
-unconventional_but_native
-register_inversion
-hierarchy_particle
-code_switch_integration
-linebreak_composition
-stance_decisiveness
-known_failure_cluster
-```
+`https://flipgazine.pages.dev/tcj-contrastive-review.html`
 
-A materially changed interactive successor must be frozen as a new evaluator configuration and face a **new fresh hidden Qualification bank created after that freeze**.
+It is designed to give more mechanism evidence per human action than another six-slider absolute-rating bank.
+
+It is development evidence, not the future final hidden Qualification.
 
 ---
 
-## Final release sequence
+## Current offline v1.8 direction
+
+A parallel research path uses only stored judgments and deterministic logic.
+
+First release-safety result on exposed evidence:
 
 ```text
-current v1.5 blind Qualification
-→ scoped eager/precomputed Passport if PASS
-→ implement narrow tcj_evidence_assess + capability-denial security
-→ replay interactive successor on exposed DEV evidence only
-→ freeze exact interactive evaluator
-→ create NEW fresh hidden Qualification bank
-→ native-human blind review/freeze
-→ interactive Qualification
-→ interactive authority-bearing Passport if PASS
-→ qualified Panel / reliability architecture
-→ untouched independent Assurance
-→ source-identity invariance
-→ evidence-exfiltration + prompt-injection tests
-→ tenant isolation
-→ security/secrets acceptance
-→ reproducibility / fresh-install PASS
-→ Docker Compose / Helm packaging where claimed
-→ local-only and BYOK deployment acceptance
-→ latency / cost / revision-success measurement
-→ commercial/provider diligence
-→ final commercial release freeze
+v2 human MAJOR/CRITICAL falsely ACCEPTed = 0
+v3 human MAJOR/CRITICAL falsely ACCEPTed = 0
 ```
 
-Frozen native-human gold and preregistered thresholds are never weakened because a model/configuration fails.
+This is not authority and not a claim that v1.8 is finished. The current Release Policy remains somewhat conservative and false-blocks some human-PASS cases; narrowing that behavior is active work.
+
+The main architecture lesson is that Release Policy should not be forced to operate only through manipulated 1–4 scores.
 
 ---
 
-## Commercial default
+## BYOK commercial default
 
-Preferred BYOK enterprise structure:
+Preferred enterprise structure:
 
 ```text
 BUYER PAYS TCJ FOR
-- TCJ Runtime / Gateway
-- TCJ Core
+- TCJ Runtime/Core
+- Methodology Pack
+- Context Retriever
 - Voice Profile(s)
-- Private Evidence Intelligence
-- Private Evidence Tool
-- guards / challenge / resolver
-- Qualification / Passport framework
-- optional Assurance, support and improvement service
+- Private Evidence capability/tool
+- Release Policy
+- Qualification/Passport framework
+- deployment/support
 
 BUYER SEPARATELY PROVIDES / PAYS FOR
-- chosen external provider account/API usage
+- its chosen provider account/API usage
 ```
 
 For OpenAI-backed deployment:
 
 ```text
-TCJ license
+TCJ software in buyer environment
 + buyer-owned OpenAI organization/account
-+ buyer-controlled API credential
-+ buyer pays OpenAI usage directly
++ buyer-controlled API key
++ buyer pays OpenAI directly
 ```
 
-TCJ does not sell or transfer buyer API keys. OpenAI/Sol is a reference BYOK judge, not a mandatory dependency. Local Judge remains supported for VPC/on-prem/provider-independent deployment.
+The developer's OpenAI credit is not a production dependency.
+
+Local Judge remains supported for VPC/on-prem/provider-independent deployment.
+
+Connected ≠ compatible ≠ qualified.
 
 ---
 
-## Buyer-specific private improvement
-
-Private-server/VPC buyers may opt into:
+## Final implementation sequence
 
 ```text
-buyer-owned eligible evidence
-→ buyer-private evidence namespace
-→ pattern analysis
-→ proposed Voice Profile / evidence-policy delta
-→ frozen validation
-→ Assurance/policy gate
-→ signed approved version
-→ deploy with rollback
+1. Compile TCJ-METHODOLOGY-BFF-v1.
+2. Build/test Context Retriever v1 offline.
+3. Refactor PEE into richer bounded analysis families.
+4. Narrow Release Policy false blocks using exposed evidence.
+5. Complete/analyze Contrastive Review v1.
+6. Build provider-neutral judge adapter with mocks/stored fixtures.
+7. Integrate architecture-v2 runtime.
+8. Complete security, tenant isolation and plug-and-play packaging.
+9. Freeze exact final reference configuration.
+10. Construct a fresh post-freeze Qualification 2.0 instrument.
+11. Native-human blind A/B/Tie + limited calibration review; freeze gold.
+12. Show final call count/cost/balance and obtain explicit user approval.
+13. Run one final paid provider Qualification.
+14. If PASS: issue Passport and finish Assurance/security/release gates.
+15. If FAIL: preserve the failure and make an explicit product decision; do not enter an automatic paid retry loop.
 ```
-
-No silent production self-modification. Buyer A data cannot be reused for Buyer B or general TCJ improvement without separate explicit permission.
 
 ---
 
-## Security invariants for the interactive tool
+## Final Qualification 2.0 direction
 
-Commercial acceptance must prove:
+Do not create another clone of the old 48×6 instrument.
 
-- opaque evaluation IDs cannot enumerate corpus rows;
-- unsupported analysis families/dimensions are rejected server-side;
-- arbitrary phrase/corpus search is impossible;
-- judge context never receives database/service-role credentials;
-- serializer paths cannot return raw rows/examples/anchors;
-- prompt injection cannot widen tool capability;
-- hidden Qualification/Assurance evidence is inaccessible;
-- tenant evidence cannot cross tenants;
-- tool-call budgets are server-enforced;
-- exact tool request/response provenance is auditable without leaking reconstructive evidence;
-- secrets are independently rotatable.
+The final hidden post-freeze instrument should combine:
+
+- fresh A/B/Tie controlled discrimination;
+- context counterfactuals;
+- dimension isolation;
+- release safety;
+- preservation of good/unconventional native Thai;
+- hidden reversed consistency checks;
+- limited absolute calibration for continuity.
+
+The new thresholds must be preregistered before model exposure. Historical threshold failures remain historical evidence and are not retroactively weakened.
+
+---
+
+## Security release blockers still apply
+
+Before final commercial release:
+
+- resolve/isolate relevant remaining Supabase SECURITY DEFINER/public findings;
+- replace service-role-key reuse with a dedicated independently rotatable TCJ internal secret;
+- complete tenant-isolation/evidence-exfiltration testing;
+- prove PEE tool capability denial and server-side call budgets;
+- scan/classify the Methodology Pack for protected-evidence leakage;
+- prove BYOK secret rotation and no developer-key dependency;
+- prove fresh install/restart/rollback/reproducibility;
+- complete licensing/data-processing diligence.
 
 ---
 
@@ -289,8 +296,7 @@ Commercial acceptance must prove:
 - `ANSWERS-BATCH2-SOURCESET-V1-1-REPLACEMENT-PATCH.md` — clean source replacement authority.
 - `ANSWERS-COMMERCIAL-EXECUTION-TIMELINE.md` — commercialization schedule.
 - `ANSWERS-COMMERCIAL-BENCHMARK-PLAN.md` — positioning/claim boundaries.
-- `ANSWERS-VOICE-TONE.md` — Thai/English editorial authority.
 - `ANSWERS-HUMAN-REVIEW.md` — immutable Batch 1 provenance.
 - `ANSWERS-PRIVATE-SERVER-PHASE-K-MIGRATION-MANIFEST.md` — completed private-server migration proof.
 
-Repository-root `AGENTS.md` remains the short operational entry point.
+Repository-root `AGENTS.md` remains a short operational entry point, but this README + `CURRENT-STATE.json` + `DOCUMENT-AUTHORITY-MAP.md` control current TCJ continuation.
