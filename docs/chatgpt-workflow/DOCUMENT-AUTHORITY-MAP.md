@@ -1,6 +1,6 @@
 # ChatGPT Workflow — Document Authority Map
 
-**Checkpoint:** 23 August 2026, free-model finalist selected  
+**Checkpoint:** 23 August 2026, Gemini selected and final-product roadmap adopted  
 **Purpose:** prevent historical TCJ plans, failed Qualification loops, stopped finalist runs and superseded optional-PEE checkpoints from being mistaken for current authority.
 
 `CURRENT-STATE.json` is the compact machine-readable checkpoint. Historical evidence remains preserved even when its next-action text is superseded.
@@ -11,17 +11,18 @@
 2. `ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-V2-20260823.md` — underlying commercial Architecture-v2 authority where not superseded by the mandatory-evidence amendment.
 3. `ANSWERS-TCJ-METHODOLOGY-PACK-AND-CONTEXT-RETRIEVER-SPEC-20260823.md` — governing Methodology Pack / Context Retriever specification.
 4. `ANSWERS-TCJ-FREE-MODEL-FINALIST-SELECTION-20260823.md` — **current research decision. Gemini 3.5 Flash-Lite is the selected reference-judge candidate for the next model-specific TCJ refinement phase. Read this before taking the next research action.**
-5. `ANSWERS-TCJ-MANDATORY-PEE-FREE-MODEL-TREATMENT-CHECKPOINT-20260823.md` — preserved execution checkpoint for the finalist experiment. Its instruction to continue Qwen/GPT-OSS is superseded by item 4.
-6. `ANSWERS-TCJ-FINAL-PRODUCT-IMPLEMENTATION-AND-QUALIFICATION-PLAN-V2-20260823.md` — governing execution/spend plan except its optional-PEE topology language is superseded by item 1 and its generic judge-selection phase is now superseded by item 4.
-7. `ANSWERS-TCJ-ARCHV2-REFERENCE-FREEZE-AND-QUALIFICATION2-HUMAN-GATE-20260823.md` — historical optional-PEE reference freeze + Qualification 2.0 construction/human-freeze authority. The frozen stack remains immutable evidence but is not the intended final product.
-8. `ANSWERS-TCJ-LOW-TIER-JUDGE-TRANSFER-RESEARCH-CHECKPOINT-20260823.md` — historical pre-amendment low-tier checkpoint. Its GPT-OSS control evidence remains valid; its optional-PEE next-action sequence is superseded.
-9. `ANSWERS-TCJ-V17-QUALIFICATION-FAILURE-AND-CONTEXT-ENGINE-PIVOT-20260823.md` — preserved v1.7 failure/pivot evidence. No authority.
-10. `ANSWERS-TCJ-PRIVATE-EVIDENCE-ENGINE-AND-BUYER-ISOLATION-POLICY-20260822.md` — raw-corpus / tenant isolation authority. Still fully governing.
-11. `ANSWERS-TCJ-SOL-PRIVATE-EVIDENCE-TOOL-AND-COMMERCIAL-LICENSING-CLARIFICATION-20260822.md` — bounded evidence capability and no-raw-row/search boundary. Optional-only invocation language is superseded.
-12. `ANSWERS-TCJ-BYOJ-JUDGE-RUNTIME-AND-API-KEY-POLICY-20260822.md` — Local Judge / BYOK / buyer-owned key policy. Raw evidence remains inaccessible to the judge; mandatory derived evidence is supplied before diagnosis.
-13. `ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md` — deployment and private-server voice-profile policy where consistent with Architecture v2.1.
-14. `ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md` — commercial-use/provenance boundary.
-15. `ANSWERS-THAI-CONVERSATION-JUDGE-ARCHITECTURE.md` and `ANSWERS-VOICE-TONE.md` — legacy source material where not superseded.
+5. `ANSWERS-TCJ-ROADMAP-TO-FINAL-COMMERCIAL-PRODUCT-20260823.md` — **governing execution roadmap from the current research state to qualified commercial release.** Defines Gemini refinement, fresh development validation, candidate freeze, new closed authority bank, fixed OpenAI/xAI paid-budget use, causal A/B/C frontier testing, authority decision, plug-and-play API, private-server/BYOJ-BYOK, customer adaptation, control plane, security hardening and commercial release criteria.
+6. `ANSWERS-TCJ-MANDATORY-PEE-FREE-MODEL-TREATMENT-CHECKPOINT-20260823.md` — preserved execution checkpoint for the finalist experiment. Its instruction to continue Qwen/GPT-OSS is superseded by items 4–5.
+7. `ANSWERS-TCJ-FINAL-PRODUCT-IMPLEMENTATION-AND-QUALIFICATION-PLAN-V2-20260823.md` — historical/generic execution-spend plan. Its optional-PEE topology language is superseded by item 1; its generic judge-selection and final-product sequence are superseded by items 4–5.
+8. `ANSWERS-TCJ-ARCHV2-REFERENCE-FREEZE-AND-QUALIFICATION2-HUMAN-GATE-20260823.md` — historical optional-PEE reference freeze + Qualification 2.0 construction/human-freeze authority. The frozen stack remains immutable evidence but is not the intended final product.
+9. `ANSWERS-TCJ-LOW-TIER-JUDGE-TRANSFER-RESEARCH-CHECKPOINT-20260823.md` — historical pre-amendment low-tier checkpoint. Its GPT-OSS control evidence remains valid; its optional-PEE next-action sequence is superseded.
+10. `ANSWERS-TCJ-V17-QUALIFICATION-FAILURE-AND-CONTEXT-ENGINE-PIVOT-20260823.md` — preserved v1.7 failure/pivot evidence. No authority.
+11. `ANSWERS-TCJ-PRIVATE-EVIDENCE-ENGINE-AND-BUYER-ISOLATION-POLICY-20260822.md` — raw-corpus / tenant isolation authority. Still fully governing.
+12. `ANSWERS-TCJ-SOL-PRIVATE-EVIDENCE-TOOL-AND-COMMERCIAL-LICENSING-CLARIFICATION-20260822.md` — bounded evidence capability and no-raw-row/search boundary. Optional-only invocation language is superseded.
+13. `ANSWERS-TCJ-BYOJ-JUDGE-RUNTIME-AND-API-KEY-POLICY-20260822.md` — Local Judge / BYOK / buyer-owned key policy. Raw evidence remains inaccessible to the judge; mandatory derived evidence is supplied before diagnosis.
+14. `ANSWERS-TCJ-PLUG-AND-PLAY-DEPLOYMENT-AND-VOICE-PROFILE-POLICY-20260822.md` — deployment and private-server voice-profile policy where consistent with Architecture v2.1 and the final-product roadmap.
+15. `ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md` — commercial-use/provenance boundary.
+16. `ANSWERS-THAI-CONVERSATION-JUDGE-ARCHITECTURE.md` and `ANSWERS-VOICE-TONE.md` — legacy source material where not superseded.
 
 ## Current governing architecture — v2.1 mandatory protected evidence
 
@@ -114,6 +115,46 @@ GPT-OSS 16/19 = 84.2%
 
 Do **not** restart Qwen/GPT-OSS merely to complete 48/48 unless the user explicitly reopens that experiment. The stopped ledgers are historical comparison evidence.
 
+## Governing roadmap to commercial release
+
+Current execution sequence is:
+
+```text
+Gemini-centered TCJ refinement
+→ fresh 24–32-case development validation
+→ candidate runtime freeze
+→ new closed authority qualification
+→ paid OpenAI/xAI A/B/C causal frontier test
+→ authority decision
+→ plug-and-play API
+→ private-server/BYOJ-BYOK edition
+→ customer-specific Voice Profile and controlled improvement loop
+→ operator/control plane
+→ production/security hardening
+→ commercial packaging and release
+```
+
+Fixed user-supplied remaining paid research budget as of 23 August 2026:
+
+```text
+OpenAI: USD 1.82
+xAI:    USD 3.42
+Total:  USD 5.24
+No top-up planned.
+```
+
+These credits are reserved for the final post-freeze authority experiment. Paid OpenAI/xAI development calls are prohibited. Immediately before paid dispatch, reverify model IDs, prices, balances, request count and projected spend and obtain explicit user approval.
+
+The proposed frontier authority experiment is causal:
+
+```text
+A = frontier model alone
+B = TCJ Methodology + Voice Profile + Context Retriever, no private PEE
+C = full TCJ including mandatory bounded Protected Evidence
+```
+
+Primary scores must be frozen before any post-primary forensic use of leftover paid credits.
+
 ## Critical refinement finding
 
 Gemini's full 48-case run still produced two serious false ACCEPTs (`Q3-026`, `Q3-043`). Both received a mandatory PEE packet whose structural assessment was overly reassuring. In particular the structural-completeness evidence failed to flag the clearly incomplete/dangling construction in `Q3-043`.
@@ -154,6 +195,10 @@ Bank SHA         8e3d6c5fff4860f97bfbfcd8d69c46e5484da0d5c315ed6f4888d0061d09b7c
 
 ```text
 Paid OpenAI development calls = NO.
+Paid xAI development calls = NO.
+OpenAI balance reserved for final post-freeze authority research = USD 1.82 hard budget.
+xAI balance reserved for final post-freeze authority research = USD 3.42 hard budget.
+No top-up planned.
 Groq free research = allowed only if a new experiment is explicitly opened.
 Verified free Gemini development research = allowed.
 Claude/other paid research = explicit user approval required.
@@ -165,10 +210,12 @@ Never silently upgrade a free experiment to paid inference.
 1. Architecture v2.1 mandatory Protected Evidence governs current topology.
 2. Human gold remains authoritative.
 3. Gemini 3.5 Flash-Lite is the selected development reference judge; this is not production authority.
-4. Frozen historical hashes/thresholds are never relaxed or rewritten.
-5. Raw TCJ/buyer evidence stays private; only bounded derived evidence reaches the judge.
-6. Qualification 2.0 stays untouched by development models.
-7. Preserve all provider responses, evidence packets/hashes, rate-limit events and terminal failures.
-8. Do not restart stopped finalist runs without explicit user intent.
-9. Refine against exposed/development evidence, then validate on a fresh development set before any freeze.
-10. No successor configuration receives production authority until frozen and independently qualified with a new hidden instrument.
+4. `ANSWERS-TCJ-ROADMAP-TO-FINAL-COMMERCIAL-PRODUCT-20260823.md` governs the execution path to release.
+5. Frozen historical hashes/thresholds are never relaxed or rewritten.
+6. Raw TCJ/buyer evidence stays private; only bounded derived evidence reaches the judge.
+7. Qualification 2.0 stays untouched by development models.
+8. Preserve all provider responses, evidence packets/hashes, rate-limit events and terminal failures.
+9. Do not restart stopped finalist runs without explicit user intent.
+10. Refine against exposed/development evidence, then validate on a fresh development set before any freeze.
+11. Reserve all remaining OpenAI/xAI credit for the post-freeze frontier authority experiment; no top-up and no development spend.
+12. No successor configuration receives production authority until frozen and independently qualified with a new hidden instrument.
