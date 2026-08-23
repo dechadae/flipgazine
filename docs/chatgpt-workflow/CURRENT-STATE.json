@@ -1,6 +1,6 @@
 {
-  "schema_version": 3,
-  "as_of": "2026-08-22T23:54:00+07:00",
+  "schema_version": 4,
+  "as_of": "2026-08-23T10:02:00+07:00",
   "scope": "repository_documentation_checkpoint",
   "live_state_independently_reverified": true,
   "canonical_supabase_project": "sjpvhgxacsiorrtijqua",
@@ -17,177 +17,152 @@
     "production_authority": false,
     "human_gold_authoritative": true,
     "case_design_labels_are_hypotheses": true,
-    "frozen_thresholds_unchanged": true,
-    "qualification_threshold_sha256": "b805b1f9484ea5ce576f09187c467b268c1f7c20263efa3889041680af426836",
-    "historical_qualification_v1_1": {
-      "run_key": "TCJ-JUDGE-QUALIFICATION-RUN-2026Q3-v1.1",
-      "status": "complete_valid_research_evidence",
-      "human_cases": 48,
-      "valid_judgments": 144,
-      "committed_dispatches": 146,
-      "durable_responses": 146,
-      "terminal_generation_contract_failures": 0,
-      "qualification_passports": 3,
-      "qualified_dimensions": 0,
-      "result": "all_raw_candidates_research_only",
-      "authority_role_now": "exposed_development_evidence_only"
-    },
-    "v3_negative_ablation": {
-      "profile": "TCJ-ANSWERS-BFF-v3-research",
-      "profile_sha256": "1538c9fd6b9487b5e8a3757ec69ba88a27efeb74b058c70a7875d17ce8e88fa1",
-      "status": "complete_negative_ablation",
-      "overall_mae": 0.7882,
-      "bff_voice_mae": 0.8125,
-      "bff_voice_extreme_reversals": 12,
-      "conclusion": "more_rubric_text_is_not_the_solution"
-    },
-    "voice_profile_private_evidence": {
-      "anchor_set": "ANSWERS-BFF-VOICE-ANCHORS-v1",
-      "anchor_count": 968,
-      "approved_unchanged": 566,
-      "human_edited_pairs": 402,
-      "manifest_sha256": "260bdf1c00f7c4ac8560b29ef2f4895438fb5a368a644f9658a3c335f584a92a",
-      "model_training_eligible_default": false,
-      "external_judge_raw_anchor_access": false
-    },
+    "historical_thresholds_are_immutable_evidence": true,
+    "qualification_threshold_sha256_historical_absolute_rating_protocol": "b805b1f9484ea5ce576f09187c467b268c1f7c20263efa3889041680af426836",
+    "external_paid_api_development_calls_allowed": false,
+    "external_paid_api_policy": "reserve external model credit for one final frozen authority test only unless the user explicitly authorizes an exception",
     "reference_judge": {
       "provider": "OpenAI",
       "configured_api_alias": "gpt-5.6",
       "observed_resolved_model": "gpt-5.6-sol",
-      "role": "reference_BYOK_semantic_judge_not_authority_by_itself"
+      "role": "reference_BYOK_semantic_judge_not_authority_by_itself",
+      "openai_mandatory": false
     },
-    "research_frozen_reference_evaluator": {
-      "evaluator_key": "TCJ-EVAL-ANSWERS-BFF-SOL-v1.5-frozen-dev",
-      "status": "research_frozen",
-      "configuration_sha256": "2894444317a07cccc89bef3a80d6d3851740c726f61863109afad487978f3191",
-      "primary_manifest_sha256": "8935dec656981dc84057a5ad16b5066d5aadc32da4e63bbf53eff16b48205881",
-      "challenge_manifest_sha256": "bd1c450610a57d9efc02148bb816bfa5b814c2b17d7ddd52390839c412b94a87",
-      "guard_policy": "TCJ-SOL-GUARDS-v1.1",
-      "guard_policy_sha256": "8e6b3ce97f6c27554133c05508a86996386d8426a1d88b86012a6f9370faf268",
-      "resolver": "TCJ-DIM-RESOLVER-v1.1",
-      "resolver_sha256": "99d7146a4c6244ff61a2825a5b5c204dc502151e8d14f4f021a1a030e277308d",
-      "evidence_mode": "eager_precomputed_derived_signals",
-      "interactive_private_evidence_tool_bound": false,
-      "authority": "none_until_fresh_hidden_qualification",
-      "passport_scope_if_pass": "eager_precomputed_derived_signals_only"
-    },
-    "materialized_exposed_dev_result": {
-      "run_key": "TCJ-SOL-COMPOSITE-DEV-QV11-v1.5",
-      "status": "complete",
-      "resolution_cells": 288,
-      "hash_mismatches": 0,
-      "case_decisions": 48,
-      "overall_mae": 0.3542,
-      "extreme_reversals": 0,
-      "false_fluent_human_major_or_critical": 0,
-      "production_decisions": {"ACCEPT": 28, "REVISE": 7, "ESCALATE": 13},
-      "interpretation": "clears_unchanged_thresholds_on_exposed_development_evidence_only_not_authority"
-    },
-    "fresh_hidden_qualification_v2": {
-      "protocol_key": "TCJ-EVALUATOR-QUALIFICATION-2026Q3-v2",
-      "evidence_set_key": "TCJ-EVALUATOR-QUALIFICATION-BANK-2026Q3-v2",
-      "status": "draft_review",
-      "evaluator_frozen_before_bank_construction": true,
-      "evaluator_configuration_sha256": "2894444317a07cccc89bef3a80d6d3851740c726f61863109afad487978f3191",
-      "qualified_mode_if_pass": "eager_precomputed_derived_signals_only",
-      "threshold_sha256": "b805b1f9484ea5ce576f09187c467b268c1f7c20263efa3889041680af426836",
+    "v1_7_failed_qualification": {
+      "evaluator_key": "TCJ-EVAL-ANSWERS-BFF-SOL-v1.7-frozen-dev",
+      "configuration_sha256": "5eb3d2354717573e1d8f48a574a960d3bea63a855409ac23932530be7bc23d07",
+      "protocol_key": "TCJ-EVALUATOR-QUALIFICATION-2026Q3-v3",
+      "run_key": "TCJ-EVALUATOR-QUALIFICATION-RUN-2026Q3-v3-SOL-v1.7",
+      "status": "complete_failed_qualification",
+      "summary_sha256": "52c507629205ddbb532faf57db2b9e8346ad82cfcf2e65d014231f80ddc70fd5",
       "cases": 48,
-      "distinct_scenarios": 48,
-      "distinct_candidates": 48,
-      "prior_evidence_exact_matches": 0,
-      "voice_anchor_exact_matches": 0,
-      "near_candidate_matches_ge_0_70": 0,
-      "native_human_reviews_complete": 0,
-      "candidate_evaluator_exposed": false,
-      "blind_review_url": "https://flipgazine.pages.dev/tcj-evaluator-qualification-review.html",
-      "next_action": "STOP for native-human blind review. Freeze human gold before any evaluator call on this bank."
+      "primary_judgments": 288,
+      "challenge_judgments": 101,
+      "committed_dispatches": 389,
+      "durable_responses": 389,
+      "resolution_cells": 288,
+      "terminal_generation_failures": 0,
+      "blocking_incidents": 0,
+      "credit_incidents": 0,
+      "overall_mae": 0.5729,
+      "false_fluent_human_major_or_critical": 3,
+      "authority": "none",
+      "evidence_role_now": "exposed_development_evidence_only",
+      "interpretation": "failure_is_semantic_architecture_evidence_not_provider_credit_or_generation_failure"
     },
-    "preferred_final_interactive_reference": {
-      "required": true,
-      "runtime": "selected_BYOJ_judge_bidirectionally_calls_narrow_tcj_evidence_assess_then_guards_challenge_resolver",
-      "tool_name_target": "tcj_evidence_assess",
-      "opaque_evaluation_id": true,
-      "arbitrary_search": false,
-      "sql_or_database_access": false,
-      "raw_row_return": false,
-      "nearest_example_return": false,
-      "returns_only_derived_non_reconstructive_signals": true,
-      "authority_bearing_fields": [
-        "tool_version",
-        "tool_schema_hash",
-        "allowed_analysis_families",
-        "allowed_dimensions",
-        "tool_call_budget",
-        "derived_signal_response_schema_hash",
-        "signal_aggregation_policy",
-        "private_evidence_engine_manifest",
-        "judge_model_and_settings",
-        "prompt_hash",
-        "guard_policy",
-        "challenge_policy",
-        "resolver_policy",
-        "revision_policy",
-        "complete_evaluator_configuration_hash"
-      ],
-      "qualification_rule": "materially_changed_interactive_successor_must_freeze_then_face_new_fresh_hidden_bank",
-      "current_v1_5_qualification_does_not_cover_this": true
+    "historical_absolute_rating_evidence": {
+      "banks": ["v1.1", "v2", "v3"],
+      "mechanic": "48 cases x six 1-4 dimensions plus severity/confidence",
+      "role_now": "permanent exposed development evidence",
+      "repeat_same_mechanic_as_default_next_bank": false
     },
-    "commercial_architecture": {
-      "topology_status": "frozen",
-      "runtime_path": "buyer_writer_to_gateway_to_voice_profile_to_selected_BYOJ_judge_with_private_evidence_tool_to_private_evidence_engine_to_derived_non_reconstructive_signals_back_to_judge_to_guards_to_risk_challenge_to_dimension_resolver_to_ACCEPT_REVISE_ESCALATE_to_one_writer_revision_to_recheck",
-      "eager_precomputed_evidence_mode_also_valid": true,
+    "architecture_v2": {
+      "status": "governing_final_product_architecture",
+      "authority_doc": "ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-V2-20260823.md",
+      "runtime_path": "buyer_writer_to_gateway_to_voice_profile_to_local_context_retriever_to_relevant_methodology_pack_modules_to_selected_BYOJ_judge_optional_private_evidence_tool_to_dimension_diagnosis_to_independent_release_policy_to_ACCEPT_REVISE_ESCALATE_to_one_targeted_writer_revision_to_recheck",
+      "github_runtime_dependency": false,
+      "methodology_pack_required": true,
+      "context_retriever_required": true,
+      "private_evidence_engine_required_for_reference_product": true,
+      "interactive_private_evidence_tool_preferred": true,
+      "release_policy_independent_from_score_calibration": true,
+      "risk_triggered_challenge_optional_not_architecture_mandatory": true,
       "raw_internal_evidence_to_writer": false,
       "raw_internal_evidence_to_judge": false,
       "max_revision_cycles_default": 1,
-      "byoj": {"local_judge": true, "byok_external_judge": true, "openai_mandatory": false},
-      "byok_commercial_default": {
+      "byoj": {
+        "local_judge": true,
+        "byok_external_judge": true,
+        "openai_mandatory": false
+      },
+      "byok_default": {
         "buyer_owns_provider_account": true,
         "buyer_controls_api_key": true,
         "buyer_pays_provider_usage_directly": true,
-        "tcj_license_separate": true,
-        "managed_bundled_inference": "future_separate_review"
+        "developer_api_credit_not_production_dependency": true
+      }
+    },
+    "methodology_pack": {
+      "target_id": "TCJ-METHODOLOGY-BFF-v1",
+      "status": "implementation_pending",
+      "spec_doc": "ANSWERS-TCJ-METHODOLOGY-PACK-AND-CONTEXT-RETRIEVER-SPEC-20260823.md",
+      "purpose": "compile durable TCJ conceptual knowledge from canonical docs into a versioned judge-visible artifact",
+      "raw_corpus_included_by_default": false,
+      "production_rereads_git_each_request": false,
+      "portable_local_retrieval_default": true
+    },
+    "contrastive_review_v1": {
+      "status": "development_instrument_ready",
+      "url": "https://flipgazine.pages.dev/tcj-contrastive-review.html",
+      "comparisons": 30,
+      "unique_comparisons": 26,
+      "hidden_reversed_repeats": 4,
+      "mechanism_families": 12,
+      "response_format": "A_or_B_or_Tie",
+      "authority_role": "development_evidence_not_final_hidden_qualification"
+    },
+    "v1_8_offline_research": {
+      "status": "research_only",
+      "paid_external_calls": 0,
+      "primary_goal": "architecture-v2 release safety and mechanism coverage using stored judgments",
+      "first_release_safety_result": {
+        "v2_false_accept_human_major_critical": 0,
+        "v3_false_accept_human_major_critical": 0
       },
-      "remaining_release_path": [
-        "complete_current_v1_5_blind_qualification",
-        "scoped_eager_passport_if_pass",
-        "implement_interactive_private_evidence_tool",
-        "freeze_interactive_successor",
-        "new_fresh_hidden_qualification_for_interactive_successor",
-        "interactive_authority_passport_if_pass",
-        "panel",
-        "independent_assurance",
-        "security_and_exfiltration_tests",
-        "tenant_isolation",
-        "fresh_install_reproducibility",
-        "BYOJ_packaging",
-        "latency_cost_revision_success_measurement",
-        "commercial_release_freeze"
-      ]
-    }
+      "known_current_issue": "release_policy_is_still_conservative_and_false_blocks_some_human_PASS_cases",
+      "numeric_mae_is_not_the_primary_optimization_target": true
+    },
+    "final_qualification_2_0": {
+      "status": "not_yet_constructed",
+      "construction_rule": "construct only after exact architecture-v2 reference evaluator is frozen",
+      "must_not_be_clone_of_48x6_protocol": true,
+      "planned_evidence_types": [
+        "fresh_contrastive_A_B_Tie",
+        "context_counterfactuals",
+        "dimension_isolation",
+        "release_safety",
+        "native_good_preservation",
+        "limited_absolute_calibration"
+      ],
+      "planned_provider_spend": "single final paid run after human gold freeze and explicit user approval",
+      "if_final_run_fails": "preserve failure and stop automatic paid retries"
+    },
+    "remaining_release_path": [
+      "compile_TCJ_METHODOLOGY_BFF_v1",
+      "build_context_retriever_v1_offline",
+      "refactor_private_evidence_tool_to_rich_bounded_analysis",
+      "narrow_release_policy_false_blocks",
+      "complete_and_analyze_contrastive_review_v1",
+      "build_provider_neutral_judge_adapter_with_mocks",
+      "integrate_architecture_v2_runtime",
+      "complete_security_tenant_isolation_and_packaging",
+      "freeze_exact_final_reference_configuration",
+      "construct_fresh_qualification_2_0_instrument",
+      "native_human_blind_contrastive_gold_and_freeze",
+      "explicit_user_approval_for_final_provider_spend",
+      "run_one_final_paid_provider_qualification",
+      "passport_assurance_and_release_if_pass"
+    ]
   },
   "security": {
     "private_server_migration_complete": true,
     "commercial_release_blockers": [
-      "resolve_or_isolate remaining project-wide Supabase advisor findings including legacy SECURITY DEFINER surfaces",
-      "replace service-role-key reuse in x-tcj-internal-key with dedicated independently rotatable TCJ internal secret",
-      "complete tenant-isolation and evidence-exfiltration tests",
-      "prove private evidence tool capability denial and server-enforced call budgets"
+      "resolve_or_isolate_remaining_project_wide_Supabase_advisor_findings_relevant_to_commercial_runtime",
+      "replace_service_role_key_reuse_with_dedicated_independently_rotatable_TCJ_internal_secret",
+      "complete_tenant_isolation_and_evidence_exfiltration_tests",
+      "prove_private_evidence_tool_capability_denial_and_server_enforced_call_budgets",
+      "classify_and_scan_Methodology_Pack_for_protected_evidence_leakage",
+      "prove_BYOK_secret_rotation_and_no_developer_key_dependency"
     ]
-  },
-  "github_sync": {
-    "last_historical_migration_body_present_before_gap": "20260822132415_tcj_qualification_v11_gold_incident_supersession_and_freeze_gate_correction.sql",
-    "canonical_supabase_latest_at_checkpoint": "20260822164451_tcj_fresh_hidden_qualification_v2_pair_blindness_repair_sta04",
-    "historical_sql_body_gap_documented": true,
-    "rule": "Do not fabricate missing historical migration bodies; reconstruct from canonical live schema/evidence or retained execution records."
   },
   "authorities": {
     "document_map": "DOCUMENT-AUTHORITY-MAP.md",
-    "tcj_final_product_architecture": "ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-FREEZE-20260822.md",
-    "tcj_private_evidence_tool_clarification": "ANSWERS-TCJ-SOL-PRIVATE-EVIDENCE-TOOL-AND-COMMERCIAL-LICENSING-CLARIFICATION-20260822.md",
-    "tcj_final_product_execution_plan": "ANSWERS-TCJ-FINAL-PRODUCT-IMPLEMENTATION-AND-QUALIFICATION-PLAN-20260822.md",
+    "tcj_final_product_architecture": "ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-V2-20260823.md",
+    "tcj_methodology_pack_context_retriever": "ANSWERS-TCJ-METHODOLOGY-PACK-AND-CONTEXT-RETRIEVER-SPEC-20260823.md",
+    "tcj_final_product_execution_plan": "ANSWERS-TCJ-FINAL-PRODUCT-IMPLEMENTATION-AND-QUALIFICATION-PLAN-V2-20260823.md",
+    "tcj_current_execution_checkpoint": "ANSWERS-TCJ-V17-QUALIFICATION-FAILURE-AND-CONTEXT-ENGINE-PIVOT-20260823.md",
     "tcj_private_evidence_runtime": "ANSWERS-TCJ-PRIVATE-EVIDENCE-ENGINE-AND-BUYER-ISOLATION-POLICY-20260822.md",
     "tcj_judge_runtime": "ANSWERS-TCJ-BYOJ-JUDGE-RUNTIME-AND-API-KEY-POLICY-20260822.md",
-    "tcj_current_execution_checkpoint": "ANSWERS-TCJ-SOL-V15-RESEARCH-FREEZE-AND-FRESH-QUALIFICATION-V2-20260822.md",
     "tcj_commercial_boundary": "ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md"
   }
 }
