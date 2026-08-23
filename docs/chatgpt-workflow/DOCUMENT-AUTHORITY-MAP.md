@@ -91,7 +91,8 @@ Unique pairs     24
 Human clicks     28 / 28
 Hidden repeats   4 / 4 consistent
 Human manifest   07a25c08b331c215bf6a7378665726c376045bcb9d547d3cd21eaca22b51428d
-Threshold SHA    c9bd44181023471a961ddcce698e6c4141961573d4eae1d69c46e5484da0d5c315ed6f4888d0061d09b7c8
+Threshold SHA    c9bd44181023471a961ddcce698e6c4141961573d4eae359ea73529ee12026e5
+Bank SHA         8e3d6c5fff4860f97bfbfcd8d69c46e5484da0d5c315ed6f4888d0061d09b7c8
 ```
 
 **Do not expose Qualification 2.0 to development models.** It was constructed for the older optional-PEE freeze. It must not be used to certify the mandatory-PEE successor as though the evaluator had not changed. A future authority instrument must be created only after the successor is finalized/frozen.
