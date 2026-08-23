@@ -1,6 +1,6 @@
 {
-  "schema_version": 10,
-  "as_of": "2026-08-23T18:06:00+07:00",
+  "schema_version": 11,
+  "as_of": "2026-08-23T21:15:05+07:00",
   "scope": "repository_documentation_checkpoint",
   "live_state_independently_reverified": true,
   "canonical_supabase_project": "sjpvhgxacsiorrtijqua",
@@ -8,296 +8,168 @@
   "tcj_status_url": "https://flipgazine.pages.dev/tcj-status.html",
   "tcj": {
     "production_authority": false,
-    "authority_state": "NONE_mandatory_PEE_successor_is_research_active_Gemini_selected_for_refinement_not_frozen_or_qualified",
+    "authority_state": "NONE_candidate_successor_is_in_fresh_development_validation_not_frozen_not_hidden_qualified",
+    "current_phase": "fresh_development_validation_native_human_gate",
     "human_gold_authoritative": true,
-    "external_paid_api_development_calls_allowed": false,
-    "selected_reference_judge": {
-      "status": "development_selected_not_frozen_not_production_authority",
-      "provider": "google",
-      "model": "gemini-3.5-flash-lite",
-      "selection_document": "ANSWERS-TCJ-FREE-MODEL-FINALIST-SELECTION-20260823.md",
-      "selection_reason": "best_same_case_native_human_agreement_best_large_error_profile_best_overall_safety_containment_and_100_percent_protocol_completion",
-      "vendor_lock_in": false,
-      "portability_rule": "keep_Gemini_specific_optimization_in_adapter_evidence_presentation_and_configuration_layers_where_possible_so_BYOJ_BYOK_remains_viable"
+    "governing_documents": {
+      "document_map": "DOCUMENT-AUTHORITY-MAP.md",
+      "mandatory_pee_topology": "ANSWERS-TCJ-MANDATORY-PROTECTED-EVIDENCE-ARCHITECTURE-AMENDMENT-20260823.md",
+      "commercial_architecture": "ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-V2-20260823.md",
+      "roadmap": "ANSWERS-TCJ-ROADMAP-TO-FINAL-COMMERCIAL-PRODUCT-20260823.md",
+      "active_phase_checkpoint": "ANSWERS-TCJ-PHASE-B-FOCUS-PEE-EDITOR-ROLE-AND-FRESH-VALIDATION-20260823.md"
     },
-    "architecture_v2_1": {
-      "status": "governing_final_product_topology",
-      "governing_amendment": "ANSWERS-TCJ-MANDATORY-PROTECTED-EVIDENCE-ARCHITECTURE-AMENDMENT-20260823.md",
-      "underlying_architecture_doc": "ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-V2-20260823.md",
-      "github_runtime_dependency": false,
-      "methodology_pack_required": true,
-      "context_retriever_required": true,
-      "protected_evidence_required": true,
-      "mandatory_initial_protected_evidence_calls": 1,
-      "max_total_protected_evidence_calls": 2,
-      "optional_additional_targeted_calls": 1,
-      "raw_internal_evidence_to_writer": false,
-      "raw_internal_evidence_to_judge": false,
-      "judge_receives_bounded_non_reconstructive_evidence_only": true,
-      "release_policy_independent_from_dimension_score_calibration": true,
-      "buyer_owns_provider_key_and_usage_by_default": true,
-      "successor_runtime": {
-        "key": "TCJ-RUNTIME-ANSWERS-BFF-ARCHV2-v2-MANDATORY-PEE",
-        "status": "research_active",
-        "configuration_sha256": "9c418186601158ffe0afa85a1ce68a22e48b81e9dbd086d8b1fc10f0f9e51842",
-        "judge_adapter": "TCJ-JUDGE-ADAPTER-v2.2-MANDATORY-PEE",
-        "protected_evidence_planner": "TCJ-PROTECTED-EVIDENCE-PLAN-v1",
-        "private_evidence_tool": "TCJ-PRIVATE-EVIDENCE-ASSESS-v1.1",
-        "planner_anon_execute": false,
-        "planner_authenticated_execute": false,
-        "planner_postgres_execute": true,
-        "external_dispatch_default": false
+    "design_principles": {
+      "reasoning_first": true,
+      "sophisticated_not_complicated": true,
+      "measurement_role": "verify_human_reasoning_not_drive_case_specific_complexity",
+      "do_not_chase_exposed_bank_perfection": true,
+      "primary_human_boundary": {
+        "usable": ["PASS", "MINOR"],
+        "failed": ["MAJOR", "CRITICAL"],
+        "consequential_boundary": "MINOR_vs_MAJOR",
+        "exact_PASS_vs_MINOR_primary_target": false,
+        "exact_MAJOR_vs_CRITICAL_primary_target": false
       }
     },
-    "final_product_roadmap": {
-      "status": "governing_execution_roadmap",
-      "document": "ANSWERS-TCJ-ROADMAP-TO-FINAL-COMMERCIAL-PRODUCT-20260823.md",
-      "sequence": [
-        "Gemini_centered_TCJ_refinement",
-        "fresh_development_validation",
-        "candidate_runtime_freeze",
-        "new_closed_native_human_authority_qualification",
-        "final_paid_OpenAI_xAI_causal_frontier_experiment",
-        "authority_decision",
-        "plug_and_play_API_productization",
-        "private_server_BYOJ_BYOK_edition",
-        "customer_specific_voice_profile_and_controlled_quality_improvement",
-        "operator_control_plane",
-        "production_security_hardening",
-        "commercial_packaging_and_release"
-      ],
-      "fresh_development_validation_target_unique_cases": "24-32",
-      "hidden_authority_planning_target": {
-        "unique_cases": 32,
-        "concealed_consistency_or_reversal_presentations": 4,
-        "count_not_yet_frozen": true
-      },
-      "paid_frontier_primary_design": {
-        "condition_A": "frontier_model_alone_neutral_six_dimension_schema",
-        "condition_B": "TCJ_methodology_voice_profile_context_retriever_without_private_PEE",
-        "condition_C": "full_TCJ_with_mandatory_bounded_protected_evidence_and_independent_release_policy",
-        "derived_value_tests": [
-          "A_to_B_methodology_context_contribution",
-          "B_to_C_protected_evidence_contribution",
-          "A_to_C_total_TCJ_contribution"
-        ],
-        "primary_scores_frozen_before_post_primary_diagnostics": true
-      },
-      "commercial_completion_requires": [
-        "qualified_frozen_runtime",
-        "Gemini_reference_judge_configuration",
-        "independent_frontier_authority_evidence",
-        "causal_model_alone_vs_methodology_vs_full_TCJ_evidence",
-        "mandatory_protected_evidence",
-        "six_dimension_diagnosis",
-        "independent_release_policy",
-        "plug_and_play_API",
-        "batch_API",
-        "BYOJ_BYOK",
-        "private_server_deployment",
-        "customer_voice_profiles",
-        "customer_local_retrieval_and_protected_evidence",
-        "controlled_versioned_quality_improvement_loop",
-        "operator_control_plane",
-        "auditability",
-        "production_security_test_pack",
-        "versioning_and_rollback",
-        "qualification_report",
-        "commercial_licensing_documentation",
-        "buyer_ready_data_room_and_demo"
-      ]
+    "selected_reference_judge": {
+      "provider": "google",
+      "model": "gemini-3.5-flash-lite",
+      "status": "development_reference_not_frozen_not_production_authority",
+      "vendor_lock_in": false,
+      "free_development_calls_allowed": true,
+      "professional_role_for_answers_bff": "senior_Thai_magazine_and_conversation_editor",
+      "role_capsule_is_voice_profile_concept": true
     },
+    "current_research_architecture": {
+      "topology": "mandatory_protected_evidence_v2_1",
+      "semantic_taxonomy": "TCJ-SEMANTIC-TAXONOMY-ANSWERS-r127",
+      "semantic_strategy": "Book_of_Answers_style_canonical_focus_normalization_then_relevant_private_neighborhood",
+      "methodology_pack": "TCJ-METHODOLOGY-BFF-v1.2-research",
+      "context_retriever": "TCJ-CONTEXT-RETRIEVER-v1.5-research",
+      "protected_evidence": "TCJ-MANDATORY-PROTECTED-EVIDENCE-v10-FOCUS-EXCEPTION-RESEARCH",
+      "private_evidence_assessor": "TCJ-PRIVATE-EVIDENCE-ASSESS-v1.10-FOCUS-CLEAN-RESEARCH",
+      "licensed_exception_matcher": "TCJ-LICENSED-EXCEPTION-MATCH-v4-research",
+      "release_policy": "TCJ-RELEASE-POLICY-v1.7-BANDED-RESEARCH",
+      "mandatory_initial_pee_calls": 1,
+      "max_total_pee_calls": 2,
+      "raw_private_rows_to_judge": false,
+      "raw_private_examples_to_judge": false,
+      "bounded_non_reconstructive_evidence_only": true,
+      "code_switch_rule": "mixed_script_is_non_diagnostic_and_must_be_judged_for_integration_quality_not_whitelisted_as_good",
+      "licensed_weirdness_rule": "licensed_mechanism_removes_false_reason_for_failure_but_never_grants_blanket_PASS"
+    },
+    "exposed_development_regression": {
+      "source_bank": "TCJ-EVALUATOR-QUALIFICATION-BANK-2026Q3-v3",
+      "source_bank_role": "exposed_development_evidence_only",
+      "original_gemini_run": {
+        "run_id": 8,
+        "usable_failed_band_correct": 39,
+        "cases": 48,
+        "band_accuracy": 0.8125,
+        "false_usable": 5,
+        "false_failure": 4
+      },
+      "simplified_successor_run": {
+        "run_id": 25,
+        "run_key": "TCJ-GEMINI-BFF-EDITOR-FOCUS-EXCEPTION-FULL48-BANDED-v1",
+        "usable_failed_band_correct": 44,
+        "cases": 48,
+        "band_accuracy": 0.9167,
+        "false_usable": 2,
+        "false_failure": 2,
+        "complete": 48,
+        "terminal_failures": 0,
+        "provider_requests": 53,
+        "total_evidence_calls": 51,
+        "optional_second_pee_calls": 3
+      },
+      "final_definition_correction": {
+        "change": "remove_natural_code_switch_from_positive_exception_whitelist_and_add_integration_register_quality_evidence",
+        "heavy_codeswitch_shadow_false_usable_flags": 0,
+        "formal_register_collision_shadow_false_usable_flags": 0,
+        "followup_gemini_sanity_run_id": 26,
+        "followup_run_status": "stopped_at_zero_requests_by_design",
+        "reason": "shadow_definition_check_sufficient_and_user_directed_no_perfection_chasing"
+      },
+      "further_exposed_case_tuning_allowed": false
+    },
+    "fresh_development_validation": {
+      "status": "native_human_review_required_before_any_Gemini_exposure",
+      "evidence_set_key": "TCJ-DEVELOPMENT-VALIDATION-BANK-2026Q3-v1",
+      "evidence_set_id": 8,
+      "protocol_key": "TCJ-DEVELOPMENT-VALIDATION-2026Q3-v1",
+      "protocol_id": 5,
+      "cases": 24,
+      "reviewed": 0,
+      "bank_state": "draft",
+      "protocol_state": "draft_review",
+      "gemini_exposed": false,
+      "qualification_2_0_reused": false,
+      "threshold_sha256": "11e3e2448e048633925e6dc7148323021f57282d5da1c471a5b5a7a997dd1c06",
+      "private_review_url": "https://flipgazine.pages.dev/tcj-development-validation-review.html",
+      "review_function": "tcj-development-validation-review-v1",
+      "construction_labels_are_hypotheses_only": true,
+      "primary_metric": "PASS_MINOR_vs_MAJOR_CRITICAL_band_accuracy",
+      "comparison_after_human_freeze": [
+        "same_Gemini_model_alone",
+        "same_Gemini_with_full_TCJ"
+      ],
+      "development_guidance": {
+        "minimum_full_tcj_band_accuracy": 0.80,
+        "minimum_boundary_error_reduction_vs_model_alone_fraction": 0.20,
+        "full_tcj_false_usable_must_not_exceed_model_alone": true,
+        "max_full_tcj_false_usable": 3,
+        "max_terminal_protocol_failures": 0,
+        "commercial_authority_gate": false
+      }
+    },
+    "next_action": "NATIVE_HUMAN_GATE: user reviews all 24 cases at tcj-development-validation-review.html. Do not expose the bank to Gemini before review completion/freeze. After 24/24: freeze human manifest, run same Gemini alone vs full TCJ, compare usable/failed band uplift, and if materially positive without a new general architectural defect stop development refinement and freeze the candidate runtime.",
+    "post_validation_sequence": [
+      "candidate_runtime_freeze",
+      "new_hidden_native_human_authority_instrument",
+      "final_paid_OpenAI_xAI_causal_frontier_experiment",
+      "authority_decision",
+      "plug_and_play_API",
+      "private_server_BYOJ_BYOK",
+      "customer_voice_profile_and_controlled_improvement",
+      "operator_control_plane",
+      "security_hardening",
+      "commercial_release"
+    ],
     "frontier_paid_budget": {
       "status": "reserved_for_post_freeze_authority_research_only",
-      "user_declared_no_top_up": true,
-      "as_of": "2026-08-23",
       "openai_usd_remaining": 1.82,
       "xai_usd_remaining": 3.42,
       "total_usd_remaining": 5.24,
-      "openai_paid_development_allowed": false,
-      "xai_paid_development_allowed": false,
-      "explicit_user_approval_required_immediately_before_dispatch": true,
-      "must_reverify_live_balance_model_id_pricing_request_count_and_projected_spend_before_dispatch": true,
-      "hard_rule": "do_not_intentionally_exceed_remaining_credit_or_trigger_silent_overage",
-      "leftover_credit_priority": [
-        "serious_false_ACCEPT",
-        "frontier_vs_human_disagreement",
-        "cross_model_disagreement",
-        "methodology_helps_but_PEE_hurts",
-        "PEE_rescues_baseline_failure",
-        "full_TCJ_worse_than_model_alone",
-        "release_policy_rescue_or_false_block",
-        "repeat_instability",
-        "high_confidence_wrong_diagnosis"
-      ]
+      "user_declared_no_top_up": true,
+      "paid_development_allowed": false,
+      "explicit_user_approval_required_immediately_before_paid_dispatch": true,
+      "must_reverify_balance_model_pricing_request_count_and_projected_spend": true
     },
-    "historical_optional_pee_reference": {
-      "freeze_key": "TCJ-ARCHV2-REFERENCE-EVALUATOR-FREEZE-v1",
-      "status": "research_frozen_historical_control",
-      "manifest_sha256": "916ffa3632e428f287692632d9e11b0eda5ea88fe39399fc39e362e0cae13d5c",
-      "runtime_key": "TCJ-RUNTIME-ANSWERS-BFF-ARCHV2-v1",
-      "runtime_configuration_sha256": "43df71f47353c6abfd96f2a020e3bd8dc97e9ef4dc7c5071df8f4309a138f6da",
-      "interpretation": "immutable_historical_optional_PEE_reference_not_intended_final_product"
-    },
-    "qualification_2_0": {
-      "protocol_key": "TCJ-QUALIFICATION-2.0-2026Q3-v1",
-      "status": "human_frozen",
-      "unique_comparisons": 24,
-      "human_clicks": 28,
-      "hidden_reversed_repeats": 4,
-      "consistent_repeats": 4,
-      "human_manifest_sha256": "07a25c08b331c215bf6a7378665726c376045bcb9d547d3cd21eaca22b51428d",
-      "threshold_sha256": "c9bd44181023471a961ddcce698e6c4141961573d4eae359ea73529ee12026e5",
-      "bank_manifest_sha256": "8e3d6c5fff4860f97bfbfcd8d69c46e5484da0d5c315ed6f4888d0061d09b7c8",
-      "development_model_exposure_allowed": false,
-      "successor_authority_role": "cannot_certify_mandatory_PEE_successor_because_evaluator_topology_changed_after_instrument_construction",
-      "future_rule": "construct_new_hidden_authority_instrument_only_after_Gemini_centered_refined_successor_is_finalized_and_frozen"
-    },
-    "free_model_finalist_selection": {
-      "status": "selection_complete_runs_frozen_for_selection_purposes",
-      "source_bank": "TCJ-EVALUATOR-QUALIFICATION-BANK-2026Q3-v3",
-      "source_bank_role": "already_exposed_development_evidence_only_not_unseen_authority",
-      "selection_document": "ANSWERS-TCJ-FREE-MODEL-FINALIST-SELECTION-20260823.md",
-      "winner": "gemini-3.5-flash-lite",
-      "primary_same_case_intersection": {
-        "cases": 13,
-        "gemini_mae": 0.5385,
-        "qwen_mae": 0.8077,
-        "gpt_oss_mae": 1.0897,
-        "gemini_errors_ge_2": 10,
-        "qwen_errors_ge_2": 18,
-        "gpt_oss_errors_ge_2": 28,
-        "gemini_cases_with_ge_2": 4,
-        "qwen_cases_with_ge_2": 7,
-        "gpt_oss_cases_with_ge_2": 10,
-        "gemini_serious_false_accept": "0/2",
-        "qwen_serious_false_accept": "0/2",
-        "gpt_oss_serious_false_accept": "2/2",
-        "gemini_pass_false_block": "3/9",
-        "qwen_pass_false_block": "4/9",
-        "gpt_oss_pass_false_block": "5/9"
+    "protected_historical_authority": {
+      "qualification_2_0": {
+        "protocol_key": "TCJ-QUALIFICATION-2.0-2026Q3-v1",
+        "status": "human_frozen_historical_topology",
+        "unique_comparisons": 24,
+        "human_clicks": 28,
+        "hidden_reversed_repeats": 4,
+        "consistent_repeats": 4,
+        "human_manifest_sha256": "07a25c08b331c215bf6a7378665726c376045bcb9d547d3cd21eaca22b51428d",
+        "threshold_sha256": "c9bd44181023471a961ddcce698e6c4141961573d4eae359ea73529ee12026e5",
+        "bank_manifest_sha256": "8e3d6c5fff4860f97bfbfcd8d69c46e5484da0d5c315ed6f4888d0061d09b7c8",
+        "development_model_exposure_allowed": false,
+        "can_certify_current_successor": false
       },
-      "pairwise_robustness": {
-        "gemini_vs_qwen_21": {
-          "cases": 21,
-          "gemini_mae": 0.5238,
-          "qwen_mae": 0.7460,
-          "gemini_serious_false_accept": "0/5",
-          "qwen_serious_false_accept": "1/5",
-          "gemini_pass_false_block": "3/13",
-          "qwen_pass_false_block": "5/13"
-        },
-        "gemini_vs_gptoss_16": {
-          "cases": 16,
-          "gemini_mae": 0.5729,
-          "gpt_oss_mae": 1.0,
-          "gemini_serious_false_accept": "0/4",
-          "gpt_oss_serious_false_accept": "2/4",
-          "gemini_pass_false_block": "3/9",
-          "gpt_oss_pass_false_block": "5/9"
-        }
-      },
-      "runs": {
-        "gemini": {
-          "run_id": 8,
-          "run_key": "TCJ-ARCHV2-GEMINI35-FLASHLITE-STRESS-MANDATORY-PEE-v1",
-          "status": "complete",
-          "complete": 48,
-          "terminal": 0,
-          "staged": 0,
-          "provider_requests": 49,
-          "mandatory_evidence_packets": 48,
-          "total_evidence_calls": 49,
-          "second_pee_cases": 1,
-          "full_bank_mae": 0.6875,
-          "full_bank_serious_false_accept": "2/17",
-          "full_bank_pass_false_block": "4/21",
-          "protocol_completion": "48/48"
-        },
-        "qwen": {
-          "run_id": 7,
-          "run_key": "TCJ-ARCHV2-GROQ-QWEN36-27B-STRESS-MANDATORY-PEE-v1",
-          "status": "stopped_preserved_partial_finalist",
-          "complete": 21,
-          "terminal": 4,
-          "staged": 23,
-          "live_request_count_at_roadmap_adoption": 76,
-          "protocol_completion_among_semantic_attempts": "21/25",
-          "restart_without_explicit_user_intent": false
-        },
-        "gpt_oss": {
-          "run_id": 9,
-          "run_key": "TCJ-ARCHV2-GROQ-GPTOSS20B-STRESS-MANDATORY-PEE-v2",
-          "status": "stopped_preserved_partial_finalist",
-          "complete": 16,
-          "terminal": 3,
-          "staged": 29,
-          "live_request_count_at_roadmap_adoption": 31,
-          "protocol_completion_among_semantic_attempts": "16/19",
-          "restart_without_explicit_user_intent": false
-        },
-        "ox_alpha": {
-          "run_id": 12,
-          "status": "stopped_excluded_from_finalist_selection",
-          "live_request_count_at_roadmap_adoption": 5,
-          "restart_without_explicit_user_intent": false
-        }
-      },
-      "terminal_failure_classes": {
-        "qwen": [
-          "three_non_JSON_prose_outputs_despite_JSON_only_contract",
-          "one_invalid_optional_PEE_tool_call_schema"
-        ],
-        "gpt_oss": [
-          "two_bad_rationale_intent_structured_output_failures",
-          "one_unterminated_truncated_JSON"
-        ],
-        "gemini": []
+      "optional_pee_reference": {
+        "freeze_key": "TCJ-ARCHV2-REFERENCE-EVALUATOR-FREEZE-v1",
+        "manifest_sha256": "916ffa3632e428f287692632d9e11b0eda5ea88fe39399fc39e362e0cae13d5c",
+        "role": "immutable_historical_control_not_final_product"
       }
     },
-    "critical_refinement_findings": {
-      "gemini_serious_false_accept_item_keys": ["Q3-026", "Q3-043"],
-      "gemini_serious_false_accept_count": 2,
-      "finding": "both serious false ACCEPTs received an overly reassuring mandatory PEE structural assessment; Q3-043 clearly demonstrates structural-completeness false reassurance",
-      "implication": "refinement_must_target_both_Gemini_judgment_calibration_and_TCJ_protected_evidence_detector_planner_quality_not_prompt_only",
-      "priority_dimensions": [
-        "bff_voice",
-        "stance",
-        "composition",
-        "thai_pragmatics",
-        "lexical_social_fit"
-      ],
-      "priority_engine_areas": [
-        "linebreak_and_structural_completeness",
-        "false_reassurance_detection",
-        "evidence_family_routing",
-        "global_overpositive_judge_containment",
-        "release_policy_safety_backstop"
-      ]
-    },
-    "spend_policy": {
-      "openai_paid_development": "forbidden",
-      "xai_paid_development": "forbidden",
-      "openai_remaining_credit_reserved_for_post_freeze_authority_usd": 1.82,
-      "xai_remaining_credit_reserved_for_post_freeze_authority_usd": 3.42,
-      "user_declared_no_top_up": true,
-      "groq_free_testing": "do_not_continue_stopped_finalists_without_explicit_user_intent",
-      "gemini_free_testing": "allowed_for_selected_reference_judge_refinement",
-      "claude_or_other_paid_testing": "explicit_user_approval_required",
-      "do_not_silently_upgrade_free_tier_to_paid": true
-    },
-    "next_action": "execute_Phase_B_of_ANSWERS-TCJ-ROADMAP-TO-FINAL-COMMERCIAL-PRODUCT-20260823.md:begin_Gemini_centered_TCJ_refinement_on_exposed_development_evidence_fix_PEE_false_reassurance_structural_completeness_evidence_routing_Gemini_consumption_and_release_containment_then_build_fresh_development_validation_bank;do_not_spend_OpenAI_xAI_and_do_not_use_Qualification_2_0_for_tuning",
-    "authorities": {
-      "document_map": "DOCUMENT-AUTHORITY-MAP.md",
-      "mandatory_protected_evidence_amendment": "ANSWERS-TCJ-MANDATORY-PROTECTED-EVIDENCE-ARCHITECTURE-AMENDMENT-20260823.md",
-      "current_research_decision": "ANSWERS-TCJ-FREE-MODEL-FINALIST-SELECTION-20260823.md",
-      "final_product_roadmap": "ANSWERS-TCJ-ROADMAP-TO-FINAL-COMMERCIAL-PRODUCT-20260823.md",
-      "historical_execution_checkpoint": "ANSWERS-TCJ-MANDATORY-PEE-FREE-MODEL-TREATMENT-CHECKPOINT-20260823.md",
-      "underlying_commercial_architecture": "ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-V2-20260823.md",
-      "methodology_pack_context_retriever": "ANSWERS-TCJ-METHODOLOGY-PACK-AND-CONTEXT-RETRIEVER-SPEC-20260823.md",
-      "private_evidence_runtime": "ANSWERS-TCJ-PRIVATE-EVIDENCE-ENGINE-AND-BUYER-ISOLATION-POLICY-20260822.md",
-      "judge_runtime_BYOJ_BYOK": "ANSWERS-TCJ-BYOJ-JUDGE-RUNTIME-AND-API-KEY-POLICY-20260822.md",
-      "historical_optional_pee_low_tier_checkpoint": "ANSWERS-TCJ-LOW-TIER-JUDGE-TRANSFER-RESEARCH-CHECKPOINT-20260823.md"
+    "stopped_model_runs": {
+      "qwen_run_7_restart_without_explicit_user_intent": false,
+      "gpt_oss_run_9_restart_without_explicit_user_intent": false,
+      "ox_restart_without_explicit_user_intent": false
     }
   }
 }
