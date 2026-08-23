@@ -1,0 +1,15 @@
+services:
+  tcj-runtime:
+    build: .
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "8787:8787"
+    volumes:
+      - ./artifacts:/opt/tcj:ro
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
