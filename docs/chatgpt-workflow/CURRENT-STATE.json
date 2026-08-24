@@ -1,6 +1,6 @@
 {
-  "schema_version": 27,
-  "as_of": "2026-08-24T20:26:00+07:00",
+  "schema_version": 28,
+  "as_of": "2026-08-24T20:37:16+07:00",
   "scope": "repository_documentation_checkpoint",
   "live_state_independently_reverified": true,
   "canonical_supabase_project": "sjpvhgxacsiorrtijqua",
@@ -8,9 +8,9 @@
   "tcj": {
     "production_authority": false,
     "authority_state": "NONE_development_only",
-    "current_phase": "footing_first_rewrite_capable_linguistic_r_and_d",
+    "current_phase": "footing_native_human_analysis_gate",
     "human_gold_authoritative": true,
-    "active_phase_checkpoint": "docs/chatgpt-workflow/ANSWERS-TCJ-FOOTING-FIRST-REWRITE-CAPABLE-ARCHITECTURE-RESET-20260824.md",
+    "active_phase_checkpoint": "docs/chatgpt-workflow/ANSWERS-TCJ-FOOTING-NATIVE-HUMAN-ANALYSIS-GATE-20260824.md",
     "linguistic_architecture_authority": "docs/chatgpt-workflow/ANSWERS-TCJ-CONVERSATIONAL-FOOTING-STANCE-AND-DISCOURSE-ARCHITECTURE-20260824.md",
     "commercial_architecture_authority": "docs/chatgpt-workflow/ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-V3-FOOTING-FIRST-REWRITE-CAPABLE-20260824.md",
     "register_difficulty_authority": "docs/chatgpt-workflow/ANSWERS-TCJ-REGISTER-DIFFICULTY-AND-BFF-STRESS-TEST-20260824.md",
@@ -62,33 +62,58 @@
       "as_of": "2026-08-24",
       "chatgpt_voice_available": true,
       "public_gpt_live_1_api_available": false,
-      "official_state": "api_planned_signup_for_notification",
       "production_dependency_allowed": false,
       "research_reference_allowed": true,
       "research_priority": "optional_not_main_track",
       "public_realtime_candidate": "gpt-realtime-2.1",
-      "realtime_candidate_equivalence_assumed": false,
-      "if_gpt_live_api_becomes_public": "immediately_test_direct_GPT_Live_vs_GPT_Live_plus_TCJ_control_and_simplify_architecture_if_TCJ_adds_no_semantic_lift",
-      "tcj_if_gpt_live_is_strong": "control_qualification_private_evidence_repository_context_audit_release_and_model_abstraction_layer"
+      "realtime_candidate_equivalence_assumed": false
+    },
+    "footing_native_human_analysis_v1": {
+      "status": "ACTIVE_NATIVE_HUMAN_GATE",
+      "set_id": 1,
+      "set_key": "TCJ-FOOTING-NATIVE-HUMAN-ANALYSIS-2026Q3-v1",
+      "set_status": "reviewing",
+      "case_count": 8,
+      "answers_bff_cases": 5,
+      "formal_enterprise_cases": 3,
+      "prior_exact_hash_overlap": 0,
+      "source_manifest_sha256": "060fc4ffcf3b4c53034b40cba65bc1a63ce98627157fe0ba0095cc399047d75e",
+      "case_exposure_state": "human_only",
+      "model_test_exposure_allowed_before_human_freeze": false,
+      "human_review": {
+        "protocol_id": 1,
+        "protocol_key": "TCJ-FOOTING-NATIVE-HUMAN-REVIEW-2026Q3-v1",
+        "status": "reviewing",
+        "state": "reviewing_0_of_8",
+        "human_manifest_sha256": null,
+        "review_url": "https://flipgazine.pages.dev/tcj-footing-analysis-review-v1.html",
+        "page_sha256": "bb0ea9fbacc52e1f16d9861b9f897a6d151e418981a47a9cf41a3bc5e2b1d156",
+        "controller_sha256": "31ef9e48164a1641eb4b5f01ffdf25554461ea2eed6bfca0036d9bc438ed7171",
+        "review_api_slot": "tcj-rewrite-lift-hard-review-v2",
+        "review_api_version": 8,
+        "review_api_sha256": "3ac59c4dcf1212905190bf54f89bad4cd55affc8de948cdc7bba0ddcd5225ca9"
+      },
+      "annotation_contract": {
+        "format": "open_text_not_enum",
+        "social_scene_summary_required": true,
+        "nine_footing_questions_required": true,
+        "segment_map_required": true,
+        "ambiguity_notes_optional": true,
+        "ship_revise_judgment_in_this_gate": false
+      },
+      "freeze_rule": "after 8/8 verify case hashes, compute deterministic human manifest over ordered case + all human interpretation fields, freeze set/protocol before any model reconstruction test"
     },
     "closed_role_writer_feasibility_v1": {
       "status": "FROZEN_FAILED_WRITER_FEASIBILITY",
-      "source_manifest_sha256": "42fe22fa2c0c7b4be43d45fba087c629627e1ff78fce928156abb59643db7e07",
-      "human_manifest_sha256": "97c372791de1f4af77950f5b100efa8c8b0956efa5bced19f4de5cd48a4270e1",
       "human_ship": 0,
       "human_revise": 8,
-      "tcj_exposed": false,
-      "interpretation": "persona-only Gemini produced performed BFF caricature; never reuse these cases for evaluator scoring"
+      "human_manifest_sha256": "97c372791de1f4af77950f5b100efa8c8b0956efa5bced19f4de5cd48a4270e1",
+      "tcj_exposed": false
     },
     "invalidated_session_replica_writer_v1": {
       "status": "INVALIDATED_TASK_DESIGN",
       "source_bank_id": 21,
-      "source_bank_key": "TCJ-SESSION-REPLICA-WRITER-SOURCE-BANK-2026Q3-v1",
-      "source_manifest_sha256": "c2516eb9b1214fc5175ff95e36811a92fcdd97a870d959c3f13fbcb4db01d3f0",
       "review_protocol_id": 2,
-      "review_protocol_key": "TCJ-SESSION-REPLICA-WRITER-HUMAN-REVIEW-2026Q3-v1",
-      "review_protocol_status": "invalidated",
-      "evidence_set_status": "retired",
       "preserved_human_reviews": 1,
       "formal_scoring_allowed": false,
       "tcj_exposed": false,
@@ -96,12 +121,10 @@
     },
     "stopped_session_replica_writer_v2": {
       "status": "STOPPED_BEFORE_PROVIDER_GENERATION",
-      "reason": "binary speaker-task-mode build was superseded by footing-first linguistic architecture before a replacement writer bank was generated",
-      "binary_task_modes_may_remain_as_instrumentation": true,
+      "reason": "binary speaker-task-mode build was superseded by footing-first linguistic architecture",
       "hosted_snapshot_id": 4,
       "hosted_snapshot_status": "retired",
       "hosted_snapshot_file_count": 0,
-      "hosted_snapshot_manifest_sha256": null,
       "provider_generation_authority_evidence": false
     },
     "research_horizon": {
@@ -110,7 +133,7 @@
       "shipping_half_complete_tcj_prohibited": true,
       "release_question": "does_this_behave_like_a_genuinely_useful_native_senior_editor_within_its_declared_scope"
     },
-    "next_action": "LINGUISTIC_R_AND_D: build a small native-human discourse/footing analysis set using examples with meaningful speaker, addressee, hierarchy, stance, implication and quoted/reported/proposed-speech shifts. Annotate qualitatively with the nine footing-first questions; test publicly deployable model candidates against the frozen social-scene interpretations; refine discourse reachability and rewrite semantics from disagreements. Maintain parallel Track A formal-enterprise Thai and Track B Answers BFF stress-test research. GPT-Live may be used only as an optional R&D reference until public API availability changes. Do not resume the stopped binary v2 writer build.",
+    "next_action": "NATIVE_HUMAN_GATE: review all 8 footing-analysis cases at tcj-footing-analysis-review-v1.html. Describe the social scene and answer the nine footing questions in your own words; do not SHIP/REVISE or rewrite the utterance. After 8/8, freeze/hash the human interpretation manifest before any model reconstruction test. GPT-Live remains outside the critical path.",
     "protected_historical_authority": {
       "qualification_2_0": {
         "protocol_key": "TCJ-QUALIFICATION-2.0-2026Q3-v1",
