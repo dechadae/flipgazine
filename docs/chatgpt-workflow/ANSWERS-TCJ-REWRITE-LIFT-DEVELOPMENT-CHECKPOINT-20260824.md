@@ -6,10 +6,18 @@ TCJ is not only an evaluator. Evaluation is the feedback engine.
 
 **draft → TCJ understands what is wrong and why → bounded native-editor intervention when needed → same/customer model revises → TCJ can check again**
 
-The rewrite research has now exposed two different requirements:
+The rewrite research has now exposed two requirements:
 
 1. do not damage a capable writer by over-directing it;
-2. do not mistake competent generic BFF Thai for the actual Answers BFF house voice.
+2. do not mistake competent generic BFF Thai for publishable Answers BFF copy.
+
+The native-human publishing rule is now deliberately simple:
+
+> **SHIP = I would publish this exact copy unchanged.**
+>
+> **REVISE = I would make any meaningful edit before publishing, including shortening, compression, restructuring, house-voice correction, stance/certainty correction, or semantic/pragmatic correction.**
+
+There is no separate `VOICE_POLISH` state in the current design. If the copy must be shortened or edited to sound like the house voice, that is a revision.
 
 ## Preserved prior evidence
 
@@ -60,7 +68,7 @@ Interpretation: plain Gemini with a short BFF-target instruction already writes 
 
 Gemini-memory audit: all 12 baseline calls were independent single-turn `generateContent` requests, no explicit `cachedContent`, no prior conversation history, and no cache-hit accounting. Treat the strong baseline as model capability, not remembered TCJ context.
 
-## v5 — selective editor, human gate frozen
+## v5 — selective editor, frozen human gate
 
 ### Architecture tested
 
@@ -73,7 +81,7 @@ semantic skeleton
 → only a REVISE case is sent back to Gemini once
 ```
 
-The selective editor was explicitly told not to revise merely to make copy punchier, funnier, slangier, more emotional, longer, or more distinctive.
+The v5 editor was explicitly told not to revise merely to make copy more distinctive or stylistically preferable. This prohibition turned out to be too broad because house-voice compression and removal of model-like elaboration can themselves be necessary publication edits.
 
 ### Rollback / reversibility
 
@@ -112,9 +120,7 @@ Protocol: `TCJ-SELECTIVE-EDITOR-HUMAN-REVIEW-2026Q3-v5`
 
 Frozen at: `2026-08-24 02:08:43.350902+00`
 
-Human manifest SHA-256:
-
-`e2a2293ac467edef834b7cf6484985823905035239d371b147e86af5a496cded`
+Human manifest SHA-256: `e2a2293ac467edef834b7cf6484985823905035239d371b147e86af5a496cded`
 
 Human result:
 
@@ -135,46 +141,77 @@ Direct intervention-gate comparison:
 
 The only human `Use as is` case was `SEL-010`.
 
-This is not a small threshold miss. The binary v5 abstraction is wrong for the product. It solved v4 over-editing by suppressing intervention so aggressively that TCJ accepted generic Gemini BFF prose as finished Answers copy.
+Interpretation: v5 did not merely miss a threshold. Its definition of “leave a capable writer alone” was too permissive. It accepted responses that were understandable and BFF-like but still required editorial shortening/compression before publication.
 
-### What the 11 misses appear to contain
+## v6 preflight — frozen human definition gate
 
-The human review itself was binary and did not provide per-case reason labels, so the following is analytical interpretation, not new human gold.
+The 11 v5 human `Needs revision` cases were shown again in a separate append-only classification protocol to test whether the missing category should be a third state called `VOICE_POLISH` or whether the human editor simply considers those changes revisions.
 
-The missed cases visibly include two different classes:
+Protocol: `TCJ-SELECTIVE-VOICE-VS-REVISE-REVIEW-2026Q3-v6-preflight`
 
-1. **voice-distance / house-voice misses** — competent, friendly Thai that still carries a generic Gemini/assistant cadence: complete explanations, decision-tree phrasing, canned reassurance, explicit conclusions, and prose that continues after the social answer has already landed;
-2. **actual editorial/pragmatic defects** in at least some cases — e.g. unnecessary aggression/escalation, questionable factual confidence, or not answering the exact social decision as cleanly as a native editor would want.
+Frozen at: `2026-08-24 02:29:20.294993+00`
 
-This supports separating “good answer but not yet our voice” from “actual problem.”
+Human manifest SHA-256: `bcbd3f65ac78caf4c6abba2b9845d0a6957e9ad9ab7404fb3a56b95f38d61538`
 
-## Current conceptual direction — not implemented yet
+Result:
 
-The next candidate architecture should not simply loosen the binary threshold. A more human-recognizable model is:
+- `VOICE_POLISH`: **0/11**
+- `REVISE`: **11/11**
+
+Native-human clarification:
+
+- all 11 responses were too long / over-elaborated for publication;
+- shortening and editing the copy counts as **revision**;
+- therefore a separate `VOICE_POLISH` product state is unnecessary and does not match the human editor's mental model.
+
+This is the key simplification after v5.
+
+## Settled v6 plain-language contract — ready to implement on a fresh bank
 
 ```text
-Gemini/customer model writes first
-→ TCJ inspects finished copy
+customer/Gemini model writes first
+→ TCJ inspects the exact finished draft
    → SHIP
-       already publishable and genuinely belongs in the house voice
-   → VOICE POLISH
-       meaning/social judgment are usable, but copy is still generic/model-like rather than house voice
-       preserve content; make the smallest house-voice transformation
+       publish this exact copy unchanged
    → REVISE
-       material semantic/pragmatic/register/factual/composition defect
-       one targeted correction first
-→ check again
+       any meaningful publication edit is required
+       this includes shortening/compression, removing generic/model-like elaboration,
+       house-voice correction, restructuring, stance/certainty correction,
+       or semantic/pragmatic correction
+→ if REVISE, give the same writer the current finished draft plus the smallest useful correction
+→ writer edits the current draft rather than recomposing from the semantic skeleton
+→ TCJ can check again
 ```
 
-Important distinction:
+### Critical v6 distinction
 
-**Good generic BFF Thai ≠ Answers BFF house voice.**
+The problem with v4 was **not that TCJ cared about voice**. The problem was that it gave a rich pre-writing brief and then asked Gemini to compose again from the source, which invited elaboration.
 
-v4 suggests the TCJ Voice Profile/private methodology can transfer some house-voice signature, but its full pre-rewrite brief was too heavy. v5 shows that removing voice transfer almost entirely exposes strong but recognizably generic Gemini prose.
+The problem with v5 was **not that it used a binary state**. The problem was that `REVISE` was defined too narrowly and effectively treated “competent generic BFF prose” as publishable.
 
-The likely goal for the next research design is therefore to preserve v4's useful house-voice transfer while removing its permission to elaborate or re-compose unnecessarily.
+The v6 correction should therefore remain binary and human-recognizable:
 
-Do not implement this merely from the same 12 cases. First settle the plain-language contract, then validate any implementation on a new fresh bank.
+> **Would the human editor touch this exact copy before publication?**
+
+- No → `SHIP`.
+- Yes → `REVISE`.
+
+If revision is needed because the answer is overlong/generic, the instruction should explicitly ask the writer to **shorten and preserve the useful meaning**, not to add personality, examples, explanation, stronger emotion, or new facts.
+
+The writer should receive the **current finished draft**, not be invited to generate a fresh composition from the semantic skeleton.
+
+## v6 implementation/validation requirements
+
+Implementation must be separate and reversible. Do not mutate v4 or v5 evidence.
+
+Use a **new fresh semantic-skeleton bank** after the v6 mechanism is implemented. Do not tune on the 12 v5 cases or the 11 preflight classifications.
+
+Validation should answer two different questions:
+
+1. **Gate accuracy:** on the fresh raw Gemini drafts, does TCJ correctly predict whether the native human would publish the exact draft unchanged (`SHIP`) or edit it (`REVISE`)?
+2. **Revision value:** where revision is needed, does the targeted TCJ-guided edit improve publishability without recreating v4-style elaboration?
+
+For revision-value review, keep the baseline and TCJ-edited outputs blind. A shorter output is not automatically better; the human publishing judgment remains authority.
 
 ## Diagnostic regression against frozen v4 baseline drafts
 
@@ -186,16 +223,18 @@ Retrospective diagnostic only; not fresh causal evidence and not a tuning bank.
 - REVISE: 1/12
 - single revision was literal typo `หลร` → `หล่อ`
 
-This independently showed the selective gate was extremely conservative.
+This independently showed the old selective gate was extremely conservative.
 
 ## Invariants
 
 - Qualification 2.0 remains protected and untouched.
-- No paid OpenAI/xAI development calls.
+- Never run `tcj-q2-final-worker` during development.
+- No paid OpenAI/xAI development calls without explicit user approval immediately before dispatch.
+- Free Gemini development calls are allowed.
 - Human judgment remains authority.
 - Reasoning first; measurement verifies rather than drives complexity.
-- Raw private evidence stays server-side.
-- v4 remains the rollback implementation.
-- Do not retune v4 or v5 reviewed cases to force a result.
-- Do not treat the 11 v5 human revisions as a case-specific tuning list; derive general editorial principles and validate on fresh material.
-- Remaining paid budget is reserved for post-freeze authority research and requires explicit user approval immediately before dispatch.
+- Raw private evidence stays server-side; writer receives only bounded derived guidance, never private rows/examples/IDs.
+- v4 remains an intact rollback implementation.
+- Do not retune v4/v5 reviewed cases to force a result.
+- Do not use the 11 v5/preflight cases as a case-specific tuning bank; derive only the general human rule above and validate on fresh material.
+- Preserve provider responses, hashes, manifests, attempts and historical failures.
