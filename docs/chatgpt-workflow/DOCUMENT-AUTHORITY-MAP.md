@@ -1,7 +1,7 @@
 # ChatGPT Workflow — Document Authority Map
 
-**Checkpoint:** 24 August 2026, 20:04 Asia/Bangkok  
-**Purpose:** prevent superseded prompt architectures, rigid task-mode models, invalidated writer evidence and diagnosis-only product assumptions from being mistaken for current TCJ authority.
+**Checkpoint:** 24 August 2026, 20:26 Asia/Bangkok  
+**Purpose:** prevent superseded prompt architectures, rigid task-mode models, unavailable-model dependencies, invalidated writer evidence and diagnosis-only product assumptions from being mistaken for current TCJ authority.
 
 ## Read these first
 
@@ -10,12 +10,13 @@
 3. `ANSWERS-TCJ-CONVERSATIONAL-FOOTING-STANCE-AND-DISCOURSE-ARCHITECTURE-20260824.md` — **governing linguistic architecture.**
 4. `ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-V3-FOOTING-FIRST-REWRITE-CAPABLE-20260824.md` — **governing commercial architecture.**
 5. `ANSWERS-TCJ-REGISTER-DIFFICULTY-AND-BFF-STRESS-TEST-20260824.md` — **governing profile-difficulty and qualification strategy.**
-6. `ANSWERS-TCJ-BFF-SPEAKER-AND-QUOTED-SPEECH-CONTRACT-20260824.md` — useful Answers speaker/quoted-speech authority; its binary task modes are engineering instrumentation under the richer footing-first model.
-7. `ANSWERS-TCJ-REPOSITORY-CONNECTED-REFERENCE-RUNTIME-AND-SESSION-CONTINUITY-PLAN-20260824.md` — repository-connected conceptual-memory architecture.
-8. `ANSWERS-TCJ-MANDATORY-PROTECTED-EVIDENCE-ARCHITECTURE-AMENDMENT-20260823.md` — protected evidence remains bounded/non-reconstructive.
-9. `ANSWERS-TCJ-METHODOLOGY-PACK-AND-CONTEXT-RETRIEVER-SPEC-20260823.md` — methodology concepts where compatible; Methodology Pack is a portable fallback, not the reference brain.
-10. `ANSWERS-TCJ-V7-COMMERCIAL-SIM-SELECTIVE-GATE-20260824.md`, role-writer and session-replica checkpoints — historical failed/invalidated evidence only.
-11. Older commercial architecture v2 / roadmap docs only where not superseded above.
+6. `ANSWERS-TCJ-GPT-LIVE-AVAILABILITY-AND-DEPENDENCY-POLICY-20260824.md` — **governing model-availability/dependency policy.**
+7. `ANSWERS-TCJ-BFF-SPEAKER-AND-QUOTED-SPEECH-CONTRACT-20260824.md` — useful Answers speaker/quoted-speech authority; its binary task modes are engineering instrumentation under the richer footing-first model.
+8. `ANSWERS-TCJ-REPOSITORY-CONNECTED-REFERENCE-RUNTIME-AND-SESSION-CONTINUITY-PLAN-20260824.md` — repository-connected conceptual-memory architecture.
+9. `ANSWERS-TCJ-MANDATORY-PROTECTED-EVIDENCE-ARCHITECTURE-AMENDMENT-20260823.md` — protected evidence remains bounded/non-reconstructive.
+10. `ANSWERS-TCJ-METHODOLOGY-PACK-AND-CONTEXT-RETRIEVER-SPEC-20260823.md` — methodology concepts where compatible; Methodology Pack is a portable fallback, not the reference brain.
+11. `ANSWERS-TCJ-V7-COMMERCIAL-SIM-SELECTIVE-GATE-20260824.md`, role-writer and session-replica checkpoints — historical failed/invalidated evidence only.
+12. Older commercial architecture v2 / roadmap docs only where not superseded above.
 
 ## Current TCJ mental model
 
@@ -29,11 +30,11 @@ Private native-human evidence
 focus + discourse reachability
 = relevant-memory addressing
 
-capable model
+replaceable qualified deployable model
 = semantic reasoning + rewriting engine
 
 TCJ Core
-= release authority
+= control + qualification + release authority
 ```
 
 The linguistic order is now:
@@ -110,6 +111,36 @@ Particles, pronouns, politeness and register must be attributed to the correct l
 
 The previous `DIRECT_BFF_RESPONSE` / `BFF_WITH_QUOTED_SCRIPT` distinction can still aid routing/logging, but it must not be treated as a complete model of discourse. Quoted speech, reported speech, imitation, hypothetical voice, internal monologue and other footing shifts can occur more flexibly.
 
+## GPT-Live availability / dependency policy
+
+As of 24 August 2026:
+
+```text
+GPT-Live-1 in ChatGPT Voice       available to eligible consumer users
+GPT-Live-1 public API             not generally available
+official API state                planned / notification signup
+production TCJ dependency         prohibited for now
+R&D linguistic reference          allowed, optional
+```
+
+Do **not** build production TCJ around a model buyers cannot call or deploy.
+
+Public realtime models such as `gpt-realtime-2.1` are separate candidates; do not assume they reproduce GPT-Live's Thai ability merely because they are realtime/audio models.
+
+If GPT-Live later becomes publicly callable and proves strong on Thai judging + rewriting, simplify TCJ rather than recreating solved intelligence. In that architecture, TCJ may intentionally become the control plane around GPT-Live:
+
+```text
+repository context
++ private native evidence
++ Voice/Profile
++ discourse reachability
++ GPT-Live judge/rewriter
++ deterministic release policy
++ audit/version/qualification
+```
+
+The decisive commercial question would then be whether TCJ adds measurable lift/control over calling GPT-Live directly.
+
 ## Profile difficulty / qualification scope
 
 Current research hypothesis:
@@ -172,6 +203,14 @@ Purpose: expose difficult failures in:
 
 BFF may remain in R&D for months and continues to improve TCJ Core even if a constrained enterprise profile becomes commercially qualified earlier.
 
+### Optional Track C — GPT-Live linguistic reference
+
+Use only opportunistically while public API access is unavailable.
+
+Purpose: discover potentially useful conversational-Thai phenomena, not qualify a production dependency.
+
+Do not make GPT-Live transcript comparison the main TCJ architecture/test program until public API availability changes.
+
 ## Current experimental status
 
 ### Role-only writer v1 — CLOSED FAILED
@@ -222,7 +261,7 @@ No paid OpenAI/xAI development calls. Any later paid authority experiment requir
 
 ## CURRENT next action
 
-Do **not** immediately create another writer bank.
+Do **not** immediately create another writer bank and do not architect around GPT-Live.
 
 First build a small native-human discourse/footing analysis set containing useful variation in:
 
@@ -242,7 +281,7 @@ For each example:
 1. native-human interpretation is authoritative;
 2. annotate qualitatively using the nine footing-first questions;
 3. freeze the example/annotation before model testing;
-4. test whether a fresh repo-connected model reconstructs the same social scene;
+4. test publicly deployable model candidates against the same social scene;
 5. use disagreements to refine the linguistic model and discourse reachability;
 6. only after this stabilizes, create fresh writing/evaluation/rewrite experiments.
 
