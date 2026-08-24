@@ -1,6 +1,6 @@
 {
-  "schema_version": 21,
-  "as_of": "2026-08-24T17:39:00+07:00",
+  "schema_version": 22,
+  "as_of": "2026-08-24T18:09:23+07:00",
   "scope": "repository_documentation_checkpoint",
   "live_state_independently_reverified": true,
   "canonical_supabase_project": "sjpvhgxacsiorrtijqua",
@@ -8,9 +8,9 @@
   "tcj": {
     "production_authority": false,
     "authority_state": "NONE_development_only",
-    "current_phase": "repository_connected_reference_runtime_bootstrap",
+    "current_phase": "role_writer_feasibility_native_human_gate",
     "human_gold_authoritative": true,
-    "active_phase_checkpoint": "docs/chatgpt-workflow/ANSWERS-TCJ-REPOSITORY-CONNECTED-REFERENCE-RUNTIME-AND-SESSION-CONTINUITY-PLAN-20260824.md",
+    "active_phase_checkpoint": "docs/chatgpt-workflow/ANSWERS-TCJ-REPOSITORY-BOOTSTRAP-AND-WRITER-FEASIBILITY-GATE-20260824.md",
     "reference_architecture": {
       "conceptual_memory": "pinned_canonical_git_repository",
       "empirical_memory": "bounded_private_supabase_evidence",
@@ -22,28 +22,72 @@
       "tcj_rewrites_directly": false,
       "methodology_pack_role": "portable_compiled_fallback_not_reference_brain"
     },
-    "session_continuity": {
-      "goal": "reconstruct_material_project_state_without_original_chat_transcript",
-      "bootstrap_order": [
-        "docs/chatgpt-workflow/CURRENT-STATE.json",
-        "docs/chatgpt-workflow/DOCUMENT-AUTHORITY-MAP.md",
-        "active_phase_checkpoint",
-        "governing_amendments",
-        "live_supabase_verification"
-      ],
-      "new_chat_prompt_required": "short_repository_supabase_handoff_only",
-      "exact_session_identity_guaranteed": false,
-      "material_project_state_reproducible": true
+    "repo_reference_bootstrap": {
+      "status": "IMPLEMENTED_FROZEN_BOOTSTRAP_V1",
+      "repo_full_name": "dechadae/flipgazine",
+      "pinned_commit_sha": "47349851f4d2655bcb6d831538b4ddc5645a815e",
+      "snapshot_key": "TCJ-REPO-REFERENCE-BOOTSTRAP-20260824-47349851",
+      "snapshot_manifest_sha256": "0cf0973ffa6df63b40305c87645c106a072ec6bffa90174f5acb0ed2cab1c09e",
+      "file_count": 3,
+      "total_bytes": 31007,
+      "source_policy": "explicit_allowlist_no_hidden_qualification_no_raw_corpus_no_secrets_v1",
+      "bootstrap_smoke_test": "PASS",
+      "raw_private_evidence_exported": false,
+      "reference_judge_worker": "tcj-gemini-focus-exception-pee9-worker-v2",
+      "reference_judge_worker_version": 2,
+      "reference_judge_worker_sha256": "750b995d303aed39fe07fa806467e5f3cb4fae4ae0693e1219630bc921b3b62c",
+      "reference_judge_model": "gemini-3.5-flash-lite",
+      "protected_evidence_contract": "TCJ-MANDATORY-PROTECTED-EVIDENCE-v11-NEGATIVE-FIRST-RESEARCH",
+      "repo_tool_budget": 4,
+      "note": "This is the first safe bootstrap authority bundle. Expand and refreeze the safe conceptual allowlist before the later A/B/C evaluator experiment; never add hidden qualification material, raw corpus data or secrets."
     },
-    "product_definition": {
-      "writer_contract": "capable writer receives compact role/voice capsule and exact task/source",
-      "editor_contract": "repository-connected TCJ inspects exact finished copy using pinned project knowledge plus bounded relevant private evidence",
-      "revision_contract": "if REVISE, same writer edits its CURRENT finished draft using one smallest useful instruction",
-      "raw_private_evidence_in_writer_prompt": false,
-      "methodology_pack_in_writer_prompt": false,
-      "voice_polish_separate_state": false
+    "writer_feasibility_pilot": {
+      "status": "ACTIVE_NATIVE_HUMAN_GATE",
+      "evidence_set_id": 19,
+      "set_key": "TCJ-ROLE-WRITER-FEASIBILITY-SOURCE-BANK-2026Q3-v1",
+      "source_manifest_sha256": "42fe22fa2c0c7b4be43d45fba087c629627e1ff78fce928156abb59643db7e07",
+      "fresh_cases": 8,
+      "distinct_phenomena": 8,
+      "exact_prior_hash_overlap": 0,
+      "tcj_exposure_prohibited": true,
+      "tcj_exposed": false,
+      "writer_model": "gemini-3.5-flash-lite",
+      "writer_prompt_sha256": "fa1d708093e2903fb42fb932a808543d342c76120964891b8fa758523a11aa56",
+      "writer_receives_methodology": false,
+      "writer_receives_private_evidence": false,
+      "writer_receives_tcj_brief": false,
+      "generation": {
+        "complete": 8,
+        "target": 8,
+        "terminal_failures": 0,
+        "provider_errors": 0,
+        "http_429": 0,
+        "transport_errors": 0,
+        "output_hash_mismatch": 0,
+        "average_chars": 197.9,
+        "min_chars": 112,
+        "max_chars": 349,
+        "worker_slot": "tcj-rewrite-lift-neutral-gemini35-worker-v3",
+        "worker_version": 6,
+        "worker_sha256": "6a252a72a6fbb1e0ad5c3c958ac1658fcb4577f462842f8ebf07c0473bdf821e"
+      },
+      "human_review": {
+        "protocol_id": 1,
+        "protocol_key": "TCJ-ROLE-WRITER-FEASIBILITY-HUMAN-REVIEW-2026Q3-v1",
+        "state": "reviewing_0_of_8",
+        "manifest_sha256": null,
+        "question": "Would you publish this exact finished response unchanged?",
+        "choices": ["SHIP", "REVISE"],
+        "review_url": "https://flipgazine.pages.dev/tcj-writer-feasibility-review-v1.html",
+        "review_api": "tcj-rewrite-lift-hard-review-v2",
+        "review_api_version": 6,
+        "review_api_sha256": "6259df72a7ba8d7dd0e78b1e7ef163744d45603315a506a3f874240a99bd3107",
+        "page_sha256": "70704c22072e0574a489582485270beba5ac33a44bb2344cf17de122411daee4",
+        "controller_sha256": "525dca9a94f6757af4e73b8fb0ee344d3b697c897f36296dc765ee788317c52b"
+      },
+      "isolation_rule": "Freeze the 8-case human manifest before interpretation. Never expose these eight cases to TCJ or reuse them for evaluator scoring. If writer viability holds, build a separate fresh A/B/C bank."
     },
-    "development_evidence": {
+    "closed_development_evidence": {
       "v1_role_conditioned_writer": {
         "experiment": "TCJ-REWRITE-LIFT-GEMINI35-v1",
         "human_result": {"tcj_wins": 2, "baseline_wins": 1, "ties": 13, "neither": 0},
@@ -52,26 +96,25 @@
       },
       "v7": {
         "status": "FROZEN_FAILED_DIAGNOSTIC",
-        "source_bank": "TCJ-SELECTIVE-EDITOR-SOURCE-BANK-2026Q3-v7",
         "source_manifest_sha256": "b487efa82f88f295d825d2b12e300b43ab25075423a494b048ca275aee0208ba",
         "human_manifest_sha256": "b2c32f637afd14fdefea89f7f293bfe48b39f25edc879bc88b43c87ebb930f76",
         "human_ship": 1,
         "human_revise": 23,
         "tcj_ship": 16,
         "tcj_revise": 8,
-        "correct_ship": 1,
-        "correct_revise": 8,
         "missed_revisions": 15,
-        "unnecessary_revisions": 0,
         "agreement_pct": 37.5,
-        "interpretation": "poor writer simulation plus inconsistent false-SHIP behavior; do not retune v7"
+        "interpretation": "poor writer simulation plus inconsistent false-SHIP behavior; never retune v7"
       }
     },
-    "next_action": "Implement the repository-connected reference judge bootstrap against a pinned canonical Git snapshot while retaining bounded focus/reachability private evidence. Then run a small fresh role-only writer feasibility pilot before any larger native-human gate. After writer viability is proven, use a separate fresh bank for A model-alone vs B repository-connected TCJ vs C repository-connected TCJ plus private evidence. Do not reuse v7 for scoring.",
+    "next_action": "NATIVE_HUMAN_GATE: review all 8 raw role-conditioned Gemini drafts at tcj-writer-feasibility-review-v1.html. SHIP only if the exact copy is publishable unchanged; REVISE for any meaningful edit including shortening. Do not balance labels. After 8/8, freeze/hash the writer-human manifest before interpretation. Never expose these 8 cases to TCJ. If writer viability holds, build a separate fresh A/B/C evaluator bank using an expanded/refrozen safe repository snapshot.",
     "protected_historical_authority": {
       "qualification_2_0": {
         "protocol_key": "TCJ-QUALIFICATION-2.0-2026Q3-v1",
         "status": "human_frozen",
+        "unique_pair_count": 24,
+        "review_click_count": 28,
+        "consistency_repeat_count": 4,
         "development_model_exposure_allowed": false,
         "machine_exposed_at": null,
         "human_manifest_sha256": "07a25c08b331c215bf6a7378665726c376045bcb9d547d3cd21eaca22b51428d",
