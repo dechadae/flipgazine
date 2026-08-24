@@ -1,6 +1,6 @@
 {
-  "schema_version": 14,
-  "as_of": "2026-08-24T07:24:00+07:00",
+  "schema_version": 15,
+  "as_of": "2026-08-24T08:12:00+07:00",
   "scope": "repository_documentation_checkpoint",
   "live_state_independently_reverified": true,
   "canonical_supabase_project": "sjpvhgxacsiorrtijqua",
@@ -8,22 +8,24 @@
   "tcj": {
     "production_authority": false,
     "authority_state": "NONE_candidate_successor_remains_development_only_not_frozen_not_hidden_qualified",
-    "current_phase": "rewrite_lift_semantic_skeleton_v4_native_human_blind_gate",
+    "current_phase": "selective_editor_v5_native_human_intervention_gate",
     "human_gold_authoritative": true,
+    "active_phase_checkpoint": "docs/chatgpt-workflow/ANSWERS-TCJ-REWRITE-LIFT-DEVELOPMENT-CHECKPOINT-20260824.md",
     "product_definition": {
       "evaluation_is_feedback_engine": true,
       "rewrite_guidance_is_product_capability": true,
-      "plain_language_loop": "generic/candidate draft -> TCJ understands context and voice -> bounded native-editor brief -> same/customer model rewrites -> TCJ can check rewrite"
+      "current_plain_language_loop": "model writes finished local-language copy -> TCJ inspects exact draft -> USE_AS_IS or one surgical REVISE instruction -> same model revises only when needed -> TCJ can check again"
     },
     "design_principles": {
       "reasoning_first": true,
       "sophisticated_not_complicated": true,
-      "do_not_retune_blind_bank_after_unblinding_to_force_a_win": true,
-      "causal_rewrite_test_must_not_leak_target_voice_through_control_prompt_or_source_draft": true,
-      "rewrite_source_rule": "correct useful meaning but deliberately wrong/neutral voice; semantic skeleton, not finished copy"
+      "use_as_is_is_success": true,
+      "do_not_revise_for_optional_style_preference": true,
+      "one_material_problem_one_instruction": true,
+      "do_not_retune_reviewed_cases_to_force_agreement": true
     },
     "current_research_architecture": {
-      "topology": "mandatory_protected_evidence_v2_1",
+      "topology": "mandatory_protected_evidence_v2_1_with_selective_editor_rewrite_gate",
       "semantic_taxonomy": "TCJ-SEMANTIC-TAXONOMY-ANSWERS-r127",
       "methodology_pack": "TCJ-METHODOLOGY-BFF-v1.2-research",
       "context_retriever": "TCJ-CONTEXT-RETRIEVER-v1.5-research",
@@ -34,68 +36,63 @@
       "raw_private_examples_to_external_model": false,
       "bounded_non_reconstructive_evidence_only": true
     },
+    "rollback": {
+      "available": true,
+      "rewrite_runtime": "tcj-rewrite-lift-semantic-gemini35-worker-v4",
+      "worker_version": 1,
+      "worker_sha256": "813f6b91cd080ae125afd834eaaaa74c5a9ebb08fbe0e733517423cf70565c41",
+      "state": "ACTIVE_UNTOUCHED",
+      "note": "v5 was built in obsolete worker slots; no v4 worker/source/output/hash/human evidence was mutated"
+    },
     "development_evidence": {
-      "rewrite_lift_v1": {
-        "cases": 16,
-        "tcj_wins": 2,
-        "baseline_wins": 1,
-        "ties": 13,
-        "neither": 0,
-        "frozen": true,
-        "material_lift_claim_allowed": false,
-        "limitation": "baseline was overpowered by specialist BFF writer role and distilled house-voice rules"
-      },
-      "rewrite_lift_v2": {
-        "valid_for_causal_rewrite_lift": false,
-        "invalid_reason": "source drafts leaked Answers-BFF voice mechanics",
-        "human_reviews_preserved": 5,
-        "protocol_status": "frozen",
-        "invalid_test_manifest_sha256": "3dac4bcafa578e656e04c4906d49e82f372643da1e53e1a59554ced8a3a0cce8",
-        "resume_review": false
-      },
-      "rewrite_lift_v3": {
-        "valid_for_causal_rewrite_lift": false,
-        "invalid_reason": "generic source drafts were still too close to finished good copy, leaving too little meaningful rewrite task",
-        "completed_trials": 4,
-        "stopped_trials": 8,
-        "human_review_opened": false,
-        "resume": false
-      },
       "rewrite_lift_v4": {
-        "status": "ACTIVE_NATIVE_HUMAN_BLIND_REVIEW",
+        "status": "frozen",
         "source_bank": "TCJ-REWRITE-LIFT-SEMANTIC-SKELETON-BANK-2026Q3-v4",
-        "source_bank_id": 14,
-        "source_manifest_sha256": "4e684729e4dbe8ff9416533ea0d34aa8e0bb80fd6ca5436ffd61d0ec44138616",
-        "source_contract": "12 generic common-Thai semantic skeletons: correct meaning, no line-break performance, no English/code-switch, no emoji, no BFF slang/punchline/house-voice mechanics",
-        "experiment_key": "TCJ-REWRITE-LIFT-SEMANTIC-GEMINI35-v4",
+        "human_manifest_sha256": "4b3bfad5efc653d5584b3140eeb2b61cdc89267fdb1e331892ebbdb0df5ead1c",
+        "cases": 12,
+        "baseline_preferred": 6,
+        "mandatory_tcj_preferred": 2,
+        "ties": 3,
+        "neither": 1,
+        "interpretation": "mandatory editorial guidance over-intervened relative to already-strong Gemini BFF rewriting; no material rewrite-lift claim"
+      },
+      "selective_editor_v5": {
+        "status": "ACTIVE_NATIVE_HUMAN_REVIEW",
+        "source_bank": "TCJ-SELECTIVE-EDITOR-SOURCE-BANK-2026Q3-v5",
+        "source_bank_id": 15,
+        "source_manifest_sha256": "d7dfaa5488cc6cd80dd16200e32249849c50f74d21255a98c55156a0d5a68187",
+        "experiment_key": "TCJ-SELECTIVE-EDITOR-GEMINI35-v5",
         "model": "gemini-3.5-flash-lite",
         "cases": 12,
         "generation_complete": 12,
-        "terminal_failures_final": 0,
-        "identical_pairs": 0,
-        "obvious_internal_leak_pairs": 0,
-        "same_writer_instruction_verified": "12/12",
-        "writer_internal_packet_leak_verified": "0/12",
-        "worker": "tcj-rewrite-lift-semantic-gemini35-worker-v4",
-        "worker_sha256": "813f6b91cd080ae125afd834eaaaa74c5a9ebb08fbe0e733517423cf70565c41",
-        "intermediate_incident": "SS-002 returned one empty final Gemini text after baseline+guidance completed; final step retried without changing case/prompt and completed",
-        "protocol_key": "TCJ-REWRITE-LIFT-SEMANTIC-BLIND-REVIEW-2026Q3-v4",
-        "protocol_id": 3,
-        "protocol_status": "reviewing",
-        "reviewed": 0,
-        "private_review_url": "https://flipgazine.pages.dev/tcj-rewrite-lift-semantic-review.html",
-        "review_api_slug": "tcj-rewrite-lift-hard-review-v2",
-        "review_api_current_version": 2,
-        "review_api_note": "reused obsolete invalid-v2 endpoint slot because project reached Edge Function count cap; v2 historical version/hash remains preserved",
-        "review_api_sha256": "b442aa9a1b8c1c78665b9776c920f828b12ac780912671bdefec93cef5f3b1f0",
-        "baseline_contract": "scenario + semantic skeleton + plain request to rewrite as natural close Thai friend/BFF",
-        "tcj_contract": "same writer instruction plus short TCJ-derived editorial brief from frozen Voice Profile, methodology/context and bounded private evidence",
-        "writer_raw_private_evidence_access": false
+        "terminal_failures": 0,
+        "tcj_use_as_is": 12,
+        "tcj_revise": 0,
+        "identical_selective_outputs": 12,
+        "selective_worker_slot": "tcj-rewrite-lift-neutral-gemini35-worker-v3",
+        "selective_worker_slot_version": 2,
+        "selective_worker_sha256": "172117389d4bc925d0c378c5d82fc806b091d115194d65478c9f2e90f5a5ea07",
+        "human_protocol": "TCJ-SELECTIVE-EDITOR-HUMAN-REVIEW-2026Q3-v5",
+        "human_review_url": "https://flipgazine.pages.dev/tcj-selective-editor-review.html",
+        "human_review_state": "reviewing_0_of_12",
+        "human_question": "Would you publish this exact finished Gemini draft in Answers BFF without changing it?",
+        "human_choices": ["use_as_is", "revise"]
+      },
+      "selective_v4_regression": {
+        "role": "retrospective_diagnostic_only_not_causal_not_tuning_bank",
+        "experiment_key": "TCJ-SELECTIVE-EDITOR-V4-BASELINE-REGRESSION-v5",
+        "cases": 12,
+        "use_as_is": 11,
+        "revise": 1,
+        "single_revision": "SS-011 literal typo หลร -> หล่อ; human prior preference was tie",
+        "missed_known_neither": "SS-004",
+        "left_prior_tcj_preference_cases_unchanged": ["SS-007", "SS-010"],
+        "interpretation": "selective gate is conservative; pairwise preference wins alone are not grounds to loosen it; active human publishability gate will determine missed-intervention rate"
       }
     },
-    "next_action": "NATIVE_HUMAN_GATE: user reviews all 12 semantic-skeleton v4 blind rewrite pairs at tcj-rewrite-lift-semantic-review.html. Judge which final response actually belongs in Answers BFF while using the generic source only as a meaning reference. After 12/12 freeze human preference manifest and unblind exactly once. Do not tune this bank to force a TCJ win.",
+    "next_action": "NATIVE_HUMAN_GATE: review 12 finished Gemini drafts at tcj-selective-editor-review.html. Choose USE AS IS if the exact draft is publishable even if a nicer alternative could exist; choose NEEDS REVISION only if something must actually change. TCJ decisions are hidden. After 12/12 freeze the human manifest and compare use_as_is/revise directly. Do not open Qualification 2.0 or spend paid frontier credits.",
     "frontier_paid_budget": {
-      "status": "reserved_for_post-freeze_authority_research_only",
+      "status": "reserved_for_post_freeze_authority_research_only",
       "openai_usd_remaining": 1.82,
       "xai_usd_remaining": 3.42,
       "total_usd_remaining": 5.24,
