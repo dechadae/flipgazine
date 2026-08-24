@@ -1,106 +1,50 @@
 {
-  "schema_version": 19,
-  "as_of": "2026-08-24T17:16:52+07:00",
+  "schema_version": 20,
+  "as_of": "2026-08-24T17:25:00+07:00",
   "scope": "repository_documentation_checkpoint",
   "live_state_independently_reverified": true,
   "canonical_supabase_project": "sjpvhgxacsiorrtijqua",
   "live_site": "https://flipgazine.pages.dev",
   "tcj": {
     "production_authority": false,
-    "authority_state": "NONE_candidate_successor_remains_development_only_not_hidden_qualified",
-    "current_phase": "v7_native_human_manifest_frozen_pre_unblind",
+    "authority_state": "NONE_development_only",
+    "current_phase": "post_v7_failure_role_writer_feasibility_pivot",
     "human_gold_authoritative": true,
     "active_phase_checkpoint": "docs/chatgpt-workflow/ANSWERS-TCJ-V7-COMMERCIAL-SIM-SELECTIVE-GATE-20260824.md",
     "product_definition": {
-      "evaluation_is_feedback_engine": true,
-      "rewrite_guidance_is_product_capability": true,
-      "current_plain_language_loop": "customer model writes finished local-language copy -> TCJ decides SHIP or REVISE -> if REVISE, same model edits its current finished draft using the smallest useful bounded instruction -> TCJ can check again",
-      "ship_definition": "publish this exact copy unchanged",
-      "revise_definition": "any meaningful edit is required before publication, including shortening/compression, restructuring, house-voice correction, removal of generic/model-like elaboration, stance/certainty correction, semantic/pragmatic correction, factual correction or composition correction",
+      "writer_contract": "capable writer receives compact role/voice capsule only",
+      "editor_contract": "TCJ inspects exact finished copy and returns SHIP or REVISE",
+      "revision_contract": "if REVISE, same writer edits its CURRENT finished draft using one smallest useful instruction under the same role capsule",
+      "raw_private_evidence_in_writer_prompt": false,
+      "methodology_pack_in_writer_prompt": false,
       "voice_polish_separate_state": false
     },
-    "design_principles": {
-      "reasoning_first": true,
-      "sophisticated_not_complicated": true,
-      "human_editor_mental_model": "would_the_editor_touch_this_exact_copy_before_publication",
-      "shortening_counts_as_revision": true,
-      "writer_edits_current_finished_draft_not_recompose_from_source": true,
-      "preserve_useful_meaning": true,
-      "avoid_added_facts_examples_explanation_emotion": true,
-      "do_not_retune_reviewed_cases_to_force_agreement": true,
-      "validate_writer_baseline_before_selective_editor_claim": true
-    },
-    "rollback": {
-      "available": true,
-      "rewrite_runtime": "tcj-rewrite-lift-semantic-gemini35-worker-v4",
-      "worker_version": 1,
-      "worker_sha256": "813f6b91cd080ae125afd834eaaaa74c5a9ebb08fbe0e733517423cf70565c41",
-      "state": "ACTIVE_UNTOUCHED"
-    },
     "development_evidence": {
-      "selective_editor_v5": {
-        "status": "FROZEN_NATIVE_HUMAN_REVIEW_COMPLETE",
-        "cases": 12,
-        "tcj_use_as_is": 12,
-        "tcj_revise": 0,
-        "human_use_as_is": 1,
-        "human_revise": 11,
-        "human_manifest_sha256": "e2a2293ac467edef834b7cf6484985823905035239d371b147e86af5a496cded",
-        "interpretation": "v5 defined REVISE too narrowly and accepted copy the human editor would still shorten/edit"
+      "v1_role_conditioned_writer": {
+        "experiment": "TCJ-REWRITE-LIFT-GEMINI35-v1",
+        "human_result": {"tcj_wins": 2, "baseline_wins": 1, "ties": 13, "neither": 0},
+        "baseline_avg_chars": 157.6,
+        "interpretation": "additional TCJ editorial brief added little over the strong simple writer role; role is not proven as sole causal factor because input shape also differed"
       },
-      "selective_editor_v6": {
-        "status": "STOPPED_BEFORE_HUMAN_REVIEW_DESIGN_INVALID",
-        "source_bank": "TCJ-SELECTIVE-EDITOR-SOURCE-BANK-2026Q3-v6",
-        "source_manifest_sha256": "30d2d02160ed47f91e40b3b1c7f61e6618edb2b79355823487976ac9503e9850",
-        "experiment_key": "TCJ-SELECTIVE-EDITOR-BINARY-GEMINI35-v6",
-        "generation_complete": 12,
-        "human_review_count": 0,
-        "decision_distribution": "PRESERVED_HIDDEN_DIAGNOSTIC_HISTORY",
-        "interpretation": "instrument structurally encouraged overlong advice-like outputs and was retired before native-human review rather than misused as selective-editor evidence"
-      },
-      "selective_editor_v7": {
-        "status": "NATIVE_HUMAN_MANIFEST_FROZEN_TCJ_STILL_SEALED",
+      "v7": {
+        "status": "FROZEN_FAILED_DIAGNOSTIC",
         "source_bank": "TCJ-SELECTIVE-EDITOR-SOURCE-BANK-2026Q3-v7",
-        "source_bank_id": 18,
         "source_manifest_sha256": "b487efa82f88f295d825d2b12e300b43ab25075423a494b048ca275aee0208ba",
-        "experiment_key": "TCJ-SELECTIVE-EDITOR-COMMERCIAL-SIM-GEMINI35-v7",
-        "model": "gemini-3.5-flash-lite",
-        "cases": 24,
-        "generation_complete": 24,
-        "terminal_failures": 0,
-        "provider_http_429": 0,
-        "integrity": {
-          "bank_manifest_matches": true,
-          "final_output_hash_mismatch": 0,
-          "baseline_output_hash_mismatch": 0,
-          "mandatory_evidence_missing": 0,
-          "attempt_link_mismatch": 0,
-          "ship_byte_identity_violations": 0,
-          "revise_request_integrity_violations": 0,
-          "obvious_writer_private_leak_flags": 0
-        },
-        "worker_slot": "tcj-rewrite-lift-neutral-gemini35-worker-v3",
-        "worker_version": 5,
-        "worker_sha256": "e52ca158c9c51a28bbedf8ca34320ef32ffdce21831e504b57cf994c611334bf",
-        "review_api": "tcj-rewrite-lift-hard-review-v2",
-        "review_api_version": 5,
-        "review_api_sha256": "5ef49e8328cbbf58e83cc3d7b31e00e789b0758419fd70d6ace39d0623f883aa",
-        "human_protocol": "TCJ-SELECTIVE-EDITOR-HUMAN-REVIEW-2026Q3-v7",
-        "human_review_state": "FROZEN_24_OF_24",
+        "human_manifest_sha256": "b2c32f637afd14fdefea89f7f293bfe48b39f25edc879bc88b43c87ebb930f76",
         "human_ship": 1,
         "human_revise": 23,
-        "human_manifest_sha256": "b2c32f637afd14fdefea89f7f293bfe48b39f25edc879bc88b43c87ebb930f76",
-        "human_qualitative_note": "responses generally very poor and frequently severely overlong; some were three paragraphs",
-        "tcj_decision_distribution": "SEALED_PENDING_CANONICAL_GITHUB_SYNC_AND_SINGLE_UNBLIND",
-        "interpretation_pre_unblind": "writer baseline is overwhelmingly non-publishable, so v7 is likely diagnostic for false-SHIP detection but weak as standalone evidence of selective leave-good-copy-untouched behavior"
+        "tcj_ship": 16,
+        "tcj_revise": 8,
+        "correct_ship": 1,
+        "correct_revise": 8,
+        "missed_revisions": 15,
+        "unnecessary_revisions": 0,
+        "agreement_pct": 37.5,
+        "baseline_avg_chars": 224.5,
+        "interpretation": "writer simulation was poor and TCJ still falsely SHIPPED most drafts the native editor would revise; v7 cannot support selective-editor claims"
       }
     },
-    "next_action": "After canonical GitHub synchronization, unblind v7 TCJ decisions exactly once and report agreement/confusion matrix. Do not alter v7 cases or human labels. If class imbalance makes selectivity non-identifiable, treat v7 as diagnostic and design a fresh writer-baseline-qualified successor instrument. Do not touch Qualification 2.0 or spend paid frontier credits.",
-    "frontier_paid_budget": {
-      "status": "reserved_for_post_freeze_authority_research_only",
-      "paid_development_allowed": false,
-      "explicit_user_approval_required_immediately_before_paid_dispatch": true
-    },
+    "next_action": "Run a small fresh role-writer feasibility pilot using the simple v1-style writer role and no TCJ exposure. Human reviews only raw writer drafts for exact-copy publishability. Only if writer simulation is viable should a new fresh selective-editor bank be created. Do not reuse v7 for scoring.",
     "protected_historical_authority": {
       "qualification_2_0": {
         "protocol_key": "TCJ-QUALIFICATION-2.0-2026Q3-v1",
@@ -108,9 +52,12 @@
         "development_model_exposure_allowed": false,
         "machine_exposed_at": null,
         "human_manifest_sha256": "07a25c08b331c215bf6a7378665726c376045bcb9d547d3cd21eaca22b51428d",
-        "bank_manifest_sha256": "8e3d6c5fff4860f97bfbfcd8d69c46e5484da0d5c315ed6f4888d0061d09b7c8",
-        "can_certify_current_successor": false
+        "bank_manifest_sha256": "8e3d6c5fff4860f97bfbfcd8d69c46e5484da0d5c315ed6f4888d0061d09b7c8"
       }
+    },
+    "paid_frontier": {
+      "development_allowed": false,
+      "explicit_user_approval_required": true
     }
   }
 }
