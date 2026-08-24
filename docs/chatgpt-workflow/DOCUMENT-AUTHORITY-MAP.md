@@ -1,150 +1,210 @@
 # ChatGPT Workflow — Document Authority Map
 
-**Checkpoint:** 24 August 2026, 19:46 Asia/Bangkok  
-**Purpose:** prevent stopped TCJ experiments, superseded prompt architectures, contaminated writer/evaluator evidence and stale next-actions from being mistaken for current authority.
+**Checkpoint:** 24 August 2026, 20:04 Asia/Bangkok  
+**Purpose:** prevent superseded prompt architectures, rigid task-mode models, invalidated writer evidence and diagnosis-only product assumptions from being mistaken for current TCJ authority.
 
 ## Read these first
 
 1. `CURRENT-STATE.json` — canonical machine-readable state.
-2. `ANSWERS-TCJ-BFF-SPEAKER-CONTRACT-CORRECTION-AND-SRW-V1-INVALIDATION-20260824.md` — **current execution checkpoint; invalidates the ambiguous six-case writer gate and defines v2 build.**
-3. `ANSWERS-TCJ-BFF-SPEAKER-AND-QUOTED-SPEECH-CONTRACT-20260824.md` — **current writer speaker/addressee authority.**
-4. `ANSWERS-TCJ-SESSION-REPLICA-WRITER-SAFE-MEMORY-V1.md` — hosted searchable Git-memory view, now amended with the speaker/quote boundary.
-5. `ANSWERS-TCJ-ROLE-WRITER-FEASIBILITY-FAILURE-AND-SESSION-REPLICA-PIVOT-20260824.md` — frozen 0/8 persona-only failure and architectural pivot.
-6. `ANSWERS-TCJ-REPOSITORY-CONNECTED-REFERENCE-RUNTIME-AND-SESSION-CONTINUITY-PLAN-20260824.md` — governing repository-connected architecture and session-continuity plan.
-7. `ANSWERS-TCJ-V7-COMMERCIAL-SIM-SELECTIVE-GATE-20260824.md` — frozen failed diagnostic; never retune.
+2. `ANSWERS-TCJ-FOOTING-FIRST-REWRITE-CAPABLE-ARCHITECTURE-RESET-20260824.md` — **current execution checkpoint.**
+3. `ANSWERS-TCJ-CONVERSATIONAL-FOOTING-STANCE-AND-DISCOURSE-ARCHITECTURE-20260824.md` — **governing linguistic architecture.**
+4. `ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-V3-FOOTING-FIRST-REWRITE-CAPABLE-20260824.md` — **governing commercial architecture.**
+5. `ANSWERS-TCJ-REGISTER-DIFFICULTY-AND-BFF-STRESS-TEST-20260824.md` — **governing profile-difficulty and qualification strategy.**
+6. `ANSWERS-TCJ-BFF-SPEAKER-AND-QUOTED-SPEECH-CONTRACT-20260824.md` — useful Answers speaker/quoted-speech authority; its binary task modes are engineering instrumentation under the richer footing-first model.
+7. `ANSWERS-TCJ-REPOSITORY-CONNECTED-REFERENCE-RUNTIME-AND-SESSION-CONTINUITY-PLAN-20260824.md` — repository-connected conceptual-memory architecture.
 8. `ANSWERS-TCJ-MANDATORY-PROTECTED-EVIDENCE-ARCHITECTURE-AMENDMENT-20260823.md` — protected evidence remains bounded/non-reconstructive.
 9. `ANSWERS-TCJ-METHODOLOGY-PACK-AND-CONTEXT-RETRIEVER-SPEC-20260823.md` — methodology concepts where compatible; Methodology Pack is a portable fallback, not the reference brain.
-10. broad commercial architecture/roadmap docs only where not superseded above.
+10. `ANSWERS-TCJ-V7-COMMERCIAL-SIM-SELECTIVE-GATE-20260824.md`, role-writer and session-replica checkpoints — historical failed/invalidated evidence only.
+11. Older commercial architecture v2 / roadmap docs only where not superseded above.
 
-## Current reference architecture
-
-```text
-full private-server mode:
-  pinned local Git checkout
-  + customer/private evidence
-  + focus/reachability
-  + capable model
-
-hosted research mode:
-  pinned safe Git-memory view
-  + bounded focus/reachability native-human projection
-  + capable model
-
-writer writes
-TCJ evaluates exact finished copy
-```
-
-Raw private rows, nearest proprietary examples/edit pairs, hidden qualification cases and secrets remain outside provider prompts.
-
-## Mandatory BFF speaker contract
-
-The outer speaker is always **Answers BFF speaking directly to the user**.
-
-Two task modes are allowed:
+## Current TCJ mental model
 
 ```text
-DIRECT_BFF_RESPONSE
-  Answers BFF → user
-  no third-party quote required
+Git repository
+= durable conceptual + linguistic memory
 
-BFF_WITH_QUOTED_SCRIPT
-  Answers BFF → user
-  + quoted wording the user can say/write to a third party
+Private native-human evidence
+= empirical memory
+
+focus + discourse reachability
+= relevant-memory addressing
+
+capable model
+= semantic reasoning + rewriting engine
+
+TCJ Core
+= release authority
 ```
 
-For quoted-script mode:
-
-- outside quotes = Answers BFF voice;
-- inside quotes = user-to-third-party speech;
-- quote register follows the actual recipient/context and may be casual, BFF, Dek Inter, workplace-polished, formal, deferential, ceremonial, romantic, customer-service appropriate, restrained, etc.;
-- a formal quote to a boss is not a BFF-voice failure;
-- SHIP still applies to the whole finished answer unchanged.
-
-Every writer case must freeze these fields before generation:
+The linguistic order is now:
 
 ```text
-task_mode
-outer_speaker
-outer_addressee
-quote_required
-quoted_speaker
-quoted_addressee
-quoted_register_target
+CONVERSATIONAL FOOTING FIRST
+→ language surface second
 ```
 
-A case with ambiguous speaker/addressee roles is invalid for formal evidence.
-
-## Closed role-only writer feasibility gate
+Before judging naturalness, TCJ should understand:
 
 ```text
-source manifest  42fe22fa2c0c7b4be43d45fba087c629627e1ff78fce928156abb59643db7e07
-human manifest   97c372791de1f4af77950f5b100efa8c8b0956efa5bced19f4de5cd48a4270e1
-human SHIP       0
-human REVISE     8
-TCJ exposed      false
+Who am I right now?
+Who am I talking to?
+Whose words am I voicing?
+Am I endorsing those words or merely proposing/reporting/imitating them?
+How close are we?
+What hierarchy is active locally?
+How much can remain implicit?
+Where does my own stance resume?
+Whose particle/pronoun/politeness marker is this?
 ```
 
-Diagnosis after freeze: performed BFF caricature—forced intimacy/slang, stretched vowels, camp/emojis, generic reassurance, over-explanation and unsupported additions.
+Task modes, topic labels, focus tags, register labels and routing enums remain useful engineering instrumentation. They are not the linguistic ontology.
 
-These eight cases are closed diagnostic evidence only. Never expose them to TCJ or reuse them for evaluator scoring.
+> **Do not let the state machine become the linguistic theory.**
 
-## INVALIDATED — session-replica writer v1
+## Complete judge requirement
 
-The first six-case repository-memory writer gate is **not writer-quality evidence** because its task design did not explicitly distinguish speaker/addressee roles.
+TCJ is no longer defined as a diagnosis-only gate.
+
+A qualified runtime must be capable of:
 
 ```text
-set id             21
-set key            TCJ-SESSION-REPLICA-WRITER-SOURCE-BANK-2026Q3-v1
-source manifest    c2516eb9b1214fc5175ff95e36811a92fcdd97a870d959c3f13fbcb4db01d3f0
-review protocol    TCJ-SESSION-REPLICA-WRITER-HUMAN-REVIEW-2026Q3-v1
-protocol status    invalidated
-evidence-set state retired
-saved reviews      1
-formal score       prohibited
-TCJ exposed        false
+understand
+→ judge exact copy
+→ diagnose the primary problem
+→ rewrite better when necessary
+→ recheck
+→ release
 ```
 
-Preserve all outputs and the one saved human review as immutable test-design history. Do not complete the old review and do not infer writer viability from it.
+### SHIP
 
-## CURRENT — session-replica writer v2 build
+Exact-copy publishability. No rewrite merely for preference.
 
-Build a fresh six-case bank with zero scenario/source hash overlap.
+### REVISE
 
-Required mix:
+TCJ must be capable of returning:
 
 ```text
-DIRECT_BFF_RESPONSE
-BFF_WITH_QUOTED_SCRIPT
+one primary problem
+one surgical instruction
+one complete proposed rewrite
 ```
 
-For every case, freeze the structured speaker/addressee contract separately from scenario/source meaning before generation.
+The customer may choose not to expose/apply the rewrite, but **rewrite competence is still required for TCJ qualification**.
 
-The hosted safe Git memory must include the canonical speaker/quote contract. Per-case focus/reachability writer-context projections remain bounded and non-reconstructive.
+A judge that cannot demonstrate a better meaning-preserving rewrite has not demonstrated complete editorial understanding.
 
-Human review UI must display the task mode and explain:
+## Footing and local voice
+
+Voice/register is not necessarily global across a response.
+
+A natural answer may move through:
 
 ```text
-Outside quotes: review as Answers BFF speaking to you.
-Inside quotes: review as wording you would actually say/write to the named recipient.
+Answers BFF → user
+→ temporarily voice user → boss
+→ return to Answers BFF → user
 ```
 
-`SHIP` remains exact-copy publishability for the entire answer.
+Particles, pronouns, politeness and register must be attributed to the correct local speaker/addressee relationship.
 
-Session-replica v2 is writer-feasibility evidence only and must never score TCJ itself.
+The previous `DIRECT_BFF_RESPONSE` / `BFF_WITH_QUOTED_SCRIPT` distinction can still aid routing/logging, but it must not be treated as a complete model of discourse. Quoted speech, reported speech, imitation, hypothetical voice, internal monologue and other footing shifts can occur more flexibly.
 
-## A/B/C remains downstream
+## Profile difficulty / qualification scope
 
-Only after a valid writer-feasibility gate demonstrates viable finished copy:
+Current research hypothesis:
 
 ```text
-A = strong semantic model alone
-B = repository-connected TCJ
-C = repository-connected TCJ + bounded private evidence
+formal bank / telecom / enterprise Thai
+= lower conversational entropy, high commercial value
+
+Answers BFF
+= higher conversational entropy, hard stress test
 ```
 
-Use a separate fresh bank. Freeze human gold before unblinding. Never tune reviewed cases.
+Formal enterprise Thai often constrains roles, hierarchy, terminology, speech acts and politeness more tightly, so it may be easier to qualify than casual intimate Thai.
+
+This does **not** mean formal Thai is trivial or commercially less important.
+
+Qualification is profile-scoped. A bank or telecom profile may eventually qualify earlier only if the **complete TCJ loop** is proven in that declared scope:
+
+```text
+understanding
+judgment
+diagnosis
+rewrite
+recheck
+private-evidence discipline
+reproducibility
+```
+
+Passing a formal profile does not authorize claims that TCJ has solved BFF/casual Thai or Thai conversation universally.
+
+## Research tracks
+
+### Track A — constrained commercial Thai
+
+Candidate profiles:
+
+- bank service/customer Thai;
+- telecom support/service-recovery Thai;
+- formal workplace Thai;
+- customer-service Thai;
+- executive/corporate Thai.
+
+Purpose: prove complete buyer-facing editorial utility in lower-variance, high-value environments.
+
+### Track B — Answers BFF stress test
+
+Purpose: expose difficult failures in:
+
+- footing shifts;
+- stance;
+- intimacy;
+- implication/omission;
+- particles;
+- humor;
+- code-switching;
+- quoted/reported speech;
+- local hierarchy;
+- social timing;
+- assistantese / over-helpfulness.
+
+BFF may remain in R&D for months and continues to improve TCJ Core even if a constrained enterprise profile becomes commercially qualified earlier.
+
+## Current experimental status
+
+### Role-only writer v1 — CLOSED FAILED
+
+```text
+human SHIP   0
+human REVISE 8
+```
+
+Persona pressure produced performed BFF caricature. Never reuse/retune those cases.
+
+### Session-replica writer v1 — INVALIDATED
+
+Speaker/addressee ambiguity made the six-case gate invalid for formal writer-quality evidence. One human review is preserved. Do not score or complete it.
+
+### Session-replica writer v2 binary task-mode build — STOPPED BEFORE GENERATION
+
+The replacement build was stopped because footing-first linguistic architecture superseded the idea that two rigid task modes should be the primary representation.
+
+The empty hosted snapshot for that build was retired:
+
+```text
+snapshot id 4
+status      retired
+files       0
+manifest    null
+```
+
+Do not resume that experiment as originally designed.
 
 ## Protected Qualification 2.0
+
+Historical authority remains protected:
 
 ```text
 protocol            TCJ-QUALIFICATION-2.0-2026Q3-v1
@@ -154,19 +214,38 @@ bank manifest       8e3d6c5fff4860f97bfbfcd8d69c46e5484da0d5c315ed6f4888d0061d09
 machine_exposed_at  null
 ```
 
-Do not expose Q2 to development models.
+Do not expose Q2 to development models. It cannot certify the materially changed footing-first/rewrite-capable successor.
 
-## Paid resources
+## Paid frontier resources
 
-No paid OpenAI/xAI development calls. Later paid authority work still requires explicit user approval immediately before dispatch.
+No paid OpenAI/xAI development calls. Any later paid authority experiment requires explicit user approval immediately before dispatch.
 
-## Immediate next action
+## CURRENT next action
+
+Do **not** immediately create another writer bank.
+
+First build a small native-human discourse/footing analysis set containing useful variation in:
 
 ```text
-build fresh six-case v2 with explicit speaker contracts ← CURRENT
-→ freeze bank + task metadata + safe Git memory + per-case bounded context
-→ sequential generation
-→ native-human whole-answer review with quote-layer guidance
-→ freeze/hash manifest before interpretation
-→ only if viable: separate fresh evaluator A/B/C bank
+speaker/addressee
+relationship distance
+hierarchy
+stance
+implication
+quoted/reported/proposed speech
+footing return
+particle/pronoun ownership
 ```
+
+For each example:
+
+1. native-human interpretation is authoritative;
+2. annotate qualitatively using the nine footing-first questions;
+3. freeze the example/annotation before model testing;
+4. test whether a fresh repo-connected model reconstructs the same social scene;
+5. use disagreements to refine the linguistic model and discourse reachability;
+6. only after this stabilizes, create fresh writing/evaluation/rewrite experiments.
+
+The project may continue this loop for months.
+
+> **Do not ship TCJ until it behaves like a genuinely useful native senior editor inside its declared qualification scope.**
