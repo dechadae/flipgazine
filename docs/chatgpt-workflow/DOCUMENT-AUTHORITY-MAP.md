@@ -1,17 +1,18 @@
 # ChatGPT Workflow — Document Authority Map
 
-**Checkpoint:** 24 August 2026, 18:09 Asia/Bangkok  
+**Checkpoint:** 24 August 2026, 19:05 Asia/Bangkok  
 **Purpose:** prevent stopped TCJ experiments, superseded prompt architectures, contaminated writer/evaluator evidence and stale next-actions from being mistaken for current authority.
 
 ## Read these first
 
 1. `CURRENT-STATE.json` — canonical machine-readable state.
-2. `ANSWERS-TCJ-REPOSITORY-BOOTSTRAP-AND-WRITER-FEASIBILITY-GATE-20260824.md` — **current execution checkpoint and native-human gate.**
+2. `ANSWERS-TCJ-ROLE-WRITER-FEASIBILITY-FAILURE-AND-SESSION-REPLICA-PIVOT-20260824.md` — **current execution checkpoint and writer-architecture pivot.**
 3. `ANSWERS-TCJ-REPOSITORY-CONNECTED-REFERENCE-RUNTIME-AND-SESSION-CONTINUITY-PLAN-20260824.md` — governing repository-connected architecture and session-continuity plan.
-4. `ANSWERS-TCJ-V7-COMMERCIAL-SIM-SELECTIVE-GATE-20260824.md` — frozen failed diagnostic that motivated the pivot; never retune.
-5. `ANSWERS-TCJ-MANDATORY-PROTECTED-EVIDENCE-ARCHITECTURE-AMENDMENT-20260823.md` — protected evidence remains bounded/non-reconstructive on the TCJ editor side.
-6. `ANSWERS-TCJ-METHODOLOGY-PACK-AND-CONTEXT-RETRIEVER-SPEC-20260823.md` — historical/governing concepts where compatible, but Methodology Pack is now the portable compiled fallback rather than the reference brain.
-7. `ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-V2-20260823.md` and roadmap docs — broad commercial direction where not superseded above.
+4. `ANSWERS-TCJ-REPOSITORY-BOOTSTRAP-AND-WRITER-FEASIBILITY-GATE-20260824.md` — historical implementation checkpoint for the first repo bootstrap and now-completed role-writer gate.
+5. `ANSWERS-TCJ-V7-COMMERCIAL-SIM-SELECTIVE-GATE-20260824.md` — frozen failed diagnostic; never retune.
+6. `ANSWERS-TCJ-MANDATORY-PROTECTED-EVIDENCE-ARCHITECTURE-AMENDMENT-20260823.md` — protected evidence remains bounded/non-reconstructive.
+7. `ANSWERS-TCJ-METHODOLOGY-PACK-AND-CONTEXT-RETRIEVER-SPEC-20260823.md` — methodology concepts where compatible; Methodology Pack is a portable compiled fallback, not the reference brain.
+8. `ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-V2-20260823.md` and roadmap docs — broad commercial direction where not superseded above.
 
 ## Current reference architecture
 
@@ -19,108 +20,137 @@
 Git repository = durable conceptual/project memory
 Private Supabase evidence = protected native-human empirical memory
 Focus/reachability = address system for relevant private evidence
-Capable LLM = semantic reasoning engine
-Capable writer = writes
+Capable LLM = semantic reasoning/writing engine
 TCJ = native senior release editor
 ```
 
-The writer receives only a compact role/voice capsule plus the exact task/source by default. TCJ does not write the initial copy. The repository-connected editor reasons from a pinned safe Git snapshot plus bounded focus/reachability private evidence and returns only:
+The writer and evaluator are now deliberately separated.
+
+### Writer hypothesis under test
 
 ```text
-SHIP
+fresh scenario/source
++ pinned SAFE canonical Git memory
++ bounded focus/reachability native-human findings
++ minimal task instruction
+→ finished Thai copy
+```
+
+Do **not** tell the writer to perform stereotyped BFF slang, camp, warmth, stretched spellings or visible intimacy markers. Repository knowledge and bounded native-human evidence should carry the actual voice constraints.
+
+### TCJ evaluator contract
+
+```text
+finished draft
++ pinned repository knowledge
++ bounded private evidence
+→ SHIP
 or
-REVISE + one primary problem + one smallest useful instruction
+→ REVISE + one primary problem + one smallest useful instruction
 ```
 
-## Repository-connected bootstrap — implemented
+TCJ does not write the initial copy.
 
-The first private frozen authority mirror is:
+## Closed writer-feasibility evidence — role-only v1
+
+The fresh role-only feasibility gate is complete and frozen.
 
 ```text
-snapshot       TCJ-REPO-REFERENCE-BOOTSTRAP-20260824-47349851
-repo           dechadae/flipgazine
-pinned commit  47349851f4d2655bcb6d831538b4ddc5645a815e
-files          3
-bytes          31,007
-manifest       0cf0973ffa6df63b40305c87645c106a072ec6bffa90174f5acb0ed2cab1c09e
+source bank       TCJ-ROLE-WRITER-FEASIBILITY-SOURCE-BANK-2026Q3-v1
+source manifest   42fe22fa2c0c7b4be43d45fba087c629627e1ff78fce928156abb59643db7e07
+human manifest    97c372791de1f4af77950f5b100efa8c8b0956efa5bced19f4de5cd48a4270e1
+cases             8
+human SHIP        0
+human REVISE      8
+TCJ exposed       false
+output mismatch   0
 ```
 
-It contains only the bootstrap authority chain: `CURRENT-STATE.json`, this authority-map generation's predecessor, and the repository-connected architecture plan. Hidden qualification material, raw corpus rows and secrets are excluded by policy.
+Generation integrity was clean: 8/8 complete, no provider error, no 429, no transport error.
 
-The active repository-connected reference-judge research worker is:
+After the human manifest was frozen, diagnostic inspection showed a recurring **performed BFF caricature**: forced `แก/มึง`, stretched vowels, gratuitous emojis/camp, generic reassurance, over-explanation, extra joke scaffolding and unsupported assumptions.
+
+Therefore:
+
+- role-only prompting is **not** a viable portable writer architecture on current fresh evidence;
+- do not rerun, relabel or tune these eight cases;
+- never expose these eight to TCJ;
+- never use them in evaluator scoring.
+
+The historical rewrite-lift v1 result remains useful history, but it did not isolate role prompting as the causal mechanism.
+
+## CURRENT — session-replica writer bootstrap
+
+The next development question is:
+
+> Can a fresh capable model write materially more natural Thai when it is given a reproducible approximation of this ChatGPT project's external memory system, rather than a persona prompt?
+
+Build an expanded **safe conceptual Git snapshot** from the current post-failure canonical commit.
+
+Candidate safe conceptual material includes:
+
+- `CURRENT-STATE.json`;
+- this `DOCUMENT-AUTHORITY-MAP.md`;
+- active session-replica checkpoint;
+- repository-connected/session-continuity plan;
+- `ANSWERS-VOICE-TONE.md`;
+- `ANSWERS-HUMAN-REVIEW.md`;
+- `ANSWERS-HUMAN-EVALUATION-SCHEME.md`;
+- Voice benchmark acceptance/implementation lessons;
+- `ANSWERS-THAI-CONVERSATION-JUDGE-ARCHITECTURE.md`;
+- corpus routing/reachability implementation report;
+- mandatory protected-evidence architecture amendment.
+
+Explicitly exclude:
+
+- hidden qualification-bank/case documents;
+- Qualification 2.0 item content;
+- raw private corpus rows;
+- raw nearest proprietary examples/edit pairs;
+- credentials/secrets;
+- any material that would contaminate future hidden authority testing.
+
+Freeze this snapshot before provider generation.
+
+## Private writer evidence remains bounded
+
+For the session-replica feasibility test:
 
 ```text
-slot       tcj-gemini-focus-exception-pee9-worker-v2
-version    2
-SHA-256    750b995d303aed39fe07fa806467e5f3cb4fae4ae0693e1219630bc921b3b62c
-model      gemini-3.5-flash-lite
-evidence   TCJ-MANDATORY-PROTECTED-EVIDENCE-v11-NEGATIVE-FIRST-RESEARCH
+scenario + source meaning
+→ deterministic focus/reachability
+→ relevant private neighborhood
+→ derived non-reconstructive native-human findings
+→ writer
 ```
 
-Bootstrap/status smoke test passed. Raw private evidence is not exported. Repository search/read is bounded to four tool calls.
+Do not export raw evidence merely because the writer is inside TCJ research.
 
-This first bootstrap snapshot remains immutable history. Before the later A/B/C evaluator experiment, create an **expanded fresh frozen safe conceptual snapshot** from the then-current canonical Git state rather than mutating this one.
+If the existing evaluator PEE projection is inappropriate before a candidate exists, construct a dedicated **writer-context projection** over the same focus/reachability substrate. Do not weaken the evidence boundary.
 
-## CURRENT — writer-only feasibility gate
+## Next writer gate
 
-The current human task is **not yet a TCJ evaluation test**.
+Use 6–8 completely fresh cases.
 
-Fresh writer bank:
+Requirements:
 
-```text
-set id           19
-set key          TCJ-ROLE-WRITER-FEASIBILITY-SOURCE-BANK-2026Q3-v1
-cases            8
-prior hash overlap 0
-source manifest  42fe22fa2c0c7b4be43d45fba087c629627e1ff78fce928156abb59643db7e07
-TCJ exposed      false
-```
+1. zero reuse of the failed role-only eight;
+2. zero exact scenario/source hash overlap with prior evidence;
+3. bank frozen before generation;
+4. repo snapshot and writer instruction frozen before generation;
+5. sequential generation;
+6. native human reviews only raw finished outputs;
+7. `SHIP` = exact copy publishable unchanged;
+8. `REVISE` = any meaningful edit including shortening;
+9. no label balancing;
+10. freeze/hash complete human manifest before interpretation;
+11. writer-feasibility cases never score TCJ.
 
-Writer:
+If this session-replica writer is systematically bad, stop again rather than running evaluator experiments on a broken baseline.
 
-```text
-model             gemini-3.5-flash-lite
-prompt SHA        fa1d708093e2903fb42fb932a808543d342c76120964891b8fa758523a11aa56
-worker slot       tcj-rewrite-lift-neutral-gemini35-worker-v3
-worker version    6
-worker SHA        6a252a72a6fbb1e0ad5c3c958ac1658fcb4577f462842f8ebf07c0473bdf821e
-generation        8 / 8 complete
-terminal/errors   0
-HTTP 429           0
-output mismatch    0
-```
+## A/B/C evaluator experiment — still downstream
 
-Writer receives no TCJ methodology, private evidence or editorial brief.
-
-Native-human review:
-
-```text
-protocol   TCJ-ROLE-WRITER-FEASIBILITY-HUMAN-REVIEW-2026Q3-v1
-state      0 / 8 at checkpoint
-URL        https://flipgazine.pages.dev/tcj-writer-feasibility-review-v1.html
-API        tcj-rewrite-lift-hard-review-v2 v6
-API SHA    6259df72a7ba8d7dd0e78b1e7ef163744d45603315a506a3f874240a99bd3107
-page SHA   70704c22072e0574a489582485270beba5ac33a44bb2344cf17de122411daee4
-JS SHA     525dca9a94f6757af4e73b8fb0ee344d3b697c897f36296dc765ee788317c52b
-```
-
-### Human rule
-
-`SHIP` only if the exact draft is publishable unchanged. `REVISE` if any meaningful edit is needed, including shortening. Do not balance labels.
-
-### Isolation rule
-
-These eight cases are permanently **writer-feasibility only**. After 8/8:
-
-1. freeze/hash the human manifest before interpretation;
-2. do not expose these cases to TCJ;
-3. do not use them in the later evaluator score;
-4. if writer quality is bad, preserve the failure and build another fresh writer pilot;
-5. if writer quality is viable, create a separate fresh A/B/C evaluator bank.
-
-## Next evaluator experiment — only after writer viability
-
-Use a separate fresh bank and the same frozen writer outputs within that experiment to compare:
+Only after writer viability is demonstrated, create a separate fresh bank:
 
 ```text
 A = strong semantic model alone
@@ -138,7 +168,21 @@ A → C = total TCJ value
 
 Freeze human gold before unblinding model judgments. Never tune reviewed cases to improve scores.
 
-## Closed negative evidence
+## Existing repository bootstrap history
+
+The first three-file bootstrap snapshot remains immutable history:
+
+```text
+snapshot       TCJ-REPO-REFERENCE-BOOTSTRAP-20260824-47349851
+pinned commit  47349851f4d2655bcb6d831538b4ddc5645a815e
+files          3
+bytes          31,007
+manifest       0cf0973ffa6df63b40305c87645c106a072ec6bffa90174f5acb0ed2cab1c09e
+```
+
+Do not mutate it. The session-replica writer uses a new snapshot.
+
+## Closed negative evaluator evidence
 
 ### v7
 
@@ -151,24 +195,9 @@ Missed revisions 15
 Agreement          9 / 24 = 37.5%
 ```
 
-v7 is frozen failed diagnostic evidence. Do not rerun, rewrite, relabel or retune it.
-
-### v1 role-conditioned writer
-
-Historical blind result:
-
-```text
-TCJ wins       2
-Baseline wins  1
-Ties          13
-Neither        0
-```
-
-This motivated returning writing to the capable role-conditioned model rather than injecting more TCJ guidance into the writer.
+v7 remains frozen failed diagnostic evidence. Do not rerun, rewrite, relabel or retune it.
 
 ## Protected historical authority — Qualification 2.0
-
-Reverified live at this checkpoint:
 
 ```text
 Protocol            TCJ-QUALIFICATION-2.0-2026Q3-v1
@@ -181,7 +210,7 @@ Bank manifest       8e3d6c5fff4860f97bfbfcd8d69c46e5484da0d5c315ed6f4888d0061d09
 machine_exposed_at  null
 ```
 
-Do not expose Q2 to development models. It cannot certify the materially changed repository-connected successor.
+Do not expose Q2 to development models. It cannot certify the materially changed successor.
 
 ## Paid frontier resources
 
@@ -190,12 +219,10 @@ No paid OpenAI/xAI development calls. Any later paid authority experiment requir
 ## Immediate next action
 
 ```text
-native human reviews 8 writer-only drafts ← CURRENT
-→ freeze/hash writer-human manifest
-→ decide writer viability
-→ if viable, create a separate fresh A/B/C evaluator bank + expanded safe repo snapshot
-→ freeze candidate runtime only if fresh evidence supports it
-→ new hidden native-human authority instrument
-→ final paid frontier experiment with explicit approval
-→ commercial release path
+expand + freeze safe repo snapshot ← CURRENT
+→ build bounded writer-context projection over focus/reachability
+→ create/freeze 6–8 fresh writer cases
+→ session-replica writer generates sequentially
+→ native-human exact-copy SHIP/REVISE gate
+→ only if writer viable: separate fresh A/B/C evaluator bank
 ```
