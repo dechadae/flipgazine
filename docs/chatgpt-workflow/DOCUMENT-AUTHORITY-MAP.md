@@ -1,50 +1,29 @@
 # ChatGPT Workflow — Document Authority Map
 
-**Checkpoint:** 24 August 2026, 20:26 Asia/Bangkok  
-**Purpose:** prevent superseded prompt architectures, rigid task-mode models, unavailable-model dependencies, invalidated writer evidence and diagnosis-only product assumptions from being mistaken for current TCJ authority.
+**Checkpoint:** 24 August 2026, 20:37 Asia/Bangkok  
+**Purpose:** prevent superseded prompt architectures, unavailable-model dependencies, invalidated writer evidence and diagnosis-only product assumptions from being mistaken for current TCJ authority.
 
 ## Read these first
 
 1. `CURRENT-STATE.json` — canonical machine-readable state.
-2. `ANSWERS-TCJ-FOOTING-FIRST-REWRITE-CAPABLE-ARCHITECTURE-RESET-20260824.md` — **current execution checkpoint.**
+2. `ANSWERS-TCJ-FOOTING-NATIVE-HUMAN-ANALYSIS-GATE-20260824.md` — **CURRENT execution checkpoint and human gate.**
 3. `ANSWERS-TCJ-CONVERSATIONAL-FOOTING-STANCE-AND-DISCOURSE-ARCHITECTURE-20260824.md` — **governing linguistic architecture.**
 4. `ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-V3-FOOTING-FIRST-REWRITE-CAPABLE-20260824.md` — **governing commercial architecture.**
-5. `ANSWERS-TCJ-REGISTER-DIFFICULTY-AND-BFF-STRESS-TEST-20260824.md` — **governing profile-difficulty and qualification strategy.**
-6. `ANSWERS-TCJ-GPT-LIVE-AVAILABILITY-AND-DEPENDENCY-POLICY-20260824.md` — **governing model-availability/dependency policy.**
-7. `ANSWERS-TCJ-BFF-SPEAKER-AND-QUOTED-SPEECH-CONTRACT-20260824.md` — useful Answers speaker/quoted-speech authority; its binary task modes are engineering instrumentation under the richer footing-first model.
-8. `ANSWERS-TCJ-REPOSITORY-CONNECTED-REFERENCE-RUNTIME-AND-SESSION-CONTINUITY-PLAN-20260824.md` — repository-connected conceptual-memory architecture.
-9. `ANSWERS-TCJ-MANDATORY-PROTECTED-EVIDENCE-ARCHITECTURE-AMENDMENT-20260823.md` — protected evidence remains bounded/non-reconstructive.
-10. `ANSWERS-TCJ-METHODOLOGY-PACK-AND-CONTEXT-RETRIEVER-SPEC-20260823.md` — methodology concepts where compatible; Methodology Pack is a portable fallback, not the reference brain.
-11. `ANSWERS-TCJ-V7-COMMERCIAL-SIM-SELECTIVE-GATE-20260824.md`, role-writer and session-replica checkpoints — historical failed/invalidated evidence only.
-12. Older commercial architecture v2 / roadmap docs only where not superseded above.
+5. `ANSWERS-TCJ-REGISTER-DIFFICULTY-AND-BFF-STRESS-TEST-20260824.md` — **governing profile-difficulty / qualification strategy.**
+6. `ANSWERS-TCJ-GPT-LIVE-AVAILABILITY-AND-DEPENDENCY-POLICY-20260824.md` — GPT-Live is optional R&D reference only, not a production dependency.
+7. `ANSWERS-TCJ-BFF-SPEAKER-AND-QUOTED-SPEECH-CONTRACT-20260824.md` — useful speaker/quoted-speech authority; binary task modes are instrumentation under the richer footing model.
+8. `ANSWERS-TCJ-REPOSITORY-CONNECTED-REFERENCE-RUNTIME-AND-SESSION-CONTINUITY-PLAN-20260824.md` — durable repository-memory architecture.
+9. protected-evidence / methodology docs where compatible.
+10. old writer/evaluator checkpoints only as frozen failed or invalidated history.
 
-## Current TCJ mental model
-
-```text
-Git repository
-= durable conceptual + linguistic memory
-
-Private native-human evidence
-= empirical memory
-
-focus + discourse reachability
-= relevant-memory addressing
-
-replaceable qualified deployable model
-= semantic reasoning + rewriting engine
-
-TCJ Core
-= control + qualification + release authority
-```
-
-The linguistic order is now:
+## Current linguistic principle
 
 ```text
 CONVERSATIONAL FOOTING FIRST
 → language surface second
 ```
 
-Before judging naturalness, TCJ should understand:
+Before judging or rewriting, TCJ should understand:
 
 ```text
 Who am I right now?
@@ -58,15 +37,13 @@ Where does my own stance resume?
 Whose particle/pronoun/politeness marker is this?
 ```
 
-Task modes, topic labels, focus tags, register labels and routing enums remain useful engineering instrumentation. They are not the linguistic ontology.
+Task modes, focus tags, register labels and enums are implementation instrumentation only.
 
 > **Do not let the state machine become the linguistic theory.**
 
-## Complete judge requirement
+## Complete TCJ requirement
 
-TCJ is no longer defined as a diagnosis-only gate.
-
-A qualified runtime must be capable of:
+A qualified TCJ must be able to:
 
 ```text
 understand
@@ -77,73 +54,94 @@ understand
 → release
 ```
 
-### SHIP
+Customer policy may hide or ignore the proposed rewrite, but rewrite competence is mandatory for qualification.
 
-Exact-copy publishability. No rewrite merely for preference.
+## CURRENT — native-human footing analysis gate
 
-### REVISE
-
-TCJ must be capable of returning:
+Live private set:
 
 ```text
-one primary problem
-one surgical instruction
-one complete proposed rewrite
+set id       1
+set key      TCJ-FOOTING-NATIVE-HUMAN-ANALYSIS-2026Q3-v1
+status       reviewing
+cases        8
+BFF          5
+formal enterprise  3
+prior exact hash overlap  0
+source manifest  060fc4ffcf3b4c53034b40cba65bc1a63ce98627157fe0ba0095cc399047d75e
+exposure state   human_only
 ```
 
-The customer may choose not to expose/apply the rewrite, but **rewrite competence is still required for TCJ qualification**.
+This is development linguistic R&D, not Qualification/Assurance.
 
-A judge that cannot demonstrate a better meaning-preserving rewrite has not demonstrated complete editorial understanding.
-
-## Footing and local voice
-
-Voice/register is not necessarily global across a response.
-
-A natural answer may move through:
+Human review protocol:
 
 ```text
-Answers BFF → user
-→ temporarily voice user → boss
-→ return to Answers BFF → user
+protocol id    1
+protocol key   TCJ-FOOTING-NATIVE-HUMAN-REVIEW-2026Q3-v1
+status         reviewing
+state          0 / 8 at checkpoint
+human manifest null
 ```
 
-Particles, pronouns, politeness and register must be attributed to the correct local speaker/addressee relationship.
+Review URL:
 
-The previous `DIRECT_BFF_RESPONSE` / `BFF_WITH_QUOTED_SCRIPT` distinction can still aid routing/logging, but it must not be treated as a complete model of discourse. Quoted speech, reported speech, imitation, hypothetical voice, internal monologue and other footing shifts can occur more flexibly.
+`https://flipgazine.pages.dev/tcj-footing-analysis-review-v1.html`
 
-## GPT-Live availability / dependency policy
-
-As of 24 August 2026:
+Review page:
 
 ```text
-GPT-Live-1 in ChatGPT Voice       available to eligible consumer users
-GPT-Live-1 public API             not generally available
-official API state                planned / notification signup
-production TCJ dependency         prohibited for now
-R&D linguistic reference          allowed, optional
+/tcj-footing-analysis-review-v1.html
+v1
+SHA-256 bb0ea9fbacc52e1f16d9861b9f897a6d151e418981a47a9cf41a3bc5e2b1d156
 ```
 
-Do **not** build production TCJ around a model buyers cannot call or deploy.
-
-Public realtime models such as `gpt-realtime-2.1` are separate candidates; do not assume they reproduce GPT-Live's Thai ability merely because they are realtime/audio models.
-
-If GPT-Live later becomes publicly callable and proves strong on Thai judging + rewriting, simplify TCJ rather than recreating solved intelligence. In that architecture, TCJ may intentionally become the control plane around GPT-Live:
+Controller:
 
 ```text
-repository context
-+ private native evidence
-+ Voice/Profile
-+ discourse reachability
-+ GPT-Live judge/rewriter
-+ deterministic release policy
-+ audit/version/qualification
+/fg-page-tcj-footing-analysis-review-v1.js
+v1
+SHA-256 31ef9e48164a1641eb4b5f01ffdf25554461ea2eed6bfca0036d9bc438ed7171
 ```
 
-The decisive commercial question would then be whether TCJ adds measurable lift/control over calling GPT-Live directly.
+Review API reuses the closed historical human-review Edge Function slot because the Supabase project has reached its function-slot limit:
 
-## Profile difficulty / qualification scope
+```text
+slug      tcj-rewrite-lift-hard-review-v2
+version   8
+verify_jwt true
+SHA-256   3ac59c4dcf1212905190bf54f89bad4cd55affc8de948cdc7bba0ddcd5225ca9
+```
 
-Current research hypothesis:
+Prior versions remain preserved.
+
+### Human task
+
+This is **not** SHIP / REVISE.
+
+For each scenario + Thai utterance, native human writes:
+
+- social-scene summary;
+- answers to the nine footing questions in open text;
+- free-form segment map;
+- optional ambiguity/discomfort note.
+
+Do not force every example into a footing shift. If no shift exists, say so. If the case is genuinely ambiguous, record the ambiguity instead of repairing the source after review begins.
+
+### Freeze rule
+
+Before any model gets a reconstruction task on these eight cases:
+
+1. human completes 8 / 8;
+2. verify all source case manifests still match;
+3. hash ordered case key + case manifest + every human interpretation field;
+4. freeze set and protocol;
+5. only then expose the source cases to a fresh publicly deployable model candidate;
+6. compare the model's social-scene reconstruction against frozen human authority.
+
+No model worker receives the human interpretations before freeze.
+
+## Profile strategy
 
 ```text
 formal bank / telecom / enterprise Thai
@@ -153,138 +151,63 @@ Answers BFF
 = higher conversational entropy, hard stress test
 ```
 
-Formal enterprise Thai often constrains roles, hierarchy, terminology, speech acts and politeness more tightly, so it may be easier to qualify than casual intimate Thai.
+Formal profiles may eventually qualify earlier only if the complete TCJ loop is proven inside the declared profile. Passing formal Thai never authorizes a claim that BFF/casual Thai or Thai conversation generally has been solved.
 
-This does **not** mean formal Thai is trivial or commercially less important.
+## GPT-Live policy
 
-Qualification is profile-scoped. A bank or telecom profile may eventually qualify earlier only if the **complete TCJ loop** is proven in that declared scope:
+GPT-Live is outside the critical path while its public API is unavailable.
 
-```text
-understanding
-judgment
-diagnosis
-rewrite
-recheck
-private-evidence discipline
-reproducibility
-```
+Do not architect production TCJ around it. If it later becomes public and proves strong on Thai judging + rewriting, test whether TCJ adds measurable control/lift and simplify the architecture if it does not.
 
-Passing a formal profile does not authorize claims that TCJ has solved BFF/casual Thai or Thai conversation universally.
-
-## Research tracks
-
-### Track A — constrained commercial Thai
-
-Candidate profiles:
-
-- bank service/customer Thai;
-- telecom support/service-recovery Thai;
-- formal workplace Thai;
-- customer-service Thai;
-- executive/corporate Thai.
-
-Purpose: prove complete buyer-facing editorial utility in lower-variance, high-value environments.
-
-### Track B — Answers BFF stress test
-
-Purpose: expose difficult failures in:
-
-- footing shifts;
-- stance;
-- intimacy;
-- implication/omission;
-- particles;
-- humor;
-- code-switching;
-- quoted/reported speech;
-- local hierarchy;
-- social timing;
-- assistantese / over-helpfulness.
-
-BFF may remain in R&D for months and continues to improve TCJ Core even if a constrained enterprise profile becomes commercially qualified earlier.
-
-### Optional Track C — GPT-Live linguistic reference
-
-Use only opportunistically while public API access is unavailable.
-
-Purpose: discover potentially useful conversational-Thai phenomena, not qualify a production dependency.
-
-Do not make GPT-Live transcript comparison the main TCJ architecture/test program until public API availability changes.
-
-## Current experimental status
+## Historical experiment status
 
 ### Role-only writer v1 — CLOSED FAILED
 
 ```text
-human SHIP   0
-human REVISE 8
+SHIP   0
+REVISE 8
 ```
 
-Persona pressure produced performed BFF caricature. Never reuse/retune those cases.
+Persona pressure produced performed BFF caricature. Never retune/reuse those cases for evaluator scoring.
 
 ### Session-replica writer v1 — INVALIDATED
 
-Speaker/addressee ambiguity made the six-case gate invalid for formal writer-quality evidence. One human review is preserved. Do not score or complete it.
+Speaker/addressee ambiguity invalidated formal scoring. One human review is preserved; TCJ was never exposed.
 
-### Session-replica writer v2 binary task-mode build — STOPPED BEFORE GENERATION
+### Session-replica writer v2 binary build — STOPPED BEFORE PROVIDER GENERATION
 
-The replacement build was stopped because footing-first linguistic architecture superseded the idea that two rigid task modes should be the primary representation.
-
-The empty hosted snapshot for that build was retired:
-
-```text
-snapshot id 4
-status      retired
-files       0
-manifest    null
-```
-
-Do not resume that experiment as originally designed.
+The replacement build was stopped when the footing-first linguistic architecture superseded its two-mode ontology. Empty snapshot id 4 is retired.
 
 ## Protected Qualification 2.0
 
-Historical authority remains protected:
+Reverified before the current gate:
 
 ```text
 protocol            TCJ-QUALIFICATION-2.0-2026Q3-v1
 status              human_frozen
-human manifest      07a25c08b331c215bf6a7378665726c376045bcb9d547d3cd21eaca22b51428d
 bank manifest       8e3d6c5fff4860f97bfbfcd8d69c46e5484da0d5c315ed6f4888d0061d09b7c8
+human manifest      07a25c08b331c215bf6a7378665726c376045bcb9d547d3cd21eaca22b51428d
 machine_exposed_at  null
 ```
 
-Do not expose Q2 to development models. It cannot certify the materially changed footing-first/rewrite-capable successor.
+Never expose Q2 to development models.
 
 ## Paid frontier resources
 
-No paid OpenAI/xAI development calls. Any later paid authority experiment requires explicit user approval immediately before dispatch.
+No paid OpenAI/xAI development call is authorized. Any later paid authority experiment requires explicit user approval immediately before dispatch.
 
 ## CURRENT next action
 
-Do **not** immediately create another writer bank and do not architect around GPT-Live.
-
-First build a small native-human discourse/footing analysis set containing useful variation in:
-
 ```text
-speaker/addressee
-relationship distance
-hierarchy
-stance
-implication
-quoted/reported/proposed speech
-footing return
-particle/pronoun ownership
+native human reviews 8 footing cases ← CURRENT
+→ say “done”
+→ freeze/hash human footing manifest
+→ create fresh model reconstruction test using a publicly deployable candidate
+→ analyze disagreements
+→ refine discourse reachability / rewrite semantics
+→ only after footing stabilizes, return to writer/judge/rewrite qualification
 ```
 
-For each example:
-
-1. native-human interpretation is authoritative;
-2. annotate qualitatively using the nine footing-first questions;
-3. freeze the example/annotation before model testing;
-4. test publicly deployable model candidates against the same social scene;
-5. use disagreements to refine the linguistic model and discourse reachability;
-6. only after this stabilizes, create fresh writing/evaluation/rewrite experiments.
-
-The project may continue this loop for months.
+The project may repeat this loop for months.
 
 > **Do not ship TCJ until it behaves like a genuinely useful native senior editor inside its declared qualification scope.**
