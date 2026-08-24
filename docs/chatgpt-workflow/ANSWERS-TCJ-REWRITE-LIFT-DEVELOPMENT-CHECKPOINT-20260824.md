@@ -1,162 +1,153 @@
 # TCJ Rewrite-Lift Development Checkpoint — 24 Aug 2026
 
-## Plain-language product correction
+## Product definition
 
 TCJ is not only an evaluator. Evaluation is the feedback engine.
 
-The intended product loop is:
+**draft → TCJ understands what is wrong and why → bounded native-editor brief → same/customer model rewrites → TCJ can check the rewrite again**
 
-**draft → TCJ understands what is wrong and why → TCJ produces a bounded native-editor brief → the same/customer model rewrites → TCJ can check the rewrite again**
+The rewrite question is:
 
-The commercial question is therefore not merely “does TCJ score Thai better?” It is also:
+> Can TCJ transfer a private native house voice into the same underlying model better than a plain request to rewrite in that voice?
 
-> **Can TCJ make the same underlying model produce better final Thai by giving it better native editorial guidance?**
+## v1 — frozen, limited evidence only
 
-## Rewrite-lift experiment v1 — frozen development evidence
+`TCJ-REWRITE-LIFT-GEMINI35-v1`
 
-Experiment: `TCJ-REWRITE-LIFT-GEMINI35-v1`
+16 blind comparisons: **13 ties / 2 TCJ / 1 baseline / 0 neither**.
 
-Blind protocol: `TCJ-REWRITE-LIFT-BLIND-REVIEW-2026Q3-v1`
+Do not claim material lift. The baseline was overpowered: it already received the specialist BFF writer role plus distilled house-voice rules, making it effectively TCJ-lite.
 
-Source bank: `TCJ-REWRITE-LIFT-SOURCE-BANK-2026Q3-v1`
+Useful diagnostic only: on RW-014 the baseline wrote `Green flag ... 🚩`, while the TCJ-guided output avoided the contradictory red-flag emoji.
 
-Source-bank manifest: `37fc7c3d5206b8272b07d4928ff50ab0eff22c40edf6bd38970f71d4842c584a`
+## v2 — stopped and invalid for causal rewrite lift
 
-Human blind-review manifest: `427a6e71042804d8ca987819edad7d555c673539c28f63a338ae12432c30e877`
+`TCJ-REWRITE-LIFT-HARD-GEMINI35-v2`
 
-Result across 16 fresh comparisons:
+The source drafts themselves leaked Answers-BFF rhythm, slang, mock-politeness, compression and punchline structure. The user detected the confound after 5/12 blind reviews and stopped.
 
-- Tie: **13**
-- TCJ-guided rewrite preferred: **2**
-- Baseline rewrite preferred: **1**
-- Neither: **0**
+Protocol `TCJ-REWRITE-LIFT-HARD-BLIND-REVIEW-2026Q3-v2` is frozen with invalid-test manifest:
 
-### Important interpretation
+`3dac4bcafa578e656e04c4906d49e82f372643da1e53e1a59554ced8a3a0cce8`
 
-This is **not** evidence of a material rewrite lift.
+The five saved choices are diagnostic history only and must never be counted as causal evidence.
 
-The baseline was too strong for the intended commercial comparison because both arms were explicitly given the same specialist writer role:
+## v3 — stopped before review; source too close to finished copy
 
-> expert Thai conversational copywriter for a modern close-friend/BFF magazine voice
+`TCJ-REWRITE-LIFT-NEUTRAL-GEMINI35-v3`
 
-The baseline also received distilled voice knowledge such as permission for Thai-English mixing, slang, mock politeness, sarcasm, hyperbole and line breaks when natural.
+The source was generic Thai but still too polished as final copy. The user correctly identified that if the source is already good copy, there is little meaningful rewrite task left.
 
-Therefore the control was effectively **TCJ-lite**, not ordinary model use.
+State preserved: 4 completed trials; remaining 8 closed as `terminal_failure` with stop reason `stopped_invalid_test_source_too_finished`. No human review gate was opened. Do not resume.
 
-The correct interpretation is:
+## v4 — ACTIVE: semantic skeleton → Answers BFF
 
-> Once low-tier Gemini is already given a strong specialist BFF writer role, the additional full-TCJ editorial pass produces mostly equivalent outputs on these 16 cases.
+### Clean causal design
 
-Do not market the 2–1 non-tie result as a lift claim.
+Source bank:
 
-### Useful diagnostic example
+`TCJ-REWRITE-LIFT-SEMANTIC-SKELETON-BANK-2026Q3-v4`
 
-On `RW-014`, the baseline wrote:
+Source manifest:
 
-`Green flag ตะโกนมากแม่! 🚩✨`
+`4e684729e4dbe8ff9416533ea0d34aa8e0bb80fd6ca5436ffd61d0ec44138616`
 
-The text says “green flag” while using the red-flag emoji. The TCJ-guided version did not make that contradiction.
+Cases: **12**
 
-This is a useful example of the kind of small editorial-execution defect that a native editorial layer can catch, but it is not by itself a statistical claim.
+Source-draft rule:
 
-## Rewrite-lift experiment v2 — active human gate
+- correct/useful meaning only;
+- generic common Thai;
+- deliberately not publishable Answers copy;
+- one plain paragraph;
+- no performance line breaks;
+- no emoji;
+- no English/code-switch;
+- no BFF slang, particles, punchlines or house-voice mechanics.
 
-The next experiment corrects the v1 baseline problem.
+This is **correct content, wrong voice**.
 
-Source bank: `TCJ-REWRITE-LIFT-HARD-SOURCE-BANK-2026Q3-v2`
+### Experiment
 
-Source-bank manifest: `fc76e21ad36a5d11685db3dd4aa16398bc817ba0882dd3a20a04a31e0ecd8d79`
+Experiment:
 
-Experiment: `TCJ-REWRITE-LIFT-HARD-GEMINI35-v2`
+`TCJ-REWRITE-LIFT-SEMANTIC-GEMINI35-v4`
 
-Model in both arms: `gemini-3.5-flash-lite`
+Model in both arms:
 
-Cases: **12 fresh subtle native-language cases**
+`gemini-3.5-flash-lite`
 
-Generation state: **12/12 complete**
+Writer instruction in both arms is exactly the same:
 
-Terminal failures: **0**
+> Rewrite the SOURCE DRAFT as a natural reply from a close Thai friend/BFF to the SCENARIO. Preserve the useful meaning, but make the final Thai conversational and appropriate to the situation. Do not explain your choices. Output only the rewritten response.
 
-Obvious private/TCJ leakage in final outputs: **0**
+**Baseline**
 
-Text-identical A/B pairs: **1** (legitimate tie candidate; preserved)
+scenario + generic semantic draft → same Gemini writer.
 
-Worker: `tcj-rewrite-lift-hard-gemini35-worker-v2`
+**TCJ**
 
-Worker SHA-256: `bd6aa2b5afed8dc71468d22d12957de7d9cd311a354f5a00176c04a73465b6b7`
+scenario + same generic semantic draft → TCJ reachability/context + frozen Voice Profile + methodology + bounded private evidence → senior Thai magazine/conversation editor produces short derived brief → exact same Gemini writer instruction rewrites from the brief.
 
-Blind protocol: `TCJ-REWRITE-LIFT-HARD-BLIND-REVIEW-2026Q3-v2`
+The writer sees no raw private rows, reconstructive examples, Voice Profile packet, private warning packet, row IDs or internal TCJ mechanisms.
 
-Review API: `tcj-rewrite-lift-hard-review-v2`
+### Generation result before human review
 
-Review API SHA-256: `2d65c604b21116fc61eca9132c68b3a33aee86974c79c5c4048114567504c402`
+- 12/12 baseline outputs complete
+- 12/12 TCJ-guided outputs complete
+- 0 terminal failures at final state
+- 0 identical pairs
+- 0 obvious internal/private-evidence leakage
+- 12/12 trials verified to use the same writer system instruction
+- one intermediate empty Gemini final-output incident on SS-002 was retried from preserved baseline + editorial-brief state; no prompt/case change
+
+Worker:
+
+`tcj-rewrite-lift-semantic-gemini35-worker-v4`
+
+Worker SHA-256:
+
+`813f6b91cd080ae125afd834eaaaa74c5a9ebb08fbe0e733517423cf70565c41`
+
+### Blind human gate
+
+Protocol:
+
+`TCJ-REWRITE-LIFT-SEMANTIC-BLIND-REVIEW-2026Q3-v4`
+
+Protocol id: `3`
+
+State at checkpoint: **reviewing, 0/12 reviewed**
 
 Private review URL:
 
-`https://flipgazine.pages.dev/tcj-rewrite-lift-hard-review.html`
+`https://flipgazine.pages.dev/tcj-rewrite-lift-semantic-review.html`
 
-Current review state at checkpoint: **0/12 reviewed**
+A/B order is deterministic and hidden. The reviewer sees:
 
-### Clean v2 comparison contract
+scenario → generic semantic draft → Rewrite A → Rewrite B → A better / B better / Tie / Neither.
 
-Both arms use the same ordinary writer instruction:
+Review standard:
 
-> Rewrite the source draft naturally in Thai for the scenario. Make the final response appropriate to the situation and preserve useful meaning from the source. Do not explain your choices. Output only the rewritten response.
+> Which final answer would actually belong in Answers BFF without another rewrite?
 
-**Control arm**
-
-Scenario + source draft → ordinary Gemini rewrite.
-
-**TCJ arm**
-
-Scenario + source draft → TCJ context/reachability + Voice Profile + methodology + bounded private warning evidence + candidate-specific licensed-weirdness rescue → senior Thai magazine/conversation editor produces a short derived editorial brief → the **same ordinary Gemini writer instruction** rewrites from that brief.
-
-The writer does not receive raw private rows or reconstructive private examples.
-
-### Case design
-
-The 12 cases deliberately avoid easy “formal consultant paragraph → casual BFF paragraph” transformations. They include:
-
-- valid mock-politeness that should survive;
-- natural code-switching that should survive;
-- badly integrated code-switching that should be repaired;
-- pragmatic omission / missing the actual social concern;
-- high-stakes emotional stance;
-- mock-politeness plus genuine register collision;
-- uncertainty without false factual certainty;
-- line-break delivery with a dangling ending;
-- topic answer vs actual social-conversation concern;
-- dry ironic negative-event reframing;
-- contextually wrong polite/service register;
-- micro-line / queer timing that should survive.
-
-The point is to test **reasoning about composition**, not surface-rule application.
+The generic semantic draft is only a meaning reference. Generic competent Thai can lose if it does not fit the house voice; slangier copy does not automatically win.
 
 ## Active next action
 
-**Native-human blind gate:** review all 12 pairs at `tcj-rewrite-lift-hard-review.html` and choose only:
+1. User reviews all 12 v4 blind pairs.
+2. Freeze the human preference manifest.
+3. Unblind exactly once.
+4. Report TCJ wins / baseline wins / ties / neither.
+5. Do not tune this bank after unblinding to force a TCJ win.
+6. Use non-ties only to understand the general type of editorial intelligence transferred or lost.
+7. Then decide whether rewrite guidance is strong enough to freeze as a core product capability before the new hidden authority phase.
 
-- A better
-- B better
-- Tie
-- Neither
+## Invariants
 
-A/B identity is hidden and stable.
-
-After 12/12:
-
-1. freeze the human preference manifest;
-2. unblind once;
-3. report TCJ wins / baseline wins / ties / neither;
-4. inspect non-ties and failures for general product reasoning only;
-5. **do not retune this same bank to chase a win**;
-6. decide whether rewrite lift is sufficiently demonstrated, needs one principled architecture correction, or should remain a secondary capability claim rather than the primary proof.
-
-## Invariants still in force
-
-- Do not touch protected Qualification 2.0 for development.
-- Do not use paid OpenAI/xAI credits during this development test.
-- Do not chase 100% exposed-bank performance.
-- Reasoning first; simple representation second; measurement verifies rather than drives complexity.
-- Raw private rows/examples do not leave the protected server-side evidence boundary.
-- Paid frontier budget remains reserved for the post-freeze authority experiment and requires explicit user approval immediately before dispatch.
+- Qualification 2.0 remains protected and untouched.
+- No paid OpenAI/xAI development calls.
+- Human judgment remains authority.
+- Reasoning first; measurement verifies rather than drives complexity.
+- Raw private evidence stays server-side.
+- The remaining OpenAI/xAI budget is reserved for the post-freeze frontier experiment and requires explicit user approval immediately before dispatch.
