@@ -1,6 +1,6 @@
 {
-  "schema_version": 15,
-  "as_of": "2026-08-24T08:12:00+07:00",
+  "schema_version": 16,
+  "as_of": "2026-08-24T09:09:00+07:00",
   "scope": "repository_documentation_checkpoint",
   "live_state_independently_reverified": true,
   "canonical_supabase_project": "sjpvhgxacsiorrtijqua",
@@ -8,89 +8,70 @@
   "tcj": {
     "production_authority": false,
     "authority_state": "NONE_candidate_successor_remains_development_only_not_frozen_not_hidden_qualified",
-    "current_phase": "selective_editor_v5_native_human_intervention_gate",
+    "current_phase": "post_v5_selective_editor_reasoning_before_v6_design",
     "human_gold_authoritative": true,
     "active_phase_checkpoint": "docs/chatgpt-workflow/ANSWERS-TCJ-REWRITE-LIFT-DEVELOPMENT-CHECKPOINT-20260824.md",
     "product_definition": {
       "evaluation_is_feedback_engine": true,
       "rewrite_guidance_is_product_capability": true,
-      "current_plain_language_loop": "model writes finished local-language copy -> TCJ inspects exact draft -> USE_AS_IS or one surgical REVISE instruction -> same model revises only when needed -> TCJ can check again"
+      "current_learning": "capable generic BFF Thai is not equivalent to the customer's actual house voice; TCJ must know both when copy is wrong and when it is usable but still needs a light house-voice transformation"
     },
     "design_principles": {
       "reasoning_first": true,
       "sophisticated_not_complicated": true,
-      "use_as_is_is_success": true,
-      "do_not_revise_for_optional_style_preference": true,
-      "one_material_problem_one_instruction": true,
-      "do_not_retune_reviewed_cases_to_force_agreement": true
-    },
-    "current_research_architecture": {
-      "topology": "mandatory_protected_evidence_v2_1_with_selective_editor_rewrite_gate",
-      "semantic_taxonomy": "TCJ-SEMANTIC-TAXONOMY-ANSWERS-r127",
-      "methodology_pack": "TCJ-METHODOLOGY-BFF-v1.2-research",
-      "context_retriever": "TCJ-CONTEXT-RETRIEVER-v1.5-research",
-      "initial_protected_evidence": "TCJ-MANDATORY-PROTECTED-EVIDENCE-v11-NEGATIVE-FIRST-RESEARCH",
-      "candidate_specific_exception_rescue": "TCJ-LICENSED-WEIRDNESS-RESCUE-v1",
-      "professional_role_for_answers_bff": "senior_Thai_magazine_and_conversation_editor",
-      "raw_private_rows_to_external_model": false,
-      "raw_private_examples_to_external_model": false,
-      "bounded_non_reconstructive_evidence_only": true
+      "do_not_retune_reviewed_cases_to_force_agreement": true,
+      "good_generic_bff_is_not_house_voice": true,
+      "preserve_good_writer_content": true,
+      "avoid_mandatory_full_recomposition": true
     },
     "rollback": {
       "available": true,
       "rewrite_runtime": "tcj-rewrite-lift-semantic-gemini35-worker-v4",
       "worker_version": 1,
       "worker_sha256": "813f6b91cd080ae125afd834eaaaa74c5a9ebb08fbe0e733517423cf70565c41",
-      "state": "ACTIVE_UNTOUCHED",
-      "note": "v5 was built in obsolete worker slots; no v4 worker/source/output/hash/human evidence was mutated"
+      "state": "ACTIVE_UNTOUCHED"
     },
     "development_evidence": {
       "rewrite_lift_v4": {
         "status": "frozen",
-        "source_bank": "TCJ-REWRITE-LIFT-SEMANTIC-SKELETON-BANK-2026Q3-v4",
-        "human_manifest_sha256": "4b3bfad5efc653d5584b3140eeb2b61cdc89267fdb1e331892ebbdb0df5ead1c",
         "cases": 12,
         "baseline_preferred": 6,
         "mandatory_tcj_preferred": 2,
         "ties": 3,
         "neither": 1,
-        "interpretation": "mandatory editorial guidance over-intervened relative to already-strong Gemini BFF rewriting; no material rewrite-lift claim"
+        "human_manifest_sha256": "4b3bfad5efc653d5584b3140eeb2b61cdc89267fdb1e331892ebbdb0df5ead1c",
+        "interpretation": "full pre-rewrite TCJ guidance transferred recognizable house voice but often over-directed and elaborated"
       },
       "selective_editor_v5": {
-        "status": "ACTIVE_NATIVE_HUMAN_REVIEW",
+        "status": "FROZEN_NATIVE_HUMAN_REVIEW_COMPLETE",
         "source_bank": "TCJ-SELECTIVE-EDITOR-SOURCE-BANK-2026Q3-v5",
-        "source_bank_id": 15,
         "source_manifest_sha256": "d7dfaa5488cc6cd80dd16200e32249849c50f74d21255a98c55156a0d5a68187",
         "experiment_key": "TCJ-SELECTIVE-EDITOR-GEMINI35-v5",
         "model": "gemini-3.5-flash-lite",
         "cases": 12,
-        "generation_complete": 12,
-        "terminal_failures": 0,
         "tcj_use_as_is": 12,
         "tcj_revise": 0,
-        "identical_selective_outputs": 12,
-        "selective_worker_slot": "tcj-rewrite-lift-neutral-gemini35-worker-v3",
-        "selective_worker_slot_version": 2,
-        "selective_worker_sha256": "172117389d4bc925d0c378c5d82fc806b091d115194d65478c9f2e90f5a5ea07",
+        "human_use_as_is": 1,
+        "human_revise": 11,
+        "correct_non_intervention": 1,
+        "correct_intervention": 0,
+        "missed_interventions": 11,
+        "unnecessary_interventions": 0,
         "human_protocol": "TCJ-SELECTIVE-EDITOR-HUMAN-REVIEW-2026Q3-v5",
-        "human_review_url": "https://flipgazine.pages.dev/tcj-selective-editor-review.html",
-        "human_review_state": "reviewing_0_of_12",
-        "human_question": "Would you publish this exact finished Gemini draft in Answers BFF without changing it?",
-        "human_choices": ["use_as_is", "revise"]
-      },
-      "selective_v4_regression": {
-        "role": "retrospective_diagnostic_only_not_causal_not_tuning_bank",
-        "experiment_key": "TCJ-SELECTIVE-EDITOR-V4-BASELINE-REGRESSION-v5",
-        "cases": 12,
-        "use_as_is": 11,
-        "revise": 1,
-        "single_revision": "SS-011 literal typo หลร -> หล่อ; human prior preference was tie",
-        "missed_known_neither": "SS-004",
-        "left_prior_tcj_preference_cases_unchanged": ["SS-007", "SS-010"],
-        "interpretation": "selective gate is conservative; pairwise preference wins alone are not grounds to loosen it; active human publishability gate will determine missed-intervention rate"
+        "human_manifest_sha256": "e2a2293ac467edef834b7cf6484985823905035239d371b147e86af5a496cded",
+        "frozen_at_utc": "2026-08-24T02:08:43.350902Z",
+        "only_human_use_as_is_case": "SEL-010",
+        "interpretation": "binary USE_AS_IS/REVISE gate is too conservative and confuses competent generic Gemini BFF prose with finished Answers house voice"
       }
     },
-    "next_action": "NATIVE_HUMAN_GATE: review 12 finished Gemini drafts at tcj-selective-editor-review.html. Choose USE AS IS if the exact draft is publishable even if a nicer alternative could exist; choose NEEDS REVISION only if something must actually change. TCJ decisions are hidden. After 12/12 freeze the human manifest and compare use_as_is/revise directly. Do not open Qualification 2.0 or spend paid frontier credits.",
+    "candidate_next_concept_not_implemented": {
+      "states": ["SHIP", "VOICE_POLISH", "REVISE"],
+      "ship": "already publishable and genuinely belongs in the customer's house voice",
+      "voice_polish": "meaning and social judgment are usable but output still feels generic/model-like; preserve content and apply smallest house-voice transformation",
+      "revise": "material semantic, pragmatic, register, factual or composition defect; correct the problem before voice finishing",
+      "constraint": "do not implement until the plain-language contract is agreed; then validate on a fresh bank rather than tuning v5 cases"
+    },
+    "next_action": "REASONING_GATE: agree on the simplest v6 SHIP / VOICE_POLISH / REVISE contract and how a light voice pass must preserve content without v4-style elaboration. Once concept is settled, implementation becomes a Codex-suitable task. Do not touch Qualification 2.0 or paid frontier credits.",
     "frontier_paid_budget": {
       "status": "reserved_for_post_freeze_authority_research_only",
       "openai_usd_remaining": 1.82,
