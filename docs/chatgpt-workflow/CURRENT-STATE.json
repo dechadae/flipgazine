@@ -1,6 +1,6 @@
 {
-  "schema_version": 23,
-  "as_of": "2026-08-24T19:05:47+07:00",
+  "schema_version": 24,
+  "as_of": "2026-08-24T19:22:04+07:00",
   "scope": "repository_documentation_checkpoint",
   "live_state_independently_reverified": true,
   "canonical_supabase_project": "sjpvhgxacsiorrtijqua",
@@ -8,11 +8,11 @@
   "tcj": {
     "production_authority": false,
     "authority_state": "NONE_development_only",
-    "current_phase": "session_replica_writer_feasibility_bootstrap",
+    "current_phase": "session_replica_writer_native_human_gate",
     "human_gold_authoritative": true,
-    "active_phase_checkpoint": "docs/chatgpt-workflow/ANSWERS-TCJ-ROLE-WRITER-FEASIBILITY-FAILURE-AND-SESSION-REPLICA-PIVOT-20260824.md",
+    "active_phase_checkpoint": "docs/chatgpt-workflow/ANSWERS-TCJ-SESSION-REPLICA-WRITER-HUMAN-GATE-20260824.md",
     "reference_architecture": {
-      "conceptual_memory": "pinned_safe_canonical_git_repository",
+      "conceptual_memory": "pinned_repository_memory_full_local_git_or_hosted_safe_view",
       "empirical_memory": "bounded_private_supabase_evidence",
       "private_memory_addressing": "focus_normalization_plus_reachability",
       "reasoning_engine": "capable_replaceable_llm",
@@ -22,89 +22,87 @@
       "tcj_rewrites_directly": false,
       "methodology_pack_role": "portable_compiled_fallback_not_reference_brain"
     },
-    "repo_reference_bootstrap_v1": {
-      "status": "FROZEN_IMMUTABLE_HISTORY",
-      "pinned_commit_sha": "47349851f4d2655bcb6d831538b4ddc5645a815e",
-      "snapshot_key": "TCJ-REPO-REFERENCE-BOOTSTRAP-20260824-47349851",
-      "snapshot_manifest_sha256": "0cf0973ffa6df63b40305c87645c106a072ec6bffa90174f5acb0ed2cab1c09e",
-      "file_count": 3,
-      "total_bytes": 31007,
-      "raw_private_evidence_exported": false,
-      "reference_judge_worker": "tcj-gemini-focus-exception-pee9-worker-v2",
-      "reference_judge_worker_version": 2,
-      "reference_judge_worker_sha256": "750b995d303aed39fe07fa806467e5f3cb4fae4ae0693e1219630bc921b3b62c"
-    },
-    "role_writer_feasibility_pilot_v1": {
+    "closed_role_writer_feasibility_v1": {
       "status": "FROZEN_FAILED_WRITER_FEASIBILITY",
-      "evidence_set_id": 19,
-      "set_key": "TCJ-ROLE-WRITER-FEASIBILITY-SOURCE-BANK-2026Q3-v1",
       "source_manifest_sha256": "42fe22fa2c0c7b4be43d45fba087c629627e1ff78fce928156abb59643db7e07",
       "human_manifest_sha256": "97c372791de1f4af77950f5b100efa8c8b0956efa5bced19f4de5cd48a4270e1",
       "human_ship": 0,
       "human_revise": 8,
-      "fresh_cases": 8,
-      "distinct_phenomena": 8,
-      "exact_prior_hash_overlap": 0,
-      "output_hash_mismatch": 0,
+      "tcj_exposed": false,
+      "interpretation": "persona-only Gemini produced performed BFF caricature; never reuse these cases for evaluator scoring"
+    },
+    "session_replica_writer_v1": {
+      "status": "ACTIVE_NATIVE_HUMAN_GATE",
+      "source_bank_id": 21,
+      "source_bank_key": "TCJ-SESSION-REPLICA-WRITER-SOURCE-BANK-2026Q3-v1",
+      "source_manifest_sha256": "c2516eb9b1214fc5175ff95e36811a92fcdd97a870d959c3f13fbcb4db01d3f0",
+      "fresh_cases": 6,
+      "distinct_phenomena": 6,
+      "prior_hash_overlap": 0,
       "tcj_exposure_prohibited": true,
       "tcj_exposed": false,
       "writer_model": "gemini-3.5-flash-lite",
-      "writer_prompt_sha256": "fa1d708093e2903fb42fb932a808543d342c76120964891b8fa758523a11aa56",
-      "generation_complete": 8,
-      "terminal_failures": 0,
-      "provider_errors": 0,
-      "http_429": 0,
-      "transport_errors": 0,
-      "diagnostic_interpretation": "role prompt produced performed BFF caricature: forced intimacy/slang, stretched vowels, camp/emojis, generic reassurance, extra scaffolding and unsupported additions. Do not retune/reuse these cases.",
-      "isolation_rule": "Never expose these eight cases to TCJ or reuse them for evaluator scoring."
-    },
-    "session_replica_writer_hypothesis": {
-      "status": "ACTIVE_BUILD",
-      "goal": "reproduce useful project/session conditioning through externalized memory rather than persona prompting",
-      "writer_inputs": [
-        "fresh scenario and source meaning",
-        "pinned expanded safe canonical Git snapshot",
-        "bounded focus/reachability native-human findings",
-        "minimal non-caricaturing task instruction"
-      ],
-      "writer_exclusions": [
-        "hidden qualification material",
-        "raw private corpus rows",
-        "nearest proprietary full examples",
-        "secrets/provider credentials",
-        "stereotyped BFF/slang performance instruction"
-      ],
-      "next_gate_size": "6_to_8_fresh_cases",
-      "feasibility_cases_may_score_tcj": false
-    },
-    "closed_development_evidence": {
-      "v1_role_conditioned_writer": {
-        "experiment": "TCJ-REWRITE-LIFT-GEMINI35-v1",
-        "human_result": {"tcj_wins": 2, "baseline_wins": 1, "ties": 13, "neither": 0},
-        "baseline_avg_chars": 157.6,
-        "interpretation": "historical signal that simple role could be competitive, but fresh 0/8 feasibility shows it is not a sufficient portable writer architecture"
+      "writer_prompt_sha256": "109edee6839af516ab1b24891fdc743dfe243d911b91834d2f492946563333b3",
+      "generation_settings": {"temperature": 0.3, "max_output_tokens": 180},
+      "repo_memory": {
+        "hosted_safe_memory_file": "docs/chatgpt-workflow/ANSWERS-TCJ-SESSION-REPLICA-WRITER-SAFE-MEMORY-V1.md",
+        "memory_file_commit": "2b3ac6d2705c0706d7fdefdfeb31868570bbe2dc",
+        "snapshot_key": "TCJ-REPO-SESSION-REPLICA-WRITER-20260824-757a0690",
+        "snapshot_source_commit": "2b3ac6d2705c0706d7fdefdfeb31868570bbe2dc",
+        "snapshot_manifest_sha256": "1c788bec1f3f18509aa652387043647749abbfd796915c360b3e089ad2309f35",
+        "snapshot_files": 2,
+        "snapshot_bytes": 28434,
+        "private_server_full_git_checkout_remains_reference_option": true
       },
-      "v7": {
-        "status": "FROZEN_FAILED_DIAGNOSTIC",
-        "source_manifest_sha256": "b487efa82f88f295d825d2b12e300b43ab25075423a494b048ca275aee0208ba",
-        "human_manifest_sha256": "b2c32f637afd14fdefea89f7f293bfe48b39f25edc879bc88b43c87ebb930f76",
-        "human_ship": 1,
-        "human_revise": 23,
-        "tcj_ship": 16,
-        "tcj_revise": 8,
-        "missed_revisions": 15,
-        "agreement_pct": 37.5,
-        "interpretation": "poor writer simulation plus inconsistent false-SHIP behavior; never retune v7"
-      }
+      "private_writer_context": {
+        "function": "private.tcj_writer_context_projection_v1",
+        "contract": "TCJ-WRITER-CONTEXT-PROJECTION-v1-research",
+        "focus_reachability_substrate": true,
+        "raw_evidence_exported": false,
+        "raw_examples_exported": false,
+        "trial_context_hashes_frozen_before_generation": true
+      },
+      "worker": {
+        "slot": "tcj-rewrite-lift-neutral-gemini35-worker-v3",
+        "active_version": 8,
+        "active_sha256": "c3f7f272a759abb3808cc7562c1efa853f57d30b2f7e7a32df6bbc333aa04cd7",
+        "failed_role_only_version": 6,
+        "pre_provider_hash_incident_version": 7,
+        "incident": "writer_context_hash_serialization_mismatch_v7",
+        "incident_provider_request_sent": false
+      },
+      "generation": {
+        "complete": 6,
+        "target": 6,
+        "terminal_failures": 0,
+        "provider_attempts_complete": 6,
+        "http_429": 0,
+        "tcj_exposed": 0,
+        "output_hash_mismatch": 0,
+        "frozen_context_hash_mismatch": 0,
+        "average_chars": 79.5,
+        "min_chars": 49,
+        "max_chars": 107
+      },
+      "human_review": {
+        "protocol_id": 2,
+        "protocol_key": "TCJ-SESSION-REPLICA-WRITER-HUMAN-REVIEW-2026Q3-v1",
+        "state": "reviewing_0_of_6",
+        "manifest_sha256": null,
+        "review_url": "https://flipgazine.pages.dev/tcj-session-replica-writer-review-v1.html",
+        "review_api": "tcj-rewrite-lift-hard-review-v2",
+        "review_api_version": 7,
+        "review_api_sha256": "2a24bb02d36ffa450f57ebe540b28e2a7ddc679f44fbe2a8b44e719a172c0ea2",
+        "page_sha256": "d5c5fdc8754d467b95f9fbef35fc4b6f73bf8ac2a575b654d5ad15ee7ee23d65",
+        "controller_sha256": "a07e09efd967288c84072ef19ea834bd5c073a5fb509c397e8bb899c23d71ce8"
+      },
+      "isolation_rule": "Freeze the complete six-case human manifest before inspecting SHIP/REVISE distribution or reading outputs diagnostically. Never expose these six cases to TCJ or reuse them for evaluator scoring."
     },
-    "next_action": "AUTONOMOUS_BUILD: create and freeze an expanded safe repository snapshot from the post-failure canonical Git commit; preserve hidden qualification/raw corpus/secrets exclusions. Build a dedicated session-replica writer context using that repo memory plus bounded focus/reachability native-human findings and a minimal non-caricaturing instruction. Create 6-8 fresh zero-overlap cases, freeze all inputs before generation, generate sequentially, then stop only at the new native-human exact-copy SHIP/REVISE gate. Do not proceed to evaluator A/B/C unless this fresh writer gate demonstrates viability.",
+    "next_action": "NATIVE_HUMAN_GATE: review all 6 raw session-replica Gemini drafts at tcj-session-replica-writer-review-v1.html. SHIP only if the exact copy is publishable unchanged; REVISE for any meaningful edit including shortening. Do not balance labels. After 6/6, freeze/hash the human manifest before interpreting results. If writer viability is demonstrated, create a separate fresh A/B/C evaluator bank; otherwise preserve this as failed diagnostic evidence and stop evaluator progression.",
     "protected_historical_authority": {
       "qualification_2_0": {
         "protocol_key": "TCJ-QUALIFICATION-2.0-2026Q3-v1",
         "status": "human_frozen",
-        "unique_pair_count": 24,
-        "review_click_count": 28,
-        "consistency_repeat_count": 4,
         "development_model_exposure_allowed": false,
         "machine_exposed_at": null,
         "human_manifest_sha256": "07a25c08b331c215bf6a7378665726c376045bcb9d547d3cd21eaca22b51428d",
