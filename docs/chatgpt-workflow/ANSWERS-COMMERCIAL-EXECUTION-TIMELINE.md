@@ -1,8 +1,8 @@
 # The Book of Answers — Commercial Execution Timeline
 
-**Status:** ACTIVE MASTER EXECUTION PLAN — OUTREACH ACTIVE · B2-0041–0060 CORPUS CRITICAL PATH · TCJ ARCHITECTURE v2.1 / GEMINI-CENTERED REFINEMENT ACTIVE  
+**Status:** ACTIVE MASTER EXECUTION PLAN — OUTREACH ACTIVE · B2-0041–0060 CORPUS CRITICAL PATH · TCJ FOOTING-FIRST / REWRITE-CAPABLE R&D ACTIVE  
 **Created:** 17 August 2026  
-**Reconciled:** 23 August 2026 · 20:05 ICT  
+**Reconciled:** 24 August 2026 · 20:16 ICT  
 **Project:** Flipgazine / The Book of Answers  
 **Repository:** `dechadae/flipgazine`  
 **Supabase:** `sjpvhgxacsiorrtijqua`
@@ -15,10 +15,10 @@
 - Batch 2 production: `ANSWERS-BATCH2-CORPUS-ROUTING-REACHABILITY-IMPLEMENTATION-REPORT.md`
 - Human-first authority: `ANSWERS-BATCH2-HUMAN-FIRST-REVIEW-CORRECTION.md`
 - Buyer export authority: `ANSWERS-BATCH2-BUYER-DATA-EXTRACTION-SPEC.md`
-- TCJ final product topology: `ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-V2-20260823.md`
-- Mandatory protected-evidence amendment: `ANSWERS-TCJ-MANDATORY-PROTECTED-EVIDENCE-ARCHITECTURE-AMENDMENT-20260823.md`
-- Final-product roadmap: `ANSWERS-TCJ-ROADMAP-TO-FINAL-COMMERCIAL-PRODUCT-20260823.md`
-- Free-model finalist selection: `ANSWERS-TCJ-FREE-MODEL-FINALIST-SELECTION-20260823.md`
+- TCJ current development checkpoint: `ANSWERS-TCJ-FOOTING-FIRST-REWRITE-CAPABLE-ARCHITECTURE-RESET-20260824.md`
+- TCJ linguistic authority: `ANSWERS-TCJ-CONVERSATIONAL-FOOTING-STANCE-AND-DISCOURSE-ARCHITECTURE-20260824.md`
+- TCJ commercial architecture: `ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-V3-FOOTING-FIRST-REWRITE-CAPABLE-20260824.md`
+- Register/profile strategy: `ANSWERS-TCJ-REGISTER-DIFFICULTY-AND-BFF-STRESS-TEST-20260824.md`
 - Commercial-use boundary: `ANSWERS-TCJ-COMMERCIAL-USE-AND-PROVENANCE-BOUNDARY.md`
 
 Newest owning authority wins on conflict. Integrity gates and frozen native-human judgments outrank calendar targets.
@@ -27,21 +27,21 @@ Newest owning authority wins on conflict. Integrity gates and frozen native-huma
 
 # 1. Executive status
 
-The corpus track has **not advanced** since the previous reconciliation. Live Supabase independently verifies revision **127**, **40** Batch 2 answer mappings, **2** promotions and **2** buyer-export snapshots. B2-0041–0060 therefore remains the active corpus critical path.
+The corpus track has **not advanced** since the previous reconciliation. Live Supabase independently verifies revision **127**, **988 active answers**, **40** Batch 2 answer mappings, **2** promotions and **2** buyer-export snapshots. B2-0041–0060 therefore remains the active corpus critical path.
 
-TCJ has materially advanced since 22 August. Qualification v1.1 remains immutable historical evidence: its three candidates were `research_only` and it granted no production authority. The project has since adopted the governing **TCJ Architecture v2.1** with **mandatory protected evidence**, selected **Gemini 3.5 Flash Lite** as the development reference judge from free-model finalist testing, and adopted a final commercial-product roadmap. Gemini is selected for refinement only: it is **not frozen, qualified or production authority**.
+TCJ has materially changed direction on 24 August. The previous Architecture v2.1 / Gemini-centered refinement sequence is superseded as the active development plan by a **footing-first, rewrite-capable native-editor architecture**. Production authority remains **NONE**. The governing linguistic rule is **conversational footing first; language surface second**. Task modes, focus tags, register labels and routing enums remain engineering instrumentation only and must not substitute for reconstruction of speaker, addressee, relationship, hierarchy, stance, implication and quoted/reported/proposed speech.
 
-The current TCJ successor runtime is `TCJ-RUNTIME-ANSWERS-BFF-ARCHV2-v2-MANDATORY-PEE`, research-active. It requires one initial protected-evidence call and permits at most one additional targeted call; raw private evidence is not exposed to the writer or judge. Release policy remains independent from dimension-score calibration.
+A production-qualified TCJ must now demonstrate the complete loop: **understand → judge → diagnose → rewrite → recheck → release**. A verdict-only customer surface may hide rewriting, but the underlying runtime cannot qualify without demonstrated meaning-preserving rewrite competence.
 
-Qualification 2.0 has completed its native-human freeze (24 unique comparisons, 28 clicks, four hidden reversed repeats, all four consistent), but because the evaluator topology changed afterward it **cannot certify the mandatory-PEE successor**. It is preserved as human-frozen evidence and must not be used to tune the development model. A new hidden authority instrument will be constructed only after the refined successor runtime is finalized and frozen.
+The role-only Gemini writer feasibility experiment is frozen failed evidence (**0 SHIP / 8 REVISE**). Session-replica writer v1 is invalidated for ambiguous speaker/addressee contract. The binary task-mode v2 replacement was stopped before provider generation and its empty hosted snapshot retired. None of these may be repurposed as evaluator authority evidence.
 
-Paid OpenAI/xAI credits remain reserved for the post-freeze authority experiment only. No paid development calls are allowed.
+There is deliberately **no artificial TCJ release deadline**. Two research tracks now proceed in parallel: formal enterprise Thai as a potentially lower-variance early qualification surface, and Answers BFF as the high-variance stress test. Paid OpenAI/xAI development remains prohibited without the later authority gate and explicit approval.
 
 ---
 
 # 2. Planned vs actual reconciliation
 
-| Workstream | Verified state at 23 Aug 2026 | Timeline action |
+| Workstream | Verified state at 24 Aug 2026 | Timeline action |
 |---|---|---|
 | Private-server security | Complete | DONE |
 | Voice benchmark + editor-grounded calibration | Complete | DONE |
@@ -54,15 +54,19 @@ Paid OpenAI/xAI credits remain reserved for the post-freeze authority experiment
 | Thai/SEA outreach | first-contact outreach sent | ACTIVE |
 | B2-0041–0060 | active clean unit | ACTIVE · CORPUS CRITICAL PATH |
 | Qualification v1.1 | complete; 3 research-only Passports | DONE · HISTORICAL EVIDENCE |
-| Architecture v2.1 mandatory PEE | governing final topology adopted | DONE · ARCHITECTURE |
-| Free-model finalist selection | Gemini 3.5 Flash Lite selected for development refinement | DONE · DEVELOPMENT SELECTION |
-| Qualification 2.0 human gate | human-frozen; cannot certify changed successor topology | DONE · PRESERVE / NO TUNING |
-| Gemini-centered TCJ refinement | exposed development evidence; PEE/judge/release containment | ACTIVE · TCJ CRITICAL PATH |
-| Fresh development validation | 24–32 unique cases after refinement | NEXT |
-| Candidate runtime freeze | follows successful development validation | DEPENDENT |
-| New hidden native-human authority qualification | only after candidate freeze | FUTURE HUMAN GATE |
-| Paid OpenAI/xAI causal frontier experiment | post-freeze only; explicit approval before dispatch | BLOCKED UNTIL AUTHORITY GATE |
-| Plug-and-play / BYOJ-BYOK / private server productization | after authority decision | DEPENDENT |
+| Qualification 2.0 human gate | human-frozen protected historical authority | DONE · PRESERVE / NO TUNING |
+| Architecture v2.1 / Gemini-centered refinement | superseded by footing-first reset | CLOSED AS PRIOR R&D PHASE |
+| Role-only Gemini writer feasibility v1 | 0 SHIP / 8 REVISE | DONE · FROZEN FAILED EVIDENCE |
+| Session-replica writer v1 | task design ambiguous | INVALIDATED · PRESERVE |
+| Session-replica binary writer v2 | stopped before provider generation | STOPPED · SUPERSEDED |
+| Footing-first linguistic architecture | governing R&D architecture adopted | DONE · ARCHITECTURE |
+| Rewrite-capable TCJ qualification contract | complete loop required | DONE · PRODUCT REQUIREMENT |
+| Native-human discourse/footing analysis set | next experiment before new writer/evaluator bank | NEXT · TCJ CRITICAL PATH |
+| Track A formal-enterprise Thai | lower-variance profile research | ACTIVE R&D TRACK |
+| Track B Answers BFF | high-variance stress-test research | ACTIVE R&D TRACK |
+| Fresh writer/evaluator/rewrite authority banks | only after discourse instrumentation is validated | DEPENDENT |
+| Paid OpenAI/xAI authority experiment | post-freeze only; explicit approval before dispatch | BLOCKED UNTIL AUTHORITY GATE |
+| Plug-and-play / BYOJ-BYOK / private server productization | after scoped authority is proven | DEPENDENT |
 | B2R clean supplemental 20 | still required | KEEP |
 | Final clean corpus analysis/package | after clean 1,000 freeze | DEPENDENT |
 
@@ -110,8 +114,6 @@ GENERATE / FREEZE NEXT 20
 
 Short form: **REVIEW 20 → ENGLISH → ENRICH → VALIDATE → PROMOTE → VERIFY → EXPORT PREVIEW → NEXT 20**.
 
-### Standing preparation-leak rule
-
 If machine evidence is exposed before a row's first human decision: stop the row; retire the exposed version from active production; preserve append-only provenance; create and freeze a genuinely new scenario; regenerate sealed evidence; verify zero prior human decisions/exposure; only then return the clean replacement to review. Never relabel an exposed row as clean.
 
 ---
@@ -138,48 +140,39 @@ The technical first 20 are never converted into clean metric rows. B2R is a sepa
 
 # 6. TCJ product/research track
 
-## Current governing topology
+## Current governing architecture
 
 ```text
-Architecture                       v2.1 mandatory protected evidence
-successor runtime                  TCJ-RUNTIME-ANSWERS-BFF-ARCHV2-v2-MANDATORY-PEE
-runtime status                     research_active
-reference judge                    google / gemini-3.5-flash-lite
-development status                 selected for refinement only
 production authority               NONE
-mandatory initial PEE calls        1
-max total PEE calls                2
-raw private evidence to writer     NO
-raw private evidence to judge      NO
-release policy                     independent from dimension-score calibration
-buyer provider key/usage default   buyer-owned
+current phase                       footing-first rewrite-capable linguistic R&D
+conceptual memory                   pinned repository memory / safe hosted view
+empirical memory                    bounded private Supabase evidence
+private-memory addressing           focus + discourse reachability
+reasoning engine                    capable replaceable LLM
+linguistic order                    conversational footing first; language surface second
+TCJ role                            native senior editor
+release contract                    SHIP or REVISE
+rewrite capability                  mandatory for qualification
+qualified loop                      understand → judge → diagnose → rewrite → recheck → release
 ```
 
-Gemini won the development finalist comparison on same-case human agreement, large-error profile, safety containment and protocol completion. This is **not** a production qualification.
+The next experiment is **not another writer bank**. First build a small native-human discourse/footing analysis set containing meaningful speaker, addressee, hierarchy, stance, implication and quoted/reported/proposed-speech shifts. Annotate qualitatively against the nine footing-first questions, then test whether a fresh repo-connected model reconstructs the same social scene. Use disagreements to refine discourse reachability and rewrite semantics before creating fresh writer/evaluator/rewrite experiments.
 
-Priority refinement targets are the two serious Gemini false-ACCEPT cases (`Q3-026`, `Q3-043`) and the underlying failure classes: PEE false reassurance, structural/line-break completeness, evidence-family routing, over-positive judge calibration, and release-policy containment. Development may use the already exposed evidence bank. Qualification 2.0 may not be used for tuning.
-
-## TCJ final-product sequence
+Maintain two complementary tracks:
 
 ```text
-Gemini-centered TCJ refinement
-→ fresh development validation (target 24–32 unique cases)
-→ candidate runtime freeze
-→ new closed native-human authority qualification
-→ paid OpenAI/xAI causal frontier experiment
-→ authority decision
-→ plug-and-play API + batch API
-→ BYOJ/BYOK + private-server edition
-→ customer Voice Profiles + local retrieval/protected evidence
-→ controlled versioned quality-improvement loop
-→ operator control plane
-→ production security hardening
-→ commercial packaging and release
+Track A — formal enterprise Thai
+bank / telecom / workplace / customer service
+lower conversational variance; potentially earlier scoped qualification
+
+Track B — Answers BFF
+high-variance conversational stress test
+footing / stance / omission / humor / intimacy / code-switching
 ```
 
-The paid frontier experiment must compare: **A)** frontier model alone with neutral six-dimension schema; **B)** TCJ methodology/profile/context without private PEE; **C)** full TCJ with mandatory bounded PEE and independent release policy. Primary scores freeze before post-primary diagnostics. OpenAI/xAI spend requires explicit user approval immediately before dispatch and live re-verification of balance, model ID, pricing, request count and projected spend.
+Profile-scoped qualification is allowed only if the **complete TCJ loop** passes within that declared profile. Formal-enterprise success does not authorize universal Thai or BFF claims.
 
-TCJ remains a parallel product track and must not weaken or reorder Batch 2 human-first production.
+Qualification 2.0 remains protected human-frozen historical authority and may not be exposed for development tuning. Paid frontier development remains disallowed.
 
 ---
 
@@ -191,18 +184,19 @@ TCJ remains a parallel product track and must not weaken or reorder Batch 2 huma
 | **18 Aug** | ✅ Voice benchmark/calibration; B2 infrastructure/base freeze; technical first20 cycle |
 | **19 Aug** | ✅ OpenAI + Thai/SEA first-contact outreach; clean B2-0021–0040 cycle; revision 127 / buyer snapshot 2 |
 | **20–22 Aug** | ✅ TCJ multi-judge/control-plane research; Qualification v1.1 completed with all candidates research-only |
-| **23 Aug** | ✅ Architecture v2.1 mandatory-PEE topology adopted; free-model finalist testing reconciled; Gemini 3.5 Flash Lite selected for development refinement |
-| **23 Aug** | ✅ Qualification 2.0 native-human freeze preserved; declared non-authoritative for changed successor topology |
+| **23 Aug** | ✅ Architecture v2.1 mandatory-PEE phase and Gemini development selection; Qualification 2.0 human freeze preserved |
+| **24 Aug** | ✅ footing-first linguistic reset adopted; rewrite competence made mandatory; failed/invalidated writer experiments frozen; binary v2 build stopped before provider generation |
 | **Now — corpus** | complete B2-0041–0060 through unchanged human-first promotion/export cycle |
-| **Now — TCJ** | Gemini-centered refinement on exposed development evidence; no paid OpenAI/xAI calls |
-| **Next TCJ gate** | fresh 24–32-case development validation → candidate freeze |
-| **After candidate freeze** | construct new hidden authority instrument → native-human blind review/freeze → qualification |
-| **After authority qualification** | paid causal frontier experiment, within remaining credits and only after explicit approval |
-| **1 Sep** | B2R date remains a soft target only; do not force it ahead of verified corpus throughput |
+| **Now — TCJ** | build native-human discourse/footing analysis set; validate social-scene reconstruction; Track A enterprise + Track B BFF in parallel |
+| **Next TCJ gate** | refine discourse reachability/rewrite semantics from native-human disagreements |
+| **After instrumentation validation** | create fresh writing/evaluation/rewrite experiments with clean authority separation |
+| **After scoped candidate freeze** | construct new hidden authority instrument → native-human blind review/freeze → qualification of complete loop |
+| **After authority qualification** | paid causal frontier experiment only if still methodologically useful and explicitly approved |
+| **1 Sep** | B2R remains a soft target only; do not force it ahead of verified corpus throughput |
 | **After clean 1,000 freeze** | package-integrity verification + cross-batch/human↔machine analysis |
 | **After substantive completion** | commercial suite/data room refresh + substantive buyer updates |
 
-Former early-September package dates remain non-binding. Human throughput and integrity gates govern actual completion.
+There is **no TCJ release-date commitment**. TCJ may remain in native-human R&D for months. Human throughput and integrity gates govern actual completion.
 
 ---
 
@@ -226,23 +220,26 @@ B2-0041–0060 sealed evidence
 → substantive completion update
 ```
 
-## TCJ — parallel product path
+## TCJ — parallel R&D/product path
 
 ```text
-Gemini-centered refinement
-→ fresh development validation
-→ candidate runtime freeze
+native-human discourse/footing analysis set
+→ qualitative nine-question footing annotations
+→ fresh repo-connected social-scene reconstruction test
+→ refine discourse reachability + rewrite semantics from disagreements
+→ fresh writer/evaluator/rewrite experiments
+→ scoped candidate runtime freeze
 → fresh hidden native-human authority bank
 → blind human freeze
-→ successor qualification
-→ paid A/B/C frontier causal experiment
-→ authority decision
+→ complete-loop qualification: understand/judge/diagnose/rewrite/recheck/release
+→ scoped authority decision
+→ optional paid frontier causal experiment
 → API / BYOJ-BYOK / private-server productization
 → customer-profile improvement system
 → security + rollback + commercial release
 ```
 
-No Panel or production-authority claim is permitted unless the applicable future authority gates actually pass.
+No Panel, production-authority or universal-Thai claim is permitted unless the applicable future authority gates actually pass.
 
 ---
 
@@ -258,6 +255,6 @@ First-contact/private-evidence policy remains conservative: ordinary HTTPS/email
 
 # 10. Schedule-risk rule
 
-The dominant corpus risk remains native-human review throughput. The dominant TCJ risk is proving that the refined mandatory-PEE successor actually improves human agreement without false reassurance or over-positive release behavior.
+The dominant corpus risk remains native-human review throughput. The dominant TCJ risk has shifted upstream: **whether the system can reconstruct conversational footing and demonstrate genuinely better, meaning-preserving rewrites before evaluator qualification is attempted again**.
 
-Do not trade either integrity gate for a calendar date. Dates after the current checkpoints are working targets, not promises.
+Do not trade either integrity gate for a calendar date. Dates after the current checkpoints are working targets, not promises. The release question for TCJ is now explicitly: **does this behave like a genuinely useful native senior editor within its declared scope?** If not, continue research.
