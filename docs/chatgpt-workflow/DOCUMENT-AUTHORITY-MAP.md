@@ -1,221 +1,144 @@
 # ChatGPT Workflow — Document Authority Map
 
-**Checkpoint:** 24 August 2026, 06:48 Asia/Bangkok  
-**Purpose:** prevent historical TCJ plans, stopped runs, exposed-bank refinement loops and superseded validation instructions from being mistaken for current authority.
+**Checkpoint:** 24 August 2026, 17:16 Asia/Bangkok  
+**Purpose:** prevent stopped TCJ experiments, exposed development banks, superseded gates and stale next-actions from being mistaken for current authority.
 
 ## Read these first
 
-1. `CURRENT-STATE.json` — compact machine-readable live checkpoint.
-2. `ANSWERS-TCJ-REWRITE-LIFT-DEVELOPMENT-CHECKPOINT-20260824.md` — **active execution checkpoint and immediate human gate.**
-3. `ANSWERS-TCJ-MANDATORY-PROTECTED-EVIDENCE-ARCHITECTURE-AMENDMENT-20260823.md` — highest topology amendment: protected private evidence is required and remains bounded/non-reconstructive.
+1. `CURRENT-STATE.json` — machine-readable canonical checkpoint.
+2. `ANSWERS-TCJ-V7-COMMERCIAL-SIM-SELECTIVE-GATE-20260824.md` — **current execution checkpoint. Native-human v7 manifest is frozen; TCJ remains sealed until one post-sync unblind.**
+3. `ANSWERS-TCJ-MANDATORY-PROTECTED-EVIDENCE-ARCHITECTURE-AMENDMENT-20260823.md` — protected private evidence is mandatory and bounded/non-reconstructive.
 4. `ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-V2-20260823.md` — commercial product architecture where not superseded by later checkpoints.
 5. `ANSWERS-TCJ-METHODOLOGY-PACK-AND-CONTEXT-RETRIEVER-SPEC-20260823.md` — methodology/context specification.
-6. `ANSWERS-TCJ-ROADMAP-TO-FINAL-COMMERCIAL-PRODUCT-20260823.md` — roadmap to qualification and commercial release.
+6. `ANSWERS-TCJ-ROADMAP-TO-FINAL-COMMERCIAL-PRODUCT-20260823.md` — commercial roadmap.
 
-## Active product definition
+## Current product definition
 
-TCJ is not merely an evaluator. Evaluation is the feedback engine.
-
-Plain-language product loop:
+TCJ is a native-editor feedback engine, not merely a scalar evaluator.
 
 ```text
-draft
-→ TCJ understands what is wrong and why
-→ TCJ privately checks relevant language/voice evidence
-→ TCJ gives the model a short native-editor brief
-→ the same/customer model rewrites
-→ TCJ can check the rewrite again
-```
-
-The external writer/judge never needs raw private corpus rows, proprietary nearest examples, hidden qualification cases, row IDs or reconstructive evidence.
-
-For Answers BFF, the professional role is a **senior Thai magazine/conversation editor**. A customer Voice Profile can instead define a bank QA editor, hospitality editor, legal QA role, etc.
-
-## Current simplified architecture
-
-```text
-SCENARIO / DRAFT
-→ canonical focus normalization / reachability
-→ relevant private semantic neighborhood
-→ relevant methodology + Voice Profile
-→ negative-first bounded private evidence
-→ candidate-specific licensed-weirdness rescue when relevant
-→ professional native-editor reasoning
-→ usable / failed decision and/or concise rewrite brief
-→ customer/model rewrite
+customer model writes finished local-language copy
+→ TCJ decides whether the native editor would publish that exact copy unchanged
+→ SHIP or REVISE
+→ if REVISE, the same/customer model edits its current finished draft using the smallest useful bounded instruction
 → optional TCJ re-check
 ```
 
-Design rules:
+For Answers BFF, `SHIP` means exact-copy publication with no meaningful edit. Any meaningful shortening, restructuring, voice correction, semantic/pragmatic correction, stance/certainty correction, removal of generic/model-like elaboration or composition correction is `REVISE`.
 
-- reasoning first;
-- sophisticated ≠ complicated;
-- measurement verifies the reasoning rather than steering case-specific complexity;
-- code-switching is neutral by itself and must be judged for integration quality;
-- licensed weirdness only removes a false surface reason for rejection; it never proves the whole answer good;
-- `PASS/MINOR = usable`, `MAJOR/CRITICAL = failed`; exact adjacent-label agreement is secondary.
-
-## Development evidence already closed
-
-### Exposed 48-case evaluator regression
-
-Original Gemini development reference:
+## Current execution state — v7
 
 ```text
-39 / 48 band-correct = 81.25%
-false usable  = 5
-false failure = 4
-```
-
-Simplified focus-normalized/editor-role successor (`run 25`):
-
-```text
-44 / 48 band-correct = 91.67%
-false usable  = 2
-false failure = 2
-```
-
-Do **not** tune this exposed bank toward 48/48.
-
-### Fresh 24-case evaluator comparison
-
-Human-first bank was completed and frozen before Gemini exposure.
-
-Result:
-
-```text
-Gemini editor baseline   21 / 24 = 87.5%
-Full TCJ                 21 / 24 = 87.5%
-```
-
-TCJ fixed two baseline mistakes and introduced two different mistakes. This was correctly treated as **no net lift**, not as a win. The result motivated simpler negative-first evidence handling rather than another scoring layer.
-
-## Rewrite-lift v1 — frozen, not a material-lift claim
-
-Experiment: `TCJ-REWRITE-LIFT-GEMINI35-v1`
-
-Blind result across 16 fresh cases:
-
-```text
-TCJ wins      2
-baseline wins 1
-ties         13
-neither       0
-```
-
-Human review manifest:
-
-`427a6e71042804d8ca987819edad7d555c673539c28f63a338ae12432c30e877`
-
-Important limitation: both arms were already given a strong specialist BFF writer role and distilled voice rules. The baseline was therefore effectively **TCJ-lite**, so 2–1 must not be marketed as material rewrite uplift.
-
-Useful diagnostic example: baseline `RW-014` wrote **“Green flag” with a 🚩 red-flag emoji**. TCJ-guided output did not.
-
-## Rewrite-lift hard v2 — ACTIVE HUMAN GATE
-
-This is the current execution state.
-
-```text
-Source bank       TCJ-REWRITE-LIFT-HARD-SOURCE-BANK-2026Q3-v2
-Source manifest   fc76e21ad36a5d11685db3dd4aa16398bc817ba0882dd3a20a04a31e0ecd8d79
-Experiment        TCJ-REWRITE-LIFT-HARD-GEMINI35-v2
+Source bank       TCJ-SELECTIVE-EDITOR-SOURCE-BANK-2026Q3-v7
+Evidence set id   18
+Source manifest   b487efa82f88f295d825d2b12e300b43ab25075423a494b048ca275aee0208ba
+Experiment        TCJ-SELECTIVE-EDITOR-COMMERCIAL-SIM-GEMINI35-v7
 Model             gemini-3.5-flash-lite
-Cases             12
-Generation        12 / 12 complete
+Cases             24
+Generation        24 / 24 complete
 Terminal failures 0
-Obvious leakage   0
-Identical pairs   1 (legitimate tie candidate)
-Protocol          TCJ-REWRITE-LIFT-HARD-BLIND-REVIEW-2026Q3-v2
-Protocol id       2
-Review state      0 / 12
+Gemini HTTP 429   0
+Human protocol    TCJ-SELECTIVE-EDITOR-HUMAN-REVIEW-2026Q3-v7
+Human review      FROZEN 24 / 24
+Human SHIP        1
+Human REVISE      23
+Human manifest    b2c32f637afd14fdefea89f7f293bfe48b39f25edc879bc88b43c87ebb930f76
+TCJ distribution  SEALED
+Q2 exposure       null
+Paid frontier     locked
 ```
 
-Private review page:
+The native-human qualitative finding is part of the evidence: the v7 writer simulation produced generally poor, frequently severely overlong copy; some responses were three paragraphs. This is a design finding, not a reason to alter any reviewed case.
 
-`https://flipgazine.pages.dev/tcj-rewrite-lift-hard-review.html`
+### v7 pre-unblind interpretation
 
-### Why v2 is cleaner
+The 1/23 human class distribution means v7 is strongly imbalanced toward `REVISE`. Therefore v7 may be useful for measuring false-SHIP behavior, but by itself it is weak evidence that TCJ is truly **selective**—there are too few genuinely publishable writer outputs to demonstrate that TCJ reliably leaves good copy untouched.
 
-Both arms use the **same ordinary rewrite instruction**.
-
-Control:
-
-```text
-scenario + source draft → ordinary Gemini rewrite
-```
-
-TCJ:
-
-```text
-scenario + source draft
-→ Voice Profile / methodology / reachability / bounded private evidence
-→ short derived editorial brief
-→ same ordinary Gemini rewrite instruction
-```
-
-The control does **not** receive the specialist BFF role capsule or distilled TCJ voice rules for free.
-
-The 12 cases are deliberately subtle: valid weirdness that should survive, natural vs bad code-switching, pragmatic omission, stance, line-break delivery, register collision and social-concern reasoning.
+Do **not** repair this by balancing labels, rewriting reviewed cases, regenerating v7 or tuning TCJ against these 24 examples.
 
 ### Immediate next action
 
-1. User reviews all 12 A/B pairs blindly.
-2. Freeze the preference manifest.
-3. Unblind exactly once.
-4. Report `TCJ wins / baseline wins / ties / neither`.
-5. Inspect non-ties only for general product reasoning.
-6. **Do not retune these same 12 cases to force a TCJ win.**
-7. Decide whether rewrite lift is demonstrated strongly enough to freeze the candidate architecture, needs one principled correction, or remains a secondary capability claim.
+1. Human manifest is already frozen.
+2. Canonical GitHub synchronization is now complete.
+3. Unblind TCJ v7 exactly once.
+4. Report agreement and confusion matrix honestly.
+5. If the result is dominated by the bad writer baseline, classify v7 as diagnostic rather than qualification evidence.
+6. Any successor selective-editor test must use a completely fresh bank and should validate the writer baseline before TCJ is allowed to see the cases.
+7. Do not touch Qualification 2.0.
+8. Do not spend paid OpenAI/xAI development credits.
+
+## v6 — stopped before human review
+
+`TCJ-SELECTIVE-EDITOR-BINARY-GEMINI35-v6` is immutable diagnostic history, not active evidence.
+
+- source bank frozen before generation;
+- 12/12 generation completed;
+- native-human review count remained `0 / 12`;
+- v6 was stopped because its task construction strongly encouraged advice-like, over-explained responses, making the selective gate structurally weak;
+- hidden v6 TCJ decisions and provider evidence remain preserved;
+- the former v6 review page is retired and must not be reopened as an active gate.
+
+## v5 — frozen negative development evidence
+
+The v5 selective editor gate is closed historical evidence:
+
+```text
+TCJ SHIP     12
+TCJ REVISE    0
+Human SHIP    1
+Human REVISE 11
+```
+
+Interpretation: v5's REVISE definition was too narrow and accepted copy the native editor would still edit/shorten.
+
+## Earlier rewrite/evaluator evidence
+
+Earlier rewrite-lift, evaluator and exposed-bank experiments remain valid only for the claims stated in their own frozen checkpoints. They are not active next-action authority and must not be tuned further to improve their published scores.
+
+Important previously closed findings include:
+
+- exposed evaluator regression improved after focus-normalized/editor-role simplification but must not be tuned to 48/48;
+- fresh 24-case evaluator comparison showed no net lift (`21/24` baseline vs `21/24` full TCJ);
+- rewrite-lift v1 had `2 TCJ wins / 1 baseline win / 13 ties` but the control already contained substantial BFF guidance and therefore cannot support a strong causal uplift claim;
+- later rewrite tests motivated the simpler selective-editor architecture.
 
 ## Protected historical authority — Qualification 2.0
 
 ```text
-Protocol         TCJ-QUALIFICATION-2.0-2026Q3-v1
-Unique pairs     24
-Human clicks     28 / 28
-Hidden repeats   4 / 4 consistent
-Human manifest   07a25c08b331c215bf6a7378665726c376045bcb9d547d3cd21eaca22b51428d
-Threshold SHA    c9bd44181023471a961ddcce698e6c4141961573d4eae359ea73529ee12026e5
-Bank SHA         8e3d6c5fff4860f97bfbfcd8d69c46e5484da0d5c315ed6f4888d0061d09b7c8
+Protocol       TCJ-QUALIFICATION-2.0-2026Q3-v1
+Unique pairs   24
+Human clicks   28 / 28
+Hidden repeats 4 / 4 consistent
+Human manifest 07a25c08b331c215bf6a7378665726c376045bcb9d547d3cd21eaca22b51428d
+Bank SHA       8e3d6c5fff4860f97bfbfcd8d69c46e5484da0d5c315ed6f4888d0061d09b7c8
+Machine exposed_at null
 ```
 
 **Do not expose Qualification 2.0 to development models.** It is historical authority for an older topology and cannot certify the current successor.
 
-## Paid frontier budget — still locked
+## Paid frontier budget
 
-```text
-OpenAI remaining USD 1.82
-xAI remaining    USD 3.42
-Total            USD 5.24
-No top-up planned
-```
+Paid OpenAI/xAI calls remain reserved for a later post-freeze authority experiment. Development must remain on free resources unless the user explicitly changes that rule, and any paid dispatch requires an immediate live pricing/balance/request-count preflight plus explicit user approval.
 
-Do not use paid OpenAI/xAI during development. Paid calls remain reserved for the post-freeze authority experiment and require an immediate live pricing/balance/request-count preflight plus explicit user approval.
+## Historical/stopped runs
 
-## Historical/stopped documents and runs
+All older phase documents, v4/v5/v6 selective experiments, prior rewrite-lift gates, Qwen/GPT-OSS/Ox Alpha finalist runs and exposed development regressions are historical evidence unless a newer checkpoint explicitly promotes them.
 
-The following remain evidence/history, not active next-action authority:
-
-- `ANSWERS-TCJ-PHASE-B-FOCUS-PEE-EDITOR-ROLE-AND-FRESH-VALIDATION-20260823.md`
-- `ANSWERS-TCJ-MANDATORY-PEE-FREE-MODEL-TREATMENT-CHECKPOINT-20260823.md`
-- `ANSWERS-TCJ-FINAL-PRODUCT-IMPLEMENTATION-AND-QUALIFICATION-PLAN-V2-20260823.md`
-- `ANSWERS-TCJ-ARCHV2-REFERENCE-FREEZE-AND-QUALIFICATION2-HUMAN-GATE-20260823.md`
-- `ANSWERS-TCJ-LOW-TIER-JUDGE-TRANSFER-RESEARCH-CHECKPOINT-20260823.md`
-- `ANSWERS-TCJ-V17-QUALIFICATION-FAILURE-AND-CONTEXT-ENGINE-PIVOT-20260823.md`
-
-Stopped finalist runs remain stopped unless the user explicitly reopens them:
+Stopped finalist runs remain stopped unless explicitly reopened:
 
 - Qwen 3.6 27B run 7
 - GPT-OSS 20B run 9
 - Ox Alpha
 
-## Commercial sequence after the active gate
+## Commercial sequence from here
 
 ```text
-hard rewrite-lift blind review ← CURRENT
-→ decide/freeze candidate runtime
-→ construct new hidden native-human authority instrument
-→ final paid OpenAI/xAI causal frontier experiment
+v7 single unblind ← CURRENT NEXT ACTION
+→ decide whether v7 is diagnostic or supports selective-editor evidence
+→ if needed, build fresh writer-baseline-qualified selective test
+→ freeze candidate runtime only after native-human evidence supports it
+→ construct new hidden authority instrument
+→ final paid OpenAI/xAI causal frontier experiment (with explicit approval)
 → authority decision
 → plug-and-play API
 → private-server / BYOJ / BYOK edition
