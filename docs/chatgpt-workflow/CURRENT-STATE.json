@@ -1,6 +1,6 @@
 {
-  "schema_version": 24,
-  "as_of": "2026-08-24T19:22:04+07:00",
+  "schema_version": 25,
+  "as_of": "2026-08-24T19:46:00+07:00",
   "scope": "repository_documentation_checkpoint",
   "live_state_independently_reverified": true,
   "canonical_supabase_project": "sjpvhgxacsiorrtijqua",
@@ -8,19 +8,30 @@
   "tcj": {
     "production_authority": false,
     "authority_state": "NONE_development_only",
-    "current_phase": "session_replica_writer_native_human_gate",
+    "current_phase": "session_replica_writer_v2_explicit_speaker_contract_build",
     "human_gold_authoritative": true,
-    "active_phase_checkpoint": "docs/chatgpt-workflow/ANSWERS-TCJ-SESSION-REPLICA-WRITER-HUMAN-GATE-20260824.md",
+    "active_phase_checkpoint": "docs/chatgpt-workflow/ANSWERS-TCJ-BFF-SPEAKER-CONTRACT-CORRECTION-AND-SRW-V1-INVALIDATION-20260824.md",
+    "speaker_contract_authority": "docs/chatgpt-workflow/ANSWERS-TCJ-BFF-SPEAKER-AND-QUOTED-SPEECH-CONTRACT-20260824.md",
     "reference_architecture": {
       "conceptual_memory": "pinned_repository_memory_full_local_git_or_hosted_safe_view",
       "empirical_memory": "bounded_private_supabase_evidence",
       "private_memory_addressing": "focus_normalization_plus_reachability",
       "reasoning_engine": "capable_replaceable_llm",
-      "writer_contract": "session_replica_writer_uses_repo_memory_plus_bounded_native_evidence",
+      "writer_contract": "answers_bff_outer_voice_plus_explicit_optional_recipient_specific_quoted_speech",
       "tcj_role": "native_senior_release_editor",
       "release_contract": "SHIP_or_REVISE",
       "tcj_rewrites_directly": false,
       "methodology_pack_role": "portable_compiled_fallback_not_reference_brain"
+    },
+    "writer_speaker_contract": {
+      "outer_speaker": "ANSWERS_BFF",
+      "outer_addressee": "USER",
+      "task_modes": ["DIRECT_BFF_RESPONSE", "BFF_WITH_QUOTED_SCRIPT"],
+      "direct_mode_quote_required": false,
+      "quoted_script_mode_quote_required": true,
+      "quoted_script_default_speaker": "USER",
+      "quoted_register_rule": "recipient_and_context_specific_not_bff_by_default",
+      "review_rule": "outside_quote_is_BFF_voice; inside_quote_is_recipient_specific_speech; SHIP_applies_to_whole_answer"
     },
     "closed_role_writer_feasibility_v1": {
       "status": "FROZEN_FAILED_WRITER_FEASIBILITY",
@@ -31,74 +42,33 @@
       "tcj_exposed": false,
       "interpretation": "persona-only Gemini produced performed BFF caricature; never reuse these cases for evaluator scoring"
     },
-    "session_replica_writer_v1": {
-      "status": "ACTIVE_NATIVE_HUMAN_GATE",
+    "invalidated_session_replica_writer_v1": {
+      "status": "INVALIDATED_TASK_DESIGN",
       "source_bank_id": 21,
       "source_bank_key": "TCJ-SESSION-REPLICA-WRITER-SOURCE-BANK-2026Q3-v1",
       "source_manifest_sha256": "c2516eb9b1214fc5175ff95e36811a92fcdd97a870d959c3f13fbcb4db01d3f0",
-      "fresh_cases": 6,
-      "distinct_phenomena": 6,
-      "prior_hash_overlap": 0,
-      "tcj_exposure_prohibited": true,
+      "review_protocol_id": 2,
+      "review_protocol_key": "TCJ-SESSION-REPLICA-WRITER-HUMAN-REVIEW-2026Q3-v1",
+      "review_protocol_status": "invalidated",
+      "evidence_set_status": "retired",
+      "preserved_human_reviews": 1,
+      "formal_scoring_allowed": false,
       "tcj_exposed": false,
-      "writer_model": "gemini-3.5-flash-lite",
-      "writer_prompt_sha256": "109edee6839af516ab1b24891fdc743dfe243d911b91834d2f492946563333b3",
-      "generation_settings": {"temperature": 0.3, "max_output_tokens": 180},
-      "repo_memory": {
-        "hosted_safe_memory_file": "docs/chatgpt-workflow/ANSWERS-TCJ-SESSION-REPLICA-WRITER-SAFE-MEMORY-V1.md",
-        "memory_file_commit": "2b3ac6d2705c0706d7fdefdfeb31868570bbe2dc",
-        "snapshot_key": "TCJ-REPO-SESSION-REPLICA-WRITER-20260824-757a0690",
-        "snapshot_source_commit": "2b3ac6d2705c0706d7fdefdfeb31868570bbe2dc",
-        "snapshot_manifest_sha256": "1c788bec1f3f18509aa652387043647749abbfd796915c360b3e089ad2309f35",
-        "snapshot_files": 2,
-        "snapshot_bytes": 28434,
-        "private_server_full_git_checkout_remains_reference_option": true
-      },
-      "private_writer_context": {
-        "function": "private.tcj_writer_context_projection_v1",
-        "contract": "TCJ-WRITER-CONTEXT-PROJECTION-v1-research",
-        "focus_reachability_substrate": true,
-        "raw_evidence_exported": false,
-        "raw_examples_exported": false,
-        "trial_context_hashes_frozen_before_generation": true
-      },
-      "worker": {
-        "slot": "tcj-rewrite-lift-neutral-gemini35-worker-v3",
-        "active_version": 8,
-        "active_sha256": "c3f7f272a759abb3808cc7562c1efa853f57d30b2f7e7a32df6bbc333aa04cd7",
-        "failed_role_only_version": 6,
-        "pre_provider_hash_incident_version": 7,
-        "incident": "writer_context_hash_serialization_mismatch_v7",
-        "incident_provider_request_sent": false
-      },
-      "generation": {
-        "complete": 6,
-        "target": 6,
-        "terminal_failures": 0,
-        "provider_attempts_complete": 6,
-        "http_429": 0,
-        "tcj_exposed": 0,
-        "output_hash_mismatch": 0,
-        "frozen_context_hash_mismatch": 0,
-        "average_chars": 79.5,
-        "min_chars": 49,
-        "max_chars": 107
-      },
-      "human_review": {
-        "protocol_id": 2,
-        "protocol_key": "TCJ-SESSION-REPLICA-WRITER-HUMAN-REVIEW-2026Q3-v1",
-        "state": "reviewing_0_of_6",
-        "manifest_sha256": null,
-        "review_url": "https://flipgazine.pages.dev/tcj-session-replica-writer-review-v1.html",
-        "review_api": "tcj-rewrite-lift-hard-review-v2",
-        "review_api_version": 7,
-        "review_api_sha256": "2a24bb02d36ffa450f57ebe540b28e2a7ddc679f44fbe2a8b44e719a172c0ea2",
-        "page_sha256": "d5c5fdc8754d467b95f9fbef35fc4b6f73bf8ac2a575b654d5ad15ee7ee23d65",
-        "controller_sha256": "a07e09efd967288c84072ef19ea834bd5c073a5fb509c397e8bb899c23d71ce8"
-      },
-      "isolation_rule": "Freeze the complete six-case human manifest before inspecting SHIP/REVISE distribution or reading outputs diagnostically. Never expose these six cases to TCJ or reuse them for evaluator scoring."
+      "invalidation_reason": "speaker_addressee_contract_ambiguous",
+      "interpretation": "generated cleanly but some scenarios failed to specify whether Answers spoke to user, spoke to third party, or drafted user-to-third-party wording; no writer-quality conclusion allowed"
     },
-    "next_action": "NATIVE_HUMAN_GATE: review all 6 raw session-replica Gemini drafts at tcj-session-replica-writer-review-v1.html. SHIP only if the exact copy is publishable unchanged; REVISE for any meaningful edit including shortening. Do not balance labels. After 6/6, freeze/hash the human manifest before interpreting results. If writer viability is demonstrated, create a separate fresh A/B/C evaluator bank; otherwise preserve this as failed diagnostic evidence and stop evaluator progression.",
+    "session_replica_writer_v2": {
+      "status": "ACTIVE_BUILD",
+      "goal": "test repository-memory plus bounded native evidence under explicit speaker/addressee task contracts",
+      "target_cases": 6,
+      "required_case_mix": ["DIRECT_BFF_RESPONSE", "BFF_WITH_QUOTED_SCRIPT"],
+      "zero_overlap_required": true,
+      "task_contract_frozen_before_generation": true,
+      "safe_memory_must_include_speaker_contract": true,
+      "writer_feasibility_cases_may_score_tcj": false,
+      "review_ui_requirement": "show task mode and distinguish outside-quote BFF voice from inside-quote recipient register"
+    },
+    "next_action": "AUTONOMOUS_BUILD: create a fresh six-case session-replica writer v2 bank with explicit structured task_mode, outer_speaker, outer_addressee, quote_required, quoted_speaker, quoted_addressee and quoted_register_target. Include both direct BFF advice and BFF-with-quoted-script tasks. Freeze bank, speaker contracts, safe Git memory snapshot, writer prompt and per-case bounded writer-context hashes before generation. Generate sequentially, then stop only at the new native-human whole-answer SHIP/REVISE gate. Do not continue or score invalidated v1.",
     "protected_historical_authority": {
       "qualification_2_0": {
         "protocol_key": "TCJ-QUALIFICATION-2.0-2026Q3-v1",
