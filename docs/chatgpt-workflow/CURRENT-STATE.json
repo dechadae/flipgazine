@@ -1,6 +1,6 @@
 {
-  "schema_version": 25,
-  "as_of": "2026-08-24T19:46:00+07:00",
+  "schema_version": 26,
+  "as_of": "2026-08-24T20:04:00+07:00",
   "scope": "repository_documentation_checkpoint",
   "live_state_independently_reverified": true,
   "canonical_supabase_project": "sjpvhgxacsiorrtijqua",
@@ -8,30 +8,54 @@
   "tcj": {
     "production_authority": false,
     "authority_state": "NONE_development_only",
-    "current_phase": "session_replica_writer_v2_explicit_speaker_contract_build",
+    "current_phase": "footing_first_rewrite_capable_linguistic_r_and_d",
     "human_gold_authoritative": true,
-    "active_phase_checkpoint": "docs/chatgpt-workflow/ANSWERS-TCJ-BFF-SPEAKER-CONTRACT-CORRECTION-AND-SRW-V1-INVALIDATION-20260824.md",
+    "active_phase_checkpoint": "docs/chatgpt-workflow/ANSWERS-TCJ-FOOTING-FIRST-REWRITE-CAPABLE-ARCHITECTURE-RESET-20260824.md",
+    "linguistic_architecture_authority": "docs/chatgpt-workflow/ANSWERS-TCJ-CONVERSATIONAL-FOOTING-STANCE-AND-DISCOURSE-ARCHITECTURE-20260824.md",
+    "commercial_architecture_authority": "docs/chatgpt-workflow/ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-V3-FOOTING-FIRST-REWRITE-CAPABLE-20260824.md",
+    "register_difficulty_authority": "docs/chatgpt-workflow/ANSWERS-TCJ-REGISTER-DIFFICULTY-AND-BFF-STRESS-TEST-20260824.md",
     "speaker_contract_authority": "docs/chatgpt-workflow/ANSWERS-TCJ-BFF-SPEAKER-AND-QUOTED-SPEECH-CONTRACT-20260824.md",
     "reference_architecture": {
       "conceptual_memory": "pinned_repository_memory_full_local_git_or_hosted_safe_view",
       "empirical_memory": "bounded_private_supabase_evidence",
-      "private_memory_addressing": "focus_normalization_plus_reachability",
+      "private_memory_addressing": "focus_plus_discourse_reachability",
       "reasoning_engine": "capable_replaceable_llm",
-      "writer_contract": "answers_bff_outer_voice_plus_explicit_optional_recipient_specific_quoted_speech",
-      "tcj_role": "native_senior_release_editor",
+      "linguistic_order": "conversational_footing_first_language_surface_second",
+      "tcj_role": "native_senior_editor",
       "release_contract": "SHIP_or_REVISE",
-      "tcj_rewrites_directly": false,
+      "rewrite_capability_required_for_qualification": true,
+      "qualified_tcj_loop": ["understand", "judge", "diagnose", "rewrite", "recheck", "release"],
+      "customer_policy_may_hide_rewrite": true,
       "methodology_pack_role": "portable_compiled_fallback_not_reference_brain"
     },
-    "writer_speaker_contract": {
-      "outer_speaker": "ANSWERS_BFF",
-      "outer_addressee": "USER",
-      "task_modes": ["DIRECT_BFF_RESPONSE", "BFF_WITH_QUOTED_SCRIPT"],
-      "direct_mode_quote_required": false,
-      "quoted_script_mode_quote_required": true,
-      "quoted_script_default_speaker": "USER",
-      "quoted_register_rule": "recipient_and_context_specific_not_bff_by_default",
-      "review_rule": "outside_quote_is_BFF_voice; inside_quote_is_recipient_specific_speech; SHIP_applies_to_whole_answer"
+    "footing_first_core_questions": [
+      "who_am_i_right_now",
+      "who_am_i_talking_to",
+      "whose_words_am_i_voicing",
+      "am_i_endorsing_or_proposing_reporting_imitating_those_words",
+      "how_close_are_we",
+      "what_hierarchy_is_active_locally",
+      "how_much_can_remain_implicit",
+      "where_does_my_own_stance_resume",
+      "whose_particle_pronoun_or_politeness_marker_is_this"
+    ],
+    "engineering_labels_policy": "task modes, focus tags, register labels and routing enums are instrumentation only; they must not replace the richer discourse/footing interpretation",
+    "rewrite_requirement": {
+      "principle": "a judge without demonstrated ability to produce a better meaning-preserving rewrite is not a complete production judge",
+      "revise_output_required_capability": ["primary_problem", "surgical_instruction", "proposed_rewrite"],
+      "ship_exact_copy_semantics_unchanged": true,
+      "rewrite_must_preserve_correct_local_segments": true,
+      "rewrite_must_preserve_footing_and_local_register": true,
+      "rewrite_must_not_add_unsupported_information": true
+    },
+    "profile_difficulty_strategy": {
+      "formal_enterprise_thai_hypothesis": "lower_conversational_entropy_than_answers_bff",
+      "candidate_early_profiles": ["bank_service_thai", "telecom_support_thai", "formal_workplace_thai", "customer_service_thai"],
+      "answers_bff_role": "high_variance_stress_test_for_deep_conversational_competence",
+      "profile_scoped_qualification_allowed": true,
+      "profile_scoped_qualification_requires_complete_tcj_loop": true,
+      "formal_profile_success_does_not_authorize_universal_thai_claims": true,
+      "no_single_universal_competence_score": true
     },
     "closed_role_writer_feasibility_v1": {
       "status": "FROZEN_FAILED_WRITER_FEASIBILITY",
@@ -54,21 +78,25 @@
       "preserved_human_reviews": 1,
       "formal_scoring_allowed": false,
       "tcj_exposed": false,
-      "invalidation_reason": "speaker_addressee_contract_ambiguous",
-      "interpretation": "generated cleanly but some scenarios failed to specify whether Answers spoke to user, spoke to third party, or drafted user-to-third-party wording; no writer-quality conclusion allowed"
+      "invalidation_reason": "speaker_addressee_contract_ambiguous"
     },
-    "session_replica_writer_v2": {
-      "status": "ACTIVE_BUILD",
-      "goal": "test repository-memory plus bounded native evidence under explicit speaker/addressee task contracts",
-      "target_cases": 6,
-      "required_case_mix": ["DIRECT_BFF_RESPONSE", "BFF_WITH_QUOTED_SCRIPT"],
-      "zero_overlap_required": true,
-      "task_contract_frozen_before_generation": true,
-      "safe_memory_must_include_speaker_contract": true,
-      "writer_feasibility_cases_may_score_tcj": false,
-      "review_ui_requirement": "show task mode and distinguish outside-quote BFF voice from inside-quote recipient register"
+    "stopped_session_replica_writer_v2": {
+      "status": "STOPPED_BEFORE_PROVIDER_GENERATION",
+      "reason": "binary speaker-task-mode build was superseded by footing-first linguistic architecture before a replacement writer bank was generated",
+      "binary_task_modes_may_remain_as_instrumentation": true,
+      "hosted_snapshot_id": 4,
+      "hosted_snapshot_status": "retired",
+      "hosted_snapshot_file_count": 0,
+      "hosted_snapshot_manifest_sha256": null,
+      "provider_generation_authority_evidence": false
     },
-    "next_action": "AUTONOMOUS_BUILD: create a fresh six-case session-replica writer v2 bank with explicit structured task_mode, outer_speaker, outer_addressee, quote_required, quoted_speaker, quoted_addressee and quoted_register_target. Include both direct BFF advice and BFF-with-quoted-script tasks. Freeze bank, speaker contracts, safe Git memory snapshot, writer prompt and per-case bounded writer-context hashes before generation. Generate sequentially, then stop only at the new native-human whole-answer SHIP/REVISE gate. Do not continue or score invalidated v1.",
+    "research_horizon": {
+      "artificial_release_deadline": false,
+      "months_of_native_human_iteration_allowed": true,
+      "shipping_half_complete_tcj_prohibited": true,
+      "release_question": "does_this_behave_like_a_genuinely_useful_native_senior_editor_within_its_declared_scope"
+    },
+    "next_action": "LINGUISTIC_R_AND_D: before another writer/evaluator bank, build a small native-human discourse/footing analysis set using examples with meaningful speaker, addressee, hierarchy, stance, implication and quoted/reported/proposed-speech shifts. Annotate qualitatively with the nine footing-first questions; test whether a fresh repo-connected model reconstructs the same social scene; refine discourse reachability and rewrite semantics from disagreements. Maintain parallel Track A formal-enterprise Thai and Track B Answers BFF stress-test research. Do not resume the stopped binary v2 writer build.",
     "protected_historical_authority": {
       "qualification_2_0": {
         "protocol_key": "TCJ-QUALIFICATION-2.0-2026Q3-v1",
