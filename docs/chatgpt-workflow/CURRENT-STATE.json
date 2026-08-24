@@ -1,6 +1,6 @@
 {
-  "schema_version": 20,
-  "as_of": "2026-08-24T17:25:00+07:00",
+  "schema_version": 21,
+  "as_of": "2026-08-24T17:39:00+07:00",
   "scope": "repository_documentation_checkpoint",
   "live_state_independently_reverified": true,
   "canonical_supabase_project": "sjpvhgxacsiorrtijqua",
@@ -8,13 +8,37 @@
   "tcj": {
     "production_authority": false,
     "authority_state": "NONE_development_only",
-    "current_phase": "post_v7_failure_role_writer_feasibility_pivot",
+    "current_phase": "repository_connected_reference_runtime_bootstrap",
     "human_gold_authoritative": true,
-    "active_phase_checkpoint": "docs/chatgpt-workflow/ANSWERS-TCJ-V7-COMMERCIAL-SIM-SELECTIVE-GATE-20260824.md",
+    "active_phase_checkpoint": "docs/chatgpt-workflow/ANSWERS-TCJ-REPOSITORY-CONNECTED-REFERENCE-RUNTIME-AND-SESSION-CONTINUITY-PLAN-20260824.md",
+    "reference_architecture": {
+      "conceptual_memory": "pinned_canonical_git_repository",
+      "empirical_memory": "bounded_private_supabase_evidence",
+      "private_memory_addressing": "focus_normalization_plus_reachability",
+      "reasoning_engine": "capable_replaceable_llm",
+      "writer_role": "capable_writer_with_compact_role_voice_capsule",
+      "tcj_role": "native_senior_release_editor",
+      "release_contract": "SHIP_or_REVISE",
+      "tcj_rewrites_directly": false,
+      "methodology_pack_role": "portable_compiled_fallback_not_reference_brain"
+    },
+    "session_continuity": {
+      "goal": "reconstruct_material_project_state_without_original_chat_transcript",
+      "bootstrap_order": [
+        "docs/chatgpt-workflow/CURRENT-STATE.json",
+        "docs/chatgpt-workflow/DOCUMENT-AUTHORITY-MAP.md",
+        "active_phase_checkpoint",
+        "governing_amendments",
+        "live_supabase_verification"
+      ],
+      "new_chat_prompt_required": "short_repository_supabase_handoff_only",
+      "exact_session_identity_guaranteed": false,
+      "material_project_state_reproducible": true
+    },
     "product_definition": {
-      "writer_contract": "capable writer receives compact role/voice capsule only",
-      "editor_contract": "TCJ inspects exact finished copy and returns SHIP or REVISE",
-      "revision_contract": "if REVISE, same writer edits its CURRENT finished draft using one smallest useful instruction under the same role capsule",
+      "writer_contract": "capable writer receives compact role/voice capsule and exact task/source",
+      "editor_contract": "repository-connected TCJ inspects exact finished copy using pinned project knowledge plus bounded relevant private evidence",
+      "revision_contract": "if REVISE, same writer edits its CURRENT finished draft using one smallest useful instruction",
       "raw_private_evidence_in_writer_prompt": false,
       "methodology_pack_in_writer_prompt": false,
       "voice_polish_separate_state": false
@@ -24,7 +48,7 @@
         "experiment": "TCJ-REWRITE-LIFT-GEMINI35-v1",
         "human_result": {"tcj_wins": 2, "baseline_wins": 1, "ties": 13, "neither": 0},
         "baseline_avg_chars": 157.6,
-        "interpretation": "additional TCJ editorial brief added little over the strong simple writer role; role is not proven as sole causal factor because input shape also differed"
+        "interpretation": "strong simple writer role already did most of the useful writing work; extra TCJ editorial brief added little, though source-input shape also differed"
       },
       "v7": {
         "status": "FROZEN_FAILED_DIAGNOSTIC",
@@ -40,11 +64,10 @@
         "missed_revisions": 15,
         "unnecessary_revisions": 0,
         "agreement_pct": 37.5,
-        "baseline_avg_chars": 224.5,
-        "interpretation": "writer simulation was poor and TCJ still falsely SHIPPED most drafts the native editor would revise; v7 cannot support selective-editor claims"
+        "interpretation": "poor writer simulation plus inconsistent false-SHIP behavior; do not retune v7"
       }
     },
-    "next_action": "Run a small fresh role-writer feasibility pilot using the simple v1-style writer role and no TCJ exposure. Human reviews only raw writer drafts for exact-copy publishability. Only if writer simulation is viable should a new fresh selective-editor bank be created. Do not reuse v7 for scoring.",
+    "next_action": "Implement the repository-connected reference judge bootstrap against a pinned canonical Git snapshot while retaining bounded focus/reachability private evidence. Then run a small fresh role-only writer feasibility pilot before any larger native-human gate. After writer viability is proven, use a separate fresh bank for A model-alone vs B repository-connected TCJ vs C repository-connected TCJ plus private evidence. Do not reuse v7 for scoring.",
     "protected_historical_authority": {
       "qualification_2_0": {
         "protocol_key": "TCJ-QUALIFICATION-2.0-2026Q3-v1",
