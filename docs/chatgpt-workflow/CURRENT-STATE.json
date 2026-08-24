@@ -1,6 +1,6 @@
 {
-  "schema_version": 16,
-  "as_of": "2026-08-24T09:09:00+07:00",
+  "schema_version": 17,
+  "as_of": "2026-08-24T09:31:00+07:00",
   "scope": "repository_documentation_checkpoint",
   "live_state_independently_reverified": true,
   "canonical_supabase_project": "sjpvhgxacsiorrtijqua",
@@ -8,21 +8,27 @@
   "tcj": {
     "production_authority": false,
     "authority_state": "NONE_candidate_successor_remains_development_only_not_frozen_not_hidden_qualified",
-    "current_phase": "post_v5_selective_editor_reasoning_before_v6_design",
+    "current_phase": "v6_binary_ship_revise_implementation_ready",
     "human_gold_authoritative": true,
     "active_phase_checkpoint": "docs/chatgpt-workflow/ANSWERS-TCJ-REWRITE-LIFT-DEVELOPMENT-CHECKPOINT-20260824.md",
     "product_definition": {
       "evaluation_is_feedback_engine": true,
       "rewrite_guidance_is_product_capability": true,
-      "current_learning": "capable generic BFF Thai is not equivalent to the customer's actual house voice; TCJ must know both when copy is wrong and when it is usable but still needs a light house-voice transformation"
+      "current_plain_language_loop": "model writes finished local-language copy -> TCJ asks whether a human editor would publish this exact copy unchanged -> SHIP or REVISE -> if REVISE, same model edits the current draft using the smallest useful bounded instruction -> TCJ can check again",
+      "ship_definition": "publish this exact copy unchanged",
+      "revise_definition": "any meaningful edit is required before publication, including shortening/compression, restructuring, house-voice correction, removal of generic/model-like elaboration, stance/certainty correction, or semantic/pragmatic correction",
+      "voice_polish_separate_state": false
     },
     "design_principles": {
       "reasoning_first": true,
       "sophisticated_not_complicated": true,
-      "do_not_retune_reviewed_cases_to_force_agreement": true,
-      "good_generic_bff_is_not_house_voice": true,
-      "preserve_good_writer_content": true,
-      "avoid_mandatory_full_recomposition": true
+      "human_editor_mental_model": "would_the_editor_touch_this_exact_copy_before_publication",
+      "good_generic_bff_is_not_automatically_publishable_house_voice": true,
+      "shortening_counts_as_revision": true,
+      "writer_edits_current_finished_draft_not_recompose_from_source": true,
+      "preserve_useful_meaning": true,
+      "avoid_added_facts_examples_explanation_emotion": true,
+      "do_not_retune_reviewed_cases_to_force_agreement": true
     },
     "rollback": {
       "available": true,
@@ -61,17 +67,34 @@
         "human_manifest_sha256": "e2a2293ac467edef834b7cf6484985823905035239d371b147e86af5a496cded",
         "frozen_at_utc": "2026-08-24T02:08:43.350902Z",
         "only_human_use_as_is_case": "SEL-010",
-        "interpretation": "binary USE_AS_IS/REVISE gate is too conservative and confuses competent generic Gemini BFF prose with finished Answers house voice"
+        "interpretation": "v5 REVISE was defined too narrowly; it accepted copy the human editor would still shorten/edit before publication"
+      },
+      "v6_preflight_human_definition_gate": {
+        "status": "FROZEN",
+        "protocol_key": "TCJ-SELECTIVE-VOICE-VS-REVISE-REVIEW-2026Q3-v6-preflight",
+        "source": "the 11 frozen v5 human Needs revision cases",
+        "cases": 11,
+        "voice_polish": 0,
+        "revise": 11,
+        "human_manifest_sha256": "bcbd3f65ac78caf4c6abba2b9845d0a6957e9ad9ab7404fb3a56b95f38d61538",
+        "frozen_at_utc": "2026-08-24T02:29:20.294993Z",
+        "human_clarification": "all 11 were too long/over-elaborated; shortening and editing the copy is revision, so a separate VOICE_POLISH state does not match the human editor mental model",
+        "architecture_consequence": "retain binary SHIP/REVISE but redefine REVISE around actual publication editing rather than only severe semantic defects"
       }
     },
-    "candidate_next_concept_not_implemented": {
-      "states": ["SHIP", "VOICE_POLISH", "REVISE"],
-      "ship": "already publishable and genuinely belongs in the customer's house voice",
-      "voice_polish": "meaning and social judgment are usable but output still feels generic/model-like; preserve content and apply smallest house-voice transformation",
-      "revise": "material semantic, pragmatic, register, factual or composition defect; correct the problem before voice finishing",
-      "constraint": "do not implement until the plain-language contract is agreed; then validate on a fresh bank rather than tuning v5 cases"
+    "v6_settled_contract": {
+      "states": ["SHIP", "REVISE"],
+      "ship": "the native editor would publish the exact finished draft unchanged",
+      "revise": "the native editor would make any meaningful edit before publication",
+      "revision_behavior": "give the writer the current finished draft plus the smallest useful correction; preserve what works; when overlong/generic, shorten rather than add; do not invite fresh composition from the semantic source",
+      "validation": {
+        "fresh_bank_required": true,
+        "do_not_tune_on_v5_cases": true,
+        "gate_question": "does TCJ predict whether the human would publish the raw model draft unchanged?",
+        "revision_value_question": "when revision is needed, does the targeted edit improve publishability without v4-style elaboration?"
+      }
     },
-    "next_action": "REASONING_GATE: agree on the simplest v6 SHIP / VOICE_POLISH / REVISE contract and how a light voice pass must preserve content without v4-style elaboration. Once concept is settled, implementation becomes a Codex-suitable task. Do not touch Qualification 2.0 or paid frontier credits.",
+    "next_action": "CODEX_IMPLEMENTATION: inspect canonical GitHub+Supabase first, preserve v4/v5 evidence and workers, implement v6 separately under the settled binary SHIP/REVISE contract, create and freeze a new fresh semantic-skeleton bank, run free Gemini only, then stop at a new blind native-human review gate. Never touch Qualification 2.0 or spend paid frontier credits.",
     "frontier_paid_budget": {
       "status": "reserved_for_post_freeze_authority_research_only",
       "openai_usd_remaining": 1.82,
