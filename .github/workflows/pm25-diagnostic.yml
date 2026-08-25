@@ -1,0 +1,60 @@
+name: PM25 diagnostic
+
+on:
+  push:
+    branches:
+      - pm25-shell-scope-fix
+    paths:
+      - ".github/workflows/pm25-diagnostic.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: pm25-shell-scope-fix
+          fetch-depth: 1
+      - name: Diagnose public endpoints
+        shell: bash
+        run: |
+          set +e
+          cb="${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          shell_code="$(curl -sS -L -o /tmp/index.html -w '%{http_code}' -H 'Cache-Control: no-cache' "https://flipgazine.pages.dev/index.html?cb=$cb")"
+          page_code="$(curl -sS -L -o /tmp/page.html -w '%{http_code}' -H 'Cache-Control: no-cache' "https://flipgazine.pages.dev/sindhornmidtown/pm25.html?cb=$cb")"
+          echo "SHELL_HTTP=$shell_code"
+          echo "PAGE_HTTP=$page_code"
+          for spec in 'BOOT_DARK:fg-boot-dark' 'BOOT_QUIET:fg-boot-quiet' "QUIET_SCOPE:var isQuiet=path==='/sindhornmidtown/pm25.html';" 'FAIL_EN:The live air-quality report' 'FAIL_TH:ไม่สามารถโหลดรายงานคุณภาพอากาศได้'; do
+            name="${spec%%:*}"; needle="${spec#*:}"; grep -Fq "$needle" /tmp/index.html; echo "$name=$?"
+          done
+          for spec in 'PWA_OFF:<meta name="fg-pwa" content="off">' 'HOTEL_CLASS:.hotel-name{white-space:nowrap}' 'HOTEL_TEXT:สินธร&nbsp;มิดทาวน์'; do
+            name="${spec%%:*}"; needle="${spec#*:}"; grep -Fq "$needle" /tmp/page.html; echo "$name=$?"
+          done
+          urls=(
+            'VIGNETTE_LIGHT|https://sjpvhgxacsiorrtijqua.supabase.co/storage/v1/object/public/media/brand/vignette/v1/fonts/vignette-sans-light.woff'
+            'VIGNETTE_REGULAR|https://sjpvhgxacsiorrtijqua.supabase.co/storage/v1/object/public/media/brand/vignette/v1/fonts/vignette-sans-regular.woff'
+            'VIGNETTE_SEMIBOLD|https://sjpvhgxacsiorrtijqua.supabase.co/storage/v1/object/public/media/brand/vignette/v1/fonts/vignette-sans-semibold.woff'
+            'THAI_LIGHT|https://sjpvhgxacsiorrtijqua.supabase.co/storage/v1/object/public/media/brand/vignette/v1/fonts/ibm-plex-sans-thai-light.woff2'
+            'THAI_REGULAR|https://sjpvhgxacsiorrtijqua.supabase.co/storage/v1/object/public/media/brand/vignette/v1/fonts/ibm-plex-sans-thai-regular.woff2'
+            'THAI_SEMIBOLD|https://sjpvhgxacsiorrtijqua.supabase.co/storage/v1/object/public/media/brand/vignette/v1/fonts/ibm-plex-sans-thai-semibold.woff2'
+            'LOGO_BLACK|https://sjpvhgxacsiorrtijqua.supabase.co/storage/v1/object/public/media/brand/sindhorn-midtown/v1/sindhorn-midtown-vignette-black.png'
+            'LOGO_WHITE|https://sjpvhgxacsiorrtijqua.supabase.co/storage/v1/object/public/media/brand/sindhorn-midtown/v1/sindhorn-midtown-vignette-white.png'
+          )
+          for spec in "${urls[@]}"; do name="${spec%%|*}"; u="${spec#*|}"; code="$(curl -sS -L -o /dev/null -w '%{http_code}' "$u")"; echo "$name=$code"; done
+          air_code="$(curl -sS -o /tmp/air.json -w '%{http_code}' -X POST -H 'Content-Type: application/json' --data '{"message":"Request data"}' 'https://stations.airbkk.com/api/web/data')"
+          echo "AIR_HTTP=$air_code"
+          node - <<'NODE'
+          const fs=require('fs');
+          try{const j=JSON.parse(fs.readFileSync('/tmp/air.json','utf8')); console.log('AIR_STATUS='+(j.status||'')); console.log('AIR_ARRAY='+Array.isArray(j.message)); console.log('AIR_114='+(Array.isArray(j.message)&&j.message.some(x=>String(x?.MeasIndex)==='114'))); console.log('AIR_ROWS='+(Array.isArray(j.message)?j.message.length:0));}catch(e){console.log('AIR_PARSE_ERROR='+e.message)}
+          NODE
+      - name: Remove diagnostic workflow
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/pm25-diagnostic.yml
+          git commit -m "chore: remove PM2.5 diagnostic" || true
+          git push origin HEAD:pm25-shell-scope-fix || true
