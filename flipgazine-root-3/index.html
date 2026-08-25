@@ -72,7 +72,10 @@
   window.__FG_BOOT_HINT={path:path,ground:ground,wantsBar:wantsBar,bookGrounds:books};
   document.documentElement.style.background=ground;
   if(!wantsBar) document.documentElement.classList.add('fg-boot-nobar');
-  if(isQuiet) document.documentElement.classList.add('fg-boot-quiet');
+  if(isQuiet){
+    document.documentElement.classList.add('fg-boot-quiet');
+    if(ground==='#2E273B') document.documentElement.classList.add('fg-boot-dark');
+  }
 })();
 </script>
 <style>
@@ -81,6 +84,7 @@
      locking a written page that has nothing to do with the shell. */
   html,body{margin:0;height:100%;background:#0D1110;color:#F4F1EB;
     font-family:'Poppins',system-ui,-apple-system,sans-serif;font-weight:300;}
+  html.fg-boot-quiet body{background:transparent;}
   /* The boot screen is the seam between pages: document.write() replaces this
      whole document, so nothing can animate across it. Rather than transition,
      it wears the destination's header — same responsive geometry, same glass,
@@ -117,6 +121,10 @@
   @keyframes bootslide{0%{transform:translateX(-110%)}100%{transform:translateX(400%)}}
   .err{max-width:320px;text-align:center;padding:0 24px;line-height:1.7;font-size:14px;color:#c9c6c0;}
   .err a{color:#00F0D1;text-decoration:none;font-weight:600;}
+  html.fg-boot-quiet .err{color:#2E273B;font-family:system-ui,-apple-system,sans-serif;}
+  html.fg-boot-quiet .err a{color:#5F2836;}
+  html.fg-boot-quiet.fg-boot-dark .err{color:#F4EDE9;}
+  html.fg-boot-quiet.fg-boot-dark .err a{color:#E9D0D5;}
 </style>
 </head>
 <body>
@@ -425,6 +433,10 @@
         setTimeout(function(){ location.reload(); },Math.min(700+(retries*350),2800));
         return;
       }
+    }
+    if(isQuiet){
+      document.getElementById('boot').innerHTML='<div class="err">The live air-quality report couldn\'t be loaded.<br><span lang="th">ไม่สามารถโหลดรายงานคุณภาพอากาศได้</span><br><a href="">Try again / ลองอีกครั้ง</a></div>';
+      return;
     }
     document.getElementById('boot').innerHTML='<div class="err">This page couldn\'t be loaded right now.<br><a href="/">\u2190 Back to flipgazine</a></div>';
   }
