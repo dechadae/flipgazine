@@ -25,30 +25,26 @@ jobs:
             page.on('console',m=>{if(m.type()==='error')errors.push('CONSOLE '+m.text())});
             const res=await page.goto('https://flipgazine.pages.dev/sindhornmidtown/pm25-v6-stage.html',{waitUntil:'networkidle',timeout:60000});
             await page.waitForTimeout(2500);
-            console.log('HTTP',res&&res.status());
             const info=await page.evaluate(()=>{
-              const c=document.querySelector('#weatherCanvas');
-              const gl=c&&(c.getContext('webgl')||c.getContext('experimental-webgl'));
-              const loader=document.querySelector('#sceneLoader');
-              const save=document.querySelector('#saveImageBtn');
-              const meta=document.querySelector('#weatherMeta');
-              return {
-                canvas:!!c,gl:!!gl,loaderDone:loader&&loader.classList.contains('is-done'),
-                dock:!!document.querySelector('#appDock'),sticky:!!document.querySelector('#stickyLive'),fullscreen:!!document.querySelector('#fullscreenToggle'),
-                saveAfterWeather:!!(save&&meta&&(meta.compareDocumentPosition(save)&Node.DOCUMENT_POSITION_FOLLOWING)),
-                weatherTemp:document.querySelector('#weatherTemp')?.textContent,
-                pm:document.querySelector('#pmValue')?.textContent,aqi:document.querySelector('#aqiValue')?.textContent,
-                canvasRect:c&&c.getBoundingClientRect().toJSON(),viewport:[innerWidth,innerHeight],bodyClass:document.body.className
-              };
+              const c=document.querySelector('#weatherCanvas'),gl=c&&(c.getContext('webgl')||c.getContext('experimental-webgl')),loader=document.querySelector('#sceneLoader'),save=document.querySelector('#saveImageBtn'),meta=document.querySelector('#weatherMeta');
+              return {canvas:!!c,gl:!!gl,loaderDone:loader&&loader.classList.contains('is-done'),dock:!!document.querySelector('#appDock'),sticky:!!document.querySelector('#stickyLive'),fullscreen:!!document.querySelector('#fullscreenToggle'),saveAfterWeather:!!(save&&meta&&(meta.compareDocumentPosition(save)&Node.DOCUMENT_POSITION_FOLLOWING)),weatherTemp:document.querySelector('#weatherTemp')?.textContent,pm:document.querySelector('#pmValue')?.textContent,aqi:document.querySelector('#aqiValue')?.textContent,canvasRect:c&&c.getBoundingClientRect().toJSON(),viewport:[innerWidth,innerHeight]};
             });
             console.log('INFO',JSON.stringify(info));
             await page.screenshot({path:'pm25-v6.png',fullPage:true});
+            await page.evaluate(()=>{scrollTo(0,0);document.body.classList.add('is-fullscreen')});
+            await page.waitForTimeout(150);
+            const fsInfo=await page.evaluate(()=>{const s=document.querySelector('#stickyLive').getBoundingClientRect(),d=document.querySelector('#appDock').getBoundingClientRect();return {stickyTop:s.top,stickyBottom:s.bottom,stickyOpacity:getComputedStyle(document.querySelector('#stickyLive')).opacity,masthead:getComputedStyle(document.querySelector('.masthead')).display,dockBottom:d.bottom,viewport:innerHeight};});
+            console.log('FULLSCREEN',JSON.stringify(fsInfo));
+            await page.screenshot({path:'pm25-v6-fullscreen.png'});
             if(!res||res.status()!==200) throw new Error('HTTP not 200');
             if(!info.canvas||!info.gl) throw new Error('WebGL missing');
             if(!info.loaderDone) throw new Error('loader did not clear');
             if(!info.dock||!info.sticky||!info.fullscreen) throw new Error('app chrome missing');
             if(!info.saveAfterWeather) throw new Error('save button not at bottom after weather');
             if(info.canvasRect.width<385||info.canvasRect.height<839) throw new Error('canvas not viewport-sized');
+            if(fsInfo.stickyTop>20||fsInfo.stickyOpacity!=='1') throw new Error('fullscreen sticky is not at top');
+            if(fsInfo.masthead!=='none') throw new Error('masthead should yield to sticky in fullscreen');
+            if(fsInfo.dockBottom>fsInfo.viewport+1) throw new Error('dock outside fullscreen viewport');
             if(errors.length) throw new Error(errors.join('\n'));
             await browser.close();
           })().catch(e=>{console.error(e);process.exit(1)});
@@ -58,4 +54,4 @@ jobs:
         if: always()
         with:
           name: pm25-v6-check
-          path: pm25-v6.png
+          path: pm25-v6*.png
