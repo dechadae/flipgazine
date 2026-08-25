@@ -1,0 +1,56 @@
+name: PM25 shell scope fix
+
+on:
+  push:
+    branches:
+      - pm25-shell-scope-fix
+    paths:
+      - ".github/workflows/pm25-shell-scope-fix.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out isolated branch
+        uses: actions/checkout@v6
+        with:
+          ref: pm25-shell-scope-fix
+          fetch-depth: 1
+
+      - name: Patch quiet-page scope
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('flipgazine-root-3/index.html')
+          s = p.read_text()
+          old = """  if(completeOAuth()) return;\n\n  var path=location.pathname;\n  if(path===''||path==='/'||path==='/index.html') path='/home.html';\n"""
+          new = """  if(completeOAuth()) return;\n\n  var path=location.pathname;\n  if(path===''||path==='/'||path==='/index.html') path='/home.html';\n  var isQuiet=path==='/sindhornmidtown/pm25.html';\n"""
+          if s.count(old) != 1:
+              raise SystemExit('Expected unique PM2.5 body bootstrap target was not found')
+          p.write_text(s.replace(old, new, 1))
+          PY
+
+      - name: Validate shell scripts and diff
+        run: |
+          node - <<'NODE'
+          const fs=require('fs');
+          const html=fs.readFileSync('flipgazine-root-3/index.html','utf8');
+          const scripts=[...html.matchAll(/<script(?:\s[^>]*)?>([\s\S]*?)<\/script>/gi)].map(m=>m[1]);
+          if(!scripts.length) throw new Error('No inline scripts found');
+          scripts.forEach((src,i)=>{ try { new Function(src); } catch(e) { throw new Error(`Inline script ${i+1}: ${e.message}`); } });
+          if(!html.includes("var isQuiet=path==='/sindhornmidtown/pm25.html';")) throw new Error('Quiet-page scope declaration missing');
+          NODE
+          git diff --check
+          git diff -- flipgazine-root-3/index.html
+
+      - name: Commit isolated fix and remove one-shot workflow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/pm25-shell-scope-fix.yml
+          git add flipgazine-root-3/index.html
+          git commit -m "Fix standalone report failure scope"
+          git push origin HEAD:pm25-shell-scope-fix
