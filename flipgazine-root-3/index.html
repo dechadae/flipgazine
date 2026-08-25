@@ -249,6 +249,7 @@
 
   var path=location.pathname;
   if(path===''||path==='/'||path==='/index.html') path='/home.html';
+  var isQuiet=path==='/sindhornmidtown/pm25.html';
 
   /* Short links. _redirects sends every path to this shell, so /enqfhp arrives
      here as a pathname with no matching row in site_files. Anything that is a
