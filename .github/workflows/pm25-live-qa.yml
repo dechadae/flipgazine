@@ -1,0 +1,241 @@
+name: PM25 live production QA
+
+on:
+  push:
+    branches:
+      - pm25-live-qa
+    paths:
+      - ".github/workflows/pm25-live-qa.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out verification branch
+        uses: actions/checkout@v6
+
+      - name: Verify production shell, anonymous row, assets and AirBKK
+        shell: bash
+        run: |
+          set -euo pipefail
+          bust="${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          curl -fsSL "https://flipgazine.pages.dev/index.html?qa=${bust}" -o /tmp/index.html
+          grep -Fq "fg-boot-dark" /tmp/index.html
+          grep -Fq "fg-boot-quiet" /tmp/index.html
+          grep -Fq "The live air-quality report couldn\\'t be loaded." /tmp/index.html
+          grep -Fq "ไม่สามารถโหลดรายงานคุณภาพอากาศได้" /tmp/index.html
+          grep -Fq "var isQuiet=path==='/sindhornmidtown/pm25.html';" /tmp/index.html
+          test "$(curl -sS -o /tmp/live-shell.html -w '%{http_code}' "https://flipgazine.pages.dev/sindhornmidtown/pm25.html?qa=${bust}")" = "200"
+
+          key="$(python3 - <<'PY'
+          import re
+          s=open('/tmp/index.html',encoding='utf-8').read()
+          m=re.search(r'var KEY="([^"]+)"',s)
+          if not m: raise SystemExit('Public shell API key was not found')
+          print(m.group(1))
+          PY
+          )"
+          rest="https://sjpvhgxacsiorrtijqua.supabase.co/rest/v1/site_files?path=eq.%2Fsindhornmidtown%2Fpm25.html&select=path%2Ccontent_type%2Cversion%2Ccontent"
+          test "$(curl -sS -o /tmp/anon-row.json -w '%{http_code}' -H "apikey: ${key}" -H "Authorization: Bearer ${key}" "$rest")" = "200"
+          python3 - <<'PY'
+          import json,hashlib
+          rows=json.load(open('/tmp/anon-row.json',encoding='utf-8'))
+          assert len(rows)==1, rows
+          row=rows[0]
+          b=row['content'].encode('utf-8')
+          assert row['path']=='/sindhornmidtown/pm25.html'
+          assert row['content_type']=='text/html'
+          assert row['version']==1
+          assert len(b)==50171, len(b)
+          assert hashlib.md5(b).hexdigest()=='115c5d23446523cdca4adf9b05a51682'
+          print('anonymous site_files round trip: 50171 bytes, expected MD5')
+          PY
+
+          assets=(
+            "https://sjpvhgxacsiorrtijqua.supabase.co/storage/v1/object/public/media/brand/sindhorn-midtown/v1/sindhorn-midtown-vignette-black.png"
+            "https://sjpvhgxacsiorrtijqua.supabase.co/storage/v1/object/public/media/brand/sindhorn-midtown/v1/sindhorn-midtown-vignette-white.png"
+            "https://sjpvhgxacsiorrtijqua.supabase.co/storage/v1/object/public/media/brand/sindhorn-midtown/v1/pm25-live-report-og.png"
+            "https://sjpvhgxacsiorrtijqua.supabase.co/storage/v1/object/public/media/brand/vignette/v1/fonts/vignette-sans-light.woff"
+            "https://sjpvhgxacsiorrtijqua.supabase.co/storage/v1/object/public/media/brand/vignette/v1/fonts/vignette-sans-regular.woff"
+            "https://sjpvhgxacsiorrtijqua.supabase.co/storage/v1/object/public/media/brand/vignette/v1/fonts/vignette-sans-semibold.woff"
+            "https://sjpvhgxacsiorrtijqua.supabase.co/storage/v1/object/public/media/brand/vignette/v1/fonts/ibm-plex-sans-thai-light.woff2"
+            "https://sjpvhgxacsiorrtijqua.supabase.co/storage/v1/object/public/media/brand/vignette/v1/fonts/ibm-plex-sans-thai-regular.woff2"
+            "https://sjpvhgxacsiorrtijqua.supabase.co/storage/v1/object/public/media/brand/vignette/v1/fonts/ibm-plex-sans-thai-semibold.woff2"
+          )
+          for asset in "${assets[@]}"; do
+            test "$(curl -sS -o /dev/null -w '%{http_code}' "$asset")" = "200"
+          done
+          air_status="$(curl -sS -o /tmp/air.json -w '%{http_code}' -H 'Content-Type: application/json' --data '{"message":"Request data"}' https://stations.airbkk.com/api/web/data)"
+          test "$air_status" = "200"
+          python3 - <<'PY'
+          import json
+          d=json.load(open('/tmp/air.json',encoding='utf-8'))
+          assert d.get('status')=='Success', d.get('status')
+          rows=d.get('message')
+          assert isinstance(rows,list) and rows
+          assert any(str(x.get('MeasIndex')) in {'114','139','65'} for x in rows if isinstance(x,dict))
+          print('AirBKK POST: HTTP 200 with expected station set present')
+          PY
+
+      - name: Install Playwright Chromium
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/pm25qa
+          cd /tmp/pm25qa
+          npm init -y >/dev/null 2>&1
+          npm install --no-save playwright@1.55.0 >/dev/null
+          npx playwright install --with-deps chromium >/dev/null
+
+      - name: Run live Playwright visual and runtime checks
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/pm25qa/screens
+          cat > /tmp/pm25qa/qa.js <<'NODE'
+          const fs=require('fs');
+          const {chromium}=require('playwright');
+          const LIVE='https://flipgazine.pages.dev/sindhornmidtown/pm25.html';
+          const AIR='https://stations.airbkk.com/api/web/data';
+          const EXPECTED_LOGOS=[
+            'https://sjpvhgxacsiorrtijqua.supabase.co/storage/v1/object/public/media/brand/sindhorn-midtown/v1/sindhorn-midtown-vignette-black.png',
+            'https://sjpvhgxacsiorrtijqua.supabase.co/storage/v1/object/public/media/brand/sindhorn-midtown/v1/sindhorn-midtown-vignette-white.png'
+          ];
+          function assert(cond,msg){if(!cond)throw new Error(msg);}
+          const delay=ms=>new Promise(r=>setTimeout(r,ms));
+
+          (async()=>{
+            const browser=await chromium.launch({headless:true});
+            const results=[];
+            for(const width of [320,390,1440]){
+              for(const colorScheme of ['light','dark']){
+                const context=await browser.newContext({viewport:{width,height:width===1440?1000:900},colorScheme});
+                const page=await context.newPage();
+                const consoleErrors=[];
+                const pageErrors=[];
+                const failed=[];
+                const responses=new Map();
+                page.on('console',m=>{if(m.type()==='error')consoleErrors.push(m.text());});
+                page.on('pageerror',e=>pageErrors.push(String(e)));
+                page.on('requestfailed',r=>failed.push(r.url()+' :: '+(r.failure()?.errorText||'failed')));
+                page.on('response',r=>responses.set(r.url().split('?')[0],r.status()));
+                await page.route('https://sjpvhgxacsiorrtijqua.supabase.co/rest/v1/**',async route=>{await delay(700);await route.continue();});
+                await page.goto(LIVE+'?qa='+Date.now()+'-'+width+'-'+colorScheme,{waitUntil:'domcontentloaded',timeout:30000});
+                await page.waitForSelector('#boot',{timeout:5000});
+                const boot=await page.evaluate(()=>({
+                  htmlClass:document.documentElement.className,
+                  htmlBg:getComputedStyle(document.documentElement).backgroundColor,
+                  bodyBg:getComputedStyle(document.body).backgroundColor,
+                  bar:getComputedStyle(document.getElementById('bootbar')).display,
+                  line:getComputedStyle(document.getElementById('bootline')).display
+                }));
+                assert(boot.htmlClass.includes('fg-boot-quiet'),`boot quiet missing ${width} ${colorScheme}`);
+                assert(boot.bar==='none',`boot bar visible ${width} ${colorScheme}: ${boot.bar}`);
+                assert(boot.line==='none',`boot line visible ${width} ${colorScheme}: ${boot.line}`);
+                assert(boot.bodyBg==='rgba(0, 0, 0, 0)',`quiet body not transparent: ${boot.bodyBg}`);
+                const wantBg=colorScheme==='dark'?'rgb(46, 39, 59)':'rgb(250, 247, 245)';
+                assert(boot.htmlBg===wantBg,`wrong first-paint bg ${width} ${colorScheme}: ${boot.htmlBg}`);
+
+                await page.waitForSelector('#pageTitle',{timeout:20000});
+                await page.waitForFunction(()=>document.getElementById('pmValue')?.textContent!=='—' && ['live','delayed'].includes(document.getElementById('connection')?.dataset.state),null,{timeout:25000});
+                await page.waitForTimeout(300);
+                const state=await page.evaluate(()=>{
+                  const names=[...document.querySelectorAll('.hotel-name')].map(el=>({
+                    text:el.textContent,rects:el.getClientRects().length,
+                    left:el.getBoundingClientRect().left,right:el.getBoundingClientRect().right,
+                    parentLeft:el.parentElement.getBoundingClientRect().left,parentRight:el.parentElement.getBoundingClientRect().right
+                  }));
+                  const scale=getComputedStyle(document.querySelector('.scale-labels'));
+                  const items=[...document.querySelectorAll('.scale-labels [role="listitem"]')].map(x=>getComputedStyle(x).display);
+                  return {
+                    title:document.title,
+                    theme:document.documentElement.dataset.theme,
+                    pwaOff:document.querySelector('meta[name="fg-pwa"]')?.content,
+                    manifest:!!document.querySelector('link[rel="manifest"]'),
+                    bodyText:document.body.innerText,
+                    pm:document.getElementById('pmValue').textContent,
+                    aqi:document.getElementById('aqiValue').textContent,
+                    connection:document.getElementById('connection').dataset.state,
+                    names,
+                    overflow:document.documentElement.scrollWidth-document.documentElement.clientWidth,
+                    scaleColumns:scale.gridTemplateColumns.trim().split(/\s+/).length,
+                    itemDisplays:items
+                  };
+                });
+                assert(state.title==='Live Air Quality | Sindhorn Midtown Hotel Bangkok','wrong final title');
+                assert(state.theme===colorScheme,`device theme mismatch ${width} ${colorScheme}: ${state.theme}`);
+                assert(state.pwaOff==='off'&&!state.manifest,'PWA opt-out not preserved');
+                assert(!state.bodyText.toLowerCase().includes('flipgazine'),'visible Flipgazine text present after paint');
+                assert(state.names.length===2,'expected two visible hotel-name spans');
+                for(const n of state.names){
+                  assert(n.text==='สินธร\u00a0มิดทาวน์','hotel name text/NBSP changed');
+                  assert(n.rects===1,`hotel name split at ${width} ${colorScheme}`);
+                  assert(n.left>=n.parentLeft-.5&&n.right<=n.parentRight+.5,`hotel name overflows parent at ${width}`);
+                }
+                assert(state.overflow===0,`horizontal overflow ${state.overflow}px at ${width}`);
+                if(width<=390){
+                  assert(state.scaleColumns===1,`mobile scale is not one readable column at ${width}`);
+                  assert(state.itemDisplays.every(x=>x==='grid'),`mobile scale rows are not grids at ${width}`);
+                }else{
+                  assert(state.scaleColumns===5,`desktop scale is not five columns: ${state.scaleColumns}`);
+                }
+                for(const url of EXPECTED_LOGOS){assert(responses.get(url)===200,`logo not HTTP 200 in browser: ${url} -> ${responses.get(url)}`);}
+                assert([...responses.entries()].some(([url,status])=>url===AIR&&status===200),'AirBKK browser POST did not return HTTP 200');
+                assert(pageErrors.length===0,'page errors: '+pageErrors.join(' | '));
+                assert(consoleErrors.length===0,'console errors: '+consoleErrors.join(' | '));
+                assert(failed.length===0,'ordinary-load failed requests: '+failed.join(' | '));
+                await page.screenshot({path:`/tmp/pm25qa/screens/${width}-${colorScheme}.png`,fullPage:true});
+                results.push({width,colorScheme,pm:state.pm,aqi:state.aqi,connection:state.connection,boot});
+                await context.close();
+              }
+            }
+
+            // Device adaptation when there is no user preference, then persistence after explicit choice.
+            const ctx=await browser.newContext({viewport:{width:390,height:900},colorScheme:'dark'});
+            const p=await ctx.newPage();
+            const errs=[]; p.on('pageerror',e=>errs.push(String(e))); p.on('console',m=>{if(m.type()==='error')errs.push(m.text());});
+            await p.goto(LIVE+'?qa=theme-'+Date.now(),{waitUntil:'domcontentloaded',timeout:30000});
+            await p.waitForSelector('#pageTitle',{timeout:20000});
+            assert(await p.evaluate(()=>document.documentElement.dataset.theme)==='dark','initial system dark not followed');
+            await p.emulateMedia({colorScheme:'light'}); await p.waitForTimeout(100);
+            assert(await p.evaluate(()=>document.documentElement.dataset.theme)==='light','system theme change not followed before explicit choice');
+            await p.click('#themeToggle');
+            assert(await p.evaluate(()=>document.documentElement.dataset.theme)==='dark','explicit toggle did not select dark');
+            assert(await p.evaluate(()=>localStorage.getItem('sindhorn-midtown:pm25:theme:v1'))==='dark','explicit dark preference not persisted');
+            await p.emulateMedia({colorScheme:'light'}); await p.waitForTimeout(100);
+            assert(await p.evaluate(()=>document.documentElement.dataset.theme)==='dark','system overrode explicit preference');
+            await p.reload({waitUntil:'domcontentloaded',timeout:30000}); await p.waitForSelector('#pageTitle',{timeout:20000});
+            assert(await p.evaluate(()=>document.documentElement.dataset.theme)==='dark','explicit preference lost on reload');
+            assert(errs.length===0,'theme test console/page errors: '+errs.join(' | '));
+
+            // Last-reading fallback: first obtain a good live reading, then fail only AirBKK.
+            await p.waitForFunction(()=>document.getElementById('pmValue')?.textContent!=='—' && ['live','delayed'].includes(document.getElementById('connection')?.dataset.state),null,{timeout:25000});
+            const before=await p.locator('#pmValue').textContent();
+            await p.route(AIR,route=>route.abort('failed'));
+            await p.click('#refreshBtn');
+            await p.waitForFunction(()=>document.getElementById('connection')?.dataset.state==='offline',null,{timeout:10000});
+            const after=await p.locator('#pmValue').textContent();
+            assert(after===before,'cached fallback changed last good PM2.5 reading');
+            await ctx.close();
+
+            fs.writeFileSync('/tmp/pm25qa/qa.json',JSON.stringify({ok:true,results},null,2));
+            await browser.close();
+            console.log(JSON.stringify({ok:true,results},null,2));
+          })().catch(async e=>{console.error(e.stack||e);process.exit(1);});
+          NODE
+          cd /tmp/pm25qa
+          node qa.js
+
+      - name: Upload QA screenshots and report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pm25-live-qa
+          path: |
+            /tmp/pm25qa/screens
+            /tmp/pm25qa/qa.json
+          if-no-files-found: warn
