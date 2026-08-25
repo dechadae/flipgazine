@@ -23,7 +23,7 @@ jobs:
             const errors=[];
             page.on('pageerror',e=>errors.push('PAGEERROR '+e.message));
             page.on('console',m=>{if(m.type()==='error')errors.push('CONSOLE '+m.text())});
-            const res=await page.goto('https://flipgazine.pages.dev/sindhornmidtown/pm25-v6-stage.html',{waitUntil:'networkidle',timeout:60000});
+            const res=await page.goto('https://flipgazine.pages.dev/sindhornmidtown/pm25.html',{waitUntil:'networkidle',timeout:60000});
             await page.waitForTimeout(2500);
             const info=await page.evaluate(()=>{
               const c=document.querySelector('#weatherCanvas'),gl=c&&(c.getContext('webgl')||c.getContext('experimental-webgl')),loader=document.querySelector('#sceneLoader'),save=document.querySelector('#saveImageBtn'),meta=document.querySelector('#weatherMeta');
