@@ -45,7 +45,13 @@
     "/sindhornmidtown/lobby-lounge.html":"#0a0a0b",
     "/sindhornmidtown/sip-and-co.html":"#0e2f22"
   };
+  /* Standalone guest-facing utilities are still database pages, but their
+     first frame must not inherit the product chrome or its progress accent. */
+  var quietPages={
+    "/sindhornmidtown/pm25.html":"#FAF7F5"
+  };
   var isBook=Object.prototype.hasOwnProperty.call(books,path);
+  var isQuiet=Object.prototype.hasOwnProperty.call(quietPages,path);
   var cached=null,entry=null,back=null;
   try{
     cached=localStorage.getItem('fg:'+path);
@@ -56,13 +62,14 @@
   if(!back||back.path!==path||Date.now()-Number(back.at||0)>86400000) back=null;
   var ground=(entry&&entry.ground)||(back&&back.ground)
     ||(cached&&(cached.match(/style="background:(#[0-9A-Fa-f]{3,6})/)||[])[1])
-    ||books[path]||(isBook?'#0a0a0b':'#0D1110');
+    ||quietPages[path]||books[path]||(isBook?'#0a0a0b':'#0D1110');
   var wantsBar=entry?false:(back?true:(cached
     ?(cached.indexOf('<header')!==-1||cached.indexOf('<!--FG_HEADER')!==-1)
-    :!isBook));
+    :!(isBook||isQuiet)));
   window.__FG_BOOT_HINT={path:path,ground:ground,wantsBar:wantsBar,bookGrounds:books};
   document.documentElement.style.background=ground;
   if(!wantsBar) document.documentElement.classList.add('fg-boot-nobar');
+  if(isQuiet) document.documentElement.classList.add('fg-boot-quiet');
 })();
 </script>
 <style>
@@ -80,6 +87,7 @@
      empty screen, then vanished. */
   #boot{position:fixed;inset:0;overflow:hidden;}
   html.fg-boot-nobar #bootbar{display:none;}
+  html.fg-boot-quiet #bootline{display:none;}
   #bootbar{position:absolute;top:0;left:0;right:0;
     background:rgba(21,25,24,.55);
     -webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4);
@@ -382,6 +390,7 @@
   function keepPWA(){
     try{
       var d=document, h=d.head||d.documentElement;
+      if(d.querySelector('meta[name="fg-pwa"][content="off"]')) return;
       if(!d.querySelector('link[rel="manifest"]')){
         var l=d.createElement('link'); l.rel='manifest'; l.href='/manifest.webmanifest'; h.appendChild(l);
       }
