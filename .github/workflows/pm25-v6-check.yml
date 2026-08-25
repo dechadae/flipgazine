@@ -23,7 +23,7 @@ jobs:
             const errors=[];
             page.on('pageerror',e=>errors.push('PAGEERROR '+e.message));
             page.on('console',m=>{if(m.type()==='error')errors.push('CONSOLE '+m.text())});
-            const res=await page.goto('https://flipgazine.pages.dev/tmp/fg-pm25-premium-v6-20260825.html',{waitUntil:'networkidle',timeout:60000});
+            const res=await page.goto('https://flipgazine.pages.dev/sindhornmidtown/pm25-v6-stage.html',{waitUntil:'networkidle',timeout:60000});
             await page.waitForTimeout(2500);
             console.log('HTTP',res&&res.status());
             const info=await page.evaluate(()=>{
