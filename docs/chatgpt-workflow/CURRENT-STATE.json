@@ -1,6 +1,6 @@
 {
-  "schema_version": 28,
-  "as_of": "2026-08-24T20:37:16+07:00",
+  "schema_version": 29,
+  "as_of": "2026-08-26T22:36:44+07:00",
   "scope": "repository_documentation_checkpoint",
   "live_state_independently_reverified": true,
   "canonical_supabase_project": "sjpvhgxacsiorrtijqua",
@@ -8,9 +8,9 @@
   "tcj": {
     "production_authority": false,
     "authority_state": "NONE_development_only",
-    "current_phase": "footing_native_human_analysis_gate",
+    "current_phase": "footing_speech_event_omission_native_human_gate",
     "human_gold_authoritative": true,
-    "active_phase_checkpoint": "docs/chatgpt-workflow/ANSWERS-TCJ-FOOTING-NATIVE-HUMAN-ANALYSIS-GATE-20260824.md",
+    "active_phase_checkpoint": "docs/chatgpt-workflow/ANSWERS-TCJ-FOOTING-ABLATIONS-V2-V3-AND-SPEECH-EVENT-OMISSION-GATE-20260826.md",
     "linguistic_architecture_authority": "docs/chatgpt-workflow/ANSWERS-TCJ-CONVERSATIONAL-FOOTING-STANCE-AND-DISCOURSE-ARCHITECTURE-20260824.md",
     "commercial_architecture_authority": "docs/chatgpt-workflow/ANSWERS-TCJ-FINAL-COMMERCIAL-PRODUCT-ARCHITECTURE-V3-FOOTING-FIRST-REWRITE-CAPABLE-20260824.md",
     "register_difficulty_authority": "docs/chatgpt-workflow/ANSWERS-TCJ-REGISTER-DIFFICULTY-AND-BFF-STRESS-TEST-20260824.md",
@@ -29,18 +29,22 @@
       "customer_policy_may_hide_rewrite": true,
       "methodology_pack_role": "portable_compiled_fallback_not_reference_brain"
     },
-    "footing_first_core_questions": [
-      "who_am_i_right_now",
-      "who_am_i_talking_to",
-      "whose_words_am_i_voicing",
-      "am_i_endorsing_or_proposing_reporting_imitating_those_words",
-      "how_close_are_we",
-      "what_hierarchy_is_active_locally",
-      "how_much_can_remain_implicit",
-      "where_does_my_own_stance_resume",
-      "whose_particle_pronoun_or_politeness_marker_is_this"
-    ],
-    "engineering_labels_policy": "task modes, focus tags, register labels and routing enums are instrumentation only; they must not replace the richer discourse/footing interpretation",
+    "speech_event_representation_v2": {
+      "status": "ACTIVE_RESEARCH_REFINEMENT",
+      "outer_frame": ["outer_speaker", "outer_addressee"],
+      "embedded_speech_roles": ["source_or_origin", "current_author", "projected_speaker", "projected_addressee", "stance"],
+      "segment_local_relations": ["relationship_distance", "hierarchy_or_authority"],
+      "additional_representation": ["omission_license", "outer_voice_resume", "particle_pronoun_politeness_ownership", "segment_map"],
+      "author_is_not_assumed_to_equal_projected_speaker": true,
+      "reported_content_does_not_force_projected_voice": true,
+      "service_role_does_not_imply_hierarchy": true,
+      "engineering_labels_are_instrumentation_only": true
+    },
+    "omission_license": {
+      "principle": "identify what a natural Thai speaker can leave unexplained or unstated because common sense, relationship knowledge, conversational context or social convention already carries it",
+      "not_equivalent_to": "listing scenario facts that the response did not repeat",
+      "rewrite_relevance": "prevent explanatory scaffolding and assistantese from being added when the social meaning is already recoverable"
+    },
     "rewrite_requirement": {
       "principle": "a judge without demonstrated ability to produce a better meaning-preserving rewrite is not a complete production judge",
       "revise_output_required_capability": ["primary_problem", "surgical_instruction", "proposed_rewrite"],
@@ -69,39 +73,111 @@
       "realtime_candidate_equivalence_assumed": false
     },
     "footing_native_human_analysis_v1": {
-      "status": "ACTIVE_NATIVE_HUMAN_GATE",
+      "status": "COMPLETED_FROZEN_HUMAN_AND_MODEL_RND",
       "set_id": 1,
       "set_key": "TCJ-FOOTING-NATIVE-HUMAN-ANALYSIS-2026Q3-v1",
-      "set_status": "reviewing",
+      "set_status": "frozen",
       "case_count": 8,
       "answers_bff_cases": 5,
       "formal_enterprise_cases": 3,
       "prior_exact_hash_overlap": 0,
       "source_manifest_sha256": "060fc4ffcf3b4c53034b40cba65bc1a63ce98627157fe0ba0095cc399047d75e",
-      "case_exposure_state": "human_only",
-      "model_test_exposure_allowed_before_human_freeze": false,
+      "human_manifest_sha256": "cf3075977ed229adfeb4e640e7fe44b5fc9e747100fbd43c6172f989f1772095",
       "human_review": {
         "protocol_id": 1,
         "protocol_key": "TCJ-FOOTING-NATIVE-HUMAN-REVIEW-2026Q3-v1",
-        "status": "reviewing",
-        "state": "reviewing_0_of_8",
-        "human_manifest_sha256": null,
+        "status": "frozen",
+        "state": "frozen_8_of_8",
         "review_url": "https://flipgazine.pages.dev/tcj-footing-analysis-review-v1.html",
-        "page_sha256": "bb0ea9fbacc52e1f16d9861b9f897a6d151e418981a47a9cf41a3bc5e2b1d156",
-        "controller_sha256": "31ef9e48164a1641eb4b5f01ffdf25554461ea2eed6bfca0036d9bc438ed7171",
+        "page_version": 8,
+        "page_sha256": "195a84675e4771fc47bd10444bb9b30ae17faf95b31ae9633641fcb94a39e091",
+        "controller_version": 9,
+        "controller_sha256": "ebdb55fe9cbf0a74367ab9123840384a6d70574dd9dc737bd39642bbbc8b823c",
         "review_api_slot": "tcj-rewrite-lift-hard-review-v2",
-        "review_api_version": 8,
-        "review_api_sha256": "3ac59c4dcf1212905190bf54f89bad4cd55affc8de948cdc7bba0ddcd5225ca9"
+        "review_api_version": 9,
+        "review_api_sha256": "d205c13b9e53b64bc0af445cad764a26302c1184b2c0079f41ac29a27b2461e4"
+      },
+      "model_runs": [
+        {
+          "run_key": "TCJ-FOOTING-BLIND-RECONSTRUCTION-2026Q3-v1",
+          "status": "completed",
+          "model": "gemini-3.5-flash-lite",
+          "prompt_sha256": "ed86e32d826eddb9d0657fc57d3fa31bba9f1e895a0d8cd3a98529b1501a1902",
+          "request_manifest_sha256": "baf1c091116271431909f068409170047ee2ba25cbfaa516db453b27e2527452",
+          "response_manifest_sha256": "c1a6464481c4afa6d6a456ffdabf72bed97ee44fb8fb26ff7b17de3d9ba0f2bb",
+          "gold_exposed_to_model": false
+        },
+        {
+          "run_key": "TCJ-FOOTING-DISCOURSE-ANCHOR-ABLATION-2026Q3-v2",
+          "status": "completed_non_independent_ablation",
+          "model": "gemini-3.5-flash-lite",
+          "prompt_sha256": "fc245535948ff6ea4610676ca44c1e657204fccd67d8d63f9ed1801b69d44863",
+          "request_manifest_sha256": "3693f70ac64d3c0e63be0126b56475403e39d88b4cd6d968d103e218a1f12724",
+          "response_manifest_sha256": "703d2e0e9d33d74a9328ebf3fbdbb83af73a9daca35da87ab742321a93f6fc8e",
+          "worker_version": 7,
+          "worker_sha256": "3f671c50ec60a0203eeb2a58ff1ad8eb8a7d717a1fd64f9b622981adaed65326",
+          "gold_exposed_to_model": false
+        },
+        {
+          "run_key": "TCJ-FOOTING-LOCAL-VOICE-IMPLICITNESS-ABLATION-2026Q3-v3",
+          "status": "completed_non_independent_ablation",
+          "model": "gemini-3.5-flash-lite",
+          "prompt_sha256": "e340dfe9b7ee471e6fe27f7c4809460172684a2925c70a72eb17fed22a0f139c",
+          "request_manifest_sha256": "acacfc5f24e6318a2fc2941cf0e859c60902a593cbe7de0c0ddec9c0abf93f77",
+          "response_manifest_sha256": "1c7ee41f6fcc27043c0a1f0593a1140bee60fa1c3840110080ad82077ccb5379",
+          "worker_version": 8,
+          "worker_sha256": "26a1997e0cb0a95a8ec39611e066e1973665e198a53110362d7b94914ee4c44d",
+          "gold_exposed_to_model": false
+        }
+      ],
+      "same_case_prompt_tuning_status": "STOPPED_AFTER_V3_TO_AVOID_OVERFIT",
+      "research_conclusion": "outer turn anchoring and segment-local relations improved, but source/author/projected-speaker distinctions and pragmatic omission remain unstable"
+    },
+    "footing_speech_event_omission_v2": {
+      "status": "ACTIVE_NATIVE_HUMAN_GATE",
+      "set_id": 2,
+      "set_key": "TCJ-FOOTING-SPEECH-EVENT-OMISSION-HUMAN-2026Q3-v2",
+      "set_status": "reviewing",
+      "case_count": 6,
+      "answers_bff_cases": 4,
+      "formal_enterprise_cases": 2,
+      "prior_footing_exact_hash_overlap": 0,
+      "prior_qualification_exact_hash_overlap": 0,
+      "source_manifest_sha256": "ac6229a9d82abf696c2a602b5832a7375b17a8ddbc62e9b2c35faa77118d3c95",
+      "case_exposure_state": "6_human_only_0_model_exposed",
+      "model_test_exposure_allowed_before_human_freeze": false,
+      "human_review": {
+        "protocol_id": 2,
+        "protocol_key": "TCJ-FOOTING-SPEECH-EVENT-OMISSION-REVIEW-2026Q3-v2",
+        "status": "reviewing",
+        "state": "reviewing_0_of_6",
+        "human_manifest_sha256": null,
+        "review_url": "https://flipgazine.pages.dev/tcj-footing-speech-event-review-v2.html",
+        "page_version": 1,
+        "page_sha256": "3dfb1fea12b3da842fb71ab99d5437e3d16a29d839db3d61087863005fcdcfef",
+        "controller_version": 1,
+        "controller_sha256": "52475e696662f056d1ac1ba1706bbe4dc8fa2083708da3f5394be816fe3b1d5a",
+        "review_api_slot": "tcj-rewrite-lift-hard-review-v2",
+        "review_api_version": 9,
+        "review_api_sha256": "d205c13b9e53b64bc0af445cad764a26302c1184b2c0079f41ac29a27b2461e4"
       },
       "annotation_contract": {
         "format": "open_text_not_enum",
-        "social_scene_summary_required": true,
-        "nine_footing_questions_required": true,
+        "social_scene_summary_ui_removed": true,
+        "outer_speaker_required": true,
+        "outer_addressee_required": true,
+        "speech_event_roles_required": true,
+        "stance_required": true,
+        "segment_local_closeness_required": true,
+        "segment_local_hierarchy_required": true,
+        "omission_license_required": true,
+        "outer_voice_resume_required": true,
+        "marker_ownership_required": true,
         "segment_map_required": true,
         "ambiguity_notes_optional": true,
         "ship_revise_judgment_in_this_gate": false
       },
-      "freeze_rule": "after 8/8 verify case hashes, compute deterministic human manifest over ordered case + all human interpretation fields, freeze set/protocol before any model reconstruction test"
+      "freeze_rule": "after 6/6 verify case hashes, compute deterministic human manifest over ordered case plus all stored interpretation fields, freeze set/protocol and DB-lock before any model reconstruction test"
     },
     "closed_role_writer_feasibility_v1": {
       "status": "FROZEN_FAILED_WRITER_FEASIBILITY",
@@ -133,7 +209,7 @@
       "shipping_half_complete_tcj_prohibited": true,
       "release_question": "does_this_behave_like_a_genuinely_useful_native_senior_editor_within_its_declared_scope"
     },
-    "next_action": "NATIVE_HUMAN_GATE: review all 8 footing-analysis cases at tcj-footing-analysis-review-v1.html. Describe the social scene and answer the nine footing questions in your own words; do not SHIP/REVISE or rewrite the utterance. After 8/8, freeze/hash the human interpretation manifest before any model reconstruction test. GPT-Live remains outside the critical path.",
+    "next_action": "NATIVE_HUMAN_GATE: review the 6 fresh speech-event/omission cases at tcj-footing-speech-event-review-v2.html. Answer from native intuition in Thai or natural Thai-English mix; do not SHIP/REVISE or rewrite the utterance. After 6/6, freeze/hash the human manifest before any fresh reconstruction model sees the bank.",
     "protected_historical_authority": {
       "qualification_2_0": {
         "protocol_key": "TCJ-QUALIFICATION-2.0-2026Q3-v1",
@@ -141,7 +217,9 @@
         "development_model_exposure_allowed": false,
         "machine_exposed_at": null,
         "human_manifest_sha256": "07a25c08b331c215bf6a7378665726c376045bcb9d547d3cd21eaca22b51428d",
-        "bank_manifest_sha256": "8e3d6c5fff4860f97bfbfcd8d69c46e5484da0d5c315ed6f4888d0061d09b7c8"
+        "bank_manifest_sha256": "8e3d6c5fff4860f97bfbfcd8d69c46e5484da0d5c315ed6f4888d0061d09b7c8",
+        "machine_run_status": "stopped_incident",
+        "machine_run_started_at": null
       }
     },
     "paid_frontier": {
