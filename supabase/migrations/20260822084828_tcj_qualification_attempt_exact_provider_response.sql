@@ -1,0 +1,2 @@
+alter table private.tcj_qualification_attempts add column if not exists provider_response_text text;
+alter table private.tcj_qualification_attempts add column if not exists provider_response_sha256 text check (provider_response_sha256 is null or length(provider_response_sha256)=64);

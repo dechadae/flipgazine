@@ -1,0 +1,137 @@
+{
+  "proof_version": "batch2-routing-implementation-2026-08-18-v1",
+  "created_at": "2026-08-18T13:42:00+07:00",
+  "supabase_project_id": "sjpvhgxacsiorrtijqua",
+  "baseline": {
+    "corpus_revision": 125,
+    "active_answers": 948,
+    "unreachable_active_answers": 0,
+    "semantic_zero_answers": 0,
+    "dictionary_concepts": 268,
+    "aliases": 1139,
+    "typos": 146,
+    "normalized_alias_typo_collisions": 0
+  },
+  "source_set": {
+    "sources": 1000,
+    "domains": 20,
+    "intended_focus_labels": 129,
+    "focus_reconciliation": {
+      "existing_canonical": 121,
+      "new_focus": 7,
+      "derive_from_scenario": 1,
+      "new_focus_ids": ["bar", "cleaning", "consistency", "errand", "help", "home", "stress"],
+      "derive_from_scenario_id": "care"
+    }
+  },
+  "new_private_tables": [
+    "private.batch2_focus_reconciliation",
+    "private.batch2_semantic_staging",
+    "private.batch2_routing_checks",
+    "private.batch2_promotions",
+    "private.batch2_answer_map"
+  ],
+  "new_or_hardened_private_functions": [
+    "private.batch2_record_raw_draft",
+    "private.batch2_record_human_review",
+    "private.batch2_review_payload",
+    "private.batch2_stage_semantics",
+    "private.batch2_promote_unit",
+    "private.batch2_semantic_prepare",
+    "private.batch2_semantic_lock_promoted",
+    "private.batch2_reject_append_only"
+  ],
+  "security": {
+    "all_new_private_tables_rls_enabled": true,
+    "direct_table_privileges_for_anon_authenticated_service_role": false,
+    "all_listed_private_functions_security_invoker": true,
+    "execute_for_anon_authenticated_service_role": false,
+    "routing_provenance_append_only": true,
+    "promoted_semantic_rows_immutable": true
+  },
+  "routing_gate": {
+    "review_unit_size": 20,
+    "must_be_contiguous": true,
+    "required_zero_failures": [
+      "alias_collisions",
+      "semantic_zero",
+      "unreachable_index",
+      "unreachable_probe",
+      "batch1_regressions"
+    ],
+    "atomic_promotion": true,
+    "same_index_builder_as_batch1": "private.answer_build_index()",
+    "same_live_router_contract": true,
+    "dictionary_and_answers_promoted_in_same_revision": true
+  },
+  "edge_functions": {
+    "batch2_qwen_audit": {
+      "id": "66e84f3f-57db-43e2-9828-e6152755bcac",
+      "version": 1,
+      "verify_jwt": true,
+      "status": "ACTIVE",
+      "sha256": "32d6944719f84019693baea622e16c5114b7b75fa7531dbb3f9ce9b0a7644257"
+    },
+    "batch2_routing_service": {
+      "id": "443448b4-0ac9-4f58-af1f-0e5756cf68ae",
+      "version": 1,
+      "verify_jwt": true,
+      "status": "ACTIVE",
+      "sha256": "9bc96973c4fed8bc5c200a1bf46591ed26f6c1a10a6afe9acf8a385f7ffd5c15"
+    },
+    "batch2_production_review_service": {
+      "id": "40dcfa28-ae5b-4399-9ddc-e1136dd4470b",
+      "version": 1,
+      "verify_jwt": true,
+      "status": "ACTIVE",
+      "sha256": "217cbce93a35c5fa1b11dae5368b0b77373f70f3cff2a4eb5db0a3fa04e4c15e"
+    }
+  },
+  "review_ui": {
+    "path": "/answers-thai-review-batch2.html",
+    "site_files_version": 7,
+    "review_mode": "100-percent-human-first",
+    "machine_evidence_predecision": "sealed",
+    "official_review_storage": "private.batch2_human_reviews"
+  },
+  "clean_metric_unit": {
+    "source_start": "B2-0021",
+    "source_end": "B2-0040",
+    "raw_drafts": 20,
+    "literal_backslash_n_rows": 0,
+    "minimum_real_lf_count": 3,
+    "maximum_real_lf_count": 3,
+    "chatgpt_pre_human_audits": 20,
+    "qwen_required": 17,
+    "qwen_completed_at_proof": 0,
+    "official_human_reviews_at_proof": 0,
+    "semantic_staging_at_proof": 0,
+    "routing_checks_at_proof": 0,
+    "promotions_at_proof": 0,
+    "promoted_answers_at_proof": 0
+  },
+  "technical_non_metric_unit": {
+    "source_start": "B2-0001",
+    "source_end": "B2-0020",
+    "reason": "literal transport line-break escapes in first raw write",
+    "excluded_from_official_metrics": true,
+    "excluded_from_corpus_promotion": true
+  },
+  "advisor_result": {
+    "new_batch2_security_definer_findings": 0,
+    "new_batch2_function_search_path_findings": 0,
+    "new_batch2_foreign_key_indexes_added": [
+      "batch2_answer_map_promotion_idx",
+      "batch2_answer_map_revision_idx",
+      "batch2_promotions_base_revision_idx",
+      "batch2_promotions_promoted_by_idx",
+      "batch2_routing_checks_base_revision_idx"
+    ],
+    "remaining_advisor_findings": "pre-existing project-wide findings or expected private-table RLS-with-no-policy informational notices"
+  },
+  "github_commits": {
+    "production_review_service": "7842600b30b5be062da73cdb196fd594099061ea",
+    "routing_core": "9d83a19d8680c5aca4b9c20faa4942b8fff0a135",
+    "routing_service": "38248dcbe090bb6e56fa5cb988366b69dcc6d66b"
+  }
+}

@@ -1,0 +1,40 @@
+# Post-Phase-J guard: the public controller is intentionally slim and no longer
+# contains the frozen v124 corpus/router. The immutable 64,626-case Phase I
+# proof remains the behavioral reference; current canonical router unit tests
+# plus provenance fingerprints guard subsequent server changes.
+name: Answers v124 post-cutover guard
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'supabase/functions/_shared/router-v124.mjs'
+      - 'supabase/functions/answers-service/router-v124.mjs'
+      - 'supabase/functions/answers-admin-service/router-v124.mjs'
+      - 'answers-private-server/router-v124.mjs'
+      - 'answers-private-server/router-v124.test.mjs'
+      - 'answers-private-server/postcutover-v124-guard.mjs'
+      - 'answers-private-server/phase-i-acceptance-proof.json'
+      - '.github/workflows/answers-v124-parity.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Validate frozen full-parity proof and current provenance
+        run: node answers-private-server/postcutover-v124-guard.mjs
+
+      - name: Current canonical router regression tests
+        run: node --test answers-private-server/router-v124.test.mjs

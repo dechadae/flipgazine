@@ -1,0 +1,1 @@
+create index if not exists tcj_passport_dossiers_judge_idx on private.tcj_admission_passport_dossiers(judge_candidate_id);

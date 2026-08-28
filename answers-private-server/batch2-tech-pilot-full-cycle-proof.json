@@ -1,0 +1,56 @@
+{
+  "proof_version": "ANSWERS-B2-TECH-PILOT-FULL-CYCLE-v1",
+  "generated_on": "2026-08-18",
+  "record_class": "technical_pilot",
+  "source_range": ["B2-0001", "B2-0020"],
+  "human_review": {
+    "reviewed": 20,
+    "accept": 4,
+    "edit": 9,
+    "rewrite": 7,
+    "benchmark_metric_eligible": 0,
+    "human_first_protocol_exceptions": ["B2-0001"]
+  },
+  "deployment": {
+    "promotion_id": 1,
+    "promotion_class": "technical_pilot",
+    "base_corpus_revision": 125,
+    "corpus_revision": 126,
+    "active_answers_before": 948,
+    "active_answers_after": 968,
+    "answer_id_min": 949,
+    "answer_id_max": 968,
+    "mapped_sources": 20,
+    "promotion_sha256": "bfe59d7edef89f98b5be576f4350eb0c52c8effbacd43e87d0026b17b73260c0",
+    "dictionary_sha256": "453996612271cd15bf942ca764d6e63fb32e50a6c3ec884ab477fb4a255f2438",
+    "index_sha256": "d6f8df9cf5658690cb7ab809c5e616344c5c61ff03fadb1996671dda4f9e30b6"
+  },
+  "routing_validation": {
+    "parser_probe_check_id": 1,
+    "canonical_hash_check_id": 2,
+    "alias_collisions": 0,
+    "semantic_zero": 0,
+    "unreachable_index": 0,
+    "unreachable_probe": 0,
+    "batch1_regressions": 0,
+    "all_source_scenarios_reach_intended_answer": true,
+    "new_focus_concepts": ["consistency", "home", "stress"]
+  },
+  "post_promotion_verification": {
+    "corpus_revision_source": "batch2-technical-pilot-promotion",
+    "source_to_answer_mappings": 20,
+    "semantic_rows_promoted": 20,
+    "active_index_unreachable": 0,
+    "normalized_surface_collisions": 0,
+    "technical_rows_in_official_clean_human_table": 0,
+    "technical_rows_in_clean_benchmark_denominator": 0
+  },
+  "buyer_export_preview": {
+    "snapshot_name": "ANSWERS-B2-TECH-PILOT-v1-preview",
+    "schema_version": "ANSWERS-B2-BUYER-v1",
+    "row_count": 20,
+    "corpus_revision": 126,
+    "snapshot_sha256": "6a6e0ca0d51b3d342d0f4a14521df5466c6f8e0e8b9d3c94fe7bff4c4ee92a2d"
+  },
+  "claim_boundary": "These 20 records are corpus-linked and commercially usable as reviewed Book answers, but are excluded from clean Batch 2 benchmark metrics because the original frozen raw drafts contain escaped line-break transport bytes; B2-0001 also has a human-first exposure exception."
+}

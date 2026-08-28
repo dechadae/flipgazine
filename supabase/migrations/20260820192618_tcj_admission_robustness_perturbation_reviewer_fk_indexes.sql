@@ -1,0 +1,2 @@
+create index if not exists tcj_robustness_cases_reviewed_by_idx on private.tcj_admission_robustness_cases(reviewed_by) where reviewed_by is not null;
+create index if not exists tcj_robustness_case_reviews_reviewed_by_idx on private.tcj_admission_robustness_case_reviews(reviewed_by);

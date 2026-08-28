@@ -1,0 +1,108 @@
+import postgres from 'npm:postgres@3.4.7';
+import {normalize,resolve,careIntercept,buildIndex,mergeDictionary,surfaceMap,uniq} from './router.ts';
+
+const dbUrl=Deno.env.get('SUPABASE_DB_URL');
+if(!dbUrl) throw new Error('SUPABASE_DB_URL is required');
+const sql=postgres(dbUrl,{prepare:false,max:2,idle_timeout:20,connect_timeout:10});
+const ORIGINS=new Set(['https://flipgazine.pages.dev']);
+const BASE={'content-type':'application/json; charset=utf-8','cache-control':'no-store, private, max-age=0','pragma':'no-cache','x-content-type-options':'nosniff'};
+type Claims={sub:string;session_id:string};
+function b64u(s:string){return atob(s.replace(/-/g,'+').replace(/_/g,'/')+'='.repeat((4-s.length%4)%4))}
+function claims(req:Request):Claims|null{const m=(req.headers.get('authorization')||'').match(/^Bearer\s+([^\s]+)$/i);if(!m)return null;const p=m[1].split('.');if(p.length!==3)return null;try{const c=JSON.parse(b64u(p[1]));return typeof c?.sub==='string'&&typeof c?.session_id==='string'?{sub:c.sub,session_id:c.session_id}:null}catch{return null}}
+function cors(req:Request){const o=req.headers.get('origin')||'';return ORIGINS.has(o)?{'access-control-allow-origin':o,'access-control-allow-headers':'authorization, apikey, content-type, x-client-info','access-control-allow-methods':'POST, OPTIONS','access-control-max-age':'600','vary':'Origin'}:{}}
+function out(req:Request,b:unknown,s=200){return new Response(JSON.stringify(b),{status:s,headers:{...BASE,...cors(req)}})}
+async function admin(c:Claims){return await sql.begin(async tx=>{const a=await tx`select exists(select 1 from auth.users u join auth.sessions s on s.user_id=u.id where u.id=${c.sub}::uuid and s.id=${c.session_id}::uuid and u.deleted_at is null and (u.banned_until is null or u.banned_until<=pg_catalog.now()) and (s.not_after is null or s.not_after>pg_catalog.now())) as ok`;if(!a?.[0]?.ok)return'unauthorized';await tx`select pg_catalog.set_config('request.jwt.claim.sub',${c.sub},true)`;const z=await tx`select public.is_fg_admin() as ok`;return z?.[0]?.ok?'ok':'forbidden'})}
+
+async function loadUnit(sourceIds:string[]){
+  const rev=await sql`select r.revision,a.dictionary_json from private.answer_corpus_revisions r join private.answer_routing_assets a on a.corpus_revision=r.revision order by r.revision desc limit 1`;
+  if(!rev.length)throw new Error('current_revision_missing');
+  const answers=await sql`select answer_id,thai,english,topics,focus,support,helpers,is_universal from private.answers where active order by answer_id`;
+  const stages=await sql`select st.*,s.source_ordinal,s.question_or_scenario,s.care_case,h.final_thai,h.record_class,h.benchmark_metric_eligible from private.batch2_semantic_staging st join private.batch2_sources s on s.id=st.source_id join private.batch2_deploy_reviews h on h.source_id=st.source_id where st.source_id=any(${sourceIds}) order by s.source_ordinal`;
+  return{revision:Number(rev[0].revision),dictionary:rev[0].dictionary_json,answers,stages};
+}
+
+async function canonicalHashes(dictionary:any,index:any,semManifest:any[]){
+  const r=await sql`select
+    encode(extensions.digest((${JSON.stringify(dictionary)}::text)::jsonb::text,'sha256'),'hex') dictionary_sha,
+    encode(extensions.digest((${JSON.stringify(index)}::text)::jsonb::text,'sha256'),'hex') index_sha,
+    encode(extensions.digest((${JSON.stringify(semManifest)}::text)::jsonb::text,'sha256'),'hex') semantic_sha`;
+  return{dictionarySha:String(r[0].dictionary_sha),indexSha:String(r[0].index_sha),semanticSha:String(r[0].semantic_sha)};
+}
+
+async function validateUnit(sourceIds:string[],persist=true){
+  if(sourceIds.length!==20||new Set(sourceIds).size!==20)throw new Error('unit_must_contain_20_unique_sources');
+  const loaded=await loadUnit(sourceIds);
+  if(loaded.stages.length!==20)throw new Error('20_semantic_stages_required');
+  const ords=loaded.stages.map((x:any)=>Number(x.source_ordinal));
+  if(Math.max(...ords)-Math.min(...ords)!==19)throw new Error('unit_not_contiguous');
+  const classes=uniq(loaded.stages.map((x:any)=>String(x.record_class)));
+  if(classes.length!==1)throw new Error('mixed_review_class');
+  const recordClass=classes[0];
+  if(!['clean_metric','technical_pilot'].includes(recordClass))throw new Error('invalid_review_class');
+  if(recordClass==='technical_pilot'&&(Math.min(...ords)!==1||Math.max(...ords)!==20))throw new Error('technical_pilot_scope_mismatch');
+
+  const dictionary=mergeDictionary(loaded.dictionary,loaded.stages);
+  const baseSurface=surfaceMap(loaded.dictionary),candSurface=surfaceMap(dictionary);
+  let aliasCollisions=0;for(const owners of candSurface.owners.values())if(owners.size>1)aliasCollisions++;
+  let regressions=0;
+  const candBy=new Map<string,any>((dictionary.concepts||[]).map((c:any)=>[c.id,c]));
+  for(const old of loaded.dictionary.concepts||[]){const c=candBy.get(old.id);if(!c||c.kind!==old.kind){regressions++;continue}const ca=new Set((c.aliases||[]).map(normalize)),ct=new Set((c.typos||[]).map(normalize));for(const a of old.aliases||[])if(!ca.has(normalize(a)))regressions++;for(const t of old.typos||[])if(!ct.has(normalize(t)))regressions++}
+  for(const [surface,owners] of baseSurface.owners){const now=candSurface.owners.get(surface);if(!now||[...owners].some(x=>!now.has(x)))regressions++}
+
+  const maxId=Math.max(0,...loaded.answers.map((a:any)=>Number(a.answer_id)));
+  const newAnswers=loaded.stages.map((st:any,i:number)=>({answer_id:maxId+i+1,thai:st.final_thai,english:st.english,topics:st.topics||[],focus:st.focus||[],support:st.support||[],helpers:st.helpers||[],is_universal:!!st.is_universal,source_id:st.source_id,question_or_scenario:st.question_or_scenario,care_case:!!st.care_case,probe_questions:st.probe_questions||[]}));
+  const candidateAnswers=[...loaded.answers.map((a:any)=>({...a,answer_id:Number(a.answer_id)})),...newAnswers];
+  const index=buildIndex(candidateAnswers),allIndexed=new Set<number>();
+  for(const lane of ['focus','support','topics','helpers'])for(const ids of Object.values(index[lane]) as any[])for(const id of ids)allIndexed.add(Number(id));
+  for(const id of index.generic)allIndexed.add(Number(id));
+  const semanticZero=newAnswers.filter((a:any)=>!(a.focus.length+a.support.length+a.topics.length+a.helpers.length)).length;
+  const unreachableIndex=candidateAnswers.filter((a:any)=>!allIndexed.has(Number(a.answer_id))).length;
+
+  const concepts=new Map<string,any>((dictionary.concepts||[]).map((c:any)=>[c.id,c]));
+  let unreachableProbe=0;const probeReport:any[]=[];
+  for(const a of newAnswers){
+    const probes:string[]=[];
+    if(!careIntercept(a.question_or_scenario))probes.push(a.question_or_scenario);
+    for(const q of a.probe_questions||[])if(q&&!careIntercept(q))probes.push(q);
+    for(const k of a.focus||[]){const c=concepts.get(k);for(const x of (c?.aliases||[]).slice(0,2))if(x&&!careIntercept(x))probes.push(x)}
+    for(const k of a.support||[]){const c=concepts.get(k);for(const x of (c?.aliases||[]).slice(0,1))if(x&&!careIntercept(x))probes.push(x)}
+    const unique=uniq(probes.map(x=>String(x).trim()).filter(Boolean));
+    let hit=false;const trials:any[]=[];
+    for(const q of unique){const r=resolve(q,dictionary,index),ok=r.eligible.includes(a.answer_id);trials.push({q,ok,tier:r.selectedTier});if(ok)hit=true}
+    if(!hit)unreachableProbe++;
+    probeReport.push({source_id:a.source_id,answer_id:a.answer_id,care_intercepted:careIntercept(a.question_or_scenario),hit,trials});
+  }
+
+  const semManifest=loaded.stages.map((s:any)=>({source_id:s.source_id,semantic_sha256:s.semantic_sha256})).sort((a:any,b:any)=>a.source_id.localeCompare(b.source_id));
+  const {dictionarySha,indexSha,semanticSha}=await canonicalHashes(dictionary,index,semManifest);
+  const passed=aliasCollisions===0&&candSurface.bad.length===0&&semanticZero===0&&unreachableIndex===0&&unreachableProbe===0&&regressions===0;
+  const report={record_class:recordClass,benchmark_metric_eligible:recordClass==='clean_metric',unit_start:Math.min(...ords),unit_end:Math.max(...ords),source_ids:loaded.stages.map((s:any)=>s.source_id),base_revision:loaded.revision,alias_collisions:aliasCollisions,bad_surface_forms:candSurface.bad,semantic_zero:semanticZero,unreachable_index:unreachableIndex,unreachable_probe:unreachableProbe,batch1_regressions:regressions,probe_report:probeReport,new_answer_ids:newAnswers.map((a:any)=>a.answer_id),hash_mode:'postgres_jsonb_text_sha256'};
+  let checkId:null|number=null;
+  if(persist){
+    const rows=await sql`insert into private.batch2_routing_checks(unit_start,unit_end,source_ids,base_revision,candidate_dictionary_sha256,candidate_index_sha256,semantic_manifest_sha256,alias_collisions,semantic_zero,unreachable_index,unreachable_probe,batch1_regressions,report,passed) values(${report.unit_start},${report.unit_end},${report.source_ids},${loaded.revision},${dictionarySha},${indexSha},${semanticSha},${aliasCollisions},${semanticZero},${unreachableIndex},${unreachableProbe},${regressions},(${JSON.stringify(report)}::text)::jsonb,${passed}) returning id`;
+    checkId=Number(rows[0].id);
+    if(passed)await sql`update private.batch2_semantic_staging set status='validated' where source_id=any(${sourceIds}) and status='staged'`;
+  }
+  return{status:'ok',passed,check_id:checkId,dictionary,index,report,candidate_dictionary_sha256:dictionarySha,candidate_index_sha256:indexSha,semantic_manifest_sha256:semanticSha};
+}
+
+Deno.serve(async req=>{
+  if(req.method==='OPTIONS'){const o=req.headers.get('origin')||'';return ORIGINS.has(o)?new Response(null,{status:204,headers:{...BASE,...cors(req)}}):new Response(null,{status:403,headers:BASE})}
+  if(req.method!=='POST')return out(req,{error:'method_not_allowed'},405);
+  const o=req.headers.get('origin');if(o&&!ORIGINS.has(o))return out(req,{error:'forbidden'},403);
+  const c=claims(req);if(!c)return out(req,{error:'unauthorized'},401);
+  const a=await admin(c);if(a==='unauthorized')return out(req,{error:'unauthorized'},401);if(a==='forbidden')return out(req,{error:'forbidden'},403);
+  let body:any;try{body=await req.json()}catch{return out(req,{error:'invalid_json'},400)}
+  try{
+    if(body?.action==='get_reconciliation'){const rows=await sql`select * from private.batch2_focus_reconciliation order by intended_focus`;return out(req,{status:'ok',rows})}
+    if(body?.action==='validate_unit'){const ids=Array.isArray(body?.source_ids)?body.source_ids.map(String):[];const z=await validateUnit(ids,true);const {dictionary,index,...safe}=z;return out(req,safe,z.passed?200:422)}
+    if(body?.action==='promote_unit'){
+      const checkId=Number(body?.routing_check_id);if(!Number.isInteger(checkId)||checkId<1)return out(req,{error:'invalid_check_id'},422);
+      const rows=await sql`select source_ids,base_revision from private.batch2_routing_checks where id=${checkId} and passed=true`;if(!rows.length)return out(req,{error:'passing_check_not_found'},404);
+      const ids=rows[0].source_ids.map(String),z=await validateUnit(ids,false);if(!z.passed)return out(req,{error:'revalidation_failed',report:z.report},409);
+      const p=await sql`select private.batch2_promote_unit(${c.sub}::uuid,${Number(rows[0].base_revision)}::bigint,${ids}::text[],(${JSON.stringify(z.dictionary)}::text)::jsonb,${checkId}::bigint) as result`;
+      const result=p?.[0]?.result||{status:'error'},status=result.status==='ok'?200:result.status==='busy'||result.status==='conflict'?409:422;return out(req,result,status);
+    }
+    return out(req,{error:'unknown_action'},422);
+  }catch(e){console.error('batch2-routing-service',e instanceof Error?e.message:'unknown');return out(req,{error:e instanceof Error?e.message:'service_unavailable'},503)}
+});

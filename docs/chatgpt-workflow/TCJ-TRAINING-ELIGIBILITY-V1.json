@@ -1,0 +1,116 @@
+{
+  "schema_version": "TCJ-TRAINING-ELIGIBILITY-v1",
+  "created_at": "2026-08-23",
+  "policy_key": "TCJ-TRAINING-ELIGIBILITY-v1",
+  "policy_sha256": "3a58b220121c484e04eebfb79c5431158df3397bc025ab2da43968194648a77f",
+  "authority_doc": "ANSWERS-TCJ-DATA-TRAINING-ELIGIBILITY-AND-RIGHTS-MANIFEST-20260823.md",
+  "default_commercial_training_state": "EVALUATION_ONLY",
+  "states": [
+    "TRAINING_ELIGIBLE",
+    "TRAINING_ELIGIBLE_WITH_CONDITIONS",
+    "EVALUATION_ONLY",
+    "BUYER_CONTROLLED",
+    "REVIEW_REQUIRED",
+    "PROHIBITED"
+  ],
+  "separate_eligibility_dimensions": [
+    "runtime_context_allowed",
+    "benchmark_evaluation_allowed",
+    "buyer_export_allowed",
+    "model_development_allowed",
+    "raw_private_evidence_export_allowed"
+  ],
+  "hard_rules": {
+    "explicit_model_development_grant_required": true,
+    "human_authorship_alone_is_sufficient": false,
+    "provider_output_requires_rights_review": true,
+    "hidden_qualification_candidate_training": "PROHIBITED",
+    "raw_private_tcj_evidence_external_training": "PROHIBITED",
+    "cross_tenant_private_training": "PROHIBITED",
+    "buyer_private_default": "BUYER_CONTROLLED"
+  },
+  "canonical_model_development_use_codes": [
+    "SFT",
+    "fine_tuning",
+    "preference_data",
+    "RLHF",
+    "DPO",
+    "RLAIF",
+    "reward_model_training",
+    "distillation",
+    "synthetic_training_generation",
+    "synthetic_training_filter",
+    "checkpoint_selection",
+    "hyperparameter_optimization",
+    "evaluator_training",
+    "embedding_or_retrieval_index_for_model_development"
+  ],
+  "current_asset_defaults": [
+    {
+      "asset_key": "tcj_methodology_bff_v1_1",
+      "asset_version": "TCJ-METHODOLOGY-BFF-v1.1",
+      "training_state": "EVALUATION_ONLY",
+      "runtime_context_allowed": true,
+      "benchmark_evaluation_allowed": true,
+      "model_development_allowed": false
+    },
+    {
+      "asset_key": "tcj_voice_answers_bff_v1",
+      "asset_version": "TCJ-VOICE-ANSWERS-BFF-v1",
+      "training_state": "EVALUATION_ONLY",
+      "runtime_context_allowed": true,
+      "benchmark_evaluation_allowed": true,
+      "model_development_allowed": false
+    },
+    {
+      "asset_key": "tcj_private_evidence_raw_vault",
+      "training_state": "PROHIBITED",
+      "runtime_context_allowed": false,
+      "raw_private_evidence_export_allowed": false,
+      "model_development_allowed": false
+    },
+    {
+      "asset_key": "tcj_qualification2_hidden_evidence",
+      "asset_version": "TCJ-QUALIFICATION-2.0-2026Q3-v1",
+      "training_state": "PROHIBITED",
+      "model_development_allowed": false
+    },
+    {
+      "asset_key": "answers_batch1_948",
+      "training_state": "EVALUATION_ONLY",
+      "provider_output_materially_involved": true,
+      "model_development_allowed": false
+    },
+    {
+      "asset_key": "answers_batch2_current",
+      "training_state": "EVALUATION_ONLY",
+      "provider_output_materially_involved": true,
+      "model_development_allowed": false,
+      "note": "Human review or REWRITE status is not automatic training clearance."
+    },
+    {
+      "asset_key": "future_independent_human_training_corpus",
+      "training_state": "REVIEW_REQUIRED",
+      "model_development_allowed": false,
+      "promotion_rule": "May become TRAINING_ELIGIBLE only after exact asset freeze + provenance + rights/privacy review + explicit Model-Development grant + frozen rights manifest."
+    },
+    {
+      "asset_key": "buyer_private_data",
+      "training_state": "BUYER_CONTROLLED",
+      "model_development_allowed": false,
+      "promotion_rule": "May become buyer-scoped TRAINING_ELIGIBLE_WITH_CONDITIONS only after buyer rights/privacy authorization and permitted use codes are recorded."
+    }
+  ],
+  "buyer_export_required_fields": [
+    "training_eligibility.state",
+    "training_eligibility.policy_version",
+    "training_eligibility.provenance_classes",
+    "training_eligibility.runtime_context_allowed",
+    "training_eligibility.benchmark_evaluation_allowed",
+    "training_eligibility.model_development_allowed",
+    "training_eligibility.permitted_model_development_uses",
+    "training_eligibility.prohibited_model_development_uses",
+    "training_eligibility.reason_codes",
+    "training_eligibility.rights_manifest_sha256"
+  ]
+}

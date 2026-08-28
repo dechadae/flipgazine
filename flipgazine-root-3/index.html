@@ -47,8 +47,11 @@
   };
   /* Standalone guest-facing utilities are still database pages, but their
      first frame must not inherit the product chrome or its progress accent. */
+  var pm25Ground='#FAF7F5',pm25Theme='';
+  try{pm25Theme=localStorage.getItem('sindhorn-midtown:pm25:theme:v1')||'';}catch(e){}
+  if(pm25Theme==='dark'||(pm25Theme!=='light'&&window.matchMedia&&matchMedia('(prefers-color-scheme:dark)').matches)) pm25Ground='#2E273B';
   var quietPages={
-    "/sindhornmidtown/pm25.html":"#FAF7F5"
+    "/sindhornmidtown/pm25.html":pm25Ground
   };
   var isBook=Object.prototype.hasOwnProperty.call(books,path);
   var isQuiet=Object.prototype.hasOwnProperty.call(quietPages,path);
@@ -60,16 +63,19 @@
   }catch(e){}
   if(!entry||entry.path!==path||Date.now()-Number(entry.at||0)>5000) entry=null;
   if(!back||back.path!==path||Date.now()-Number(back.at||0)>86400000) back=null;
-  var ground=(entry&&entry.ground)||(back&&back.ground)
+  var ground=isQuiet?quietPages[path]:((entry&&entry.ground)||(back&&back.ground)
     ||(cached&&(cached.match(/style="background:(#[0-9A-Fa-f]{3,6})/)||[])[1])
-    ||quietPages[path]||books[path]||(isBook?'#0a0a0b':'#0D1110');
+    ||quietPages[path]||books[path]||(isBook?'#0a0a0b':'#0D1110'));
   var wantsBar=entry?false:(back?true:(cached
     ?(cached.indexOf('<header')!==-1||cached.indexOf('<!--FG_HEADER')!==-1)
     :!(isBook||isQuiet)));
   window.__FG_BOOT_HINT={path:path,ground:ground,wantsBar:wantsBar,bookGrounds:books};
   document.documentElement.style.background=ground;
   if(!wantsBar) document.documentElement.classList.add('fg-boot-nobar');
-  if(isQuiet) document.documentElement.classList.add('fg-boot-quiet');
+  if(isQuiet){
+    document.documentElement.classList.add('fg-boot-quiet');
+    if(ground==='#2E273B') document.documentElement.classList.add('fg-boot-dark');
+  }
 })();
 </script>
 <style>
@@ -78,6 +84,7 @@
      locking a written page that has nothing to do with the shell. */
   html,body{margin:0;height:100%;background:#0D1110;color:#F4F1EB;
     font-family:'Poppins',system-ui,-apple-system,sans-serif;font-weight:300;}
+  html.fg-boot-quiet body{background:transparent;}
   /* The boot screen is the seam between pages: document.write() replaces this
      whole document, so nothing can animate across it. Rather than transition,
      it wears the destination's header — same responsive geometry, same glass,
@@ -114,6 +121,10 @@
   @keyframes bootslide{0%{transform:translateX(-110%)}100%{transform:translateX(400%)}}
   .err{max-width:320px;text-align:center;padding:0 24px;line-height:1.7;font-size:14px;color:#c9c6c0;}
   .err a{color:#00F0D1;text-decoration:none;font-weight:600;}
+  html.fg-boot-quiet .err{color:#2E273B;font-family:system-ui,-apple-system,sans-serif;}
+  html.fg-boot-quiet .err a{color:#5F2836;}
+  html.fg-boot-quiet.fg-boot-dark .err{color:#F4EDE9;}
+  html.fg-boot-quiet.fg-boot-dark .err a{color:#E9D0D5;}
 </style>
 </head>
 <body>
@@ -238,6 +249,7 @@
 
   var path=location.pathname;
   if(path===''||path==='/'||path==='/index.html') path='/home.html';
+  var isQuiet=path==='/sindhornmidtown/pm25.html';
 
   /* Short links. _redirects sends every path to this shell, so /enqfhp arrives
      here as a pathname with no matching row in site_files. Anything that is a
@@ -422,6 +434,10 @@
         setTimeout(function(){ location.reload(); },Math.min(700+(retries*350),2800));
         return;
       }
+    }
+    if(isQuiet){
+      document.getElementById('boot').innerHTML='<div class="err">The live air-quality report couldn\'t be loaded.<br><span lang="th">ไม่สามารถโหลดรายงานคุณภาพอากาศได้</span><br><a href="">Try again / ลองอีกครั้ง</a></div>';
+      return;
     }
     document.getElementById('boot').innerHTML='<div class="err">This page couldn\'t be loaded right now.<br><a href="/">\u2190 Back to flipgazine</a></div>';
   }
