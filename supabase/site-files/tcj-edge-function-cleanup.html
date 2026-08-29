@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'none'">
+<title>TCJ Edge Function cleanup</title>
+<style>
+:root{color-scheme:dark;--bg:#0b0f14;--panel:#121923;--line:#293444;--text:#e8edf3;--muted:#9aa8b8;--ok:#50d890;--warn:#ffcc66;--bad:#ff6b78;--accent:#7eb6ff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+main{max-width:1180px;margin:0 auto;padding:32px 18px 72px}h1{font-size:24px;margin:0 0 8px}h2{font-size:17px;margin:28px 0 10px}.muted{color:var(--muted)}.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;margin:16px 0}
+.grid{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:end}.field{display:grid;gap:6px}input[type=password],input[type=text]{width:100%;background:#080c11;color:var(--text);border:1px solid var(--line);border-radius:8px;padding:11px 12px;font:inherit}
+button,a.button{background:#1b2a3c;color:var(--text);border:1px solid #36506d;border-radius:8px;padding:10px 14px;font:inherit;cursor:pointer;text-decoration:none;display:inline-block}
+button:hover,a.button:hover{border-color:var(--accent)}button:disabled{opacity:.45;cursor:not-allowed}.danger{background:#421c24;border-color:#8c3342}.row-actions{display:flex;gap:9px;flex-wrap:wrap;align-items:center}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--muted);position:sticky;top:0;background:var(--panel)}
+code{overflow-wrap:anywhere}.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.count{font-size:22px;font-weight:700}
+.status{white-space:pre-wrap;background:#080c11;border:1px solid var(--line);border-radius:8px;padding:12px;min-height:62px;max-height:340px;overflow:auto}
+.protected{display:flex;flex-wrap:wrap;gap:7px}.protected code{padding:4px 7px;border:1px solid var(--line);border-radius:6px;color:var(--muted)}
+@media(max-width:760px){.grid{grid-template-columns:1fr}table{display:block;overflow:auto;white-space:nowrap}}
+</style>
+</head>
+<body>
+<main>
+<h1>TCJ Edge Function cleanup</h1>
+<p class="muted">Project <code>sjpvhgxacsiorrtijqua</code>. Temporary, allowlisted tool for the approved Tier-1 batch only.</p>
+
+<section class="panel">
+<div class="grid">
+<label class="field">
+<span>Short-lived Supabase personal access token</span>
+<input id="token" type="password" autocomplete="off" spellcheck="false" placeholder="Token stays in this tab only">
+</label>
+<div class="row-actions">
+<a class="button" href="https://supabase.com/dashboard/account/tokens" target="_blank" rel="noreferrer">Create token</a>
+<button id="load">Load live inventory</button>
+</div>
+</div>
+<p class="muted">The token is sent only to this site's same-origin worker, forwarded to Supabase, never stored, and never written to logs or Git.</p>
+</section>
+
+<section class="panel">
+<div class="row-actions">
+<div><span class="muted">Live functions</span><div id="liveCount" class="count">—</div></div>
+<div><span class="muted">Selected</span><div id="selectedCount" class="count">23</div></div>
+<button id="all">Select all 23</button>
+<button id="none">Select none</button>
+</div>
+<div style="overflow:auto;max-height:560px;margin-top:14px">
+<table>
+<thead><tr><th></th><th>Slug</th><th>Expected</th><th>Live</th><th>Check</th></tr></thead>
+<tbody id="rows"></tbody>
+</table>
+</div>
+</section>
+
+<section class="panel">
+<h2 style="margin-top:0">Final deletion confirmation</h2>
+<p>Type <code>DELETE APPROVED EDGE FUNCTIONS</code>. The server re-lists live functions and blocks any version/hash drift before deleting.</p>
+<label class="field">
+<span>Confirmation phrase</span>
+<input id="confirmation" type="text" autocomplete="off" spellcheck="false">
+</label>
+<div class="row-actions" style="margin-top:12px">
+<button id="delete" class="danger" disabled>Delete selected deployed functions</button>
+<button id="download" disabled>Download deletion log</button>
+</div>
+</section>
+
+<section class="panel">
+<h2 style="margin-top:0">Protected — never selectable</h2>
+<div id="protected" class="protected"></div>
+</section>
+
+<section class="panel">
+<h2 style="margin-top:0">Result</h2>
+<div id="status" class="status">Load the live inventory first.</div>
+</section>
+</main>
+<script>
+(() => {
+  "use strict";
+  const API = "/api/admin/edge-function-cleanup";
+  const CONFIRMATION = "DELETE APPROVED EDGE FUNCTIONS";
+  const candidates = [{"slug":"summarize-log-entry","version":10,"sha":"194a0af3809223c70a4ba1b5bb8435b3d00619dcce1ac1645be4288c962331ff"},{"slug":"answers-service-phase-e-smoke","version":9,"sha":"f94f85e0b413ef304df8645228eb9e5151f1ec44f594c02eef7e2cd1d9b06b53"},{"slug":"answers-service-phase-f-bootstrap","version":9,"sha":"6e5a24c1e04d1d636e635c2d94b212053f03828d2deed3ef5badba597dbebeaf"},{"slug":"answers-service-phase-f-quota-smoke","version":9,"sha":"2c2897b7effa184eb9f30e7d4f6a0620f9580103497452427da596e878593803"},{"slug":"answers-phase-g-syntax-probe","version":9,"sha":"42824eac89fecc7af4f848345fd8e2f69dda9ad288986667af897523232053c6"},{"slug":"answers-phase-g-regional-smoke","version":11,"sha":"5b19d989ce58cca36a9d1c3afa6291c8cffa0cb0c6b46da43cdaa46e3f2ef6af"},{"slug":"answers-phase-h-admin-smoke","version":10,"sha":"78ea0918e1c4b23eae9cc9dd1fa14e09483ad5b244a3e70a96b46f7ae6735747"},{"slug":"answers-phase-i-admin-smoke","version":9,"sha":"759a5eb1c7e6c81cb8eed9c6fbd9a5d4cd9c7a0caecc12cd9ea3c0372cec6c18"},{"slug":"answers-phase-j-nonadmin-smoke","version":9,"sha":"9472223c1f1090da6d0890ea4a1163fbc93d08ed718469249d6c8a97ed9a93f5"},{"slug":"voice-evidence-bundle-20260817","version":11,"sha":"6f97fba785aed14896713590ef6eee36280c190e38cabacfae00d030f0919164"},{"slug":"voice-eval-calibration-runner-20260818","version":13,"sha":"b82fc939e076a8511f8377673d36c643b517830c1f1718c917a778449ee6092b"},{"slug":"voice-eval-regression-20260818","version":10,"sha":"13789610b1a61dae5576ec045c39f60ef892baddfd320cf13141fcbe418d2427"},{"slug":"voice-groq-models-20260818","version":9,"sha":"66aeb92f8ee213a9202eabe20c26f45f5f89b577a0676fa8e1dd5ad65acbc366"},{"slug":"voice-thai-audit-probe-20260818","version":12,"sha":"62211e0a0e98e34c89ac32ac1649caad1a24ec7fa19babfba93092d430369b22"},{"slug":"tcj-openai-reference-probe","version":6,"sha":"e415ee487372dd6c373386a5f35f86d8b2f8bc13752956ce70d4ecfad37b1a88"},{"slug":"tcj-evaluator-qualification-review","version":5,"sha":"c74be22bc5b79dfeb8aab07e5b2667703b6a586fc521b5d35caf2be808bf2299"},{"slug":"tcj-runtime-v2-admin","version":5,"sha":"a20063f73723b6e0af783813be61fba0ab3031f709f975de5c175e5b175d03cb"},{"slug":"tcj-evidence-v2-internal","version":5,"sha":"7624dbab7cda2e69aa3880f56a1e3c1aae9f4dcf55a126a175e6e2536b001141"},{"slug":"tcj-qualification-autoworker","version":5,"sha":"3ead293d68b00b0ef9951e7cfc3e491d10743f2015370e09b684de2ae038a72d"},{"slug":"tcj-groq-free-probe","version":5,"sha":"afa0f910d8edd84177390f001b6d0c8ee8e8d81258ef89fc4f07af7c24af7da3"},{"slug":"tcj-groq-stress-worker","version":8,"sha":"ff5b6b7577a53c6a997669d53bc4d49ca280929c0ad67479482325151d5909fb"},{"slug":"tcj-groq-stress-worker-mandatory-pee","version":7,"sha":"a89eb86409569e87bcc7c1daea98a649d80cd891fd9ed0fb968f8d1cf1600c0b"},{"slug":"tcj-qwen36-stress-worker-v2","version":4,"sha":"002118b948536e5e09e5dc5ded49a569812691690266fdea9022b53666e06e6d"}];
+  const protectedSlugs = ["answers-service","answers-admin-service","voice-eval","batch2-qwen-audit","batch2-production-review-service","batch2-review-service","human-eval-admin","human-eval-sample","answers-data-room","answers-outreach-track","tcj-live-status","tcj-engine","tcj-rewrite-lift-hard-review-v2","tcj-gemini35-flashlite-stress-worker-v2","batch2-routing-service","tcj-q2-final-worker"];
+  const state = { inventoryLoaded: false, inventory: new Map(), lastLog: null };
+
+  const els = Object.fromEntries(
+    ["token","load","liveCount","selectedCount","all","none","rows","confirmation","delete","download","protected","status"]
+      .map((id) => [id, document.getElementById(id)])
+  );
+
+  protectedSlugs.forEach((slug) => {
+    const code = document.createElement("code");
+    code.textContent = slug;
+    els.protected.append(code);
+  });
+
+  function shortSha(value) {
+    return value ? value.slice(0, 12) + "…" : "—";
+  }
+
+  function selected() {
+    return [...els.rows.querySelectorAll('input[type="checkbox"]:checked')].map((box) => box.value);
+  }
+
+  function refreshControls() {
+    const count = selected().length;
+    els.selectedCount.textContent = String(count);
+    els.delete.disabled = !state.inventoryLoaded ||
+      !count ||
+      els.confirmation.value !== CONFIRMATION ||
+      !els.token.value.trim();
+  }
+
+  function renderRows() {
+    els.rows.replaceChildren();
+    candidates.forEach((item) => {
+      const live = state.inventory.get(item.slug);
+      const tr = document.createElement("tr");
+      const checkboxCell = document.createElement("td");
+      const box = document.createElement("input");
+      box.type = "checkbox";
+      box.value = item.slug;
+      box.checked = true;
+      box.disabled = Boolean(live && live.drift);
+      box.addEventListener("change", refreshControls);
+      checkboxCell.append(box);
+
+      const slugCell = document.createElement("td");
+      const slugCode = document.createElement("code");
+      slugCode.textContent = item.slug;
+      slugCell.append(slugCode);
+
+      const expectedCell = document.createElement("td");
+      expectedCell.textContent = "v" + item.version + " · " + shortSha(item.sha);
+
+      const liveCell = document.createElement("td");
+      liveCell.textContent = live
+        ? (live.deployed ? "v" + live.live_version + " · " + shortSha(live.live_sha) : "not deployed")
+        : "not loaded";
+
+      const checkCell = document.createElement("td");
+      if (!live) {
+        checkCell.textContent = "pending";
+        checkCell.className = "muted";
+      } else if (live.drift) {
+        checkCell.textContent = "DRIFT — blocked";
+        checkCell.className = "bad";
+      } else {
+        checkCell.textContent = "match";
+        checkCell.className = "ok";
+      }
+
+      tr.append(checkboxCell, slugCell, expectedCell, liveCell, checkCell);
+      els.rows.append(tr);
+    });
+    refreshControls();
+  }
+
+  async function callApi(body) {
+    const token = els.token.value.trim();
+    if (!token) throw new Error("Enter a Supabase personal access token.");
+    const response = await fetch(API, {
+      method: "POST",
+      headers: {
+        "Authorization": "Bearer " + token,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+      cache: "no-store",
+      credentials: "same-origin",
+    });
+    const data = await response.json().catch(() => ({ error: "invalid_server_response" }));
+    if (!response.ok) {
+      const error = new Error(data.error || "Request failed");
+      error.data = data;
+      error.status = response.status;
+      throw error;
+    }
+    return data;
+  }
+
+  els.load.addEventListener("click", async () => {
+    els.load.disabled = true;
+    els.status.textContent = "Loading current Supabase inventory…";
+    try {
+      const data = await callApi({ action: "inventory" });
+      state.inventory = new Map(data.approved.map((item) => [item.slug, item]));
+      state.inventoryLoaded = true;
+      els.liveCount.textContent = String(data.function_count);
+      renderRows();
+      const drift = data.approved.filter((item) => item.drift);
+      els.status.textContent = drift.length
+        ? JSON.stringify({ warning: "Deletion blocked for drifted rows", drift }, null, 2)
+        : "All 23 approved slugs match the frozen live version/hash metadata. Ready for final confirmation.";
+    } catch (error) {
+      state.inventoryLoaded = false;
+      els.status.textContent = JSON.stringify(error.data || { error: error.message }, null, 2);
+    } finally {
+      els.load.disabled = false;
+      refreshControls();
+    }
+  });
+
+  els.all.addEventListener("click", () => {
+    els.rows.querySelectorAll('input[type="checkbox"]:not(:disabled)').forEach((box) => { box.checked = true; });
+    refreshControls();
+  });
+  els.none.addEventListener("click", () => {
+    els.rows.querySelectorAll('input[type="checkbox"]').forEach((box) => { box.checked = false; });
+    refreshControls();
+  });
+  els.confirmation.addEventListener("input", refreshControls);
+  els.token.addEventListener("input", refreshControls);
+
+  els.delete.addEventListener("click", async () => {
+    const slugs = selected();
+    if (!slugs.length) return;
+    const finalOkay = window.confirm(
+      "Delete " + slugs.length + " deployed Edge Function runtime(s) from project sjpvhgxacsiorrtijqua? Database evidence is not touched."
+    );
+    if (!finalOkay) return;
+
+    els.delete.disabled = true;
+    els.status.textContent = "Deleting the selected allowlisted runtime(s)…";
+    try {
+      const data = await callApi({ action: "delete", slugs, confirmation: CONFIRMATION });
+      state.lastLog = data;
+      els.download.disabled = false;
+      els.liveCount.textContent = String(data.after_count);
+      els.status.textContent = JSON.stringify(data, null, 2);
+      state.inventoryLoaded = false;
+      renderRows();
+    } catch (error) {
+      const data = error.data || { error: error.message };
+      state.lastLog = data;
+      els.download.disabled = false;
+      els.status.textContent = JSON.stringify(data, null, 2);
+      state.inventoryLoaded = false;
+    } finally {
+      els.confirmation.value = "";
+      refreshControls();
+    }
+  });
+
+  els.download.addEventListener("click", () => {
+    if (!state.lastLog) return;
+    const blob = new Blob([JSON.stringify(state.lastLog, null, 2) + "\n"], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "tcj-edge-function-deletion-log-20260829.json";
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  window.addEventListener("pagehide", () => { els.token.value = ""; });
+  renderRows();
+})();
+</script>
+</body>
+</html>

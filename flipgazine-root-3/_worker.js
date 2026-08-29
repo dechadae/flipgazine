@@ -19,6 +19,107 @@ const ANSWERS_MAX_BODY_BYTES = 4096;
 const ANSWERS_MAX_QUESTION_CHARS = 500;
 const ANSWERS_TOKEN_RE = /^[A-Za-z0-9_-]{43}$/;
 
+const EDGE_CLEANUP_API = "/api/admin/edge-function-cleanup";
+const EDGE_CLEANUP_MANAGEMENT =
+  "https://api.supabase.com/v1/projects/sjpvhgxacsiorrtijqua/functions";
+const EDGE_CLEANUP_CONFIRMATION = "DELETE APPROVED EDGE FUNCTIONS";
+const EDGE_CLEANUP_MAX_BODY_BYTES = 16384;
+const EDGE_CLEANUP_MAX_RESPONSE_BYTES = 1024 * 1024;
+const EDGE_CLEANUP_EXPECTED = Object.freeze({
+  "summarize-log-entry": {
+    "version": 10,
+    "sha": "194a0af3809223c70a4ba1b5bb8435b3d00619dcce1ac1645be4288c962331ff"
+  },
+  "answers-service-phase-e-smoke": {
+    "version": 9,
+    "sha": "f94f85e0b413ef304df8645228eb9e5151f1ec44f594c02eef7e2cd1d9b06b53"
+  },
+  "answers-service-phase-f-bootstrap": {
+    "version": 9,
+    "sha": "6e5a24c1e04d1d636e635c2d94b212053f03828d2deed3ef5badba597dbebeaf"
+  },
+  "answers-service-phase-f-quota-smoke": {
+    "version": 9,
+    "sha": "2c2897b7effa184eb9f30e7d4f6a0620f9580103497452427da596e878593803"
+  },
+  "answers-phase-g-syntax-probe": {
+    "version": 9,
+    "sha": "42824eac89fecc7af4f848345fd8e2f69dda9ad288986667af897523232053c6"
+  },
+  "answers-phase-g-regional-smoke": {
+    "version": 11,
+    "sha": "5b19d989ce58cca36a9d1c3afa6291c8cffa0cb0c6b46da43cdaa46e3f2ef6af"
+  },
+  "answers-phase-h-admin-smoke": {
+    "version": 10,
+    "sha": "78ea0918e1c4b23eae9cc9dd1fa14e09483ad5b244a3e70a96b46f7ae6735747"
+  },
+  "answers-phase-i-admin-smoke": {
+    "version": 9,
+    "sha": "759a5eb1c7e6c81cb8eed9c6fbd9a5d4cd9c7a0caecc12cd9ea3c0372cec6c18"
+  },
+  "answers-phase-j-nonadmin-smoke": {
+    "version": 9,
+    "sha": "9472223c1f1090da6d0890ea4a1163fbc93d08ed718469249d6c8a97ed9a93f5"
+  },
+  "voice-evidence-bundle-20260817": {
+    "version": 11,
+    "sha": "6f97fba785aed14896713590ef6eee36280c190e38cabacfae00d030f0919164"
+  },
+  "voice-eval-calibration-runner-20260818": {
+    "version": 13,
+    "sha": "b82fc939e076a8511f8377673d36c643b517830c1f1718c917a778449ee6092b"
+  },
+  "voice-eval-regression-20260818": {
+    "version": 10,
+    "sha": "13789610b1a61dae5576ec045c39f60ef892baddfd320cf13141fcbe418d2427"
+  },
+  "voice-groq-models-20260818": {
+    "version": 9,
+    "sha": "66aeb92f8ee213a9202eabe20c26f45f5f89b577a0676fa8e1dd5ad65acbc366"
+  },
+  "voice-thai-audit-probe-20260818": {
+    "version": 12,
+    "sha": "62211e0a0e98e34c89ac32ac1649caad1a24ec7fa19babfba93092d430369b22"
+  },
+  "tcj-openai-reference-probe": {
+    "version": 6,
+    "sha": "e415ee487372dd6c373386a5f35f86d8b2f8bc13752956ce70d4ecfad37b1a88"
+  },
+  "tcj-evaluator-qualification-review": {
+    "version": 5,
+    "sha": "c74be22bc5b79dfeb8aab07e5b2667703b6a586fc521b5d35caf2be808bf2299"
+  },
+  "tcj-runtime-v2-admin": {
+    "version": 5,
+    "sha": "a20063f73723b6e0af783813be61fba0ab3031f709f975de5c175e5b175d03cb"
+  },
+  "tcj-evidence-v2-internal": {
+    "version": 5,
+    "sha": "7624dbab7cda2e69aa3880f56a1e3c1aae9f4dcf55a126a175e6e2536b001141"
+  },
+  "tcj-qualification-autoworker": {
+    "version": 5,
+    "sha": "3ead293d68b00b0ef9951e7cfc3e491d10743f2015370e09b684de2ae038a72d"
+  },
+  "tcj-groq-free-probe": {
+    "version": 5,
+    "sha": "afa0f910d8edd84177390f001b6d0c8ee8e8d81258ef89fc4f07af7c24af7da3"
+  },
+  "tcj-groq-stress-worker": {
+    "version": 8,
+    "sha": "ff5b6b7577a53c6a997669d53bc4d49ca280929c0ad67479482325151d5909fb"
+  },
+  "tcj-groq-stress-worker-mandatory-pee": {
+    "version": 7,
+    "sha": "a89eb86409569e87bcc7c1daea98a649d80cd891fd9ed0fb968f8d1cf1600c0b"
+  },
+  "tcj-qwen36-stress-worker-v2": {
+    "version": 4,
+    "sha": "002118b948536e5e09e5dc5ded49a569812691690266fdea9022b53666e06e6d"
+  }
+});
+
 /* The public anon key, already present in the source of every page on the
    site. Not a secret. Set SUPABASE_ANON in the Pages dashboard to override. */
 const ANON =
@@ -37,6 +138,10 @@ export default {
 
     if (url.pathname === ANSWERS_PREPARE || url.pathname === ANSWERS_REVEAL) {
       return answersApi(request, env, url);
+    }
+
+    if (url.pathname === EDGE_CLEANUP_API) {
+      return edgeFunctionCleanupApi(request, url);
     }
 
     /* Resolve short codes at the edge before the shell is fetched. A short
@@ -322,6 +427,246 @@ async function hmacHex(secret, value) {
   return Array.from(signature, (byte) => byte.toString(16).padStart(2, "0")).join("");
 }
 
+
+/* -------------------------------------------- Edge Function cleanup API */
+
+async function edgeFunctionCleanupApi(request, url) {
+  const started = Date.now();
+  let action = "unknown";
+  let status = 500;
+  let selectedForLog = [];
+
+  try {
+    if (request.method !== "POST") {
+      status = 405;
+      return cleanupJson({ error: "method_not_allowed" }, status, { Allow: "POST" });
+    }
+
+    const origin = request.headers.get("Origin");
+    if (origin && origin !== url.origin) {
+      status = 403;
+      return cleanupJson({ error: "forbidden" }, status);
+    }
+
+    const fetchSite = request.headers.get("Sec-Fetch-Site");
+    if (fetchSite && !["same-origin", "same-site", "none"].includes(fetchSite)) {
+      status = 403;
+      return cleanupJson({ error: "forbidden" }, status);
+    }
+
+    const contentType = request.headers.get("Content-Type") || "";
+    if (!contentType.toLowerCase().includes("application/json")) {
+      status = 415;
+      return cleanupJson({ error: "unsupported_media_type" }, status);
+    }
+
+    const authorization = request.headers.get("Authorization") || "";
+    if (!/^Bearer [^\s]{20,512}$/.test(authorization)) {
+      status = 401;
+      return cleanupJson({ error: "management_token_required" }, status);
+    }
+
+    const parsed = await readJsonBounded(request, EDGE_CLEANUP_MAX_BODY_BYTES);
+    if (parsed.tooLarge) {
+      status = 413;
+      return cleanupJson({ error: "payload_too_large" }, status);
+    }
+    if (parsed.invalid || !parsed.value || typeof parsed.value !== "object") {
+      status = 400;
+      return cleanupJson({ error: "invalid_json" }, status);
+    }
+
+    action = parsed.value.action;
+    if (!["inventory", "delete"].includes(action)) {
+      status = 400;
+      return cleanupJson({ error: "invalid_action" }, status);
+    }
+
+    const beforeResult = await cleanupInventory(authorization);
+    if (!beforeResult.ok) {
+      status = beforeResult.status;
+      return cleanupJson(beforeResult.body, status);
+    }
+
+    const before = beforeResult.functions;
+    const approved = Object.entries(EDGE_CLEANUP_EXPECTED).map(([slug, expected]) => {
+      const live = before.find((fn) => fn && fn.slug === slug) || null;
+      const liveSha = live && typeof live.ezbr_sha256 === "string" ? live.ezbr_sha256 : null;
+      const liveVersion = live && Number.isInteger(live.version) ? live.version : null;
+      const drift = !live ||
+        live.status !== "ACTIVE" ||
+        liveVersion !== expected.version ||
+        liveSha !== expected.sha;
+      return {
+        slug,
+        expected_version: expected.version,
+        expected_sha: expected.sha,
+        deployed: Boolean(live),
+        status: live ? live.status : null,
+        live_version: liveVersion,
+        live_sha: liveSha,
+        drift,
+      };
+    });
+
+    if (action === "inventory") {
+      status = 200;
+      return cleanupJson({
+        project_ref: "sjpvhgxacsiorrtijqua",
+        function_count: before.length,
+        expected_after_all_23: 77,
+        approved,
+      }, status);
+    }
+
+    const requested = Array.isArray(parsed.value.slugs) ? parsed.value.slugs : [];
+    const selected = [...new Set(requested.filter((slug) => typeof slug === "string"))];
+    selectedForLog = selected;
+
+    if (
+      parsed.value.confirmation !== EDGE_CLEANUP_CONFIRMATION ||
+      selected.length < 1 ||
+      selected.length > Object.keys(EDGE_CLEANUP_EXPECTED).length ||
+      selected.some((slug) => !Object.hasOwn(EDGE_CLEANUP_EXPECTED, slug))
+    ) {
+      status = 400;
+      return cleanupJson({ error: "invalid_delete_request" }, status);
+    }
+
+    const drift = approved.filter((item) => selected.includes(item.slug) && item.drift);
+    if (drift.length) {
+      status = 409;
+      return cleanupJson({ error: "function_metadata_drift", drift }, status);
+    }
+
+    const deleted = [];
+    for (const slug of selected) {
+      const live = before.find((fn) => fn && fn.slug === slug);
+      const response = await fetch(
+        EDGE_CLEANUP_MANAGEMENT + "/" + encodeURIComponent(slug),
+        {
+          method: "DELETE",
+          headers: {
+            Accept: "application/json",
+            Authorization: authorization,
+          },
+        },
+      );
+
+      if (!response.ok) {
+        status = response.status === 401 || response.status === 403
+          ? response.status
+          : 502;
+        return cleanupJson({
+          error: "delete_failed",
+          failed_slug: slug,
+          upstream_status: response.status,
+          deleted,
+        }, status);
+      }
+
+      deleted.push({
+        slug,
+        previous_version: live.version,
+        previous_sha: live.ezbr_sha256,
+        reason: "Tier-1 historical smoke/probe runtime; no live caller found",
+        no_live_caller_evidence:
+          "Private Git deployable code, live site_files, DB routines, cron, triggers and webhooks checked 2026-08-29",
+      });
+    }
+
+    const afterResult = await cleanupInventory(authorization);
+    if (!afterResult.ok) {
+      status = 502;
+      return cleanupJson({
+        error: "post_delete_inventory_failed",
+        deleted,
+        before_count: before.length,
+      }, status);
+    }
+
+    const afterCount = afterResult.functions.length;
+    const expectedAfter = before.length - deleted.length;
+    status = afterCount === expectedAfter ? 200 : 502;
+    return cleanupJson({
+      ok: status === 200,
+      project_ref: "sjpvhgxacsiorrtijqua",
+      before_count: before.length,
+      deleted_count: deleted.length,
+      after_count: afterCount,
+      expected_after: expectedAfter,
+      deleted,
+      count_mismatch: afterCount !== expectedAfter,
+    }, status);
+  } catch (error) {
+    status = 503;
+    return cleanupJson({ error: "cleanup_service_unavailable" }, status);
+  } finally {
+    console.log(JSON.stringify({
+      event: "edge_function_cleanup",
+      action,
+      status,
+      selected_slugs: selectedForLog,
+      ms: Date.now() - started,
+      cf_ray: request.headers.get("CF-Ray") || null,
+    }));
+  }
+}
+
+async function cleanupInventory(authorization) {
+  const response = await fetch(EDGE_CLEANUP_MANAGEMENT, {
+    headers: {
+      Accept: "application/json",
+      Authorization: authorization,
+    },
+  });
+
+  if (!response.ok) {
+    return {
+      ok: false,
+      status: response.status === 401 || response.status === 403
+        ? response.status
+        : 502,
+      body: {
+        error: "inventory_failed",
+        upstream_status: response.status,
+      },
+    };
+  }
+
+  const parsed = await readJsonBounded(response, EDGE_CLEANUP_MAX_RESPONSE_BYTES);
+  const value = parsed.value;
+  const functions = Array.isArray(value)
+    ? value
+    : Array.isArray(value && value.functions)
+      ? value.functions
+      : null;
+
+  if (parsed.tooLarge || parsed.invalid || !functions) {
+    return {
+      ok: false,
+      status: 502,
+      body: { error: "invalid_inventory_response" },
+    };
+  }
+
+  return { ok: true, functions };
+}
+
+function cleanupJson(body, status = 200, extraHeaders = {}) {
+  const headers = new Headers({
+    "cache-control": "no-store, private, max-age=0",
+    pragma: "no-cache",
+    expires: "0",
+    "content-type": "application/json; charset=utf-8",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "referrer-policy": "no-referrer",
+  });
+  Object.entries(extraHeaders).forEach(([key, value]) => headers.set(key, String(value)));
+  return new Response(JSON.stringify(body), { status, headers });
+}
+
 /* ---------------------------------------------------------------- helpers */
 
 function absolute(path) {
@@ -367,3 +712,4 @@ async function row(env, table, column, value) {
   const rows = await r.json();
   return Array.isArray(rows) && rows.length ? rows[0] : null;
 }
+
