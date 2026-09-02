@@ -1,8 +1,8 @@
 # The Book of Answers — Commercial Execution Timeline
 
-**Status:** ACTIVE MASTER EXECUTION PLAN — OUTREACH ACTIVE · B2-0041–0060 CORPUS CRITICAL PATH · TCJ SPEECH-EVENT / OMISSION HUMAN GATE ACTIVE  
+**Status:** ACTIVE MASTER EXECUTION PLAN — OUTREACH ACTIVE · B2-0041–0060 CORPUS CRITICAL PATH · TCJ SPEECH-EVENT / OMISSION HUMAN GATE 2/6  
 **Created:** 17 August 2026  
-**Reconciled:** 27 August 2026 · 20:16 ICT  
+**Reconciled:** 2 September 2026 · 20:05 ICT  
 **Project:** Flipgazine / The Book of Answers  
 **Repository:** `dechadae/flipgazine`  
 **Supabase:** `sjpvhgxacsiorrtijqua`
@@ -26,11 +26,11 @@ Newest owning authority wins on conflict. Integrity gates and frozen native-huma
 
 # 1. Executive status
 
-The corpus track has **not advanced**. Live Supabase on 27 August verifies **988 active answers, 40 Batch 2 mappings, 2 promotions and 2 buyer-export snapshots**, consistent with canonical revision **127**. B2-0041–0060 remains the corpus critical path.
+The corpus track has **not advanced**. Live Supabase on 2 September verifies **988 active answers, 40 Batch 2 mappings, 2 promotions and 2 buyer-export snapshots**, consistent with canonical revision **127**. B2-0041–0060 remains the corpus critical path.
 
-TCJ has materially advanced since the 24 August reconciliation. The first footing-native-human analysis bank is **complete and frozen at 8/8**. Three controlled Gemini 3.5 Flash-Lite reconstruction runs are complete: v1 blind reconstruction, v2 discourse-anchor ablation and v3 local-voice/implicitness ablation. Outer-turn anchoring and segment-local hierarchy/closeness improved, while reported content versus projected voice and pragmatic omission remain unstable. Same-case prompt tuning stopped after v3 to avoid overfit.
+TCJ has advanced inside the existing human gate: the fresh six-case speech-event / omission bank now has **2/6 native-human reviews complete**, up from 0/6 at the 27 August reconciliation. The set remains `reviewing`; it is not frozen and no model reconstruction is authorized yet. Four native-human reviews remain before deterministic human-manifest freeze and database immutability.
 
-TCJ has therefore moved to a **fresh six-case native-human speech-event / omission gate**: 4 Answers BFF + 2 formal-enterprise cases, zero exact overlap with prior footing and Qualification banks, and **6 human-only / 0 model-exposed**. Human review is currently **0/6**. No model reconstruction is allowed before 6/6 review, deterministic human-manifest freeze and database immutability.
+No repository evidence since the prior reconciliation supersedes the governing footing/omission architecture. The 29 August temporary TCJ Edge Function cleanup page is operational maintenance, not commercialization-stage completion, and does not alter this timeline's dependency graph.
 
 Production authority remains **NONE**. The complete-loop requirement remains **understand → judge → diagnose → rewrite → recheck → release**.
 
@@ -59,8 +59,8 @@ Production authority remains **NONE**. The complete-loop requirement remains **u
 | Local-voice/implicitness ablation v3 | 8/8 valid | DONE · R&D |
 | Same-case tuning after v3 | stopped to avoid overfit | DONE · STOP RULE |
 | Fresh speech-event/omission bank v2 | 6 human-only cases | ACTIVE · TCJ CRITICAL PATH |
-| Native-human v2 review | 0/6 | NEXT HUMAN GATE |
-| Fresh v2 reconstruction | blocked until human freeze | DEPENDENT |
+| Native-human v2 review | **2/6 complete; 4 remain** | ACTIVE HUMAN GATE |
+| Fresh v2 reconstruction | blocked until 6/6 + human freeze | DEPENDENT |
 | Fresh judge/rewrite authority work | after footing/omission stability | DEPENDENT |
 | Productization | after scoped authority | DEPENDENT |
 | B2R clean supplemental 20 | still required | KEEP |
@@ -139,13 +139,15 @@ cases                       6
 tracks                      4 Answers BFF / 2 formal enterprise
 prior footing overlap       0
 prior qualification overlap 0
-exposure                    6 human-only / 0 model-exposed
-human review                0/6
+set status                  reviewing
+human review                2/6
+remaining human reviews     4
+model reconstruction        BLOCKED
 ```
 
-The representation now separates outer speaker/addressee from embedded source/origin, current author, projected speaker, projected addressee and stance. Relationship distance and hierarchy remain segment-local. `omission_license` records what natural Thai can leave unexplained because common sense, relationship knowledge, context or social convention already carries it.
+The representation separates outer speaker/addressee from embedded source/origin, current author, projected speaker, projected addressee and stance. Relationship distance and hierarchy remain segment-local. `omission_license` records what natural Thai can leave unexplained because common sense, relationship knowledge, context or social convention already carries it.
 
-Mandatory freeze order:
+Mandatory freeze order remains unchanged:
 
 ```text
 native-human review 6/6
@@ -172,15 +174,16 @@ Qualification 2.0 remains protected historical human authority and must not be u
 | **20–22 Aug** | ✅ TCJ multi-judge/control-plane research; Qualification v1.1 |
 | **23–24 Aug** | ✅ footing-first reset; rewrite competence mandatory; prior failed/invalidated writer work frozen |
 | **25–26 Aug** | ✅ footing v1 human bank 8/8 frozen; reconstruction v1 + ablations v2/v3 complete; same-case tuning stopped; fresh six-case bank established |
+| **27 Aug–2 Sep** | TCJ fresh human gate advanced from 0/6 to **2/6**; corpus remained revision 127 / 988 |
 | **Now — corpus** | B2-0041–0060 through unchanged human-first promotion/export cycle |
-| **Now — TCJ** | native-human review of six fresh speech-event/omission cases |
-| **Next TCJ gate** | freeze/hash v2 human authority → one fresh reconstruction → residual-disagreement analysis |
+| **Now — TCJ** | complete remaining **4** native-human speech-event/omission reviews |
+| **Next TCJ gate** | verify source linkage → deterministic manifest → freeze/DB lock → one fresh reconstruction |
 | **After footing/omission stability** | fresh judge + rewrite experiments with clean authority separation |
 | **After scoped candidate freeze** | fresh hidden authority instrument → blind human freeze → complete-loop qualification |
 | **After clean 1,000 freeze** | package-integrity verification + final analysis |
 | **After substantive completion** | data-room refresh + substantive buyer updates |
 
-There is **no TCJ release-date commitment**. Human throughput and integrity gates govern completion.
+There is **no TCJ release-date commitment**. Human throughput and integrity gates govern completion. No unsupported September completion date is introduced while the corpus remains at revision 127.
 
 ---
 
@@ -206,8 +209,8 @@ B2-0041–0060 sealed evidence
 ## TCJ
 
 ```text
-fresh speech-event / omission bank v2
-→ native-human interpretation 6/6
+fresh speech-event / omission bank v2 — 2/6 human-reviewed
+→ remaining native-human interpretation 4/6
 → source-hash verification + deterministic human manifest
 → freeze + DB lock before model exposure
 → one fresh reconstruction with frozen representation
@@ -234,6 +237,6 @@ Default TCJ commercial rights remain **Benchmark Use**, not unrestricted Model-D
 
 # 10. Schedule-risk rule
 
-The dominant corpus risk remains native-human review throughput. The dominant TCJ risk is now whether fresh, independently frozen native-human evidence can stabilize speech-event role reconstruction and pragmatic omission before judge/rewrite qualification resumes.
+The dominant corpus risk remains native-human review throughput. The dominant TCJ risk remains whether fresh, independently frozen native-human evidence can stabilize speech-event role reconstruction and pragmatic omission before judge/rewrite qualification resumes. The 2/6 progress reduces the immediate human-gate remainder to four cases but does not change the downstream integrity gates.
 
 Do not trade either integrity gate for a calendar date. The TCJ release question remains: **does this behave like a genuinely useful native senior editor within its declared scope?** If not, continue research.
