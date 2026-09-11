@@ -1,0 +1,17 @@
+{
+  "id": "/archexiom/",
+  "name": "ARCHEXΙOM",
+  "short_name": "ARCHEXΙOM",
+  "description": "A grunge science-fiction strategy game where mathematics is power and every ruin is a proof.",
+  "start_url": "/archexiom/app.html",
+  "scope": "/archexiom/",
+  "display": "fullscreen",
+  "background_color": "#090a09",
+  "theme_color": "#0b0c0c",
+  "orientation": "any",
+  "categories": ["games", "strategy"],
+  "icons": [
+    {"src":"/archexiom/icon-192.svg","sizes":"192x192","type":"image/svg+xml","purpose":"any maskable"},
+    {"src":"/archexiom/icon-512.svg","sizes":"512x512","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}
