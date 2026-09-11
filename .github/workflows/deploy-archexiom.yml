@@ -31,14 +31,15 @@ jobs:
           rm -rf archexiom-dist
           mkdir -p archexiom-dist
 
-          cat archexiom-src/v4/part1.b64 \
-              archexiom-src/v4/part2.b64 \
-              archexiom-src/v4/part3.b64 \
-              archexiom-src/v4/part4.b64 \
-              archexiom-src/v4/part5.b64 \
-              archexiom-src/v4/part6.b64 > /tmp/archexiom-v4.b64
-          base64 --decode /tmp/archexiom-v4.b64 | gzip --decompress > archexiom-dist/index.html
-          echo "36355467bda59b77df26bdbd282f487543e8fb868eaedf52845f4832dd4a41b1  archexiom-dist/index.html" | sha256sum --check
+          cat archexiom-src/v5/part1.b64 \
+              archexiom-src/v5/part2.b64 \
+              archexiom-src/v5/part3.b64 \
+              archexiom-src/v5/part4.b64 \
+              archexiom-src/v5/part5.b64 \
+              archexiom-src/v5/part6.b64 \
+              archexiom-src/v5/part7.b64 > /tmp/archexiom-v5.b64
+          base64 --decode /tmp/archexiom-v5.b64 | gzip --decompress > archexiom-dist/index.html
+          echo "942f83085a8593298511fe34081a7f2be546ca037da0d68f30abf11c3b0fdc65  archexiom-dist/index.html" | sha256sum --check
 
           python - <<'PY'
           from pathlib import Path
@@ -81,7 +82,7 @@ jobs:
           EOF_ICON
 
           cat > archexiom-dist/sw.js <<'EOF_SW'
-          const CACHE='archexiom-pages-v4';
+          const CACHE='archexiom-pages-v5';
           const THREE_URL='https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js';
           const CORE=['/','/index.html','/manifest.webmanifest','/icon.svg',THREE_URL];
           self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(async c=>{for(const url of CORE){try{const r=await fetch(url,{mode:url.startsWith('http')?'cors':'same-origin'});if(r.ok)c.put(url,r.clone())}catch{}}}).then(()=>self.skipWaiting()))});
