@@ -53,6 +53,19 @@ jobs:
           p.write_text(s)
           PY
 
+          python archexiom-src/v6-patch.py
+          python - <<'PY'
+          from pathlib import Path
+          s = Path('archexiom-dist/index.html').read_text()
+          assert 'campaignPointers' in s
+          assert 'hitPlate' in s
+          assert 'setCampaignZoom' in s
+          a = s.index('<script type="module">') + len('<script type="module">')
+          b = s.index('</script>', a)
+          Path('/tmp/archexiom-module.mjs').write_text(s[a:b])
+          PY
+          node --check /tmp/archexiom-module.mjs
+
           cat > archexiom-dist/manifest.webmanifest <<'EOF_MANIFEST'
           {
             "name": "ARCHEXΙOM",
@@ -82,7 +95,7 @@ jobs:
           EOF_ICON
 
           cat > archexiom-dist/sw.js <<'EOF_SW'
-          const CACHE='archexiom-pages-v5';
+          const CACHE='archexiom-pages-v6';
           const THREE_URL='https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js';
           const CORE=['/','/index.html','/manifest.webmanifest','/icon.svg',THREE_URL];
           self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(async c=>{for(const url of CORE){try{const r=await fetch(url,{mode:url.startsWith('http')?'cors':'same-origin'});if(r.ok)c.put(url,r.clone())}catch{}}}).then(()=>self.skipWaiting()))});
