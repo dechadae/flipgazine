@@ -1,0 +1,104 @@
+name: Deploy ARCHEXIOM
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/deploy-archexiom.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  deployments: write
+
+concurrency:
+  group: archexiom-production
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Build Cloudflare Pages bundle
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf archexiom-dist
+          mkdir -p archexiom-dist
+
+          curl -fsSL "https://ndzwypnjkhlpgxoqbiwx.supabase.co/functions/v1/archexiom" -o archexiom-dist/index.html
+
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('archexiom-dist/index.html')
+          s = p.read_text()
+          s = s.replace('/functions/v1/archexiom/manifest.webmanifest', '/manifest.webmanifest')
+          s = s.replace('/functions/v1/archexiom/icon.svg', '/icon.svg')
+          s = s.replace('/functions/v1/archexiom/sw.js', '/sw.js')
+          s = s.replace("location.pathname.startsWith('/functions/v1/archexiom')", 'true')
+          s = s.replace("scope:'/functions/v1/archexiom/'", "scope:'/'")
+          p.write_text(s)
+          PY
+
+          cat > archexiom-dist/manifest.webmanifest <<'EOF'
+          {
+            "name": "ARCHEXΙOM",
+            "short_name": "ARCHEXΙOM",
+            "id": "/",
+            "start_url": "/",
+            "scope": "/",
+            "display": "fullscreen",
+            "orientation": "any",
+            "background_color": "#090a08",
+            "theme_color": "#090a08",
+            "description": "Every ruin is a proof.",
+            "icons": [
+              {"src":"/icon.svg","sizes":"192x192","type":"image/svg+xml","purpose":"any maskable"},
+              {"src":"/icon.svg","sizes":"512x512","type":"image/svg+xml","purpose":"any maskable"}
+            ]
+          }
+          EOF
+
+          cat > archexiom-dist/icon.svg <<'EOF'
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+            <rect width="512" height="512" rx="92" fill="#090a08"/>
+            <path d="M128 374 256 94l128 280h-54l-25-58h-98l-25 58h-54Zm99-106h58l-29-69-29 69Z" fill="#dfd0ad"/>
+            <path d="M104 414h304" stroke="#925d43" stroke-width="18"/>
+            <circle cx="256" cy="164" r="13" fill="#748f8b"/>
+          </svg>
+          EOF
+
+          cat > archexiom-dist/sw.js <<'EOF'
+          const CACHE='archexiom-pages-v2';
+          const THREE_URL='https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js';
+          const CORE=['/','/index.html','/manifest.webmanifest','/icon.svg',THREE_URL];
+          self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(async c=>{for(const url of CORE){try{const r=await fetch(url,{mode:url.startsWith('http')?'cors':'same-origin'});if(r.ok)c.put(url,r.clone())}catch{}}}).then(()=>self.skipWaiting()))});
+          self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('archexiom-pages-')&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
+          self.addEventListener('fetch',event=>{const url=new URL(event.request.url);const inApp=url.origin===location.origin;const isThree=url.href===THREE_URL;if(!inApp&&!isThree)return;if(event.request.mode==='navigate'){event.respondWith(fetch(event.request).then(r=>{const copy=r.clone();caches.open(CACHE).then(c=>c.put('/index.html',copy));return r}).catch(()=>caches.match('/index.html')));return;}event.respondWith(caches.match(event.request).then(hit=>hit||fetch(event.request).then(r=>{if(r.ok){const copy=r.clone();caches.open(CACHE).then(c=>c.put(event.request,copy))}return r})))});
+          EOF
+
+          cat > archexiom-dist/_headers <<'EOF'
+          /*
+            X-Content-Type-Options: nosniff
+            Referrer-Policy: same-origin
+            Permissions-Policy: camera=(), microphone=(), geolocation=()
+          /sw.js
+            Cache-Control: no-cache
+          /manifest.webmanifest
+            Cache-Control: no-cache
+          EOF
+
+          cat > archexiom-dist/_redirects <<'EOF'
+          /* /index.html 200
+          EOF
+
+      - name: Deploy to Cloudflare Pages
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: npx --yes wrangler@latest pages deploy archexiom-dist --project-name=archexiom --branch=main
