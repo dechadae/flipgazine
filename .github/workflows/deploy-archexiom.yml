@@ -31,7 +31,8 @@ jobs:
           rm -rf archexiom-dist
           mkdir -p archexiom-dist
 
-          cat archexiom-src/v7/part1.b64 \
+          cat archexiom-src/v7/part1a.b64 \
+              archexiom-src/v7/part1b.b64 \
               archexiom-src/v7/part2.b64 \
               archexiom-src/v7/part3.b64 \
               archexiom-src/v7/part4.b64 \
