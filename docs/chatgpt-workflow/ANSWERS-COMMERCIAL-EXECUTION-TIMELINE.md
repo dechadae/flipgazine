@@ -2,7 +2,7 @@
 
 **Status:** ACTIVE MASTER EXECUTION PLAN — OUTREACH ACTIVE · B2-0041–0060 CORPUS CRITICAL PATH · TCJ ARCHITECTURE v2 FROZEN · QUALIFICATION 2.0 HUMAN-FROZEN  
 **Created:** 17 August 2026  
-**Reconciled:** 9 October 2026 · ICT  
+**Reconciled:** 27 October 2026 · ICT  
 **Project:** Flipgazine / The Book of Answers  
 **Repository:** `dechadae/flipgazine`  
 **Supabase:** `sjpvhgxacsiorrtijqua`
@@ -28,13 +28,13 @@ Newest owning authority wins on conflict. Integrity gates and frozen native-huma
 
 # 1. Executive status
 
-The corpus track has **not advanced**. Live Supabase on 9 October verifies canonical revision **127**, **40 Batch 2 mappings, 2 promotions, 2 buyer-export snapshots and 20 stored Batch 2 human reviews**. B2-0041–0060 therefore remains the corpus critical path.
+The corpus track has **not advanced**. Live Supabase on 27 October verifies **40 Batch 2 mappings, 2 promotions, 2 buyer-export snapshots and 20 stored Batch 2 human reviews**, unchanged from the 9 October reconciliation. B2-0041–0060 therefore remains the corpus critical path; there is no evidence supporting a later canonical promotion.
 
-TCJ has materially advanced beyond the 2 September timeline. The prior footing/speech-event gate is no longer the current execution authority. Architecture v2 is the current frozen commercial architecture, with a portable Methodology Pack, Context Retriever, Voice Profile, bounded Private Evidence capability, replaceable semantic judge and independent Release Policy.
+TCJ Architecture v2 remains the current frozen commercial architecture, with a portable Methodology Pack, Context Retriever, Voice Profile, bounded Private Evidence capability, replaceable semantic judge and independent Release Policy.
 
-Qualification 2.0 native-human authority evidence is **28/28 complete and frozen**, including **4/4 consistent hidden reversed repeats**. The final paid OpenAI authority run remains unexecuted: **0 provider requests, $0 actual cost, external dispatch disabled, no user approval**. Production authority remains **NONE**.
+Qualification 2.0 native-human authority evidence remains **28/28 complete and frozen**, including **4/4 consistent hidden reversed repeats**. The final OpenAI authority run has still made **0 provider requests and spent $0**, with external dispatch disabled and no user approval. Live state now records the run itself as **`stopped_incident`** rather than merely locked/pending. No machine incident row is currently recorded, so the stop must be treated conservatively as an unresolved preflight/dispatch-state issue rather than a completed authority attempt. Production authority remains **NONE**.
 
-Low-tier portability research has also advanced. The completed Groq GPT-OSS 20B exposed-bank stress run produced **47 usable semantic completions from 48 cases**, one preserved protocol failure, only **1 mismatched six-dimension cell across 282 cells**, zero serious false ACCEPTs, zero PASS false blocks, and one Release Policy rescue. This is strong portability/exposed-bank-fit evidence, **not unseen authority evidence**. Live Supabase additionally preserves later Qwen/GPT-OSS mandatory-evidence comparison attempts and Gemini development runs; several are partial/stopped/running historical research states and do not create production authority.
+Low-tier portability research remains development evidence only. The completed Groq GPT-OSS 20B exposed-bank stress run produced **47 usable semantic completions from 48 cases**, one preserved protocol failure, only **1 mismatched six-dimension cell across 282 cells**, zero serious false ACCEPTs, zero PASS false blocks, and one Release Policy rescue. This is strong portability/exposed-bank-fit evidence, **not unseen authority evidence**.
 
 ---
 
@@ -47,14 +47,14 @@ Low-tier portability research has also advanced. The completed Groq GPT-OSS 20B 
 | Batch 2 source freeze | 1,000 frozen | DONE |
 | B2-0001–0020 technical pilot | Full cycle; IDs 949–968 | DONE · NON-METRIC |
 | B2-0021–0040 clean unit | Full cycle; IDs 969–988 | DONE |
-| Canonical corpus | revision 127 / 988 | CURRENT |
+| Canonical corpus | no promotion after revision 127 / 988 evidenced | CURRENT |
 | Buyer export | snapshots 1–2 complete | CONTINUE PER PROMOTION |
 | OpenAI + Thai/SEA outreach | first contact sent | ACTIVE |
-| B2-0041–0060 | active clean unit | CORPUS CRITICAL PATH |
+| B2-0041–0060 | active clean unit; no new human-review rows | CORPUS CRITICAL PATH |
 | TCJ Architecture v2 | reference evaluator frozen | DONE · CURRENT ARCHITECTURE |
 | Methodology Pack / Retriever / Voice Profile / Release Policy | frozen reference stack | DONE |
 | Qualification 2.0 human authority bank | 28/28 + 4/4 repeats; frozen | DONE · PROTECTED |
-| Qualification 2.0 final OpenAI machine run | 0 requests / $0 / locked | BLOCKED ON EXPLICIT APPROVAL + REVALIDATION |
+| Qualification 2.0 final OpenAI machine run | `stopped_incident`; 0 requests / $0 / dispatch disabled | BLOCKED ON STOP-STATE RECONCILIATION + FRESH PREFLIGHT + EXPLICIT APPROVAL |
 | GPT-OSS 20B exposed-bank portability run | 47 usable / 1 protocol failure | DONE · DEVELOPMENT EVIDENCE |
 | Qwen 3.6 27B portability research | partial/stopped attempts preserved | DONE AS PARTIAL EVIDENCE · NOT AUTHORITY |
 | Gemini development research | live runs/attempts preserved | R&D EVIDENCE · NOT AUTHORITY |
@@ -68,8 +68,8 @@ Low-tier portability research has also advanced. The completed Groq GPT-OSS 20B 
 # 3. Corpus checkpoint
 
 ```text
-canonical revision            127
-active answers                988
+last evidenced canonical revision 127
+active answers at that revision 988
 Batch 1                       948
 Batch 2 corpus-linked          40
 promotions                      2
@@ -142,7 +142,7 @@ Runtime          TCJ-RUNTIME-ANSWERS-BFF-ARCHV2-v1
 Runtime SHA      43df71f47353c6abfd96f2a020e3bd8dc97e9ef4dc7c5071df8f4309a138f6da
 ```
 
-Qualification 2.0 protected authority evidence:
+Qualification 2.0 protected authority evidence and live machine-run state:
 
 ```text
 Protocol         TCJ-QUALIFICATION-2.0-2026Q3-v1
@@ -150,14 +150,15 @@ Human state      28/28 complete and frozen
 Hidden repeats   4/4 consistent
 Human manifest   07a25c08b331c215bf6a7378665726c376045bcb9d547d3cd21eaca22b51428d
 Bank manifest    8e3d6c5fff4860f97bfbfcd8d69c46e5484da0d5c315ed6f4888d0061d09b7c8
+Machine run      stopped_incident
 Machine requests 0
 Actual cost      $0
+Dispatch         disabled
+User approval    none
 Authority        NONE
 ```
 
-**Do not expose Qualification 2.0 to development models.** The final authority run requires live-state revalidation and explicit user approval before any paid dispatch.
-
-The completed GPT-OSS 20B stress run is development evidence only. Its 47 usable cases made zero PEE calls, so it primarily demonstrates Methodology Pack + Retriever + Voice Profile + low-tier judge + Release Policy portability, not PEE benefit. Qwen/Gemini development attempts must remain clearly separated from unseen Qualification authority.
+**Do not expose Qualification 2.0 to development models.** Before any authority dispatch, reconcile the `stopped_incident` state, verify that the protected bank and frozen evaluator remain untouched, create/record a fresh successful preflight state as required by the governing protocol, and obtain explicit user approval for paid dispatch. Do not reinterpret the stopped row as a failed model qualification because no provider request occurred.
 
 ---
 
@@ -171,10 +172,11 @@ The completed GPT-OSS 20B stress run is development evidence only. Its 47 usable
 | **20–22 Aug** | ✅ TCJ multi-judge/control-plane research and qualification research history |
 | **23 Aug** | ✅ Architecture v2 reference evaluator frozen; Qualification 2.0 human evidence 28/28 frozen; GPT-OSS 20B portability run complete |
 | **23 Aug onward** | Qwen/GPT-OSS mandatory-evidence and Gemini development attempts preserved as R&D evidence; no production authority inferred |
-| **9 Oct live reconciliation** | corpus still revision 127 / 40 mappings / 2 promotions / 2 buyer snapshots; Qualification authority still not executed |
+| **9 Oct reconciliation** | corpus still revision 127 / 40 mappings / 2 promotions / 2 buyer snapshots; Qualification authority not executed |
+| **27 Oct live reconciliation** | corpus counters unchanged; Qualification 2.0 machine run confirmed `stopped_incident` with 0 requests / $0 / dispatch disabled / no approval |
 | **Now — corpus** | B2-0041–0060 through unchanged human-first promotion/export cycle |
-| **Now — TCJ** | reconcile/close the low-tier development matrix as useful; keep frozen reference stack unchanged |
-| **Authority gate** | revalidate Qualification 2.0 machine-run safety state → explicit user approval → final frozen authority run |
+| **Now — TCJ** | reconcile stopped authority-run state without exposing protected Qualification 2.0 evidence |
+| **Authority gate** | stop-state reconciliation → fresh preflight/safety verification → explicit user approval → final frozen authority run |
 | **After authority** | issue scoped authority decision; only then make production-authority claims/productization decisions |
 | **After clean 1,000 freeze** | package-integrity verification + final analysis |
 | **After substantive completion** | data-room refresh + substantive buyer updates |
@@ -206,8 +208,8 @@ B2-0041–0060 sealed evidence
 
 ```text
 frozen Architecture v2 reference stack
-→ finish/reconcile low-tier portability research without touching Qualification 2.0
-→ revalidate final Qualification 2.0 dispatch contract and locked safety state
+→ reconcile Qualification 2.0 stopped_incident state without touching protected bank
+→ fresh preflight / dispatch-contract / safety-state verification
 → explicit user approval for paid authority run
 → final frozen OpenAI Qualification 2.0 machine run
 → compare against protected 28/28 native-human authority evidence
@@ -229,6 +231,6 @@ Default TCJ commercial rights remain **Benchmark Use**, not unrestricted Model-D
 
 # 10. Schedule-risk rule
 
-The dominant corpus risk remains native-human review throughput: no clean-unit promotion has occurred after B2-0021–0040. The dominant TCJ risk is no longer construction of the human authority bank; that gate is complete. The remaining authority risk is whether the **already-frozen** Architecture v2 evaluator passes the protected unseen Qualification 2.0 machine run after explicit spend approval.
+The dominant corpus risk remains native-human review throughput: no clean-unit promotion has occurred after B2-0021–0040. The dominant TCJ risk is now the unresolved **pre-dispatch `stopped_incident` authority-run state**. Because the run made zero provider requests, this is an execution/preflight integrity issue, not evidence about evaluator quality.
 
 Do not trade either integrity gate for a calendar date. Low-tier development performance, however strong, must not be promoted into authority evidence.
